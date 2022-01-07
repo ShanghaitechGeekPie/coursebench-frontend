@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@mdi/js": "^6.5.95",
     "compression-webpack-plugin": "^9.2.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
