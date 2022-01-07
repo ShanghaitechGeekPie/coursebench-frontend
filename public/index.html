@@ -4,15 +4,25 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>CourseBench</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+    <link href="/css/loader.css" rel="stylesheet">
   </head>
   <body>
     <noscript>
       <strong>Upgrade your browser. Bro!</strong>
     </noscript>
+    <div id="app-loader">
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square last"></div>
+      <div class="square clear"></div>
+      <div class="square"></div>
+      <div class="square last"></div>
+      <div class="square clear"></div>
+      <div class="square "></div>
+      <div class="square last"></div>
+    </div>
     <div id="app"></div>
   </body>
 </html>
