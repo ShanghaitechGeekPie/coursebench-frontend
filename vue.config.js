@@ -1,5 +1,6 @@
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const productionGzipExtensions = /\.(js|css|json|md|html|ico)(\?.*)?$/i;
+const path = require('path')
 
 module.exports = {
   productionSourceMap: false,
@@ -26,4 +27,11 @@ module.exports = {
   "transpileDependencies": [
     "vuetify"
   ],
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, './src')
+      }
+    }
+  }
 }
