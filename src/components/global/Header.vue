@@ -1,32 +1,204 @@
 <template>
   <v-app-bar app>
-    <v-btn text>123</v-btn>
-    <v-btn text>123</v-btn>
-    <v-btn text>123</v-btn>
+    <v-btn text>课程</v-btn>
+    <v-btn text>教师</v-btn>
     <v-spacer></v-spacer>
-    <v-menu bottom rounded offset-y>
+    <v-menu left bottom offset-y transition="slide-y-transition">
       <template v-slot:activator="{ on }">
         <v-btn icon v-on="on">
-          <v-avatar color="pink">
-            <span class="white--text">123</span>
-          </v-avatar>
+          <v-avatar color="pink">123</v-avatar>
         </v-btn>
       </template>
-      <v-card>
-        <v-list-item-content class="justify-center">
-          <div class="mx-auto text-center">
-            <v-btn text>Login</v-btn>
-            <v-divider class="my-3"></v-divider>
-            <v-btn text>Logout</v-btn>
-            <v-divider class="my-3"></v-divider>
-            <v-btn text>Feedback</v-btn>
-          </div>
-        </v-list-item-content>
-      </v-card>
+      <v-list close-on-click>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title @click="login.dialog = true">登录</v-list-item-title>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>{{ icons.mdiAccountPlusOutline }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title @click="register.dialog = true">注册</v-list-item-title>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>{{ icons.mdiAccountOutline }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>个人中心</v-list-item-title>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>{{ icons.mdiMessageAlertOutline }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>反馈</v-list-item-title>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>{{ icons.mdiLogoutVariant }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title @click="doLogout()">注销</v-list-item-title>
+        </v-list-item>
+      </v-list>
     </v-menu>
+    <v-dialog v-model="login.dialog" max-width="600">
+      <v-card>
+        <v-card-title>登录</v-card-title>
+        <v-window v-model="login.step">
+          <v-window-item :value="0">
+            <v-card-text class="px-6">
+              <v-text-field label="邮箱">
+                <v-icon slot="append">{{ icons.mdiEmail }}</v-icon>
+              </v-text-field>
+            </v-card-text>
+          </v-window-item>
+          <v-window-item :value="1">
+            <v-card-text class="px-6">
+              <v-text-field label="密码" type="password">
+                <v-icon slot="append">{{ icons.mdiFormTextboxPassword }}</v-icon>
+              </v-text-field>
+            </v-card-text>
+          </v-window-item>
+          <v-window-item :value="2">
+            <v-card-text class="px-6">
+              <v-row>
+                <v-col cols="12" sm="6" offset-sm="3">
+                  <v-otp-input @finish="doLogin" length="4" :disabled="login.loading"></v-otp-input>
+                </v-col>
+              </v-row>
+              <v-overlay absolute :value="login.loading">
+                <v-progress-circular indeterminate color="primary"></v-progress-circular>
+              </v-overlay>
+            </v-card-text>
+          </v-window-item>
+        </v-window>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn v-if="login.step !== 0" text @click="login.step -= 1">上一步</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn v-if="login.step !== 2" text @click="login.step += 1">下一步</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="register.dialog" max-width="600">
+      <v-card>
+        <v-card-title>注册</v-card-title>
+        <v-window v-model="register.step">
+          <v-window-item :value="0">
+            <v-card-text class="px-6">
+              <v-text-field label="邮箱"></v-text-field>
+            </v-card-text>
+          </v-window-item>
+          <v-window-item :value="1">
+            <v-card-text class="px-6">
+              <v-row>
+                <v-col cols="12" sm="6">
+                  <v-select v-model="register.year" :items="register.year_items" label="入学时间"></v-select>
+                </v-col>
+                <v-col cols="12" sm="6">
+                  <v-select v-model="register.grade" :items="register.grade_items" label="年级"></v-select>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field label="密码" type="password"></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field label="确认密码" type="password"></v-text-field>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-window-item>
+          <v-window-item :value="2">
+            <v-card-text class="px-6">
+              <v-row>
+                <v-col cols="12" sm="6" offset-sm="3">
+                  <v-otp-input @finish="doRegister" length="4" :disabled="register.loading"></v-otp-input>
+                </v-col>
+              </v-row>
+              <v-overlay absolute :value="register.loading">
+                <v-progress-circular indeterminate color="primary"></v-progress-circular>
+              </v-overlay>
+            </v-card-text>
+          </v-window-item>
+        </v-window>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn v-if="register.step !== 0" text @click="register.step -= 1">上一步</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn v-if="register.step !== 2" text @click="register.step += 1">下一步</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app-bar>
 </template>
 
 <script>
-export default {};
+import {
+  mdiLoginVariant,
+  mdiLogoutVariant,
+  mdiAccountPlusOutline,
+  mdiAccountOutline,
+  mdiMessageAlertOutline,
+  mdiEmail,
+  mdiFormTextboxPassword,
+} from "@mdi/js";
+
+export default {
+  data() {
+    return {
+      login: {
+        loading: false,
+        step: 0,
+        dialog: false,
+      },
+      register: {
+        loading: false,
+        step: 0,
+        dialog: false,
+        year: 2022,
+        grade: 1,
+        year_items: [2022, 2021],
+        grade_items: [1, 2, 3, 4]
+      },
+      icons: {
+        mdiLoginVariant,
+        mdiLogoutVariant,
+        mdiAccountPlusOutline,
+        mdiAccountOutline,
+        mdiMessageAlertOutline,
+        mdiEmail,
+        mdiFormTextboxPassword,
+      },
+    };
+  },
+  methods: {
+    doLogin(response) {
+      this.login.loading = true;
+      setTimeout(() => {
+        if (response != "1234") {
+          this.login.loading = false;
+          this.showSnackbar("error", "验证码错误！");
+        } else {
+          this.login.dialog = false;
+          this.login.step = 0;
+        }
+      }, 1000);
+    },
+    doRegister(response) {
+      this.register.loading = true;
+      setTimeout(() => {
+        if (response != "1234") {
+          this.register.loading = false;
+          this.showSnackbar("error", "验证码错误！");
+        } else {
+          this.register.dialog = false;
+          this.register.step = 0;
+        }
+      }, 1000);
+    },
+    showSnackbar(color, text) {
+      this.$emit("update:snackbar", { show: true, text: text, color: color });
+    },
+  },
+};
 </script>
