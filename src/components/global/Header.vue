@@ -10,17 +10,17 @@
         </v-btn>
       </template>
       <v-list close-on-click>
-        <v-list-item link>
+        <v-list-item link @click="login.dialog = true">
           <v-list-item-icon>
             <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
           </v-list-item-icon>
-          <v-list-item-title @click="login.dialog = true">登录</v-list-item-title>
+          <v-list-item-title>登录</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link @click="register.dialog = true">
           <v-list-item-icon>
             <v-icon>{{ icons.mdiAccountPlusOutline }}</v-icon>
           </v-list-item-icon>
-          <v-list-item-title @click="register.dialog = true">注册</v-list-item-title>
+          <v-list-item-title>注册</v-list-item-title>
         </v-list-item>
         <v-list-item link>
           <v-list-item-icon>
@@ -34,11 +34,11 @@
           </v-list-item-icon>
           <v-list-item-title>反馈</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link @click="doLogout()">
           <v-list-item-icon>
             <v-icon>{{ icons.mdiLogoutVariant }}</v-icon>
           </v-list-item-icon>
-          <v-list-item-title @click="doLogout()">注销</v-list-item-title>
+          <v-list-item-title>注销</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -63,8 +63,11 @@
           <v-window-item :value="2">
             <v-card-text class="px-6">
               <v-row>
+                <v-col cols="12" sm="4" offset-sm="4">
+                  <v-img src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"></v-img>
+                </v-col>
                 <v-col cols="12" sm="6" offset-sm="3">
-                  <v-otp-input @finish="doLogin" length="4" :disabled="login.loading"></v-otp-input>
+                  <v-otp-input length="4" @finish="doLogin"></v-otp-input>
                 </v-col>
               </v-row>
               <v-overlay absolute :value="login.loading">
@@ -93,6 +96,9 @@
           <v-window-item :value="1">
             <v-card-text class="px-6">
               <v-row>
+                <v-col cols="12">
+                  <v-text-field label="用户名"></v-text-field>
+                </v-col>
                 <v-col cols="12" sm="6">
                   <v-select v-model="register.year" :items="register.year_items" label="入学时间"></v-select>
                 </v-col>
@@ -111,8 +117,11 @@
           <v-window-item :value="2">
             <v-card-text class="px-6">
               <v-row>
+                <v-col cols="12" sm="4" offset-sm="4">
+                  <v-img src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"></v-img>
+                </v-col>
                 <v-col cols="12" sm="6" offset-sm="3">
-                  <v-otp-input @finish="doRegister" length="4" :disabled="register.loading"></v-otp-input>
+                  <v-otp-input length="4" @finish="doRegister"></v-otp-input>
                 </v-col>
               </v-row>
               <v-overlay absolute :value="register.loading">
@@ -133,6 +142,10 @@
 </template>
 
 <script>
+import useLogin from "@/composables/useLogin"
+import useRegister from "@/composables/useRegister"
+import useLogout from "@/composables/useLogout"
+
 import {
   mdiLoginVariant,
   mdiLogoutVariant,
@@ -141,25 +154,17 @@ import {
   mdiMessageAlertOutline,
   mdiEmail,
   mdiFormTextboxPassword,
-} from "@mdi/js";
+} from "@mdi/js"
 
 export default {
+  setup() {
+    const { login, doLogin } = useLogin()
+    const { register, doRegister } = useRegister()
+    const { doLogout } = useLogout()
+    return { login, doLogin, register, doRegister, doLogout }
+  },
   data() {
     return {
-      login: {
-        loading: false,
-        step: 0,
-        dialog: false,
-      },
-      register: {
-        loading: false,
-        step: 0,
-        dialog: false,
-        year: 2022,
-        grade: 1,
-        year_items: [2022, 2021],
-        grade_items: [1, 2, 3, 4]
-      },
       icons: {
         mdiLoginVariant,
         mdiLogoutVariant,
@@ -169,36 +174,7 @@ export default {
         mdiEmail,
         mdiFormTextboxPassword,
       },
-    };
-  },
-  methods: {
-    doLogin(response) {
-      this.login.loading = true;
-      setTimeout(() => {
-        if (response != "1234") {
-          this.login.loading = false;
-          this.showSnackbar("error", "验证码错误！");
-        } else {
-          this.login.dialog = false;
-          this.login.step = 0;
-        }
-      }, 1000);
-    },
-    doRegister(response) {
-      this.register.loading = true;
-      setTimeout(() => {
-        if (response != "1234") {
-          this.register.loading = false;
-          this.showSnackbar("error", "验证码错误！");
-        } else {
-          this.register.dialog = false;
-          this.register.step = 0;
-        }
-      }, 1000);
-    },
-    showSnackbar(color, text) {
-      this.$emit("update:snackbar", { show: true, text: text, color: color });
-    },
-  },
-};
+    }
+  }
+}
 </script>
