@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "@mdi/js": "^6.5.95",
+    "@vue/composition-api": "^1.4.3",
     "compression-webpack-plugin": "^9.2.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
+    "vue-query": "^1.16.2",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0"
   },

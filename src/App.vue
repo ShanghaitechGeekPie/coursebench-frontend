@@ -14,30 +14,29 @@
 </template>
 
 <script>
-import Header from "@/components/global/Header.vue";
+import { provide, reactive } from "@vue/composition-api"
+import Header from "@/components/global/Header.vue"
 
 export default {
   components: {
-    Header,
+    Header
   },
   created() {
     try {
-      this.$vuetify.theme.dark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      document.body.removeChild(document.getElementById("app-loader"));
+      this.$vuetify.theme.dark = window.matchMedia("(prefers-color-scheme: dark)").matches
+      document.body.removeChild(document.getElementById("app-loader"))
     } catch {
-      console.log("Have a nice day!");
+      console.log("Have a nice day!")
     }
   },
-  data() {
-    return {
-      snackbar: {
-        show: false,
-        text: null,
-        color: null
-      },
-    };
-  },
-};
+  setup() {
+    const snackbar = reactive({show: false, text: null, color: null})
+    provide("showSnackbar", (color, text) => {
+      snackbar.show = true
+      snackbar.text = text
+      snackbar.color = color
+    })
+    return { snackbar }
+  }
+}
 </script>
