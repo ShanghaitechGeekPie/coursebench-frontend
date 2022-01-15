@@ -1,12 +1,16 @@
 import { reactive, inject } from "@vue/composition-api"
 
 export default () => {
+
+  // Get the function to show snackbar from useSnackbar.js
   const showSnackbar = inject("showSnackbar")
+
   const login = reactive({
     loading: false,
     step: 0,
     dialog: false,
   })
+
   const doLogin = (response) => {
     login.loading = true
     setTimeout(() => {
@@ -19,5 +23,6 @@ export default () => {
       }
     }, 1000)
   }
+
   return { login, doLogin }
 }

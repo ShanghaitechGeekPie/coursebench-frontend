@@ -8,8 +8,27 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: () => import('@/views/Home.vue')
+      component: () => import('@/views/CourseAll.vue')
+    },
+    {
+      path: '/course/:id',
+      component: () => import('@/views/CourseDetails.vue')
+    },
+    {
+      path: '/teacher',
+      component: () => import('@/views/TeacherAll.vue')
+    },
+    {
+      path: '/teacher/:id',
+      component: () => import('@/views/TeacherDetails.vue')
+    },
+    {
+      path: '/user',
+      component: () => import('@/views/User.vue')
+    },
+    {
+      path: '*',
+      component: () => import('@/views/NotFound.vue')
     }
   ]
 })

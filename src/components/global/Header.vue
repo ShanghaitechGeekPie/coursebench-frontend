@@ -142,9 +142,9 @@
 </template>
 
 <script>
-import useLogin from "@/composables/useLogin"
-import useRegister from "@/composables/useRegister"
-import useLogout from "@/composables/useLogout"
+import useLogin from "@/composables/users/useLogin"
+import useRegister from "@/composables/users/useRegister"
+import useLogout from "@/composables/users/useLogout"
 
 import {
   mdiLoginVariant,
@@ -161,7 +161,7 @@ export default {
     const { login, doLogin } = useLogin()
     const { register, doRegister } = useRegister()
     const { doLogout } = useLogout()
-    return { login, doLogin, register, doRegister, doLogout }
+    return { login, register, doLogin, doRegister, doLogout }
   },
   data() {
     return {
