@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { provide, reactive } from "@vue/composition-api"
+import useSnackbar from "@/composables/global/useSnackbar"
 import Header from "@/components/global/Header.vue"
 
 export default {
@@ -30,12 +30,7 @@ export default {
     }
   },
   setup() {
-    const snackbar = reactive({show: false, text: null, color: null})
-    provide("showSnackbar", (color, text) => {
-      snackbar.show = true
-      snackbar.text = text
-      snackbar.color = color
-    })
+    const { snackbar } = useSnackbar()
     return { snackbar }
   }
 }
