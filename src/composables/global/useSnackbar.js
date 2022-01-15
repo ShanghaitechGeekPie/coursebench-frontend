@@ -1,7 +1,9 @@
 import { provide, reactive } from "@vue/composition-api"
 
 export default () => {
+
   const snackbar = reactive({ show: false, text: null, color: null })
+
   const showSnackbar = (color, text) => {
     snackbar.show = true
     snackbar.text = text
