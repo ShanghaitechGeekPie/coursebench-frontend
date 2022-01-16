@@ -1,8 +1,8 @@
-import { reactive } from "@vue/composition-api"
+import { ref } from "@vue/composition-api"
 
 export default () => {
 
-  const teachers = reactive([])
+  const teachers = ref([])
 
   return { teachers }
 } 

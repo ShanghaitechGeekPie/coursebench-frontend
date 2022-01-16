@@ -4,7 +4,7 @@
     <v-btn text>教师</v-btn>
     <v-spacer></v-spacer>
     <v-menu left bottom offset-y transition="slide-y-transition">
-      <template v-slot:activator="{ on }">
+      <template #activator="{ on }">
         <v-btn icon v-on="on">
           <v-avatar color="pink">123</v-avatar>
         </v-btn>
