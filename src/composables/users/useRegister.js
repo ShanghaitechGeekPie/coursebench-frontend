@@ -1,11 +1,11 @@
-import { reactive, inject } from "@vue/composition-api"
+import { ref, inject } from "@vue/composition-api"
 
 export default () => {
 
   // Get the function to show snackbar from global/useSnackbar.js
   const showSnackbar = inject("showSnackbar")
 
-  const register = reactive({
+  const register = ref({
     loading: false,
     step: 0,
     dialog: false,
@@ -16,14 +16,14 @@ export default () => {
   })
 
   const doRegister = (response) => {
-    register.loading = true
+    register.value.loading = true
     setTimeout(() => {
-      register.loading = false
+      register.value.loading = false
       if (response != "1234") {
         showSnackbar("error", "验证码错误！")
       } else {
-        register.dialog = false
-        register.step = 0
+        register.value.dialog = false
+        register.value.step = 0
       }
     }, 1000)
   }
