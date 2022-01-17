@@ -4,11 +4,20 @@ export default () => {
 
   const courses = ref([])
 
-  const pageNow = ref(1)
-
-  const itemsPerPage = ref(5)
-
-  const disableFiltering = ref(true)
+  const iterator = ref({
+    pageNow: 1,
+    itemsPerPage: 5,
+    disableFiltering: true,
+    lengthFiltered: computed(() => {
+      return iterator.value.disableFiltering ? courses.value.length : coursesMatchingFilter().length
+    }),
+    numberOfPages: computed(() => {
+      return getNumberOfPages(iterator.value.lengthFiltered)
+    }),
+    showPagination: computed(() => {
+      return iterator.value.lengthFiltered > 0
+    })
+  })
 
   const getCourses = () => {
     for (let index = 0; index < 10; index++) {
@@ -27,15 +36,13 @@ export default () => {
     return "/course/" + id
   }
 
-  const coursesMatchingFilter = () => {
-    return courses.value.filter(
-      course => course.cheched
-    )
+  const getNumberOfPages = (length) => {
+    return Math.ceil(length / iterator.value.itemsPerPage)
   }
 
-  const numberOfPages = computed(() => {
-    Math.ceil(courses.value.length / itemsPerPage.value)
-  })
+  const coursesMatchingFilter = () => {
+    return courses.value.filter(course => course.checked)
+  }
 
-  return { courses, pageNow, itemsPerPage, disableFiltering, getCourses, getCourseLinkPath, coursesMatchingFilter, numberOfPages }
+  return { courses, iterator, getCourses, getCourseLinkPath, coursesMatchingFilter }
 }

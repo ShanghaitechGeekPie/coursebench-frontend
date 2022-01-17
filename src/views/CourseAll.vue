@@ -5,8 +5,8 @@
         <v-card>
           <v-card-text>
             <v-checkbox
-              v-model="disableFiltering"
-              :label="`Filter Disabled: ${disableFiltering.toString()}`"
+              v-model="iterator.disableFiltering"
+              :label="`Filter Disabled: ${iterator.disableFiltering.toString()}`"
             ></v-checkbox>
           </v-card-text>
         </v-card>
@@ -14,10 +14,10 @@
       <v-col cols="12" md="8" order-md="first">
         <v-data-iterator
           :items="courses"
-          :page="pageNow"
+          :page="iterator.pageNow"
           :custom-filter="coursesMatchingFilter"
-          :disable-filtering="disableFiltering"
-          :items-per-page="itemsPerPage"
+          :disable-filtering="iterator.disableFiltering"
+          :items-per-page="iterator.itemsPerPage"
           sort-by="id"
           hide-default-footer
         >
@@ -35,7 +35,13 @@
             </v-card>
           </template>
           <template #footer>
-            <v-pagination v-model="pageNow" :length="numberOfPages"></v-pagination>
+            <v-pagination v-model="iterator.pageNow" v-if="iterator.showPagination" :length="iterator.numberOfPages"></v-pagination>
+          </template>
+          <template #no-results>
+            <v-card>
+              <v-card-title>Whoops</v-card-title>
+              <v-card-text>No items filtered</v-card-text>
+            </v-card>
           </template>
         </v-data-iterator>
       </v-col>
@@ -49,9 +55,9 @@ import { onMounted } from "@vue/composition-api"
 
 export default {
   setup() {
-    const { courses, pageNow, itemsPerPage, getCourses, getCourseLinkPath, coursesMatchingFilter, numberOfPages, disableFiltering } = useCourses()
+    const { courses, iterator, getCourses, getCourseLinkPath, getNumberOfPages, coursesMatchingFilter } = useCourses()
     onMounted(getCourses)
-    return { courses, pageNow, itemsPerPage, disableFiltering, getCourseLinkPath, coursesMatchingFilter, numberOfPages }
+    return { courses, iterator, getCourseLinkPath, getNumberOfPages, coursesMatchingFilter }
   }
 }
 </script>
