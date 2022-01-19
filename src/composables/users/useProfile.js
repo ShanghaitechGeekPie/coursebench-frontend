@@ -19,25 +19,35 @@ export default () => {
         avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
     })
 
-    const temp = reactive({
+    const status = reactive({
         update: false, // updating info
         dialog: false, // having a dialog
         show: false, // showing all the info
         yearItems: [2022, 2021],
         gradeItems: [1, 2, 3, 4],
+        oldKwd: "",
+        newKwd: "", 
+        reptKwd: "", 
+        captcha: "", 
         submit() { // submit info update
 
             return false
         }, 
         cancel() { // cancel info update
             resetInfo(this, userinfo)
-            temp.update = false
+            this.update = false
         }, 
         upload() { // upload new avatar
 
         }, 
+        handin() { // submit new kwd
+
+        }, 
+        abort() { // abort kwd update
+            this.dialog = false
+        }, 
         ...userinfo
     })
 
-    return { userinfo, temp }
+    return { userinfo, status }
 }
