@@ -67,7 +67,7 @@
   </v-dialog>
 </template>
 <script>
-import useEditKwd from "@/composables/users/useEditKwd";
+import useEditKwd from "@/composables/users/profile/useEditKwd";
 
 export default {
   setup() {

@@ -3,8 +3,12 @@ import { inject, reactive, toRefs } from "@vue/composition-api"
 export default () => {
 
     const showSnackbar = inject("showSnackbar")
-
     const userinfo = inject("userinfo")
+    
+    const statics = {
+        yearItems: [ 2021, 2022 ], 
+        gradeItems: [ 1, 2, 3, 4 ]
+    }
 
     const status = reactive({
         info: { ...userinfo }, 
@@ -32,11 +36,6 @@ export default () => {
                 showSnackbar("error", "修改个人资料失败")
             }
         }, 1000)
-    }
-
-    const statics = {
-        yearItems: [ 2021, 2022 ], 
-        gradeItems: [ 1, 2, 3, 4 ]
     }
 
     return { statics, status, doReset, doEditInfo }

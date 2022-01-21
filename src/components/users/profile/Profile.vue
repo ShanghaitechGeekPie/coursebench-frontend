@@ -1,33 +1,42 @@
 <template>
-  <v-container class="px-sm-3 px-0">
-    <v-row justify="center">
-      <v-col xl="7" class="pt-0 px-sm-3 px-0">
-        <v-card>
-          <v-img
-            alt="Background Image"
-            :src="statics.background"
-            :height="screen.background"
-          ></v-img>
-          <v-container>
-            <v-row>
-              <div class="pa-2 mt-sm-n12 pl-md-8 pl-sm-5 pb-md-8 pb-sm-4 mt-n7">
-                <v-card outlined>
-                  <v-avatar tile color="pink" :size="screen.avatar" class="rounded">
-                    <span v-html="userinfo.avatar"></span>
-                  </v-avatar>
-                </v-card>
-              </div>
-              <v-info-card :isMobile="screen.isMobile"></v-info-card>
-              <v-edit-info :isMobile="screen.isMobile"></v-edit-info>
-            </v-row>
-          </v-container>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-card>
+    <v-img
+      alt="Background Image"
+      :src="statics.background"
+      :aspect-ratio="screen.background"
+    ></v-img>
+    <v-container>
+      <v-row>
+        <div class="pa-2 mt-sm-n12 pl-md-8 pl-sm-5 pb-md-8 pb-sm-4 mt-n7">
+          <v-card outlined>
+            <v-avatar
+              tile
+              color="pink"
+              :size="screen.avatar"
+              class="rounded"
+            >
+              <span
+                class="text-sm-h3 text-h5"
+                v-if="userinfo.avatar === ''"
+                >{{ userinfo.nickname.slice(0, 1) }}</span
+              >
+              <v-img
+                src="https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1"
+                alt="Avatar"
+                aspect-ratio="1"
+                v-else
+              ></v-img>
+            </v-avatar>
+          </v-card>
+        </div>
+        <v-info-card :isMobile="screen.isMobile"></v-info-card>
+        <v-edit-info :isMobile="screen.isMobile"></v-edit-info>
+      </v-row>
+    </v-container>
+  </v-card>
 </template>
 <script>
-import useProfile from "@/composables/users/useProfile";
+import useProfile from "@/composables/users/profile/useProfile";
 import InfoCard from "@/components/users/profile/InfoCard";
 import EditInfo from "@/components/users/profile/EditInfo";
 
@@ -44,18 +53,18 @@ export default {
     screen() {
       if (this.$vuetify.breakpoint.name === "xs") {
         return {
-          avatar: 80, 
-          background: 120, 
-          isMobile: true, 
-        }
+          avatar: 80,
+          background: 3.625,
+          isMobile: true,
+        };
       } else {
         return {
-          avatar: 160, 
-          background: 240, 
-          isMobile: false, 
-        }
+          avatar: 160,
+          background: 4.7375,
+          isMobile: false,
+        };
       }
-    }
-  }
+    },
+  },
 };
 </script>

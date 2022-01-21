@@ -106,7 +106,7 @@
     </v-container>
     <v-container>
       <v-row>
-        <v-col class="d-flex justify-space-between pl-sm-5 pl-0 pr-4" cols="12">
+        <v-col class="d-flex justify-space-between pl-sm-5 pl-0 pr-4 pt-sm-3 pt-1" cols="12">
           <div>
             <v-btn
                 color="red darken-1 white--text"
@@ -165,7 +165,7 @@
   </v-col>
 </template>
 <script>
-import useEditInfo from "@/composables/users/useEditInfo";
+import useEditInfo from "@/composables/users/profile/useEditInfo";
 import EditKwd from "@/components/users/profile/EditKwd";
 
 export default {
