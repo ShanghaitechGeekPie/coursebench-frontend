@@ -2,16 +2,16 @@ import { provide, reactive } from "@vue/composition-api"
 
 export default () => {
     
-    // const testAvatar = "<img src='https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1'></img>"
+    const testInfo = {
+        email: "1@shanghaitech.edu.cn",
+        year: 2022,
+        grade: 1,
+        nickname: "小明",
+        realname: "吴迪",
+        avatar: "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+    } // Just for test
     const getProfile = () => {
-        const info = {
-            email: "1@shanghaitech.edu.cn",
-            year: 2022,
-            grade: 1,
-            nickname: "小明",
-            realname: "吴迪",
-            avatar: '<span class="text-sm-h3 text-h5">123</span>',
-        }        
+        const info = testInfo
 
         return info
     }
