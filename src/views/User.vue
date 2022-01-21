@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import profile from '@/components/users/Profile'
+import Profile from '@/components/users/profile/Profile'
 export default {
   components: {
-    "v-profile": profile
+    "v-profile": Profile
   }
 }
 </script>
