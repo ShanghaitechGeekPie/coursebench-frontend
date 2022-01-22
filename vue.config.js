@@ -32,6 +32,11 @@ module.exports = {
       alias: {
         '@': path.join(__dirname, './src')
       }
+    },
+    externals: {
+      'Config': JSON.stringify({
+        serverUrl: "https://cb.wa-am.com:2/api/v1"
+      })
     }
   }
 }

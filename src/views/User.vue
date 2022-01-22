@@ -1,14 +1,22 @@
 <template>
   <v-container>
-    <v-profile></v-profile>
+    <v-row justify="center">
+      <v-col xl="7" class="px-sm-3 px-0 py-3">
+        <Profile />
+        <Comment />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
-import profile from '@/components/users/Profile'
+import Profile from '@/components/users/profile/Profile'
+import Comment from '@/components/users/comment/Comment'
+
 export default {
   components: {
-    "v-profile": profile
+    Profile, 
+    Comment
   }
 }
 </script>

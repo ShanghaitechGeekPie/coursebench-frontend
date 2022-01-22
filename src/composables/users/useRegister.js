@@ -12,7 +12,7 @@ export default () => {
     year: 2022,
     grade: 1,
     year_items: [2022, 2021],
-    grade_items: [1, 2, 3, 4],
+    grade_items: [1, 2, 3, 4]
   })
 
   const doRegister = (response) => {
