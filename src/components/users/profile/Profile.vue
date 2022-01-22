@@ -21,7 +21,7 @@
                 >{{ userinfo.nickname.slice(0, 1) }}</span
               >
               <v-img
-                src="https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1"
+                :src="userinfo.avatar"
                 alt="Avatar"
                 aspect-ratio="1"
                 v-else

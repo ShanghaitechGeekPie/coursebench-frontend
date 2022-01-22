@@ -8,7 +8,7 @@
               <span
                 class="
                   text-sm-subtitle-1 text-subtitle-2
-                  font-weight-black
+                  font-weight-bold
                   pr-sm-14 pr-5
                 "
                 >用户名</span
@@ -31,7 +31,7 @@
               <span
                 class="
                   text-sm-subtitle-1 text-subtitle-2
-                  font-weight-black
+                  font-weight-bold
                   pr-sm-10 pr-2
                 "
                 >真实姓名</span
@@ -54,7 +54,7 @@
               <span
                 class="
                   text-sm-subtitle-1 text-subtitle-2
-                  font-weight-black
+                  font-weight-bold
                   pr-sm-10 pr-2
                 "
                 >入学时间</span
@@ -76,7 +76,7 @@
               <span
                 class="
                   text-sm-subtitle-1 text-subtitle-2
-                  font-weight-black
+                  font-weight-bold
                   pr-sm-10 pr-2
                 "
                 >所属年级</span

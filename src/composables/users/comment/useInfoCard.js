@@ -2,7 +2,7 @@ import { inject, reactive } from "@vue/composition-api"
 
 export default () => {
 
-    const usercomt = inject('usercomt')
+    const comtinfo = inject('comtinfo')
 
     const statics = reactive({
         
@@ -12,5 +12,5 @@ export default () => {
         
     })
 
-    return { usercomt, statics, status }
+    return { comtinfo, statics, status }
 }

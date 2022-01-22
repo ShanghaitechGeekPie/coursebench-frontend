@@ -1,26 +1,28 @@
 <template>
   <v-card>
     <v-card-text class="pa-0">
-      <v-list nav dense flat>
-        <v-list-item>
-          <span class="text-sm-h5 font-weight-black">统计</span>
+      <v-list nav dense flat class="py-sm-2 py-0">
+        <v-list-item class="mb-sm-1 mb-0">
+          <span class="text-sm-h5 text-subtitle-1 font-weight-bold">统计</span>
         </v-list-item>
-        <v-list-item>
-          <span class="text-sm-subtitle-1 font-weight-black pr-sm-4">
-            评价总数
-          </span>
-          <span>
-            {{ usercomt.total }}
-          </span>
-        </v-list-item>
-        <v-list-item>
-          <span class="text-sm-subtitle-1 font-weight-black pr-sm-4">
-            获赞总数
-          </span>
-          <span>
-            {{ usercomt.score }}
-          </span>
-        </v-list-item>
+        <div class="d-sm-block d-flex">
+          <v-list-item>
+            <span class="text-sm-subtitle-1 font-weight-bold pr-4">
+              评价总数
+            </span>
+            <span>
+              {{ comtinfo.total }}
+            </span>
+          </v-list-item>
+          <v-list-item>
+            <span class="text-sm-subtitle-1 font-weight-bold pr-4">
+              获赞总数
+            </span>
+            <span>
+              {{ comtinfo.score }}
+            </span>
+          </v-list-item>
+        </div>
       </v-list>
     </v-card-text>
   </v-card>
@@ -30,8 +32,8 @@ import useInfoCard from "@/composables/users/comment/useInfoCard";
 
 export default {
   setup() {
-    const { usercomt, statics, status } = useInfoCard();
-    return { usercomt, statics, status };
+    const { comtinfo, statics, status } = useInfoCard();
+    return { comtinfo, statics, status };
   },
 };
 </script>

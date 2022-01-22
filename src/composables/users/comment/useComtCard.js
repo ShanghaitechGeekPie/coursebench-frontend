@@ -1,6 +1,8 @@
-import { reactive } from "@vue/composition-api"
+import { inject, reactive } from "@vue/composition-api"
 
 export default () => {
+
+    const userinfo = inject("userinfo")
 
     const statics = reactive({
         
@@ -10,5 +12,5 @@ export default () => {
         
     })
 
-    return { statics, status }
+    return { userinfo, statics, status }
 }
