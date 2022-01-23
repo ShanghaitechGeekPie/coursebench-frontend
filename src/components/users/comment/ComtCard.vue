@@ -34,17 +34,29 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" class="pa-0">
+              <v-col cols="12" class="px-0">
                 <span class="text-body-2">
                   {{ comt["user_score"] }}人赞同了该评价
                 </span>
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" class="pa-0">
-                <span class="text-body-1" style="white-space: pre-wrap">
-                  {{ comt.comment }}
+              <v-col cols="12" class="px-0 pt-0">
+                <span
+                  class="text-body-1 comt-line-limit"
+                  style="white-space: pre-wrap"
+                >
+                  {{ comt["comment"] }}
                 </span>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" class="pa-0">
+                <div>
+                  <span class="text-body-2 text-decoration-underline">
+                    在课程页面中查看
+                  </span>
+                </div>
               </v-col>
             </v-row>
           </v-container>
@@ -66,3 +78,12 @@ export default {
   },
 };
 </script>
+<style>
+.comt-line-limit {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+</style>

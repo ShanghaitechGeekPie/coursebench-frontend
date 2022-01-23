@@ -6,7 +6,7 @@ export default () => {
         {
             "course": "数学分析I",
             "title": "锐评孙伟",
-            "comment": "为什么说陈克应是神....",
+            "comment": "为什么说陈克应是神....?",
             "group_id": "01",
             "time": "2020-01-14", 
             "semester": 202102,
@@ -42,7 +42,7 @@ export default () => {
         {
             "course": "数学分析I",
             "title": "锐评孙伟",
-            "comment": "为什么说陈克应是神....",
+            "comment": "为什么说陈克应是神....?",
             "group_id": "01",
             "time": "2020-01-14", 
             "semester": 202102,

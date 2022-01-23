@@ -7,6 +7,9 @@
         </v-list-item>
         <div class="d-sm-block d-flex">
           <v-list-item>
+            <span class="pr-1">
+              <v-icon size="18">{{ statics.icons.mdiCommentCheck }}</v-icon>
+            </span>
             <span class="text-sm-subtitle-1 font-weight-bold pr-4">
               评价总数
             </span>
@@ -15,6 +18,9 @@
             </span>
           </v-list-item>
           <v-list-item>
+            <span class="pr-1">
+              <v-icon size="18">{{ statics.icons.mdiThumbUp }}</v-icon>
+            </span>
             <span class="text-sm-subtitle-1 font-weight-bold pr-4">
               获赞总数
             </span>
