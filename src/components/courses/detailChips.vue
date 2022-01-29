@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-chip
-        class="type-chip ml-13"
+        class="type-chip"
         color="success"
         outlined
         small

@@ -1,6 +1,6 @@
 <template>
   <div class="font-weight-bold white--text mx-2">
-    <div class="ml-10">
+    <div class="ml-sm-10 ml-5">
       授课老师:
     </div>
     <div class="ml-10">
