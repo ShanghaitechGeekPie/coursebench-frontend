@@ -17,11 +17,11 @@
             >
               <span
                 class="text-sm-h3 text-h5"
-                v-if="userinfo.avatar === ''"
-                >{{ userinfo.nickname.slice(0, 1) }}</span
+                v-if="userProfile.avatar === ''"
+                >{{ userProfile.nickname.slice(0, 1) }}</span
               >
               <v-img
-                :src="userinfo.avatar"
+                :src="userProfile.avatar"
                 alt="Avatar"
                 aspect-ratio="1"
                 v-else
@@ -29,25 +29,25 @@
             </v-avatar>
           </v-card>
         </div>
-        <v-info-card :isMobile="screen.isMobile"></v-info-card>
-        <v-edit-info :isMobile="screen.isMobile"></v-edit-info>
+        <v-profile-card :isMobile="screen.isMobile"></v-profile-card>
+        <v-edit-profile :isMobile="screen.isMobile"></v-edit-profile>
       </v-row>
     </v-container>
   </v-card>
 </template>
 <script>
 import useProfile from "@/composables/users/profile/useProfile";
-import InfoCard from "@/components/users/profile/InfoCard";
-import EditInfo from "@/components/users/profile/EditInfo";
+import ProfileCard from "@/components/users/profile/ProfileCard";
+import EditProfile from "@/components/users/profile/EditProfile";
 
 export default {
   setup() {
-    const { userinfo, statics, status } = useProfile();
-    return { userinfo, statics, status };
+    const { userProfile, statics, status } = useProfile();
+    return { userProfile, statics, status };
   },
   components: {
-    "v-info-card": InfoCard,
-    "v-edit-info": EditInfo,
+    "v-profile-card": ProfileCard,
+    "v-edit-profile": EditProfile,
   },
   computed: {
     screen() {

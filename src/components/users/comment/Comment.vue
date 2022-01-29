@@ -5,28 +5,28 @@
         <v-info-card></v-info-card>
       </v-col>
       <v-col cols="12" md="9" order-md="first" class="pl-sm-0 pr-sm-3 pl-0 pr-0 pt-sm-3 pt-0">
-        <v-comt-card
-          v-for="(comt, index) in usercomt.comment"
+        <v-comment-card
+          v-for="(comment, index) in commentText"
           :key="index"
-          :comt="comt"
-        ></v-comt-card>
+          :comment="comment"
+        ></v-comment-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
 import useComment from "@/composables/users/comment/useComment";
-import InfoCard from '@/components/users/comment/InfoCard'
-import ComtCard from '@/components/users/comment/ComtCard'
+import StatisticCard from '@/components/users/comment/StatisticCard'
+import CommentCard from '@/components/users/comment/CommentCard'
 
 export default {
   setup() {
-    const { usercomt, statics, status } = useComment();
-    return { usercomt, statics, status };
+    const { commentText, statics, status } = useComment();
+    return { commentText, statics, status };
   },
   components: {
-    'v-info-card': InfoCard, 
-    'v-comt-card': ComtCard
+    'v-info-card': StatisticCard, 
+    'v-comment-card': CommentCard
   }
 };
 </script>
