@@ -1,10 +1,10 @@
 <template>
-  <v-col class="pt-1 d-flex justify-space-between" v-if="!status.editInfo">
+  <v-col class="pt-1 d-flex justify-space-between" v-if="!status.editProfile">
     <v-row>
       <v-col class="px-sm-3 px-0 pb-sm-3 pb-0">
         <div class="d-flex justify-space-between">
           <div class="text-sm-h3 text-h5 pt-0 pt-sm-5 pl-sm-6 px-sm-4 px-1">
-            {{ userinfo.nickname }}
+            {{ userProfile.nickname }}
           </div>
           <div class="d-flex justify-end" v-if="isMobile">
             <div class="d-flex justify-end flex-column pb-0 pr-2">
@@ -12,7 +12,7 @@
                 color="primary"
                 width="60"
                 height="30"
-                @click="status.editInfo = true"
+                @click="status.editProfile = true"
               >
                 <v-icon size="20">
                   {{ statics.icons.mdiAccountEdit }}
@@ -38,7 +38,7 @@
                   <span
                     class="text-sm-subtitle-1 text-subtitle-2"
                     :style="overflow"
-                    >{{ userinfo.email }}</span
+                    >{{ userProfile.email }}</span
                   >
                 </v-list-item>
                 <v-list-item class="px-sm-4 px-1">
@@ -51,7 +51,7 @@
                     >真实姓名</span
                   >
                   <span class="text-sm-subtitle-1 text-subtitle-2">{{
-                    userinfo.realname
+                    userProfile.realname
                   }}</span>
                 </v-list-item>
                 <v-list-item class="px-sm-4 px-1">
@@ -64,7 +64,7 @@
                     >入学时间</span
                   >
                   <span class="text-sm-subtitle-1 text-subtitle-2">{{
-                    userinfo.year
+                    userProfile.year
                   }}</span>
                 </v-list-item>
                 <v-list-item class="px-sm-4 px-1">
@@ -77,7 +77,7 @@
                     >所属年级</span
                   >
                   <span class="text-sm-subtitle-1 text-subtitle-2">{{
-                    userinfo.grade
+                    userProfile.grade
                   }}</span>
                 </v-list-item>
               </v-list>
@@ -117,7 +117,7 @@
       >
         <div class="d-flex justify-end pr-md-8 pr-sm-5">
           <div class="d-flex justify-end flex-column pb-3 pl-lg-0 pl-md-5">
-            <v-btn color="primary" width="100" @click="status.editInfo = true">
+            <v-btn color="primary" width="100" @click="status.editProfile = true">
               <v-icon size="20">
                 {{ statics.icons.mdiAccountEdit }}
               </v-icon>
@@ -130,12 +130,12 @@
   </v-col>
 </template>
 <script>
-import useInfoCard from "@/composables/users/profile/useInfoCard";
+import useProfileCard from "@/composables/users/profile/useProfileCard";
 
 export default {
   setup() {
-    const { userinfo, statics, status } = useInfoCard();
-    return { userinfo, statics, status };
+    const { userProfile, statics, status } = useProfileCard();
+    return { userProfile, statics, status };
   },
   props: {
     isMobile: {
