@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="upper-wrp" >
-      <detail-card> </detail-card>
+    <div class="upper-wrp d-flex justify-center align-end">
+      <detail-card class="mt-3 mt-sm-15"> </detail-card>
     </div>
     <div class="review-wrp">
       <v-tabs centered>
@@ -29,11 +29,6 @@ export default {
 
 <style scoped>
 .upper-wrp {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  z-index: 1;
-  height: 40vh;
   width: 100%;
   background: rgba(242, 243, 247, 0.8);
 }

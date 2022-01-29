@@ -1,7 +1,7 @@
 <template>
   <v-card class="info-wrp rounded-t-xl" elevation="10" color="#d6fdde">
-    <v-row>
-      <v-col>
+    <v-row class="pb-4">
+      <v-col sm="6" cols="12">
         <div class="white--text text-h5 font-weight-bold pt-8 pl-12"> CS100: 计算机编程 </div>
         <detail-chips class="my-1"></detail-chips>
         <review-detail class="my-2 mx-4"></review-detail>
@@ -12,15 +12,19 @@
           先修课程: 无
         </div>
         <div class="white--text text-caption font-weight-medium ml-12">
-          课程简介： The course provides an introduction to programming for starting undergraduate students. The course will be based on C and the object-oriented C++...
+          英文名：Introduction to Programming
+        </div>
+        <div class="white--text text-caption font-weight-medium ml-12">
+          学历层次：本科
         </div>
       </v-col>
-      <v-divider vertical inset class="my-6"> </v-divider>
-      <v-col class="d-flex align-end">
+      <v-divider vertical inset class="my-6 d-none d-sm-block"> </v-divider>
+      <v-col class="d-flex flex-column my-auto" sm="6" cols="12">
+        <teacher-select></teacher-select>
         <v-row class="my-2">
           <v-spacer></v-spacer>
           <v-col>
-            <score-board fontColor="orange" text="工作量" value="40"></score-board>
+            <score-board fontColor="darkorange" text="工作量" value="40"></score-board>
           </v-col>
           <v-col>
             <score-board fontColor="pink" text="内容质量" value="93"></score-board>
@@ -39,21 +43,33 @@
 import scoreBoard from '@/components/courses/scoreBoard.vue';
 import detailChips from "@/components/courses/detailChips";
 import reviewDetail from "@/components/courses/reviewDetail";
+import teacherSelect from "./teacherSelect";
 
 export default {
   components: {
     'score-board': scoreBoard,
     'detail-chips': detailChips,
-    'review-detail': reviewDetail
+    'review-detail': reviewDetail,
+    'teacher-select': teacherSelect,
+  },
+  data() {
+    return {
+    }
+  },
+  watch: {
+    model() {
+      console.log(this.model)
+    }
   }
 }
 </script>
 
 <style scoped>
 .info-wrp {
+  max-width: 800px;
   height: 90%;
-  width: 80%;
-  background: linear-gradient(40deg, blue, pink);
+  width: 90%;
+  background: linear-gradient(70deg, blue, lightcoral);
   /*background: rgba(0, 206, 209, 0.34);*/
 }
 .type-chip {
