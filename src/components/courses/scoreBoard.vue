@@ -12,8 +12,8 @@
         </v-progress-circular>
       </div>
       <div
-          :style='{"color":fontColor,fontSize:"10px"}'
-          class="mt-1"
+          :style='{"color":fontColor,fontSize:"14px"}'
+          class="mt-1 font-weight-black"
       >
         {{text}}
       </div>
