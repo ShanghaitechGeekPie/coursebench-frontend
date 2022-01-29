@@ -1,42 +1,44 @@
 <template>
-  <v-card class="info-wrp rounded-t-xl" elevation="10" color="#d6fdde">
-    <v-row class="pb-4">
-      <v-col sm="6" cols="12">
-        <div class="white--text text-h5 font-weight-bold pt-8 pl-12"> CS100: 计算机编程 </div>
-        <detail-chips class="my-1"></detail-chips>
-        <review-detail class="my-2 mx-4"></review-detail>
-        <div class="white--text text-caption font-weight-medium ml-12">
-          开课单位：信息科学与技术学院
-        </div>
-        <div class="white--text text-caption font-weight-medium ml-12">
-          先修课程: 无
-        </div>
-        <div class="white--text text-caption font-weight-medium ml-12">
-          英文名：Introduction to Programming
-        </div>
-        <div class="white--text text-caption font-weight-medium ml-12">
-          学历层次：本科
-        </div>
-      </v-col>
-      <v-divider vertical inset class="my-6 d-none d-sm-block"> </v-divider>
-      <v-col class="d-flex flex-column my-auto" sm="6" cols="12">
-        <teacher-select></teacher-select>
-        <v-row class="my-2">
-          <v-spacer></v-spacer>
-          <v-col>
-            <score-board fontColor="darkorange" text="工作量" value="40"></score-board>
-          </v-col>
-          <v-col>
-            <score-board fontColor="pink" text="内容质量" value="93"></score-board>
-          </v-col>
-          <v-col>
-            <score-board fontColor="#6dbe71" text="推荐指数" value="74"></score-board>
-          </v-col>
-          <v-spacer></v-spacer>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-card>
+  <v-scroll-y-transition>
+    <v-card class="info-wrp rounded-t-xl" elevation="10" color="#d6fdde">
+      <v-row class="pb-4">
+        <v-col sm="6" cols="12">
+          <div class="white--text text-h5 font-weight-bold pt-8 pl-12"> CS100: 计算机编程 </div>
+          <detail-chips class="my-1"></detail-chips>
+          <review-detail class="my-2 mx-4"></review-detail>
+          <div class="white--text text-caption font-weight-medium ml-12">
+            开课单位：信息科学与技术学院
+          </div>
+          <div class="white--text text-caption font-weight-medium ml-12">
+            先修课程: 无
+          </div>
+          <div class="white--text text-caption font-weight-medium ml-12">
+            英文名：Introduction to Programming
+          </div>
+          <div class="white--text text-caption font-weight-medium ml-12">
+            学历层次：本科
+          </div>
+        </v-col>
+        <v-divider vertical inset class="my-6 d-none d-sm-block"> </v-divider>
+        <v-col class="d-flex flex-column my-auto" sm="6" cols="12">
+          <teacher-select class="pt-sm-10 pt-0"></teacher-select>
+          <v-row class="my-2">
+            <v-spacer></v-spacer>
+            <v-col>
+              <score-board fontColor="darkorange" text="工作量" value="40"></score-board>
+            </v-col>
+            <v-col>
+              <score-board fontColor="pink" text="内容质量" value="93"></score-board>
+            </v-col>
+            <v-col>
+              <score-board fontColor="#6dbe71" text="推荐指数" value="74"></score-board>
+            </v-col>
+            <v-spacer></v-spacer>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-card>
+  </v-scroll-y-transition>
 </template>
 
 <script>
