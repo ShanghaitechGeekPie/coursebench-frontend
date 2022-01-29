@@ -2,34 +2,37 @@ import { provide, reactive } from "@vue/composition-api"
 
 export default () => {
     
-    const testInfo = {
-        email: "1@shanghaitech.edu.cn",
-        year: 2022,
-        grade: 1,
-        nickname: "小明",
-        realname: "吴迪",
-        avatar: "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
-    } // Just for test
-    const getProfile = () => {
-        const info = testInfo
+  const testUserProfile = {
+    email: "1@shanghaitech.edu.cn",
+    year: 2022,
+    grade: 1,
+    nickname: "小明",
+    realname: "吴迪",
+    avatar: "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+  } // Just for test
 
-        return info
-    }
+  
+  const getUserProfile = () => {
+    const userProfile = testUserProfile
+    const gradeItems = [ "本科生", "硕士研究生", "博士研究生" ]
+    userProfile.grade = gradeItems[userProfile.grade]
+    return userProfile
+  }
 
-    const userinfo = reactive(getProfile())
+  const userProfile = reactive(getUserProfile())
 
-    const statics = reactive({
-        background: "https://cdn.luogu.com.cn/upload/image_hosting/y45o30wx.png", 
-    })
+  const statics = reactive({
+    background: "https://cdn.luogu.com.cn/upload/image_hosting/y45o30wx.png", 
+  })
 
-    const status = reactive({
-        showAll: false,
-        editInfo: false, 
-        editKwd: false,
-    })
+  const status = reactive({
+    showAll: false,
+    editProfile: false, 
+    editPassword: false,
+  })
 
-    provide("userinfo", userinfo)
-    provide("status", status)
+  provide("userProfile", userProfile)
+  provide("status", status)
 
-    return { userinfo, statics, status }
+  return { userProfile, statics, status }
 }
