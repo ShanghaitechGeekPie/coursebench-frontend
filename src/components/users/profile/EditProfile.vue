@@ -1,10 +1,10 @@
 <template>
-  <v-col v-if="status.editInfo" sm="8" class="pa-sm-3 pa-0">
+  <v-col v-if="status.editProfile" sm="8" class="pa-sm-3 pa-0">
     <v-container>
       <v-row>
         <v-col class="pa-0">
           <v-list dense flat class="pl-sm-2 pl-0 py-sm-2 py-0">
-            <v-list-item class="pb-sm-2 pb-0 px-sm-4 px-0">
+            <v-list-item class="pb-0 px-sm-4 px-0">
               <span
                 class="
                   text-sm-subtitle-1 text-subtitle-2
@@ -17,17 +17,17 @@
                 single-line
                 dense
                 clearable
-                v-model="status.info.nickname"
+                v-model="status.profile.nickname"
                 :class="[
                   'text-sm-body-1',
                   'text-body-2',
-                  'pt-0',
+                  'pt-2',
                   'pl-0',
                   isMobile ? 'input-limit' : '',
                 ]"
               ></v-text-field>
             </v-list-item>
-            <v-list-item class="pb-sm-2 pb-0 px-sm-4 px-0">
+            <v-list-item class="pb-0 px-sm-4 px-0">
               <span
                 class="
                   text-sm-subtitle-1 text-subtitle-2
@@ -40,17 +40,17 @@
                 single-line
                 dense
                 clearable
-                v-model="status.info.realname"
+                v-model="status.profile.realname"
                 :class="[
                   'text-sm-body-1',
                   'text-body-2',
-                  'pt-0',
+                  'pt-2',
                   'pl-0',
                   isMobile ? 'input-limit' : '',
                 ]"
               ></v-text-field>
             </v-list-item>
-            <v-list-item class="pb-sm-2 pb-0 px-sm-4 px-0">
+            <v-list-item class="pb-0 px-sm-4 px-0">
               <span
                 class="
                   text-sm-subtitle-1 text-subtitle-2
@@ -62,11 +62,11 @@
               <v-select
                 :items="statics.yearItems"
                 dense
-                v-model="status.info.year"
+                v-model="status.profile.year"
                 :class="[
                   'text-sm-body-1',
                   'text-body-2',
-                  'pt-0',
+                  'pt-2',
                   'pl-0',
                   isMobile ? 'input-limit' : '',
                 ]"
@@ -84,11 +84,11 @@
               <v-select
                 :items="statics.gradeItems"
                 dense
-                v-model="status.info.grade"
+                v-model="status.profile.grade"
                 :class="[
                   'text-sm-body-1',
                   'text-body-2',
-                  'pt-0',
+                  'pt-2',
                   'pl-0',
                   isMobile ? 'input-limit' : '',
                 ]"
@@ -110,14 +110,14 @@
           <div>
             <v-btn
                 color="red darken-1 white--text"
-                @click="status.editKwd = true"
+                @click="status.editPassword = true"
                 v-if="!isMobile"
               >
                 修改密码
             </v-btn>
             <v-btn
                 color="red darken-1 white--text"
-                @click="status.editKwd = true"
+                @click="status.editPassword = true"
                 v-if="isMobile"
                 small
               >
@@ -128,14 +128,14 @@
             <div class="pr-sm-4 pr-3">
               <v-btn
                 color="primary"
-                @click="doEditInfo()"
+                @click="doEditProfile()"
                 v-if="!isMobile"
               >
                 保存
               </v-btn>
               <v-btn
                 color="primary"
-                @click="doEditInfo()"
+                @click="doEditProfile()"
                 v-if="isMobile"
                 small
               >
@@ -161,21 +161,21 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-edit-kwd></v-edit-kwd>
+    <v-edit-password></v-edit-password>
   </v-col>
 </template>
 <script>
-import useEditInfo from "@/composables/users/profile/useEditInfo";
-import EditKwd from "@/components/users/profile/EditKwd";
+import useEditProfile from "@/composables/users/profile/useEditProfile";
+import EditPassword from "@/components/users/profile/EditPassword";
 
 export default {
   setup() {
-    const { statics, status, doReset, doEditInfo } = useEditInfo();
+    const { statics, status, doReset, doEditProfile } = useEditProfile();
     // onMounted(doReset())
-    return { statics, status, doReset, doEditInfo };
+    return { statics, status, doReset, doEditProfile };
   },
   components: {
-    "v-edit-kwd": EditKwd,
+    "v-edit-password": EditPassword,
   },
   props: {
     isMobile: {
