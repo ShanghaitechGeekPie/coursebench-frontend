@@ -1,9 +1,9 @@
 <template>
-  <div class="font-weight-bold white--text mx-auto">
-    <div>
+  <div class="font-weight-bold white--text mx-2">
+    <div class="ml-10">
       授课老师:
     </div>
-    <div>
+    <div class="ml-10">
       <v-chip-group
           v-model="model"
           column
@@ -34,6 +34,9 @@ export default {
         {name: '粱骏睿'},
         {name: '娄鑫'},
         {name: '刘闯'},
+        {name: '野兽先辈'},
+        {name: '林弘扬'},
+        {name: '关云长'},
       ]
     }
   }
