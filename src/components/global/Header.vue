@@ -1,13 +1,13 @@
 <template>
   <v-app-bar app>
+    <v-btn text to="/">Homo</v-btn>
     <v-btn text to="/course/0">课程</v-btn>
-    <v-btn text to="/user">个人</v-btn>
     <v-btn text to="/exit">这些按钮是临时的</v-btn>
     <v-spacer></v-spacer>
     <v-menu left bottom offset-y transition="slide-y-transition">
       <template #activator="{ on }">
         <v-btn icon v-on="on">
-          <v-avatar color="pink">123</v-avatar>
+          <v-avatar color="white">123</v-avatar>
         </v-btn>
       </template>
       <v-list close-on-click>
@@ -23,7 +23,7 @@
           </v-list-item-icon>
           <v-list-item-title>注册</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/user">
           <v-list-item-icon>
             <v-icon>{{ icons.mdiAccountOutline }}</v-icon>
           </v-list-item-icon>
@@ -68,7 +68,7 @@
                   <v-img src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"></v-img>
                 </v-col>
                 <v-col cols="12" sm="6" offset-sm="3">
-                  <v-otp-input></v-otp-input>
+                  <v-otp-input length="4" @finish="doLogin"></v-otp-input>
                 </v-col>
               </v-row>
               <v-overlay absolute :value="login.loading">
@@ -122,7 +122,7 @@
                   <v-img src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"></v-img>
                 </v-col>
                 <v-col cols="12" sm="6" offset-sm="3">
-                  <v-otp-input></v-otp-input>
+                  <v-otp-input length="4" @finish="doRegister"></v-otp-input>
                 </v-col>
               </v-row>
               <v-overlay absolute :value="register.loading">

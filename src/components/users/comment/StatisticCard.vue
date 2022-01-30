@@ -1,6 +1,6 @@
 <template>
-  <v-hover v-slot="{ hover }" close-delay="50" open-delay="50">
-    <v-card :elevation="hover ? 4 : 2">
+  <v-hover #default="{ hover }" close-delay="50" open-delay="50">
+    <v-card class="transition-swing" :elevation="hover ? 4 : 2">
       <v-card-text class="pa-0">
         <v-list nav dense flat class="py-sm-2 py-0">
           <v-list-item class="mb-sm-1 mb-0 px-0 px-sm-3">

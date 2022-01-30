@@ -12,6 +12,12 @@
         </v-card>
       </v-col>
       <v-col cols="12" md="8" order-md="first">
+        <v-card class="mb-4">
+          <Loading />
+        </v-card>
+        <v-card class="mb-4">
+          <Failed />
+        </v-card>
         <v-data-iterator
           :items="courses"
           :page="iterator.pageNow"
@@ -35,7 +41,11 @@
             </v-card>
           </template>
           <template #footer>
-            <v-pagination v-model="iterator.pageNow" v-if="iterator.showPagination" :length="iterator.numberOfPages"></v-pagination>
+            <v-pagination
+              v-model="iterator.pageNow"
+              v-if="iterator.showPagination"
+              :length="iterator.numberOfPages"
+            ></v-pagination>
           </template>
           <template #no-results>
             <v-card>
@@ -50,10 +60,13 @@
 </template>
 
 <script>
+import Loading from "@/components/global/Loading"
+import Failed from "@/components/global/Failed"
 import useCourses from "@/composables/courses/useCourses"
 import { onMounted } from "@vue/composition-api"
 
 export default {
+  components: { Loading, Failed },
   setup() {
     const { courses, iterator, getCourses, getCourseLinkPath, getNumberOfPages, coursesMatchingFilter } = useCourses()
     onMounted(getCourses)
