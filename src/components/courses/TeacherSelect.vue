@@ -4,8 +4,8 @@
     <div class="ml-10">
       <v-chip-group v-model="model" column multiple>
         <v-chip
-          v-for="teacher in teachers"
-          :key="teacher"
+          v-for="(teacher, index) in teachers"
+          :key="index"
           filter
           outlined
           class="white--text"
@@ -20,7 +20,7 @@ export default {
   name: "TeacherSelect",
   data() {
     return {
-      model: 0,
+      model: [],
       teachers: [
         { name: '高盛华' },
         { name: '粱骏睿' },
