@@ -1,6 +1,6 @@
 <template>
   <v-scroll-y-transition>
-    <v-card class="info-wrp rounded-t-xl" elevation="10" color="#d6fdde">
+    <v-card class="info-wrp rounded-t-xl" elevation="10" color="#d6fdde" v-show="isShow">
       <v-row class="pb-4">
         <v-col sm="6" cols="12">
           <div class="white--text text-h5 font-weight-bold pt-8 ml-sm-12 ml-8">CS100: 计算机编程</div>
@@ -46,12 +46,18 @@ export default {
   components: { ScoreBoard, DetailChips, ReviewDetail, TeacherSelect },
   data() {
     return {
+      isShow: false,
     }
   },
   watch: {
     model() {
       console.log(this.model)
     }
+  },
+  mounted() {
+    setTimeout(()=>{
+      this.isShow = true;
+    }, 300);
   }
 }
 </script>
@@ -63,7 +69,5 @@ export default {
   width: 90%;
   background: linear-gradient(70deg, blue, lightcoral);
   /*background: rgba(0, 206, 209, 0.34);*/
-}
-.type-chip {
 }
 </style>
