@@ -7,7 +7,11 @@
           <v-card-text class="px-6 py-sm-4 py-0">
             <v-row>
               <v-col cols="12" class="py-sm-3 py-0">
-                <v-text-field label="旧密码" type="password" v-model="status.password.oldPassword"></v-text-field>
+                <v-text-field
+                  label="旧密码"
+                  type="password"
+                  v-model="status.password.oldPassword"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" class="py-sm-3 py-0">
                 <v-text-field
@@ -37,14 +41,19 @@
           <v-card-text class="px-6 py-sm-4 py-0">
             <v-row>
               <v-col cols="12" sm="4" offset-sm="4">
-                <v-img src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"></v-img>
+                <v-img
+                  src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"
+                ></v-img>
               </v-col>
               <v-col cols="12" sm="6" offset-sm="3" class="py-sm-3 py-0">
-                <v-otp-input></v-otp-input>
+                <v-otp-input length="4" @finish="doEditPassword"></v-otp-input>
               </v-col>
             </v-row>
             <v-overlay absolute :value="status.loading">
-              <v-progress-circular indeterminate color="primary"></v-progress-circular>
+              <v-progress-circular
+                indeterminate
+                color="primary"
+              ></v-progress-circular>
             </v-overlay>
           </v-card-text>
           <v-card-actions>

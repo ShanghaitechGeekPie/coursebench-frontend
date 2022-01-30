@@ -1,16 +1,19 @@
 import { inject, reactive } from "@vue/composition-api"
+import { mdiChevronDoubleRight } from "@mdi/js"
 
 export default () => {
 
-  const commentUserProfile = inject("commentUserProfile")
+  const userProfile = inject("userProfile")
 
   const statics = reactive({
-
+    icons: {
+      mdiChevronDoubleRight
+    }
   })
 
   const status = reactive({
-
+        
   })
 
-  return { commentUserProfile, statics, status }
+  return { userProfile, statics, status }
 }

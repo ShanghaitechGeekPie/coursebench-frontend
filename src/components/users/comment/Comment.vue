@@ -2,7 +2,7 @@
   <v-container class="py-sm-3 py-0">
     <v-row>
       <v-col cols="12" md="3" order-md="last" class="px-sm-0 px-0 pt-6 pt-sm-3">
-        <StatisticCard />
+        <StatisticCard/>
       </v-col>
       <v-col cols="12" md="9" order-md="first" class="pl-sm-0 pr-sm-3 pl-0 pr-0 pt-sm-3 pt-0">
         <CommentCard v-for="(comment, index) in commentText" :key="index" :comment="comment" />
@@ -16,10 +16,10 @@ import StatisticCard from '@/components/users/comment/StatisticCard'
 import CommentCard from '@/components/users/comment/CommentCard'
 
 export default {
-  components: { StatisticCard, CommentCard },
   setup() {
     const { commentText, statics, status } = useComment();
     return { commentText, statics, status };
-  }
+  },
+  components: { StatisticCard, CommentCard }
 };
 </script>

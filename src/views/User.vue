@@ -12,8 +12,12 @@
 <script>
 import Profile from '@/components/users/profile/Profile'
 import Comment from '@/components/users/comment/Comment'
+import useUser from '@/composables/users/useUser'
 
 export default {
+  setup() {
+    useUser()
+  }, 
   components: {
     Profile, 
     Comment

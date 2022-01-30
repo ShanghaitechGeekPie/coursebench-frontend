@@ -10,7 +10,7 @@ export default () => {
       mdiChevronDown,
       mdiChevronUp,
       mdiAccountEdit,
-    },
+    }, 
   })
 
   const status = inject("status")
