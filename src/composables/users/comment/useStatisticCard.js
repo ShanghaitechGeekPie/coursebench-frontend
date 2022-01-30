@@ -7,13 +7,13 @@ export default () => {
 
   const statics = reactive({
     icons: {
-      mdiThumbUp,
+      mdiThumbUp, 
       mdiCommentCheck
     }
   })
 
   const status = reactive({
-
+        
   })
 
   return { commentStatistic, statics, status }
