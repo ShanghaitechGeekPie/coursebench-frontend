@@ -1,7 +1,7 @@
 <template>
   <v-lazy>
-    <v-hover v-slot="{ hover }" close-delay="50" open-delay="50">
-      <v-card class="mb-3" :elevation="hover ? 8 : 2">
+    <v-hover #default="{ hover }" close-delay="50" open-delay="50">
+      <v-card class="mb-3 transition-swing" :elevation="hover ? 8 : 2">
         <v-card-title class="pa-sm-4 pa-2">
           <span class="text-subtitle-1 font-weight-bold">{{ comment.title }}</span>
         </v-card-title>
