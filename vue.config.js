@@ -37,6 +37,12 @@ module.exports = {
       'Config': JSON.stringify({
         serverUrl: "https://cb.wa-am.com:2/api/v1"
       })
+    },
+    module: {
+      rules: [
+        { test: /\.js$/, use: ['thread-loader'] },
+        { test: /\.md$/, use: ['./src/plugins/markdown-loader'] }
+      ]
     }
   }
 }

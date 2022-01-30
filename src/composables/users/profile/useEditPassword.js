@@ -3,26 +3,26 @@ import { inject, reactive, toRefs } from "@vue/composition-api"
 export default () => {
 
   const testKey = "1234" // Only for test
-    
+
 
   const showSnackbar = inject("showSnackbar")
 
   const status = reactive({
     password: {
-      oldPassword: "", 
-      newPassword: "", 
-      repPassword: "", 
-    }, 
-    loading: false, 
-    step: 0, 
+      oldPassword: "",
+      newPassword: "",
+      repPassword: "",
+    },
+    loading: false,
+    step: 0,
     ...toRefs(inject("status"))
   })
 
   const doReset = () => {
     status.password = {
-      oldPassword: "", 
-      newPassword: "", 
-      repPassword: "", 
+      oldPassword: "",
+      newPassword: "",
+      repPassword: "",
     }
     status.editPassword = false
     status.step = 0

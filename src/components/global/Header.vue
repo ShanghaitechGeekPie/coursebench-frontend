@@ -1,7 +1,8 @@
 <template>
   <v-app-bar app>
-    <v-btn text>课程</v-btn>
-    <v-btn text>教师</v-btn>
+    <v-btn text to="/course/0">课程</v-btn>
+    <v-btn text to="/user">个人</v-btn>
+    <v-btn text to="/exit">这些按钮是临时的</v-btn>
     <v-spacer></v-spacer>
     <v-menu left bottom offset-y transition="slide-y-transition">
       <template #activator="{ on }">
@@ -67,7 +68,7 @@
                   <v-img src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"></v-img>
                 </v-col>
                 <v-col cols="12" sm="6" offset-sm="3">
-                  <v-otp-input length="4" @finish="doLogin"></v-otp-input>
+                  <v-otp-input></v-otp-input>
                 </v-col>
               </v-row>
               <v-overlay absolute :value="login.loading">
@@ -121,7 +122,7 @@
                   <v-img src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"></v-img>
                 </v-col>
                 <v-col cols="12" sm="6" offset-sm="3">
-                  <v-otp-input length="4" @finish="doRegister"></v-otp-input>
+                  <v-otp-input></v-otp-input>
                 </v-col>
               </v-row>
               <v-overlay absolute :value="register.loading">

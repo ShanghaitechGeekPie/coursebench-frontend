@@ -3,27 +3,20 @@
     <div class="d-flex flex-column align-center">
       <div>
         <v-progress-circular
-            :value="value"
-            :size="40"
-            :width="6"
-            :style='{"color":fontColor,fontSize:"13px"}'
-        >
-          {{value}}
-        </v-progress-circular>
+          :value="value"
+          :size="40"
+          :width="6"
+          :style="{ 'color': fontColor, fontSize: '13px' }"
+        >{{ value }}</v-progress-circular>
       </div>
-      <div
-          :style='{"color":fontColor,fontSize:"14px"}'
-          class="mt-1 font-weight-black"
-      >
-        {{text}}
-      </div>
+      <div :style="{ 'color': fontColor, fontSize: '14px' }" class="mt-1 font-weight-black">{{ text }}</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "scoreBoard",
+  name: "ScoreBoard",
   props: {
     fontColor: String,
     text: String,
@@ -33,5 +26,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
