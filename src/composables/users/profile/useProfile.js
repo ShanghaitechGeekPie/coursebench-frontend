@@ -1,7 +1,7 @@
 import { provide, reactive } from "@vue/composition-api"
 
 export default () => {
-    
+
   const testUserProfile = {
     email: "1@shanghaitech.edu.cn",
     year: 2022,
@@ -11,10 +11,10 @@ export default () => {
     avatar: "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
   } // Just for test
 
-  
+
   const getUserProfile = () => {
     const userProfile = testUserProfile
-    const gradeItems = [ "本科生", "硕士研究生", "博士研究生" ]
+    const gradeItems = ["本科生", "硕士研究生", "博士研究生"]
     userProfile.grade = gradeItems[userProfile.grade]
     return userProfile
   }
@@ -22,12 +22,12 @@ export default () => {
   const userProfile = reactive(getUserProfile())
 
   const statics = reactive({
-    background: "https://cdn.luogu.com.cn/upload/image_hosting/y45o30wx.png", 
+    background: "https://cdn.luogu.com.cn/upload/image_hosting/y45o30wx.png",
   })
 
   const status = reactive({
     showAll: false,
-    editProfile: false, 
+    editProfile: false,
     editPassword: false,
   })
 

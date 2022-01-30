@@ -1,36 +1,21 @@
 <template>
   <v-card>
-    <v-img
-      alt="Background Image"
-      :src="statics.background"
-      :aspect-ratio="screen.background"
-    ></v-img>
+    <v-img alt="Background Image" :src="statics.background" :aspect-ratio="screen.background"></v-img>
     <v-container>
       <v-row>
         <div class="pa-2 mt-sm-n12 pl-md-8 pl-sm-5 pb-md-8 pb-sm-4 mt-n7">
           <v-card outlined>
-            <v-avatar
-              tile
-              color="pink"
-              :size="screen.avatar"
-              class="rounded"
-            >
+            <v-avatar tile color="pink" :size="screen.avatar" class="rounded">
               <span
                 class="text-sm-h3 text-h5"
                 v-if="userProfile.avatar === ''"
-                >{{ userProfile.nickname.slice(0, 1) }}</span
-              >
-              <v-img
-                :src="userProfile.avatar"
-                alt="Avatar"
-                aspect-ratio="1"
-                v-else
-              ></v-img>
+              >{{ userProfile.nickname.slice(0, 1) }}</span>
+              <v-img :src="userProfile.avatar" alt="Avatar" aspect-ratio="1" v-else></v-img>
             </v-avatar>
           </v-card>
         </div>
-        <v-profile-card :isMobile="screen.isMobile"></v-profile-card>
-        <v-edit-profile :isMobile="screen.isMobile"></v-edit-profile>
+        <ProfileCard :isMobile="screen.isMobile" />
+        <EditProfile :isMobile="screen.isMobile" />
       </v-row>
     </v-container>
   </v-card>
@@ -41,13 +26,10 @@ import ProfileCard from "@/components/users/profile/ProfileCard";
 import EditProfile from "@/components/users/profile/EditProfile";
 
 export default {
+  components: { ProfileCard, EditProfile },
   setup() {
     const { userProfile, statics, status } = useProfile();
     return { userProfile, statics, status };
-  },
-  components: {
-    "v-profile-card": ProfileCard,
-    "v-edit-profile": EditProfile,
   },
   computed: {
     screen() {
