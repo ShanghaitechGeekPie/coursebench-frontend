@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Header :snackbar.sync="snackbar" />
-    <v-main>
+    <v-main style="background: rgba(242, 243, 247, 0.8)">
       <router-view />
       <v-snackbar v-model="snackbar.show" :color="snackbar.color">
         {{ snackbar.text }}
