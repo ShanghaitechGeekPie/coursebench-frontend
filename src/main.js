@@ -6,6 +6,8 @@ import VueCompositionAPI from '@vue/composition-api'
 import NProgress from 'nprogress'
 import { VueQueryPlugin } from "vue-query"
 import 'nprogress/nprogress.css'
+import '@/styles/markdown.css'
+import '@/styles/prism.css'
 
 Vue.config.productionTip = false
 Vue.use(VueCompositionAPI)

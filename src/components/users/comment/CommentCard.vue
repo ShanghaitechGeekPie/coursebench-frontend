@@ -140,8 +140,6 @@
 <script>
 import useCommentCard from "@/composables/users/comment/useCommentCard";
 import useMarkdown from '@/composables/global/useMarkdown'
-import '@/styles/prism.css'
-import '@/styles/markdown.css'
 
 export default {
   setup() {
