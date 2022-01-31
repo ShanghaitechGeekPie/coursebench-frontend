@@ -25,7 +25,7 @@
               <v-row>
                 <v-col cols="12" class="pa-sm-4 py-sm-2 pt-0 pa-2">
                   <span
-                    class="text-body-1 comment-line-limit"
+                    class="text-body-1 comment-line-limit markdown-body"
                     v-html="useMarkdown(comment.comment)"
                   >
                   </span>
@@ -140,6 +140,8 @@
 <script>
 import useCommentCard from "@/composables/users/comment/useCommentCard";
 import useMarkdown from '@/composables/global/useMarkdown'
+import '@/styles/prism.css'
+import '@/styles/markdown.css'
 
 export default {
   setup() {
