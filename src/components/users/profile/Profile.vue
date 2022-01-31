@@ -1,6 +1,6 @@
 <template>
   <v-hover #default="{ hover }" close-delay="50" open-delay="50">
-    <v-card :elevation="hover ? 8 : 4">
+    <v-card class="transition-swing" :elevation="hover ? 8 : 4">
       <v-img
         alt="Background Image"
         :src="statics.background"

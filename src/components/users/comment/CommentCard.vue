@@ -26,9 +26,8 @@
                 <v-col cols="12" class="pa-sm-4 py-sm-2 pt-0 pa-2">
                   <span
                     class="text-body-1 comment-line-limit"
-                    style="white-space: pre-wrap"
+                    v-html="useMarkdown(comment.comment)"
                   >
-                    {{ comment.comment }}
                   </span>
                 </v-col>
               </v-row>
@@ -36,7 +35,7 @@
                 <v-col class="pa-0 pl-sm-1 pb-2" :cols="screen.cols" sm="12">
                   <v-container>
                     <v-row>
-                      <v-col cols="6" sm="2" class="py-0">
+                      <v-col cols="6" sm="2" md="3" lg="2" class="py-0 pl-sm-3 pl-2">
                         <div>
                           <span
                             class="pr-sm-2 pr-1 font-weight-bold text-body-2"
@@ -48,6 +47,8 @@
                       <v-col
                         cols="6"
                         sm="2"
+                        md="3"
+                        lg="2"
                         class="py-0 d-sm-block d-flex justify-end"
                       >
                         <div>
@@ -58,7 +59,7 @@
                           <span>{{ comment.score[1].toFixed(1) }}</span>
                         </div>
                       </v-col>
-                      <v-col cols="6" sm="2" class="py-0">
+                      <v-col cols="6" sm="2" md="3" lg="2" class="py-0 pl-sm-3 pl-2">
                         <div>
                           <span
                             class="pr-sm-2 pr-1 font-weight-bold text-body-2"
@@ -70,6 +71,8 @@
                       <v-col
                         cols="6"
                         sm="2"
+                        md="3"
+                        lg="2"
                         class="py-0 d-sm-block d-flex justify-end"
                       >
                         <div>
@@ -136,11 +139,12 @@
 </template>
 <script>
 import useCommentCard from "@/composables/users/comment/useCommentCard";
+import useMarkdown from '@/composables/global/useMarkdown'
 
 export default {
   setup() {
     const { userProfile, statics, status } = useCommentCard();
-    return { userProfile, statics, status };
+    return { userProfile, statics, status, useMarkdown };
   },
   props: {
     comment: Object,
