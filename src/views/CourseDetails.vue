@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="upper-wrp d-flex justify-center align-end">
-      <DetailCard class="mt-3 mt-sm-15" />
+      <DetailCard class="mt-sm-10 pb-sm-8 pt-sm-2" />
     </div>
     <div>
       <v-tabs centered v-model="currentTab">
