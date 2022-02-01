@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Header :snackbar.sync="snackbar" />
-    <v-main style="background: rgba(242, 243, 247, 0.8)">
+    <v-main>
       <router-view />
       <v-snackbar v-model="snackbar.show" :color="snackbar.color">
         {{ snackbar.text }}
@@ -9,18 +9,19 @@
           <v-btn text v-bind="attrs" @click="snackbar.show = false">Close</v-btn>
         </template>
       </v-snackbar>
+      <VueQueryDevTools />
     </v-main>
   </v-app>
 </template>
 
 <script>
+import { VueQueryDevTools } from "vue-query/devtools"
 import useSnackbar from "@/composables/global/useSnackbar"
 import Header from "@/components/global/Header.vue"
 
 export default {
-  components: {
-    Header
-  },
+  name: "App",
+  components: { VueQueryDevTools, Header },
   setup() {
     const { snackbar } = useSnackbar()
     return { snackbar }
