@@ -5,7 +5,7 @@ export default () => {
     {
       "id": "1234",
       "title": "锐评孙伟",
-      "comment": "为什么说陈克应是神....?",
+      "comment": `### 我是陈克应\n\n\- Lesson 1\n\- Lesson 2\n1. Lesson 1\n2. Lesson 2`,
       "course": "123",
       "teachers": [11, 22],
       "time": "2020-01-14",

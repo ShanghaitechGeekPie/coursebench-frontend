@@ -66,7 +66,7 @@ export default {
 .info-wrp {
   height: 90%;
   width: 90%;
-  background: linear-gradient(70deg, blue, lightcoral);
+  background: linear-gradient(70deg, blue, lightcyan);
   /*background: rgba(0, 206, 209, 0.34);*/
 }
 </style>
