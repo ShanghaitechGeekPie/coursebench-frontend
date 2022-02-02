@@ -4,14 +4,12 @@ import { mdiThumbUp } from "@mdi/js"
 export default () => {
 
   const userProfile = inject("userProfile")
+  const scoreDims = inject("scoreDims")
 
   const statics = reactive({
     icons: {
       mdiThumbUp
-    },
-    scoreNames: [
-        "课程质量", "课业负担", "考核难度", "给分情况"
-    ]
+    }
   })
 
   const status = reactive({
@@ -19,5 +17,5 @@ export default () => {
     likedNum: 32,
   })
 
-  return { userProfile, statics, status }
+  return { userProfile, statics, status, scoreDims}
 }
