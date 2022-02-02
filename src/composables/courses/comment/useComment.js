@@ -1,4 +1,5 @@
-import { reactive } from "@vue/composition-api"
+import {provide, reactive} from "@vue/composition-api"
+import {mdiThumbUp} from "@mdi/js";
 
 export default () => {
   const testCommentText = [
@@ -70,11 +71,15 @@ export default () => {
     return commentText
   }
 
+  const scoreDims = [ "课程质量", "课业负担", "考核难度", "给分情况" ]
+
   const commentText = reactive(getCommentText())
 
   const status = reactive({
 
   })
+
+  provide('scoreDims', scoreDims);
 
   return { commentText, status }
 }

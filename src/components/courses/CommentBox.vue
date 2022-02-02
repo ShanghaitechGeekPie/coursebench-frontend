@@ -35,13 +35,13 @@
             <v-subheader class="mt-sm-0 my-8 my-sm-0">
               <v-row>
                 <v-col
-                    v-for="(name, index) in statics.scoreNames" :key="index"
+                    v-for="(dim, index) in scoreDims" :key="index"
                     cols="6"
                     sm="2"
                     class="pl-0 py-1 pr-sm-15 d-flex"
                 >
                   <div class="d-flex flex-row text-no-wrap align-center">
-                    <div class="font-weight-bold text-body-2 px-sm-3 pr-1">{{name}}</div>
+                    <div class="font-weight-bold text-body-2 px-sm-3 pr-1">{{dim}}</div>
                     <div>{{ comment.score[index].toFixed(1) }}</div>
                   </div>
                 </v-col>
@@ -74,12 +74,11 @@
 <script>
 import useCommentBox from "@/composables/courses/comment/useCommentBox";
 import useMarkdown from '@/composables/global/useMarkdown'
-import colors from "vuetify/lib/util/colors"
 
 export default {
   setup() {
-    const {userProfile, statics, status} = useCommentBox();
-    return {userProfile, statics, status, useMarkdown, colors};
+    const {userProfile, statics, status, scoreDims} = useCommentBox();
+    return {userProfile, statics, status, useMarkdown, scoreDims};
   },
   props: {
     comment: Object,
