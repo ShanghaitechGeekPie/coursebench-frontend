@@ -18,39 +18,8 @@
     <v-card-text class="pa-0">
       <v-container>
         <v-row>
-          <v-col cols="12" class="px-sm-4 px-2 pt-sm-2 pb-0 pt-0">
-            <span
-              class="text-body-1 markdown-body comment-container"
-              ref="commentContainer"
-              v-html="useMarkdown(comment.comment)"
-              :style="{
-                'max-height': maxHeight,
-              }"
-            ></span>
-          </v-col>
-        </v-row>
-        <v-row v-if="status.isOverflow">
-          <v-col cols="12" class="px-sm-4 px-2 py-0">
-            <v-sheet class="overlay" v-if="!status.showAll"> </v-sheet>
-            <div
-              class="d-flex justify-end mt-n8 pr-sm-1"
-              v-if="!status.showAll"
-            >
-              <v-chip outlined label small @click="status.showAll = true">
-                <v-icon dense small>
-                  {{ statics.icons.mdiChevronDown }}
-                </v-icon>
-                <span class="text-body-2">阅读全文</span>
-              </v-chip>
-            </div>
-            <div class="d-flex justify-end pr-sm-1" v-if="status.showAll">
-              <v-chip outlined label small @click="status.showAll = false">
-                <v-icon dense small>
-                  {{ statics.icons.mdiChevronUp }}
-                </v-icon>
-                <span class="text-body-2">收起</span>
-              </v-chip>
-            </div>
+          <v-col class="pa-0">
+            <TextContainer :text="comment.comment" markdown dense />
           </v-col>
         </v-row>
         <v-row>
@@ -111,85 +80,35 @@
 </template>
 <script>
 import useCommentCardContent from "@/composables/users/comment/useCommentCardContent";
-import useMarkdown from "@/composables/global/useMarkdown";
+import TextContainer from '@/components/users/comment/TextContainer';
 
 export default {
   setup() {
     const { statics, status } = useCommentCardContent();
-    return { statics, status, useMarkdown };
+    return { statics, status };
   },
   props: {
     comment: Object,
   },
   computed: {
     screen() {
-      if (this.$vuetify.breakpoint.width >= 600) {
+      if (this.$vuetify.breakpoint.width > 420) {
         return {
-          isMobile: false,
-          cols: 6,
-        };
-      } else if (this.$vuetify.breakpoint.width > 420) {
-        return {
-          isMobile: true,
           cols: 6,
         };
       } else if (this.$vuetify.breakpoint.width > 360) {
         return {
-          isMobile: true,
           cols: 7,
         };
       } else {
         return {
-          isMobile: true,
           cols: 12,
         };
       }
     },
-    maxHeight() {
-      if (this.status.isOverflow) {
-        if (this.status.showAll) {
-          return "100000px";
-        } else {
-          if (this.screen.isMobile) {
-            return "100px";
-          } else {
-            return "400px";
-          }
-        }
-      } else {
-        return "100000px";
-      }
-    },
   },
-  methods: {
-    overflowDetect() {
-      if (
-        this.$refs.commentContainer.offsetHeight >
-        (this.screen.isMobile ? 100 : 400)
-      ) {
-        this.status.isOverflow = true;
-      }
-    },
-  },
-  mounted() {
-    setTimeout(() => {
-      this.overflowDetect();
-      setTimeout(() => {
-        this.overflowDetect();
-      }, 50);
-    }, 50);
-  },
+  components: {
+    TextContainer, 
+  }
 };
 </script>
-<style scoped>
-.comment-container {
-  display: block;
-  overflow: hidden;
-}
-
-.overlay {
-  height: 40px;
-  transform: translate(0, -40px);
-  background: linear-gradient(transparent, rgba(255, 255, 255, 1));
-}
-</style>
