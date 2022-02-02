@@ -10,12 +10,7 @@
         <v-row>
           <div class="pa-2 mt-sm-n12 pl-md-8 pl-sm-5 pb-md-8 pb-sm-4 mt-n7">
             <v-card outlined>
-              <v-avatar
-                tile
-                color="pink"
-                :size="screen.avatar"
-                class="rounded"
-              >
+              <v-avatar tile color="pink" :size="screen.avatar" class="rounded">
                 <span
                   class="text-sm-h3 text-h5"
                   v-if="userProfile.avatar === ''"
@@ -30,11 +25,11 @@
               </v-avatar>
             </v-card>
           </div>
-          <ProfileCard :isMobile="screen.isMobile"/>
-          <EditProfile :isMobile="screen.isMobile"/>
+          <ProfileCard :isMobile="screen.isMobile" />
+          <EditProfile :isMobile="screen.isMobile" />
         </v-row>
       </v-container>
-    </v-card> 
+    </v-card>
   </v-hover>
 </template>
 <script>
@@ -47,18 +42,20 @@ export default {
     const { userProfile, statics, status } = useProfile();
     return { userProfile, statics, status };
   },
-  components: { ProfileCard, EditProfile, },
+  components: { ProfileCard, EditProfile },
   computed: {
     screen() {
-      return this.$vuetify.breakpoint.name === "xs" ? {
-          avatar: 80,
-          background: 3.625,
-          isMobile: true,
-        } : {
-          avatar: 160,
-          background: 4.7375,
-          isMobile: false,
-        }
+      return this.$vuetify.breakpoint.name === "xs"
+        ? {
+            avatar: 80,
+            background: 3.625,
+            isMobile: true,
+          }
+        : {
+            avatar: 160,
+            background: 4.7375,
+            isMobile: false,
+          };
     },
   },
 };

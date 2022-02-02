@@ -11,7 +11,6 @@ export default () => {
   const status = reactive({
     showAll: false,
     editProfile: false, 
-    editPassword: false,
   })
 
   provide("status", status)

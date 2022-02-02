@@ -9,6 +9,10 @@ export default () => {
     nickname: "小明",
     realname: "吴迪",
     avatar: "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+    show_email: true, 
+    show_year: true, 
+    show_grade: true, 
+    show_realname: true, 
   } // Just for test
 
     

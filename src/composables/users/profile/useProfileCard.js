@@ -1,4 +1,4 @@
-import { inject, reactive } from "@vue/composition-api"
+import { inject, reactive, toRefs } from "@vue/composition-api"
 import { mdiChevronDown, mdiChevronUp, mdiAccountEdit } from "@mdi/js";
 
 export default () => {
@@ -13,7 +13,9 @@ export default () => {
     }, 
   })
 
-  const status = inject("status")
+  const status = reactive({
+    ...toRefs(inject("status"))
+  })
 
   return { userProfile, statics, status }
 }
