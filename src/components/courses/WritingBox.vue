@@ -3,7 +3,7 @@
     <v-card class="pl-5" elevation="0">
       <v-row class="pl-3" align="center" style="width: 100%;">
         <v-col cols="1">
-          <v-avatar color="gray" size="38">
+          <v-avatar color="gray" size="45">
             <v-img
                 :src="userProfile.avatar"
                 alt="Avatar"
@@ -35,6 +35,7 @@
               style="width: 80px"
               :label="dim"
               placeholder="0~5"
+              type="number"
           ></v-text-field>
         </v-col>
         <v-col

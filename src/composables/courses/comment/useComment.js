@@ -71,7 +71,7 @@ export default () => {
     return commentText
   }
 
-  const scoreDims = [ "课程质量", "课业负担", "考核难度", "给分情况" ]
+  const scoreDims = [ "课程质量", "工作量", "考核难度", "给分情况" ]
 
   const commentText = reactive(getCommentText())
 
