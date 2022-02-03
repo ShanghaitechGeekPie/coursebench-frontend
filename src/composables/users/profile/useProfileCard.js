@@ -5,13 +5,13 @@ export default () => {
 
   const userProfile = inject("userProfile")
 
-  const statics = reactive({
+  const statics = {
     icons: {
       mdiChevronDown,
       mdiChevronUp,
       mdiAccountEdit,
     }, 
-  })
+  }
 
   const status = reactive({
     ...toRefs(inject("status"))

@@ -4,9 +4,9 @@ export default () => {
     
   const userProfile = inject("userProfile")
 
-  const statics = reactive({
+  const statics = {
     background: "https://cdn.luogu.com.cn/upload/image_hosting/y45o30wx.png", 
-  })
+  }
 
   const status = reactive({
     showAll: false,

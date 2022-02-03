@@ -58,14 +58,14 @@ export default {
       type: Boolean, 
       default: false, 
     }, 
-    'max-height': {
-      type: Number, 
+    maxHeight: {
+      type: [ Number, String ], 
       default: 120
     }
   }, 
   methods: {
     overflowDetect() {
-      if (this.$refs.textContainer.offsetHeight > 120) {
+      if (this.$refs.textContainer.offsetHeight > this.maxHeight) {
         this.status.isOverflow = true;
       }
     },
