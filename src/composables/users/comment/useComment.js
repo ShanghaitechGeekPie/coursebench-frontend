@@ -114,9 +114,9 @@ export default () => {
   const commentText = reactive(getCommentText())
   const commentStatistic = reactive(getCommentStatistic())
 
-  const statics = reactive({
+  const statics = {
 
-  })
+  }
 
   const status = reactive({
 

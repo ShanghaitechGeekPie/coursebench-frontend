@@ -5,12 +5,12 @@ export default () => {
 
   const commentStatistic = inject('commentStatistic')
 
-  const statics = reactive({
+  const statics = {
     icons: {
       mdiThumbUp, 
       mdiCommentCheck
     }
-  })
+  }
 
   const status = reactive({
         
