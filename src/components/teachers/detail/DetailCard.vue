@@ -8,9 +8,9 @@
           </div>
         </div>
         <v-list class="mt-sm-n1 mt-n3 py-0 pt-1 pt-sm-4">
-          <v-list-item link class="px-sm-6 px-2">
+          <v-list-item class="px-sm-6 px-2">
             <v-list-item-title class="text-sm-subtitle-1 text-subtitle-2">{{
-              statics.fullName[teacherDetail.school]
+              teacherDetail.institute
             }}</v-list-item-title>
           </v-list-item>
         </v-list>
