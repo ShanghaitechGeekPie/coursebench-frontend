@@ -30,12 +30,5 @@ export default {
     return { commentText, statics, status };
   },
   components: { StatisticCard, CommentCard },
-  computed: {
-    screen() {
-      return this.$vuetify.breakpoint.name === "xs"
-        ? { isMobile: true }
-        : { isMobile: false };
-    },
-  },
 };
 </script>

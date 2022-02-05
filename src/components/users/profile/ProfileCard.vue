@@ -9,6 +9,10 @@
           <div class="d-flex justify-end" v-if="isMobile">
             <div class="d-flex justify-end flex-column pb-0 pr-2">
               <v-btn
+                icon
+                outlined
+                tile
+                elevation="2"
                 color="primary"
                 width="60"
                 height="30"
@@ -139,6 +143,10 @@
         <div class="d-flex justify-end pr-md-8 pr-sm-5">
           <div class="d-flex justify-end flex-column pb-3 pl-lg-0 pl-md-5">
             <v-btn
+              icon
+              outlined
+              tile
+              elevation="2"
               color="primary"
               width="100"
               @click="status.editProfile = true"

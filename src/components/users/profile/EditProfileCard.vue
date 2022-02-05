@@ -111,7 +111,7 @@
                       cols="3"
                       >可见性</v-col
                     >
-                    <v-col class="pa-0" sm="10" :style="{transform: isMobile ? 'translate(-6px, -4px)' : 'translate(10px, -2px)'}">
+                    <v-col class="pa-0" sm="10" :style="{transform: isMobile ? 'translate(-6px, -4px)' : 'translate(11px, -2px)'}">
                       <v-container>
                         <v-row>
                           <v-col class="pa-0" sm="3" cols="6">
