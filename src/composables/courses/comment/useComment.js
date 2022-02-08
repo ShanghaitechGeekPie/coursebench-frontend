@@ -1,5 +1,4 @@
 import {provide, reactive} from "@vue/composition-api"
-import {mdiThumbUp} from "@mdi/js";
 
 export default () => {
   const testCommentText = [

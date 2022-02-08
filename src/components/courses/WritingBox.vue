@@ -10,11 +10,11 @@
               v-on="on"
               outlined
           >
-            撰写评论
+            写评论
           </v-btn>
         </template>
 
-        <v-card class="pa-3" elevation="0" style="overflow-x: hidden" >
+        <v-card class="pa-3" elevation="0" style="overflow: hidden" >
           <v-row class="pl-3 py-3" align="center" style="width: 100%;">
             <v-col cols="1">
               <v-avatar color="gray" size="45">
@@ -52,22 +52,29 @@
               <v-slider
                   v-model="slider[index]"
                   class="align-center"
-                  max="10"
-                  min="0"
+                  max="5"
+                  min="1"
+                  step="1"
                   :color="color(index)"
                   track-color="grey"
+                  thumb-label
                   hide-details
                   :label="dim"
               >
                 <template v-slot:append>
-                  <v-text-field
-                      v-model="slider[index]"
-                      class="mt-0 pt-0"
-                      hide-details
-                      single-line
-                      type="number"
-                      style="width: 60px"
-                  ></v-text-field>
+                  <div class="pl-2">
+                    {{ satisfactionEmojis[slider[index] - 1] }}
+                  </div>
+<!--                  <v-text-field-->
+<!--                      v-model="slider[index]"-->
+<!--                      class="mt-0 pt-0"-->
+<!--                      hide-details-->
+<!--                      single-line-->
+<!--                      type="number"-->
+<!--                      readonly-->
+<!--                      @change="limitText"-->
+<!--                      style="width: 60px"-->
+<!--                  ></v-text-field>-->
                 </template>
               </v-slider>
 <!--              <v-text-field-->
@@ -79,11 +86,17 @@
 <!--              ></v-text-field>-->
             </v-col>
           </v-row>
-          <v-row class="d-flex flex-row-reverse">
+          <v-row class="d-flex flex-row justify-end align-center">
+            <v-col cols="3">
+              <v-select
+                  v-model="target"
+                  :items="selections"
+                  label="评价对象"
+              ></v-select>
+            </v-col>
             <v-col
                 cols="2"
-                class="d-flex align-center"
-                order="last"
+                class="d-flex"
             >
               <v-switch
                   class="mt-0"
@@ -92,7 +105,7 @@
                   hide-details
               ></v-switch>
             </v-col>
-            <v-col class="px-0 d-flex align-center" cols="2">
+            <v-col class="px-0 d-flex" cols="2">
               <v-btn color="primary" depressed >
                 发表评论
                 <v-icon>
@@ -113,21 +126,49 @@ import useWritingBox from "@/composables/courses/comment/useWritingBox";
 export default {
   name: "WritingBox",
   setup() {
-    const {statics, userProfile, scoreDims} = useWritingBox();
-    return {statics, userProfile, scoreDims};
+    const {statics, userProfile, scoreDims, teachers} = useWritingBox();
+    return {statics, userProfile, scoreDims, teachers};
   },
   data() {
     return {
-      slider: [10, 10, 10, 10],
+      slider: [5, 5, 5, 5],
+      satisfactionEmojis: ['😭', '☹️', '🙁', '🙂', '😊'],
+      target: "",
+    }
+  },
+  computed: {
+    selections() {
+      let res = []
+      this.teachers.forEach(
+          function (e){
+            res.push(e.name);
+          }
+      )
+      return res
     }
   },
   methods: {
     color(index) {
-      if (this.slider[index] > 9) return 'indigo'
-      if (this.slider[index] > 6) return 'teal'
-      if (this.slider[index] > 4) return 'green'
-      if (this.slider[index] > 2) return 'orange'
-      return 'red'
+      if (this.slider[index] === 5) return 'indigo'
+      if (this.slider[index] === 4) return 'teal'
+      if (this.slider[index] === 3) return 'green'
+      if (this.slider[index] === 2) return 'orange'
+      if (this.slider[index] === 1) return 'red'
+      console.log(index)
+      this.slider[index] = 5;
+    },
+    limitText() {
+      for(let index = 0, len=this.slider.length; index < len; index++) {
+        console.log(index)
+        if (!Number.isInteger(this.slider[index])) {
+          console.log(this.slider[index])
+          this.slider[index] = 5
+        }
+        if ((this.slider[index] > 5) || (this.slider[index] < 1)) {
+          console.log(this.slider[index])
+          this.slider[index] = 5
+        }
+      }
     }
   }
 }

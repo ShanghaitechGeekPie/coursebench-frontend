@@ -5,11 +5,11 @@
     </div>
     <div>
       <v-tabs centered v-model="currentTab">
-        <v-tab v-for='(item, index) in items' :key="index">{{item.name}}</v-tab>
+        <v-tab v-for='(teacher, index) in teachers' :key="index">{{teacher.name}}</v-tab>
       </v-tabs>
       <v-tabs-items v-model="currentTab"  class="transparent d-flex align-center justify-center">
-        <v-tab-item v-for="(item, index) in items" :key="index">
-          <CommentBoard :currentTab="items[currentTab]"></CommentBoard>
+        <v-tab-item v-for="(item, index) in teachers" :key="index">
+          <CommentBoard :currentTab="teachers[currentTab]"></CommentBoard>
         </v-tab-item>
       </v-tabs-items>
     </div>
@@ -17,10 +17,16 @@
 </template>
 
 <script>
-import DetailCard from '@/components/courses/DetailCard.vue'
+import DetailCard from '@/components/courses/DetailCard.vue';
 import CommentBoard from "@/components/courses/CommentBoard";
+import useCourseDetails from "@/composables/courses/comment/useCourseDetails";
+
 
 export default {
+  setup() {
+    const { teachers } = useCourseDetails();
+    return { teachers };
+  },
   components: {
     DetailCard,
     CommentBoard,
@@ -28,16 +34,6 @@ export default {
   data() {
     return {
       currentTab: 0,
-      items: [
-        { name: '全部评价'},
-        { name: '高盛华' },
-        { name: '梁骏睿' },
-        { name: '娄鑫' },
-        { name: '刘闯' },
-        { name: '野兽先辈' },
-        { name: '林弘扬' },
-        { name: '关云长' },
-      ]
     }
   }
 }
