@@ -19,7 +19,7 @@
             length="5"
             readonly
             size="23"
-            value="3"
+            :value="3"
             dense
         ></v-rating>
         <v-col class="text-end text-body-2 d-sm-block d-none" style="color: gray">
