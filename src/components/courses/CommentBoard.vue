@@ -2,6 +2,9 @@
   <v-container class="" style="background-color: white">
     <select-bar></select-bar>
     <CommentBox v-for="(comment, index) in commentText" :key="index" :comment="comment" />
+    <div class="text-center grey--text text-body-2">
+      没有更多评论了
+    </div>
   </v-container>
 </template>
 <script>
