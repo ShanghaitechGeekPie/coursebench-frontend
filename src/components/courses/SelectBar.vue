@@ -38,7 +38,7 @@ export default {
     }
   },
   created() {
-    this.selected = this.items[0];
+    this.selected = this.items[2];
   }
 }
 </script>
