@@ -1,7 +1,7 @@
 <template>
   <v-scroll-y-transition>
     <v-card class="info-wrp rounded-b-0" :class="screen" color="light-blue darken-1" elevation="10" v-show="isShow" max-width="800px">
-      <v-row class="pb-4">
+      <v-row class="pb-1">
         <v-col class="px-0" sm="6" cols="12">
           <div class="white--text text-h5 font-weight-bold pt-8 ml-sm-12 ml-8">CS100: 计算机编程</div>
           <DetailChips class="my-1 ml-sm-12 ml-9" />
@@ -19,13 +19,13 @@
           <v-row class="my-2">
             <v-spacer></v-spacer>
             <v-col>
-              <ScoreBoard fontColor="darkorange" text="工作量" value="40" />
+              <ScoreBoard fontColor="#D4E157" text="工作量" value="40" />
             </v-col>
             <v-col>
               <ScoreBoard fontColor="pink" text="内容质量" value="93" />
             </v-col>
             <v-col>
-              <ScoreBoard fontColor="#6dbe71" text="推荐指数" value="74" />
+              <ScoreBoard fontColor="#00E676" text="推荐指数" value="74" />
             </v-col>
             <v-spacer></v-spacer>
           </v-row>
