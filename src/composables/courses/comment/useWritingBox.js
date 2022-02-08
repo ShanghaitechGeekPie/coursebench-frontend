@@ -17,6 +17,7 @@ export default () => {
   } // Just for test
 
   const scoreDims = inject("scoreDims")
+  const teachers = inject("teachers")
 
   const getUserProfile = () => {
     const userProfile = testUserProfile
@@ -24,7 +25,6 @@ export default () => {
     userProfile.grade = gradeItems[userProfile.grade]
     return userProfile
   }
-
 
   const userProfile = reactive(getUserProfile())
 
@@ -34,5 +34,5 @@ export default () => {
     },
   })
 
-  return {statics, userProfile, scoreDims}
+  return {statics, userProfile, scoreDims, teachers}
 }
