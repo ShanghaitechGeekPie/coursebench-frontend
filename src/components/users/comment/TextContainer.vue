@@ -13,10 +13,20 @@
         ></span>
       </v-col>
     </v-row>
+    <v-row v-if="!status.isOverflow">
+      <v-col cols="12" :class="dense ? 'px-sm-4 px-2 py-0' : ''">
+        <slot>
+          <div></div>
+        </slot>
+      </v-col>
+    </v-row>
     <v-row v-if="status.isOverflow">
       <v-col cols="12" :class="dense ? 'px-sm-4 px-2 py-0' : ''">
         <v-sheet class="overlay" v-if="!status.showAll"> </v-sheet>
-        <div :class="['d-flex', 'justify-end', dense ? 'mt-n8 pr-sm-1' : '']" v-if="!status.showAll">
+        <div :class="['d-flex', 'justify-space-between', dense ? 'mt-n8 pr-sm-1' : '']" v-if="!status.showAll">
+          <slot>
+            <div></div>
+          </slot>
           <v-chip outlined label :small="dense" @click="status.showAll = true">
             <v-icon :dense="dense" :small="dense">
               {{ statics.icons.mdiChevronDown }}
@@ -24,7 +34,10 @@
             <span class="text-body-2">阅读全文</span>
           </v-chip>
         </div>
-        <div :class="['d-flex', 'justify-end', dense ? 'pr-sm-1' : '']" v-if="status.showAll">
+        <div :class="['d-flex', 'justify-space-between', dense ? 'pr-sm-1' : '']" v-if="status.showAll">
+          <slot>
+            <div></div>
+          </slot>
           <v-chip outlined label :small="dense" @click="status.showAll = false">
             <v-icon :dense="dense" :small="dense">
               {{ statics.icons.mdiChevronUp }}
@@ -60,7 +73,7 @@ export default {
     }, 
     maxHeight: {
       type: [ Number, String ], 
-      default: 120
+      default: 100
     }
   }, 
   methods: {

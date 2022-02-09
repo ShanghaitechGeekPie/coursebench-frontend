@@ -1,5 +1,5 @@
 import { inject, reactive } from "@vue/composition-api"
-import { mdiCommentCheck, mdiArchive } from "@mdi/js"
+import { mdiArchive } from "@mdi/js"
 
 export default () => {
 
@@ -7,7 +7,6 @@ export default () => {
 
   const statics = {
     icons: {
-      mdiCommentCheck, 
       mdiArchive, 
     }
   }

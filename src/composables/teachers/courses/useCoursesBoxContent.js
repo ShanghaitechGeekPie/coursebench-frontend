@@ -1,8 +1,6 @@
-import { inject, reactive } from "@vue/composition-api"
+import { reactive } from "@vue/composition-api"
 
 export default () => {
-
-  const teacherDetail = inject("teacherDetail")
 
   const statics = {
     background: {
@@ -16,12 +14,11 @@ export default () => {
       "数学科学研究所": '#2800ae', 
       "其他学院": '#757575'
     }, 
-    logo: "https://www.shanghaitech.edu.cn/_upload/tpl/00/20/32/template32/images/logo_white.svg"
   }
 
   const status = reactive({
 
   })
 
-  return { teacherDetail, statics, status }
+  return { statics, status }
 }
