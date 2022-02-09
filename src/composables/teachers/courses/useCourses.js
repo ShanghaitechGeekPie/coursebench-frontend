@@ -6,7 +6,6 @@ export default () => {
 
   const coursesStatistic = {
     total: 5, 
-    score: 4.6, 
   }
 
   const statics = {

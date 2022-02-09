@@ -11,6 +11,7 @@
           <img :src="statics.logo"
             :width="screen.logo.width"
             :height="screen.logo.height"
+            alt="SHTU Logo"
           ></img>
         </div>
         </v-card>
