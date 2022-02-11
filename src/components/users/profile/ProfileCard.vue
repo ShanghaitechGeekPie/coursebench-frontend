@@ -19,7 +19,7 @@
                 @click="status.editProfile = true"
               >
                 <v-icon size="20">
-                  {{ statics.icons.mdiAccountEdit }}
+                  {{ statics.icons.mdiAccountEditOutline }}
                 </v-icon>
                 <span>设置</span>
               </v-btn>
@@ -152,7 +152,7 @@
               @click="status.editProfile = true"
             >
               <v-icon size="20">
-                {{ statics.icons.mdiAccountEdit }}
+                {{ statics.icons.mdiAccountEditOutline }}
               </v-icon>
               <span>个人设置</span>
             </v-btn>

@@ -1,5 +1,5 @@
 import { inject, reactive, toRefs } from "@vue/composition-api"
-import { mdiChevronDown, mdiChevronUp, mdiAccountEdit } from "@mdi/js";
+import { mdiChevronDown, mdiChevronUp, mdiAccountEditOutline } from "@mdi/js";
 
 export default () => {
 
@@ -9,7 +9,7 @@ export default () => {
     icons: {
       mdiChevronDown,
       mdiChevronUp,
-      mdiAccountEdit,
+      mdiAccountEditOutline,
     }, 
   }
 

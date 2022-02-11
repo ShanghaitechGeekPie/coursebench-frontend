@@ -1,19 +1,22 @@
 import { reactive } from "@vue/composition-api"
-import { mdiChevronDown, mdiChevronUp } from "@mdi/js"
+import { mdiChevronDown, mdiChevronUp, mdiFullscreen, mdiFullscreenExit } from "@mdi/js"
 
 export default () => {
 
   const statics = {
     icons: {
-      mdiChevronDown, 
-      mdiChevronUp, 
-    }, 
-    inf: 100000, 
+      mdiChevronDown,
+      mdiChevronUp,
+      mdiFullscreen,
+      mdiFullscreenExit,
+    },
+    inf: 100000,
   }
 
   const status = reactive({
-    isOverflow: false, 
-    showAll: false, 
+    isOverflow: false,
+    showAll: false,
+    showDialog: false,
   })
 
   return { statics, status }

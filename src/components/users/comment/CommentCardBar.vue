@@ -1,9 +1,9 @@
 <template>
   <v-card tile>
-    <v-card-text class="px-sm-4 px-2 py-3">
+    <v-card-text class="px-sm-4 px-2 py-3 pb-sm-3 pb-0">
       <v-container>
         <v-row class="d-flex justify-space-between">
-          <v-col sm="4" class="pa-0 d-flex router-container" 
+          <v-col sm="4" cols="8" class="pa-0 d-flex router-container" 
             order-sm="0" order="0" 
             @click="$router.push({ path: `course/${comment.course_id}` })"
           >

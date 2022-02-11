@@ -1,5 +1,5 @@
 import { inject, reactive } from "@vue/composition-api"
-import { mdiThumbUp, mdiCommentCheck } from "@mdi/js"
+import { mdiThumbUpOutline, mdiCommentCheckOutline } from "@mdi/js"
 
 export default () => {
 
@@ -7,8 +7,8 @@ export default () => {
 
   const statics = {
     icons: {
-      mdiThumbUp, 
-      mdiCommentCheck
+      mdiThumbUpOutline, 
+      mdiCommentCheckOutline
     }
   }
 

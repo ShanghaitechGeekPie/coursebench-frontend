@@ -4,11 +4,6 @@ import {
   mdiClockOutline, 
   mdiSchoolOutline,  
   mdiSubtitlesOutline, 
-  mdiNumeric1BoxOutline,
-  mdiNumeric2BoxOutline,
-  mdiNumeric3BoxOutline, 
-  mdiNumeric4BoxOutline,
-  mdiNumeric5BoxOutline,
 } from "@mdi/js";
 
 export default () => {
@@ -21,11 +16,17 @@ export default () => {
       mdiSubtitlesOutline, 
     },
     grade: [
-      mdiNumeric1BoxOutline,
-      mdiNumeric2BoxOutline,
-      mdiNumeric3BoxOutline, 
-      mdiNumeric4BoxOutline,
-      mdiNumeric5BoxOutline,
+      [ "很差", "较差", "一般", "较好", "很好" ], 
+      [ ">8h ", "4-8h", "2-4h", "1-2h", "<1h " ], 
+      [ "很难", "较难", "适中", "偏易", "简单" ], 
+      [ "很差", "较差", "一般", "较好", "很好" ], 
+    ], 
+    color: [
+      "#FF0000", 
+      "#D95F00", 
+      "#A88200", 
+      "#709800",
+      "#00A607", 
     ]
   }
 

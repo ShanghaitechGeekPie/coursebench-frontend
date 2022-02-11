@@ -4,7 +4,7 @@
       <v-container>
         <v-row>
           <v-col cols="12" class="pa-0 d-flex">
-            <div class="pr-2" style="transform: translate(0, -1px);">
+            <div class="pr-2" style="transform: translate(0, -1px)">
               <v-icon size="24">
                 {{ statics.icons.mdiSubtitlesOutline }}
               </v-icon>
@@ -20,17 +20,27 @@
       <v-container>
         <v-row>
           <v-col class="pa-0">
-            <TextContainer :text="comment.comment" markdown dense>
+            <TextContainer
+              :text="comment.comment"
+              markdown
+              dense
+              :dialog="screen.isMobile"
+              #default="{ overflow }"
+            >
               <v-row>
-                <v-col class="pa-0 pl-3 pb-2 pt-4 width-limit" cols="12">
+                <v-col
+                  class="pa-0 pl-3 pb-2 pt-sm-3 pt-2"
+                  :style="{ 'max-width': overflow ? '60vw' : '90%' }"
+                  cols="12"
+                >
                   <v-icon size="16">
                     {{ statics.icons.mdiSchoolOutline }}
                   </v-icon>
                   <span
                     v-for="(teacher, index) in comment.group.teachers"
-                    class="pl-1 router-container"
+                    class="pl-1 router-container text-caption"
                     :key="index"
-                    @click="$router.push({ path: `teacher/${teacher.id}` })"
+                    @click="$router.push({ path: `teacher/${ teacher.id }` })"
                   >
                     {{ teacher.name }}
                   </span>
@@ -46,62 +56,74 @@
                 <v-col class="pa-0" :cols="screen.cols" sm="8">
                   <v-container>
                     <v-row>
-                      <v-col cols="6" sm="3" class="py-0 pl-sm-3 pl-2">
+                      <v-col
+                        cols="6"
+                        sm="3"
+                        class="py-0 pl-sm-3 pl-2 pr-lg-3 pr-md-0 pr-sm-1 pr-0"
+                      >
                         <div>
                           <span
-                            class="pr-sm-2 pr-1 font-weight-bold text-body-2"
+                            class="pr-1 pr-md-0 pr-lg-1 font-weight-bold text-body-2"
                             >课程质量</span
                           >
-                          <v-icon size="16">{{
-                            statics.grade[comment.score[0] - 1]
-                          }}</v-icon>
+                          <v-chip x-small outlined label disabled :color="statics.color[comment.score[0] - 1]" class="px-1">
+                            <span class="text-caption">{{
+                              statics.grade[0][comment.score[0] - 1]
+                            }}</span>
+                          </v-chip>
+                        </div>
+                      </v-col>
+                      <v-col cols="6" sm="3" class="py-0 px-lg-3 px-md-0 px-sm-1 px-0">
+                        <div>
+                          <span
+                            class="pr-1 font-weight-bold text-body-2"
+                            >作业用时</span
+                          >
+                          <v-chip x-small outlined label disabled :color="statics.color[comment.score[1] - 1]" class="px-1">
+                            <span class="text-caption">{{
+                              statics.grade[1][comment.score[1] - 1]
+                            }}</span>
+                          </v-chip>
                         </div>
                       </v-col>
                       <v-col
                         cols="6"
                         sm="3"
-                        class="py-0 d-sm-block d-flex justify-end"
+                        class="py-0 pl-lg-3 pl-md-0 pl-sm-1 pl-2 pr-lg-3 pr-md-0 pr-sm-1 pr-0"
                       >
                         <div>
                           <span
-                            class="pr-sm-2 pr-1 font-weight-bold text-body-2"
-                            >课业负担</span
-                          >
-                          <v-icon size="16">{{
-                            statics.grade[comment.score[1] - 1]
-                          }}</v-icon>
-                        </div>
-                      </v-col>
-                      <v-col cols="6" sm="3" class="py-0 pl-sm-3 pl-2">
-                        <div>
-                          <span
-                            class="pr-sm-2 pr-1 font-weight-bold text-body-2"
+                            class="pr-1 font-weight-bold text-body-2"
                             >考核难度</span
                           >
-                          <v-icon size="16">{{
-                            statics.grade[comment.score[2] - 1]
-                          }}</v-icon>
+                          <v-chip x-small outlined label disabled :color="statics.color[comment.score[2] - 1]" class="px-1">
+                            <span class="text-caption">{{
+                              statics.grade[2][comment.score[2] - 1]
+                            }}</span>
+                          </v-chip>
                         </div>
                       </v-col>
                       <v-col
                         cols="6"
                         sm="3"
-                        class="py-0 d-sm-block d-flex justify-end"
+                        class="py-0 px-lg-3 px-md-0 px-sm-1 px-0"
                       >
                         <div>
                           <span
-                            class="pr-sm-2 pr-1 font-weight-bold text-body-2"
+                            class="pr-1 font-weight-bold text-body-2"
                             >给分情况</span
                           >
-                          <v-icon size="16">{{
-                            statics.grade[comment.score[3] - 1]
-                          }}</v-icon>
+                          <v-chip x-small outlined label disabled :color="statics.color[comment.score[3] - 1]" class="px-1">
+                            <span class="text-caption">{{
+                              statics.grade[3][comment.score[3] - 1]
+                            }}</span>
+                          </v-chip>
                         </div>
                       </v-col>
                     </v-row>
                   </v-container>
                 </v-col>
-                <v-col class="pa-0" cols="4" sm="4">
+                <v-col class="pa-0" cols="4">
                   <v-container>
                     <v-row class="d-flex justify-end">
                       <v-col
@@ -157,17 +179,25 @@ export default {
       return `${year}年${season == "02" ? "秋" : "春"}`;
     },
     screen() {
-      if (this.$vuetify.breakpoint.width > 420) {
+      if (this.$vuetify.breakpoint.width > 600) {
         return {
-          cols: 6,
+          cols: 7, 
+          isMobile: false, 
+        }
+      } else if (this.$vuetify.breakpoint.width > 420) {
+        return {
+          cols: 7,
+          isMobile: true, 
         };
       } else if (this.$vuetify.breakpoint.width > 360) {
         return {
-          cols: 7,
+          cols: 8,
+          isMobile: true, 
         };
       } else {
         return {
           cols: 8,
+          isMobile: true, 
         };
       }
     },
@@ -186,8 +216,5 @@ export default {
 }
 .router-container:hover {
   cursor: pointer;
-}
-.width-limit {
-  max-width: 60vw;
 }
 </style>
