@@ -9,7 +9,7 @@
           <div class="d-sm-block d-flex justify-space-between">
             <v-list-item class="px-0 px-sm-3">
               <span class="pr-1">
-                <v-icon size="18">{{ statics.icons.mdiCommentCheck }}</v-icon>
+                <v-icon size="18">{{ statics.icons.mdiCommentCheckOutline }}</v-icon>
               </span>
               <span class="text-sm-subtitle-1 font-weight-bold pr-4">
                 评价总数
@@ -20,7 +20,7 @@
             </v-list-item>
             <v-list-item class="px-0 px-sm-3">
               <span class="pr-1">
-                <v-icon size="18">{{ statics.icons.mdiThumbUp }}</v-icon>
+                <v-icon size="18">{{ statics.icons.mdiThumbUpOutline }}</v-icon>
               </span>
               <span class="text-sm-subtitle-1 font-weight-bold pr-4">
                 获赞总数
