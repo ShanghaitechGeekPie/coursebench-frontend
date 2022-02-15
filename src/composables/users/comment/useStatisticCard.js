@@ -1,5 +1,11 @@
-import { inject, reactive } from "@vue/composition-api"
-import { mdiThumbUpOutline, mdiCommentCheckOutline } from "@mdi/js"
+import { inject, reactive, toRefs } from "@vue/composition-api"
+import { 
+  mdiCommentCheckOutline, 
+  mdiThumbUpOutline, 
+  mdiChevronDown, 
+  mdiChevronUp, 
+  mdiClipboardText, 
+} from "@mdi/js"
 
 export default () => {
 
@@ -7,13 +13,19 @@ export default () => {
 
   const statics = {
     icons: {
+      mdiCommentCheckOutline,
+      mdiChevronDown,
+      mdiChevronUp,
       mdiThumbUpOutline, 
-      mdiCommentCheckOutline
-    }
+      mdiClipboardText, 
+    },
+    sortKeyItem: ['修改时间', '发布时间'],
+    orderItem: ['从前往后', '从后往前']
   }
 
   const status = reactive({
-        
+    showAll: true,
+    ...toRefs(inject("commentStatus"))
   })
 
   return { commentStatistic, statics, status }

@@ -15,7 +15,7 @@ export default () => {
   const status = reactive({
     profile: { ...userProfile },
     loading: false,
-    ...toRefs(inject("status"))
+    ...toRefs(inject("editProfileStatus"))
   })
 
   const doReset = () => {

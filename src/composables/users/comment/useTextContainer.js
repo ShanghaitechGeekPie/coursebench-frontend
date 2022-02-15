@@ -1,5 +1,5 @@
 import { reactive } from "@vue/composition-api"
-import { mdiChevronDown, mdiChevronUp, mdiFullscreen, mdiFullscreenExit } from "@mdi/js"
+import { mdiChevronDown, mdiChevronUp, mdiFullscreen, mdiClose } from "@mdi/js"
 
 export default () => {
 
@@ -8,7 +8,7 @@ export default () => {
       mdiChevronDown,
       mdiChevronUp,
       mdiFullscreen,
-      mdiFullscreenExit,
+      mdiClose,
     },
     inf: 100000,
   }
@@ -17,6 +17,7 @@ export default () => {
     isOverflow: false,
     showAll: false,
     showDialog: false,
+    showDialogOverlay: false
   })
 
   return { statics, status }

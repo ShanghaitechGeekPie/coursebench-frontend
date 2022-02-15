@@ -7,13 +7,9 @@ export default () => {
 
   const showSnackbar = inject("showSnackbar")
 
-  const statics = {
-    
-  }
-
   const status = reactive({
     loading: false,
-    ...toRefs(inject("status"))
+    ...toRefs(inject("editProfileStatus"))
   })
 
   const doEditPassword = (response, password) => {
@@ -28,5 +24,5 @@ export default () => {
     }, 1000)
   }
 
-  return { statics, status, doEditPassword }
+  return { status, doEditPassword }
 }

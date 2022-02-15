@@ -32,7 +32,7 @@
           :class="[
             'd-flex',
             'justify-space-between',
-            dense ? 'mt-n8 pr-sm-1' : '',
+            'mt-n8',
           ]"
           v-if="!status.showAll"
         >
@@ -74,11 +74,12 @@
         <div>
           <v-dialog
             v-model="status.showDialog"
-            :width="screen.dialogWidth"
             transition="slide-y-reverse-transition"
             scrollable
+            width="50vw"
+            :fullscreen="breakpoint.name === 'xs'"
           >
-            <v-card tile flat :max-height="screen.dialogMaxHeight">
+            <v-card tile flat>
               <v-card-title
                 class="
                   d-flex
@@ -87,19 +88,30 @@
                   pt-sm-4 pt-2
                   pb-sm-2 pb-1
                 "
+                style="background: linear-gradient(rgba(255, 255, 255, 1), rgba(245, 245, 249, 1));"
               >
                 <span> 阅读全文 </span>
                 <v-icon @click="status.showDialog = false">
-                  {{ statics.icons.mdiFullscreenExit }}
+                  {{ statics.icons.mdiClose }}
                 </v-icon>
               </v-card-title>
-              <v-card-text class="px-sm-6 px-2">
+              <v-card-text
+                class="px-sm-6 px-2"
+                ref="textDialog"
+                @scroll="scrollDetect()"
+                style="background: #f5f5f9;"
+              >
+                <v-fade-transition>
+                  <v-sheet class="dialog-overlay" v-if="status.showDialogOverlay"></v-sheet>
+                </v-fade-transition>
+                <span class="text-h5">{{ title }}</span>
                 <span
                   v-html="markdown ? useMarkdown(text) : text"
                   :class="[
                     'text-body-1',
                     markdown ? 'markdown-body' : '',
                     'text-dialog',
+                     'pt-sm-0', 'pt-2'
                   ]"
                 ></span>
               </v-card-text>
@@ -118,6 +130,11 @@ export default {
   setup() {
     const { statics, status } = useTextContainer();
     return { statics, status, useMarkdown };
+  },
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint,
+    };
   },
   props: {
     text: {
@@ -140,12 +157,19 @@ export default {
       type: Boolean,
       default: false,
     },
+    title: {
+      type: String, 
+      default: ""
+    }
   },
   methods: {
     overflowDetect() {
       if (this.$refs.textContainer.offsetHeight > this.maxHeight) {
         this.status.isOverflow = true;
       }
+    },
+    scrollDetect() {
+      this.status.showDialogOverlay = this.$refs.textDialog.scrollTop > 0;
     },
   },
   mounted() {
@@ -155,33 +179,6 @@ export default {
         this.overflowDetect();
       }, 50);
     }, 50);
-  },
-  computed: {
-    screen() {
-      if (this.$vuetify.breakpoint.width >= 1264) {
-        return {
-          dialogWidth: "60%",
-          dialogMaxHeight: "",
-        };
-      } else if (this.$vuetify.breakpoint.width >= 960) {
-        return {
-          dialogWidth: "720px",
-          dialogMaxHeight: "72vh",
-        };
-      } else if (this.$vuetify.breakpoint.width >= 600) {
-        return {
-          dialogWidth: "600px",
-          dialogMaxHeight: "72vh",
-        };
-      } else {
-        return {
-          dialogWidth: "90%",
-          dialogMaxHeight: `${
-            (this.$vuetify.breakpoint.width / 100).toFixed(0) * 15
-          }vh`,
-        };
-      }
-    },
   },
 };
 </script>
@@ -199,5 +196,12 @@ export default {
   height: 40px;
   transform: translate(0, -40px);
   background: linear-gradient(transparent, rgba(255, 255, 255, 1));
+}
+
+.dialog-overlay {
+  height: 200px;
+  width: 100%;
+  position: fixed;
+  background: linear-gradient(rgba(245, 245, 249, 1), transparent);
 }
 </style>

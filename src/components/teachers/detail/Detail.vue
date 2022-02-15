@@ -1,7 +1,7 @@
 <template>
   <v-hover #default="{ hover }" close-delay="50" open-delay="50">
     <v-card class="transition-swing" :elevation="hover ? 8 : 4">
-      <v-responsive :aspect-ratio="screen.background">
+      <v-responsive :aspect-ratio="breakpoint.name === 'xs' ? 3.625 : 4.7375">
         <v-card
           :color="statics.background[teacherDetail.institute]"
           height="100%"
@@ -9,8 +9,8 @@
         >
         <div class="d-flex justify-center flex-column">
           <img :src="statics.logo"
-            :width="screen.logo.width"
-            :height="screen.logo.height"
+            :width="breakpoint.name === 'xs' ? 180 : 300"
+            :height="breakpoint.name === 'xs' ? 60 : 100"
             alt="SHTU Logo"
           ></img>
         </div>
@@ -23,7 +23,7 @@
               <v-avatar
                 tile
                 color="white"
-                :size="screen.avatar"
+                :size="breakpoint.name === 'xs' ? 80 : 160"
                 class="rounded"
               >
                 <span
@@ -55,29 +55,13 @@ export default {
     const { teacherDetail, statics, status } = useDetail();
     return { teacherDetail, statics, status };
   },
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint
+    }
+  }, 
   components: {
     DetailCard,
-  },
-  computed: {
-    screen() {
-      return this.$vuetify.breakpoint.name === "xs"
-        ? {
-            avatar: 80,
-            background: 3.625,
-            logo: {
-              width: 180, 
-              height: 60
-            },
-          }
-        : {
-            avatar: 160,
-            background: 4.7375,
-            logo: {
-              width: 300, 
-              height: 100
-            }
-          };
-    },
   },
 };
 </script>

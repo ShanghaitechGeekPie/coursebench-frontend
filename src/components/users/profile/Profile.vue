@@ -1,61 +1,64 @@
 <template>
-  <v-hover #default="{ hover }" close-delay="50" open-delay="50">
-    <v-card class="transition-swing" :elevation="hover ? 8 : 4">
-      <v-img
-        alt="Background Image"
-        :src="statics.background"
-        :aspect-ratio="screen.background"
-      ></v-img>
-      <v-container>
-        <v-row>
-          <div class="pa-2 mt-sm-n12 pl-md-8 pl-sm-5 pb-md-8 pb-sm-4 mt-n7">
-            <v-card outlined>
-              <v-avatar tile color="white" :size="screen.avatar" class="rounded">
-                <span
-                  class="text-sm-h3 text-h5"
-                  v-if="userProfile.avatar === ''"
-                  >{{ userProfile.nickname.slice(0, 1) }}</span
-                >
-                <v-img
-                  :src="userProfile.avatar"
-                  alt="Avatar"
-                  aspect-ratio="1"
-                  v-else
-                ></v-img>
-              </v-avatar>
-            </v-card>
-          </div>
-          <ProfileCard :isMobile="screen.isMobile" />
-          <EditProfile :isMobile="screen.isMobile" />
-        </v-row>
-      </v-container>
-    </v-card>
-  </v-hover>
+  <div>
+    <div class="d-flex justify-center">
+      <AvatarContainer
+        :name="isChinese"
+        src=""
+        :size="breakpoint.name === 'xs' ? 80 : 120"
+      />
+    </div>
+    <div class="d-flex justify-center pt-5">
+      <div class="text-sm-h5 font-weight-bold">
+        {{ userProfile.nickname }}
+      </div>
+    </div>
+    <div
+      class="d-flex justify-center pt-3"
+      v-if="
+        !(
+          !userProfile['show_year'] &
+          !userProfile['show_grade'] &
+          !userProfile['show_realname']
+        )
+      "
+    >
+      <div class="grey--text text--darken-2">
+        <span v-if="userProfile.show_year">{{ userProfile.year }}级</span>
+        <span v-if="userProfile.show_grade">{{ userProfile.grade }}</span>
+        <span v-if="userProfile.show_realname">{{ userProfile.realname }}</span>
+      </div>
+    </div>
+    <div class="d-flex justify-center pt-3" v-if="userProfile.show_email">
+      <div class="grey--text text--darken-2">
+        <span>{{ userProfile.email }}</span>
+      </div>
+    </div>
+    <div class="d-flex justify-center pt-6">
+      <EditProfile />
+    </div>
+  </div>
 </template>
 <script>
 import useProfile from "@/composables/users/profile/useProfile";
-import ProfileCard from "@/components/users/profile/ProfileCard";
 import EditProfile from "@/components/users/profile/EditProfile";
+import AvatarContainer from "@/components/users/profile/AvatarContainer";
 
 export default {
   setup() {
-    const { userProfile, statics, status } = useProfile();
-    return { userProfile, statics, status };
+    const { userProfile } = useProfile();
+    return { userProfile };
   },
-  components: { ProfileCard, EditProfile },
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint,
+    };
+  },
+  components: { EditProfile, AvatarContainer },
   computed: {
-    screen() {
-      return this.$vuetify.breakpoint.name === "xs"
-        ? {
-            avatar: 80,
-            background: 3.625,
-            isMobile: true,
-          }
-        : {
-            avatar: 160,
-            background: 4.7375,
-            isMobile: false,
-          };
+    isChinese() {
+      return escape(this.userProfile.nickname.slice(0, 2)).indexOf("%u") >= 0
+        ? this.userProfile.nickname.slice(0, 1)
+        : this.userProfile.nickname.slice(0, 2);
     },
   },
 };

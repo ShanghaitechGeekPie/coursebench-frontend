@@ -25,7 +25,7 @@
                     'text-body-2',
                     'pt-2',
                     'pl-0',
-                    isMobile ? 'input-limit' : '',
+                    breakpoint.name === 'xs' ? 'input-limit' : '',
                   ]"
                 ></v-text-field>
               </v-list-item>
@@ -48,7 +48,7 @@
                     'text-body-2',
                     'pt-2',
                     'pl-0',
-                    isMobile ? 'input-limit' : '',
+                    breakpoint.name === 'xs' ? 'input-limit' : '',
                   ]"
                 ></v-text-field>
               </v-list-item>
@@ -70,7 +70,7 @@
                     'text-body-2',
                     'pt-2',
                     'pl-0',
-                    isMobile ? 'input-limit' : '',
+                    breakpoint.name === 'xs' ? 'input-limit' : '',
                   ]"
                 ></v-select>
               </v-list-item>
@@ -92,7 +92,7 @@
                     'text-body-2',
                     'pt-2',
                     'pl-0',
-                    isMobile ? 'input-limit' : '',
+                    breakpoint.name === 'xs' ? 'input-limit' : '',
                   ]"
                 ></v-select>
               </v-list-item>
@@ -111,7 +111,7 @@
                       cols="3"
                       >可见性</v-col
                     >
-                    <v-col class="pa-0" sm="10" :style="{transform: isMobile ? 'translate(-6px, -4px)' : 'translate(11px, -2px)'}">
+                    <v-col class="pa-0" sm="10" :style="{ transform: breakpoint.name === 'xs' ? 'translate(-6px, -4px)' : 'translate(11px, -2px)'}">
                       <v-container>
                         <v-row>
                           <v-col class="pa-0" sm="3" cols="6">
@@ -174,12 +174,11 @@ export default {
     const { statics, status, doReset, doEditProfile } = useEditProfileCard();
     return { statics, status, doReset, doEditProfile };
   },
-  props: {
-    isMobile: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint
+    }
+  }, 
 };
 </script>
 <style scoped>

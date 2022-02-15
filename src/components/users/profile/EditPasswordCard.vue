@@ -49,8 +49,8 @@ import useEditPasswordCard from "@/composables/users/profile/useEditPasswordCard
 
 export default {
   setup() {
-    const { statics, status, doReset } = useEditPasswordCard()
-    return { statics, status, doReset }
+    const { status, doReset } = useEditPasswordCard()
+    return { status, doReset }
   }
 }
 </script>

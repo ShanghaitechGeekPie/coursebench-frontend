@@ -1,4 +1,4 @@
-import { reactive } from "@vue/composition-api"
+import { reactive, inject, toRefs } from "@vue/composition-api"
 
 export default () => {
 
@@ -7,7 +7,7 @@ export default () => {
   }
 
   const status = reactive({
-
+    ...toRefs(inject("commentStatus"))
   })
 
   return { statics, status }

@@ -1,12 +1,11 @@
 <template>
   <v-lazy>
-    <v-hover #default="{ hover }" close-delay="50" open-delay="50">
-      <v-card class="mb-3 transition-swing" :elevation="hover ? 8 : 4">
+    <div v-if="status.selected.some(school => school === comment.course.institute)">
+      <v-card class="mb-3 transition-swing" flat max-width="800">
         <CommentCardBar :comment="comment" />
         <CommentCardContent :comment="comment" />
-        
       </v-card>
-    </v-hover>
+    </div>
   </v-lazy>
 </template>
 <script>
@@ -25,6 +24,6 @@ export default {
   components: {
     CommentCardContent, 
     CommentCardBar, 
-  }
+  },
 };
 </script>
