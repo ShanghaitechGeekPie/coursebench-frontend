@@ -1,21 +1,34 @@
 <template>
-  <v-dialog v-model="status.editProfile" max-width="600">
-    <v-window v-model="status.step">
-      <v-window-item :value="0">
-        <EditProfileCard :isMobile="isMobile" @editPassword="status.step++" />
-      </v-window-item>
-      <v-window-item :value="1">
-        <EditPasswordCard
-          @next="status.step++"
-          @back="status.step--"
-          @sync="(status.password = $event)"
-        />
-      </v-window-item>
-      <v-window-item :value="2">
-        <CaptchaCard :password="status.password" @back="status.step--" />
-      </v-window-item>
-    </v-window>
-  </v-dialog>
+  <div>
+    <v-btn
+      outlined
+      color="primary"
+      width="100"
+      @click="status.editProfile = true"
+    >
+      <v-icon size="20">
+        {{ statics.icons.mdiAccountEditOutline }}
+      </v-icon>
+      <span>个人设置</span>
+    </v-btn>
+    <v-dialog v-model="status.editProfile" max-width="600">
+      <v-window v-model="status.step">
+        <v-window-item :value="0">
+          <EditProfileCard @editPassword="status.step++" />
+        </v-window-item>
+        <v-window-item :value="1">
+          <EditPasswordCard
+            @next="status.step++"
+            @back="status.step--"
+            @sync="status.password = $event"
+          />
+        </v-window-item>
+        <v-window-item :value="2">
+          <CaptchaCard :password="status.password" @back="status.step--" />
+        </v-window-item>
+      </v-window>
+    </v-dialog>
+  </div>
 </template>
 <script>
 import useEditProfile from "@/composables/users/profile/useEditProfile";
@@ -27,12 +40,6 @@ export default {
   setup() {
     const { statics, status } = useEditProfile();
     return { statics, status };
-  },
-  props: {
-    isMobile: {
-      type: Boolean,
-      default: false,
-    },
   },
   components: {
     EditProfileCard,

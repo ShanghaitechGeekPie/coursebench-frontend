@@ -31,8 +31,8 @@ import useCaptchaCard from "@/composables/users/profile/useCaptchaCard";
 
 export default {
   setup() {
-    const { statics, status, doEditPassword } = useCaptchaCard();
-    return { statics, status, doEditPassword }
+    const { status, doEditPassword } = useCaptchaCard();
+    return { status, doEditPassword }
   }, 
   props: {
     password: Object, 

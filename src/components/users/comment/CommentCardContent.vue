@@ -22,9 +22,10 @@
           <v-col class="pa-0">
             <TextContainer
               :text="comment.comment"
+              :title="comment.title"
               markdown
               dense
-              :dialog="screen.isMobile"
+              :dialog="breakpoint.name === 'xs'"
               #default="{ overflow }"
             >
               <v-row>
@@ -53,7 +54,7 @@
           <v-col class="pa-0 pl-sm-1 pb-2 pt-2" cols="12">
             <v-container>
               <v-row class="d-flex justify-space-between">
-                <v-col class="pa-0" :cols="screen.cols" sm="8">
+                <v-col class="pa-0" :cols="breakpoint.width > 420 ? 7 : 8" sm="8">
                   <v-container>
                     <v-row>
                       <v-col
@@ -171,35 +172,17 @@ export default {
   props: {
     comment: Object,
   },
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint
+    }
+  }, 
   computed: {
     semester() {
       let sem = new String(this.comment.semester);
       let year = sem.substring(0, 4);
       let season = sem.substring(4);
       return `${year}年${season == "02" ? "秋" : "春"}`;
-    },
-    screen() {
-      if (this.$vuetify.breakpoint.width > 600) {
-        return {
-          cols: 7, 
-          isMobile: false, 
-        }
-      } else if (this.$vuetify.breakpoint.width > 420) {
-        return {
-          cols: 7,
-          isMobile: true, 
-        };
-      } else if (this.$vuetify.breakpoint.width > 360) {
-        return {
-          cols: 8,
-          isMobile: true, 
-        };
-      } else {
-        return {
-          cols: 8,
-          isMobile: true, 
-        };
-      }
     },
   },
   components: {

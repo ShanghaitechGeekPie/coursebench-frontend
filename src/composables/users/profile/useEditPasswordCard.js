@@ -1,10 +1,6 @@
-import { inject, reactive, toRefs, watchEffect } from "@vue/composition-api"
+import { reactive, watchEffect } from "@vue/composition-api"
 
 export default () => {
-
-  const statics = {
-
-  }
 
   const status = reactive({
     password: {
@@ -12,7 +8,6 @@ export default () => {
       newPassword: "",
       repPassword: "",
     }, 
-    ...toRefs(inject("status"))
   })
 
   const doReset = () => {
@@ -29,5 +24,5 @@ export default () => {
     }
   })
 
-  return { statics, status, doReset }
+  return { status, doReset }
 }
