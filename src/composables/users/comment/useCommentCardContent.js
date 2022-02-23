@@ -1,4 +1,3 @@
-import { reactive } from "@vue/composition-api"
 import {
   mdiAccountOutline, 
   mdiClockOutline, 
@@ -22,17 +21,13 @@ export default () => {
       [ "很差", "较差", "一般", "较好", "很好" ], 
     ], 
     color: [
-      "#FF0000", 
-      "#D95F00", 
-      "#A88200", 
+      "#FF5252", 
+      "#FF892F", 
+      "#FFC107", 
       "#709800",
-      "#00A607", 
+      "#A4BE23", 
     ]
   }
 
-  const status = reactive({
-
-  })
-
-  return { statics, status }
+  return { statics }
 }

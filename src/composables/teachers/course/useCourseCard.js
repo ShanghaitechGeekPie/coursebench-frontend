@@ -1,7 +1,5 @@
-import { reactive } from "@vue/composition-api"
 import {
-  mdiUpdate, 
-  mdiCommentEditOutline, 
+  mdiChartBubble,  
 } from "@mdi/js";
 
 export default () => {
@@ -29,9 +27,23 @@ export default () => {
       "数学科学研究所": 'IMS', 
       "其他学院": '?'
     }, 
+    color: [
+      "#FF5252", 
+      "#FF892F", 
+      "#FFC107", 
+      "#709800",
+      "#A4BE23", 
+    ], 
+    label: [
+      "差评如潮", 
+      "多半差评", 
+      "褒贬不一", 
+      "多半好评", 
+      "好评如潮"
+    ], 
     icons: {
-      mdiUpdate, 
-      mdiCommentEditOutline, 
+      mdiChartBubble,  
+
     }
   }
 

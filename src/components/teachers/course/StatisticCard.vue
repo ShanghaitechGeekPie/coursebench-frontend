@@ -4,30 +4,30 @@
       <!-- <div class="d-flex justify-space-between pt-2">
       <div>
         <v-icon size="18">{{ statics.icons.mdiThumbUpOutline }}</v-icon>
-        <span class="text-sm-subtitle-1 pl-1">获赞总数</span>
+        <span class="text-sm-subtitle-1 pl-1">获评总数</span>
       </div>
       <div class="font-weight-bold">
-        {{ commentStatistic.score }}
+        {{ courseStatistic.score }}
       </div>
     </div> -->
       <div class="d-flex justify-space-between pt-2">
         <div>
           <div>
             <v-icon size="18">{{
-              statics.icons.mdiCommentCheckOutline
+              statics.icons.mdiClipboardOutline
             }}</v-icon>
-            <span class="text-sm-subtitle-1 pl-1">评价总数</span>
+            <span class="text-sm-subtitle-1 pl-1">开课总数</span>
           </div>
         </div>
         <div class="font-weight-bold" style="width: 16px;">
-          {{ commentStatistic.total }}
+          {{ courseStatistic.total }}
         </div>
       </div>
       <div class="d-flex justify-space-between py-2">
         <div>
           <div>
-            <v-icon size="18">{{ statics.icons.mdiClipboardText }}</v-icon>
-            <span class="text-sm-subtitle-1 pl-1">评价统计</span>
+            <v-icon size="18">{{ statics.icons.mdiClipboardText}}</v-icon>
+            <span class="text-sm-subtitle-1 pl-1">开课统计</span>
           </div>
         </div>
         <div class="transform: translate(0, 1px);">
@@ -42,7 +42,7 @@
       <v-expand-transition>
         <div class="pl-2" v-if="status.showAll">
           <div
-            v-for="(value, key, index) in commentStatistic.count"
+            v-for="(value, key, index) in courseStatistic.count"
             :key="index"
             :class="index !== 0 ? 'mt-n4' : ''"
           >
@@ -51,7 +51,7 @@
                 <template #label>
                   <div class="d-flex justify-space-between" style="width: 100%">
                     <div>{{ key }}</div>
-                    <div>{{ value }}篇</div>
+                    <div>{{ value }}节</div>
                   </div>
                 </template>
               </v-checkbox>
@@ -63,12 +63,12 @@
   </div>
 </template>
 <script>
-import useStatisticCard from "@/composables/users/comment/useStatisticCard";
+import useStatisticCard from "@/composables/teachers/course/useStatisticCard";
 
 export default {
   setup() {
-    const { commentStatistic, statics, status } = useStatisticCard();
-    return { commentStatistic, statics, status };
+    const { courseStatistic, statics, status } = useStatisticCard();
+    return { courseStatistic, statics, status };
   },
   data() {
     return {

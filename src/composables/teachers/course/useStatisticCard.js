@@ -1,6 +1,6 @@
 import { inject, reactive, toRefs } from "@vue/composition-api"
 import { 
-  mdiCommentCheckOutline, 
+  mdiClipboardOutline, 
   mdiThumbUpOutline, 
   mdiChevronDown, 
   mdiChevronUp, 
@@ -9,11 +9,11 @@ import {
 
 export default () => {
 
-  const commentStatistic = inject('commentStatistic')
+  const courseStatistic = inject('courseStatistic')
 
   const statics = {
     icons: {
-      mdiCommentCheckOutline,
+      mdiClipboardOutline,
       mdiChevronDown,
       mdiChevronUp,
       mdiThumbUpOutline, 
@@ -23,8 +23,8 @@ export default () => {
 
   const status = reactive({
     showAll: true,
-    ...toRefs(inject("commentStatus"))
+    ...toRefs(inject("courseStatus"))
   })
 
-  return { commentStatistic, statics, status }
+  return { courseStatistic, statics, status }
 }

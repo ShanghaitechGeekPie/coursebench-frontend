@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-card flat :outlined="outlined" :class="[tile ? '' : 'rounded-circle']">
     <v-avatar
       :tile="tile"
       :color="color"
@@ -9,7 +9,7 @@
       <span
         :class="[
           !small
-            ? 'text-sm-h3 text-h5'
+            ? size > 50 ? 'text-h3' : 'text-h6'
             : name.length >= 3
             ? 'text-body-2'
             : 'text-body-1',
@@ -20,7 +20,7 @@
       >
       <v-img :src="src" alt="Avatar" :aspect-ratio="aspectRatio" v-else></v-img>
     </v-avatar>
-  </div>
+  </v-card>
 </template>
 <script>
 export default {
@@ -53,6 +53,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    outlined: {
+      default: Boolean, 
+      default: false, 
+    }
   },
 };
 </script>

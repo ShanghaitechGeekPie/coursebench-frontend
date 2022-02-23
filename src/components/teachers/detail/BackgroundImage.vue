@@ -1,14 +1,13 @@
 <template>
   <div>
-    <v-img
-      alt="Background Image"
-      :src="theme.isDark ? statics.backgroundDark : statics.backgroundLight"
+    <v-sheet
+      :color="theme.isDark ? statics.backgroundDark : statics.background"
       :height="breakpoint.xsOnly ? 91 : (breakpoint.mdAndDown ? 121 : 211)"
-    ></v-img>
+    ></v-sheet>
   </div>
 </template>
 <script>
-import useBackgroundImage from "@/composables/users/profile/useBackgroundImage.js";
+import useBackgroundImage from "@/composables/teachers/detail/useBackgroundImage.js";
 
 export default {
   setup() {

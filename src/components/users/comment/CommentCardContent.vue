@@ -19,10 +19,15 @@
     <v-card-text class="pa-0">
       <v-container>
         <v-row>
-          <v-col class="pa-0">
+          <v-col class="pa-0 pt-sm-2">
+            <!-- <div class="px-4 pb-1" v-if="comment.user_score_ranking > 0">
+              <span class="font-weight-bold pr-2">课程绩点</span>
+              <span class="text-caption">{{ comment.user_score_ranking.toFixed(1) }}</span>
+            </div> -->
             <TextContainer
               :text="comment.comment"
               :title="comment.title"
+              :dark="theme.isDark"
               markdown
               dense
               :dialog="breakpoint.name === 'xs'"
@@ -67,8 +72,8 @@
                             class="pr-1 pr-md-0 pr-lg-1 font-weight-bold text-body-2"
                             >课程质量</span
                           >
-                          <v-chip x-small outlined label disabled :color="statics.color[comment.score[0] - 1]" class="px-1">
-                            <span class="text-caption">{{
+                          <v-chip x-small label :color="statics.color[comment.score[0] - 1]" class="px-1">
+                            <span class="text-caption white--text">{{
                               statics.grade[0][comment.score[0] - 1]
                             }}</span>
                           </v-chip>
@@ -80,8 +85,8 @@
                             class="pr-1 font-weight-bold text-body-2"
                             >作业用时</span
                           >
-                          <v-chip x-small outlined label disabled :color="statics.color[comment.score[1] - 1]" class="px-1">
-                            <span class="text-caption">{{
+                          <v-chip x-small label :color="statics.color[comment.score[1] - 1]" class="px-1">
+                            <span class="text-caption white--text">{{
                               statics.grade[1][comment.score[1] - 1]
                             }}</span>
                           </v-chip>
@@ -97,8 +102,8 @@
                             class="pr-1 font-weight-bold text-body-2"
                             >考核难度</span
                           >
-                          <v-chip x-small outlined label disabled :color="statics.color[comment.score[2] - 1]" class="px-1">
-                            <span class="text-caption">{{
+                          <v-chip x-small label :color="statics.color[comment.score[2] - 1]" class="px-1">
+                            <span class="text-caption white--text">{{
                               statics.grade[2][comment.score[2] - 1]
                             }}</span>
                           </v-chip>
@@ -114,8 +119,8 @@
                             class="pr-1 font-weight-bold text-body-2"
                             >给分情况</span
                           >
-                          <v-chip x-small outlined label disabled :color="statics.color[comment.score[3] - 1]" class="px-1">
-                            <span class="text-caption">{{
+                          <v-chip x-small label :color="statics.color[comment.score[3] - 1]" class="px-1">
+                            <span class="text-caption white--text">{{
                               statics.grade[3][comment.score[3] - 1]
                             }}</span>
                           </v-chip>
@@ -166,15 +171,16 @@ import TextContainer from "@/components/users/comment/TextContainer";
 
 export default {
   setup() {
-    const { statics, status } = useCommentCardContent();
-    return { statics, status };
+    const { statics } = useCommentCardContent();
+    return { statics };
   },
   props: {
     comment: Object,
   },
   data() {
     return {
-      breakpoint: this.$vuetify.breakpoint
+      breakpoint: this.$vuetify.breakpoint, 
+      theme: this.$vuetify.theme, 
     }
   }, 
   computed: {
@@ -197,6 +203,7 @@ export default {
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
+
 .router-container:hover {
   cursor: pointer;
 }
