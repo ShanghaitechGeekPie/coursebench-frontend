@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <v-row>
+    <Loading v-if="fetchStatus === 'loading'" />
+    <Failed v-else-if="fetchStatus === 'error'" />
+    <v-row v-else>
+      {{ courses }}
       <v-col cols="12" md="4" order-md="last">
         <v-card>
           <v-card-text>
@@ -12,12 +15,6 @@
         </v-card>
       </v-col>
       <v-col cols="12" md="8" order-md="first">
-        <v-card class="mb-4">
-          <Loading />
-        </v-card>
-        <v-card class="mb-4">
-          <Failed />
-        </v-card>
         <v-data-iterator
           :items="courses"
           :page="iterator.pageNow"
@@ -68,9 +65,9 @@ import { onMounted } from "@vue/composition-api"
 export default {
   components: { Loading, Failed },
   setup() {
-    const { courses, iterator, getCourses, getCourseLinkPath, getNumberOfPages, coursesMatchingFilter } = useCourses()
+    const { courses, iterator, getCourses, getCourseLinkPath, getNumberOfPages, coursesMatchingFilter, fetchStatus } = useCourses()
     onMounted(getCourses)
-    return { courses, iterator, getCourseLinkPath, getNumberOfPages, coursesMatchingFilter }
+    return { courses, iterator, getCourseLinkPath, getNumberOfPages, coursesMatchingFilter, fetchStatus }
   }
 }
 </script>

@@ -14,15 +14,17 @@ export default () => {
         "name": "数学分析I",
         "code": "GEMA1009",
         "id": 1,
-        "score": 5,
-        "institute": "数学科学研究所"
+        "credit": 5,
+        "institute": "数学科学研究所", 
+        "score": [4.1, 3.3, 2.5, 1.1]
       }, 
       {
         "name": "数学分析II",
         "code": "GEMA1010",
-        "id": 8,
-        "score": 5,
-        "institute": "数学科学研究所"
+        "id": 2,
+        "credit": 5,
+        "institute": "数学科学研究所", 
+        "score": [4.1, 3.3, 2.5, 1.1]
       }, 
     ]
   } // Just for test
@@ -38,16 +40,18 @@ export default () => {
       {
         "name": "化工原理",
         "code": "CHEM1381",
-        "id": 2,
-        "score": 3,
-        "institute": "物质科学与技术学院"
+        "id": 3,
+        "credit": 3,
+        "institute": "物质科学与技术学院", 
+        "score": [4.1, 3.3, 2.5, 1.1]
       }, 
       {
         "name": "气溶胶科学与技术",
         "code": "CHEM2116",
-        "id": 3,
-        "score": 2,
-        "institute": "物质科学与技术学院"
+        "id": 4,
+        "credit": 2,
+        "institute": "物质科学与技术学院", 
+        "score": [4.1, 3.3, 2.5, 1.1]
       }, 
     ]
   } // Just for test
@@ -64,8 +68,9 @@ export default () => {
         "name": "生活中的生命科学",
         "code": "SL1004",
         "id": 5,
-        "score": 2,
-        "institute": "生命科学与技术学院"
+        "credit": 2,
+        "institute": "生命科学与技术学院", 
+        "score": [4.1, 3.3, 2.5, 1.1]
       }, 
     ],
   } // Just for test
@@ -82,34 +87,76 @@ export default () => {
         "name": "信息科学技术导论",
         "code": "SI100B",
         "id": 6,
-        "score": 4,
-        "institute": "信息科学与技术学院"
+        "credit": 4,
+        "institute": "信息科学与技术学院", 
+        "score": [4.1, 3.3, 2.5, 1.1]
       }, 
       {
         "name": "可再生能源系统",
         "code": "EE272",
         "id": 7,
-        "score": 4,
-        "institute": "信息科学与技术学院"
+        "credit": 4,
+        "institute": "信息科学与技术学院", 
+        "score": [4.1, 3.3, 2.5, 1.1]
       }, 
       {
         "name": "信息科学技术导论",
         "code": "SI100B",
-        "id": 6,
-        "score": 4,
-        "institute": "信息科学与技术学院"
+        "id": 8,
+        "credit": 4,
+        "institute": "信息科学与技术学院", 
+        "score": [4.1, 3.3, 2.5, 1.1]
       }, 
       {
         "name": "可再生能源系统",
         "code": "EE272",
-        "id": 7,
-        "score": 4,
-        "institute": "信息科学与技术学院"
+        "id": 9,
+        "credit": 4,
+        "institute": "信息科学与技术学院", 
+        "score": [4.1, 3.3, 2.5, 1.1]
       }, 
+      {
+        "name": "中华文明通论", 
+        "code": "GEHA123", 
+        "id": 10, 
+        "credit": 3, 
+        "institute": "人文科学研究院",
+        "score": [4.1, 3.3, 2.5, 1.1]
+      }, 
+      {
+        "name": "数学分析I", 
+        "code": "GEMA1009", 
+        "id": 11, 
+        "credit": 4, 
+        "institute": "数学科学研究所", 
+        "score": [4.1, 3.3, 2.5, 0.1]
+      }
     ],
   } // Just for test
 
+  const testCourseStatistic = {
+    total: 6,
+    score: 2956,
+    count: {
+      "信息科学与技术学院": 4, 
+      "物质科学与技术学院": 0,
+      "生命科学与技术学院": 0,
+      "创意与艺术学院": 0, 
+      "创业与管理学院": 0, 
+      "人文科学研究院": 1, 
+      "生物医学工程学院": 0, 
+      "数学科学研究所": 1, 
+      "其他学院": 1, 
+    }
+  } // Just for test
 
+
+  const getCourseStatistic = () => {
+    const courseStatistic = testCourseStatistic;
+
+    return courseStatistic;
+  }
+  
   const getTeacherDetail = () => {
     const teacherDetail = testTeacherDetailSIST
 
@@ -118,6 +165,29 @@ export default () => {
 
   const teacherDetail = reactive(getTeacherDetail())
 
+  const courseText = reactive(teacherDetail.courses)
+
+  const courseStatistic = reactive(getCourseStatistic())
+
+  const status = reactive({
+    selected: (() => {
+      let ret = new Array()
+      for (let key in courseStatistic.count) {
+        if (courseStatistic.count[key]) {
+          ret.push(key)
+        }
+      } return ret
+    })(), 
+  })
+
+  provide("courseStatistic", courseStatistic)
+
+  provide("courseStatus", status)
+
+  provide("courseText", courseText)
+
   provide("teacherDetail", teacherDetail)
 
+  return { courseText, status }
+  
 }

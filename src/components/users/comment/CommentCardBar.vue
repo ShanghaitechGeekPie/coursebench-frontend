@@ -49,8 +49,8 @@ import AvatarContainer from '@/components/users/profile/AvatarContainer';
 export default {
   components: { AvatarContainer },
   setup() {
-    const { statics, status } = useCommentCardBar();
-    return { statics, status };
+    const { statics } = useCommentCardBar();
+    return { statics };
   },
   props: {
     comment: Object,

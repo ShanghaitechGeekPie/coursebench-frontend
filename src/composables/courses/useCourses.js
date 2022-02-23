@@ -1,4 +1,6 @@
 import { ref, computed } from "@vue/composition-api"
+import { useQuery } from "vue-query"
+import axios from "axios"
 
 export default () => {
 
@@ -19,17 +21,14 @@ export default () => {
     })
   })
 
+  const fetchStatus = ref()
+
   const getCourses = () => {
-    for (let index = 0; index < 10; index++) {
-      courses.value.push({
-        "name": "计算机编程",
-        "code": "CS100",
-        "id": index,
-        "score": 4.2,
-        "insitute": "SIST",
-        "checked": false
-      })
-    }
+    const {status, data} = useQuery("course_all", async () => 
+      await axios.get("https://cb.wa-am.com:2/api/v1/course/all")
+    )
+    fetchStatus = status
+    courses = data.data
   }
 
   const getCourseLinkPath = (id) => {
@@ -44,5 +43,5 @@ export default () => {
     return courses.value.filter(course => course.checked)
   }
 
-  return { courses, iterator, getCourses, getCourseLinkPath, coursesMatchingFilter }
+  return { courses, iterator, getCourses, getCourseLinkPath, coursesMatchingFilter, fetchStatus }
 }

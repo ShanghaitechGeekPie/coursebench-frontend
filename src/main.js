@@ -9,9 +9,21 @@ import 'nprogress/nprogress.css'
 import '@/styles/markdown.css'
 import '@/styles/prism.css'
 
+const vueQueryPluginOptions = {
+  queryClientConfig: {
+    defaultOptions: {
+      queries: {
+        retry: 0,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false
+      }
+    }
+  }
+}
+
 Vue.config.productionTip = false
 Vue.use(VueCompositionAPI)
-Vue.use(VueQueryPlugin)
+Vue.use(VueQueryPlugin, vueQueryPluginOptions)
 
 router.beforeEach((to, from, next) => {
   NProgress.start()

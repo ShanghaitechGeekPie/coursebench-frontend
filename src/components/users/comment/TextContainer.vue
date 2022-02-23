@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" :class="dense ? 'px-sm-4 px-2 pt-sm-2 pb-0 pt-0' : ''">
+      <v-col cols="12" :class="dense ? 'px-sm-4 px-2 pb-0 pt-0' : ''">
         <span
           :class="[
             'text-body-1',
@@ -27,13 +27,9 @@
     </v-row>
     <v-row v-if="status.isOverflow">
       <v-col cols="12" :class="dense ? 'px-sm-4 px-2 py-0' : ''">
-        <v-sheet class="overlay" v-if="!status.showAll"> </v-sheet>
+        <v-sheet class="overlay" :style="{ background: `linear-gradient(transparent, ${ dark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)' })` }" v-if="!status.showAll"> </v-sheet>
         <div
-          :class="[
-            'd-flex',
-            'justify-space-between',
-            'mt-n8',
-          ]"
+          :class="['d-flex', 'justify-space-between', 'mt-n8']"
           v-if="!status.showAll"
         >
           <slot :overflow="status.isOverflow">
@@ -88,7 +84,7 @@
                   pt-sm-4 pt-2
                   pb-sm-2 pb-1
                 "
-                style="background: linear-gradient(rgba(255, 255, 255, 1), rgba(245, 245, 249, 1));"
+                :style="{ background: dark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)' }"
               >
                 <span> 阅读全文 </span>
                 <v-icon @click="status.showDialog = false">
@@ -99,10 +95,14 @@
                 class="px-sm-6 px-2"
                 ref="textDialog"
                 @scroll="scrollDetect()"
-                style="background: #f5f5f9;"
+                :style="{ background: dark ? '#1e1e1e' : '#f9f9f9' }"
               >
                 <v-fade-transition>
-                  <v-sheet class="dialog-overlay" v-if="status.showDialogOverlay"></v-sheet>
+                  <v-sheet
+                    class="dialog-overlay"
+                    :style="{ background: `linear-gradient(${ dark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)' }, transparent)` }"
+                    v-if="status.showDialogOverlay"
+                  ></v-sheet>
                 </v-fade-transition>
                 <span class="text-h5">{{ title }}</span>
                 <span
@@ -111,7 +111,8 @@
                     'text-body-1',
                     markdown ? 'markdown-body' : '',
                     'text-dialog',
-                     'pt-sm-0', 'pt-2'
+                    'pt-sm-0',
+                    'pt-2',
                   ]"
                 ></span>
               </v-card-text>
@@ -158,8 +159,12 @@ export default {
       default: false,
     },
     title: {
-      type: String, 
-      default: ""
+      type: String,
+      default: "",
+    },
+    dark: {
+      type: Boolean, 
+      default: false, 
     }
   },
   methods: {
@@ -195,13 +200,11 @@ export default {
 .overlay {
   height: 40px;
   transform: translate(0, -40px);
-  background: linear-gradient(transparent, rgba(255, 255, 255, 1));
 }
 
 .dialog-overlay {
-  height: 200px;
+  height: 60px;
   width: 100%;
   position: fixed;
-  background: linear-gradient(rgba(245, 245, 249, 1), transparent);
 }
 </style>
