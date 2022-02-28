@@ -1,8 +1,47 @@
 <template>
-  <v-app-bar app>
-    <v-btn text to="/">Homo</v-btn>
-    <v-btn text to="/course/0">课程</v-btn>
-    <v-btn text to="/exit">这些按钮是临时的</v-btn>
+  <v-app-bar
+    app
+    elevate-on-scroll
+    elevation="2"
+    class="transition-ease"
+    :style="{
+      background: isScrolled
+        ? ''
+        : `linear-gradient(rgba(39, 39, 39, ${
+            theme.isDark ? 0.9 : 0.3
+          }), transparent)`,
+    }"
+  >
+    <v-btn
+      text
+      to="/"
+      :class="[
+        isScrolled ? '' : 'white--text',
+        'font-weight-bold',
+        'text-body-1',
+      ]"
+      >Homo</v-btn
+    >
+    <v-btn
+      text
+      to="/course/0"
+      :class="[
+        isScrolled ? '' : 'white--text',
+        'font-weight-bold',
+        'text-body-1',
+      ]"
+      >课程</v-btn
+    >
+    <v-btn
+      text
+      to="/exit"
+      :class="[
+        isScrolled ? '' : 'white--text',
+        'font-weight-bold',
+        'text-body-1',
+      ]"
+      >这些按钮是临时的</v-btn
+    >
     <v-spacer></v-spacer>
     <v-menu left bottom offset-y transition="slide-y-transition">
       <template #activator="{ on }">
@@ -57,7 +96,9 @@
           <v-window-item :value="1">
             <v-card-text class="px-6">
               <v-text-field label="密码" type="password">
-                <v-icon slot="append">{{ icons.mdiFormTextboxPassword }}</v-icon>
+                <v-icon slot="append">{{
+                  icons.mdiFormTextboxPassword
+                }}</v-icon>
               </v-text-field>
             </v-card-text>
           </v-window-item>
@@ -65,23 +106,32 @@
             <v-card-text class="px-6">
               <v-row>
                 <v-col cols="12" sm="4" offset-sm="4">
-                  <v-img src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"></v-img>
+                  <v-img
+                    src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"
+                  ></v-img>
                 </v-col>
                 <v-col cols="12" sm="6" offset-sm="3">
                   <v-otp-input length="4" @finish="doLogin"></v-otp-input>
                 </v-col>
               </v-row>
               <v-overlay absolute :value="login.loading">
-                <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                <v-progress-circular
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
               </v-overlay>
             </v-card-text>
           </v-window-item>
         </v-window>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-btn v-if="login.step !== 0" text @click="login.step -= 1">上一步</v-btn>
+          <v-btn v-if="login.step !== 0" text @click="login.step -= 1"
+            >上一步</v-btn
+          >
           <v-spacer></v-spacer>
-          <v-btn v-if="login.step !== 2" text @click="login.step += 1">下一步</v-btn>
+          <v-btn v-if="login.step !== 2" text @click="login.step += 1"
+            >下一步</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -101,10 +151,18 @@
                   <v-text-field label="用户名"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <v-select v-model="register.year" :items="register.year_items" label="入学时间"></v-select>
+                  <v-select
+                    v-model="register.year"
+                    :items="register.year_items"
+                    label="入学时间"
+                  ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <v-select v-model="register.grade" :items="register.grade_items" label="年级"></v-select>
+                  <v-select
+                    v-model="register.grade"
+                    :items="register.grade_items"
+                    label="年级"
+                  ></v-select>
                 </v-col>
                 <v-col cols="12">
                   <v-text-field label="密码" type="password"></v-text-field>
@@ -119,23 +177,32 @@
             <v-card-text class="px-6">
               <v-row>
                 <v-col cols="12" sm="4" offset-sm="4">
-                  <v-img src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"></v-img>
+                  <v-img
+                    src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"
+                  ></v-img>
                 </v-col>
                 <v-col cols="12" sm="6" offset-sm="3">
                   <v-otp-input length="4" @finish="doRegister"></v-otp-input>
                 </v-col>
               </v-row>
               <v-overlay absolute :value="register.loading">
-                <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                <v-progress-circular
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
               </v-overlay>
             </v-card-text>
           </v-window-item>
         </v-window>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-btn v-if="register.step !== 0" text @click="register.step -= 1">上一步</v-btn>
+          <v-btn v-if="register.step !== 0" text @click="register.step -= 1"
+            >上一步</v-btn
+          >
           <v-spacer></v-spacer>
-          <v-btn v-if="register.step !== 2" text @click="register.step += 1">下一步</v-btn>
+          <v-btn v-if="register.step !== 2" text @click="register.step += 1"
+            >下一步</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -143,9 +210,9 @@
 </template>
 
 <script>
-import useLogin from "@/composables/users/useLogin"
-import useRegister from "@/composables/users/useRegister"
-import useLogout from "@/composables/users/useLogout"
+import useLogin from "@/composables/users/useLogin";
+import useRegister from "@/composables/users/useRegister";
+import useLogout from "@/composables/users/useLogout";
 
 import {
   mdiLoginVariant,
@@ -155,14 +222,14 @@ import {
   mdiMessageAlertOutline,
   mdiEmail,
   mdiFormTextboxPassword,
-} from "@mdi/js"
+} from "@mdi/js";
 
 export default {
   setup() {
-    const { login, doLogin } = useLogin()
-    const { register, doRegister } = useRegister()
-    const { doLogout } = useLogout()
-    return { login, register, doLogin, doRegister, doLogout }
+    const { login, doLogin } = useLogin();
+    const { register, doRegister } = useRegister();
+    const { doLogout } = useLogout();
+    return { login, register, doLogin, doRegister, doLogout };
   },
   data() {
     return {
@@ -175,7 +242,14 @@ export default {
         mdiEmail,
         mdiFormTextboxPassword,
       },
-    }
-  }
-}
+      isScrolled: 0,
+      theme: this.$vuetify.theme,
+    };
+  },
+  mounted() {
+    document.addEventListener("scroll", () => {
+      this.isScrolled = document.documentElement.scrollTop > 0;
+    });
+  },
+};
 </script>

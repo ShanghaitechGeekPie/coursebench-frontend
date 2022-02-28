@@ -3,7 +3,7 @@
     <v-img
       alt="Background Image"
       :src="theme.isDark ? statics.backgroundDark : statics.backgroundLight"
-      :height="breakpoint.xsOnly ? 91 : (breakpoint.mdAndDown ? 121 : 211)"
+      :height="breakpoint.xsOnly ? 155 : (breakpoint.mdAndDown ? 185 : 275)"
     ></v-img>
   </div>
 </template>

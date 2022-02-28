@@ -1,5 +1,6 @@
 import {
   mdiChartBubble,  
+  mdiDotsHorizontal, 
 } from "@mdi/js";
 
 export default () => {
@@ -28,22 +29,26 @@ export default () => {
       "其他学院": '?'
     }, 
     color: [
+      "#B71C1C", 
       "#FF5252", 
       "#FF892F", 
       "#FFC107", 
-      "#709800",
       "#A4BE23", 
+      "#709800", 
+      "#1B5E20", 
     ], 
     label: [
+      "特别差评", 
       "差评如潮", 
       "多半差评", 
       "褒贬不一", 
       "多半好评", 
-      "好评如潮"
+      "好评如潮", 
+      "特别好评", 
     ], 
     icons: {
       mdiChartBubble,  
-
+      mdiDotsHorizontal, 
     }
   }
 

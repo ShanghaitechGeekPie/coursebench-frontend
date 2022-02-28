@@ -2,7 +2,7 @@
   <div>
     <v-sheet
       :color="theme.isDark ? statics.backgroundDark : statics.background"
-      :height="breakpoint.xsOnly ? 91 : (breakpoint.mdAndDown ? 121 : 211)"
+      :height="breakpoint.xsOnly ? 155 : (breakpoint.mdAndDown ? 185 : 275)"
     ></v-sheet>
   </div>
 </template>

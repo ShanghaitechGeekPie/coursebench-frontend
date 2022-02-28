@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="d-flex justify-center pt-3 px-4">
-      <div class="grey--text text--darken-2 overflow">
+      <div class="grey--text text--darken-2 overflow" style="max-width: 750px">
         <span>{{ teacherDetail.introduction }}</span>
       </div>
     </div>

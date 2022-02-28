@@ -13,7 +13,7 @@
             : name.length >= 3
             ? 'text-body-2'
             : 'text-body-1',
-          'white--text',
+          fontColor,
         ]"
         v-if="src === ''"
         >{{ name }}</span
@@ -49,6 +49,10 @@ export default {
       type: String,
       default: "blue",
     },
+    fontColor: {
+      type: String, 
+      default: 'white--text',
+    }, 
     small: {
       type: Boolean,
       default: false,

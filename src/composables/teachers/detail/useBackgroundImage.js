@@ -17,7 +17,8 @@ export default () => {
   const teacherDetail = inject("teacherDetail")
 
   const statics = {
-    background: background[teacherDetail.institute]
+    background: background[teacherDetail.institute], 
+    backgroundDark: 'grey darken-3', 
   }
 
   return { statics }

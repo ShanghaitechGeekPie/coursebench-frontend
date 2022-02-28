@@ -7,7 +7,7 @@
   >
     <BackgroundImage />
     <div style="flex-wrap: wrap" class="d-flex justify-center">
-      <div class="pa-lg-3 pb-3">
+      <div class="pa-lg-3">
         <v-card
           :style="{
             transform: breakpoint.mdAndDown
@@ -19,34 +19,36 @@
           flat
           class="pt-6 pb-3 px-7"
           :width="breakpoint.mdAndDown ? '100vw' : '360'"
+          outlined
         >
           <Detail />
           <StatisticCard />
         </v-card>
       </div>
-      <div class="pa-3 pl-0">
+      <div class="pa-3 px-0">
         <v-container class="py-sm-3 py-0">
           <v-row>
-            <v-col class="pl-sm-0 pr-lg-3 pr-0 pl-0 pr-0 pt-sm-3 pt-0">
+            <v-col class="px-0">
               <div
                 :style="{
-                  width:
-                    breakpoint.width - 24 > 1284
-                      ? '1284px'
-                      : breakpoint.width - 24 + 'px',
+                  width: breakpoint.mdAndDown
+                    ? ''
+                    : Math.floor((breakpoint.width - 428) / 428) * 428 + 'px',
                 }"
               >
-                <div class="d-flex flex-wrap">
-                  <CourseCard
-                    v-for="(course, index) in courseText"
-                    :key="course.id"
-                    :course="course"
-                    v-if="
-                      status.selected.some(
-                        (school) => school === course.institute
-                      )
-                    "
-                  />
+                <div class="d-flex flex-wrap justify-center justify-lg-start">
+                  <div v-for="(course, index) in courseText" :key="course.id">
+                    <v-fade-transition>
+                      <CourseCard
+                        :course="course"
+                        v-if="
+                          status.selected.some(
+                            (school) => school === course.institute
+                          )
+                        "
+                      />
+                    </v-fade-transition>
+                  </div>
                 </div>
               </div>
             </v-col>

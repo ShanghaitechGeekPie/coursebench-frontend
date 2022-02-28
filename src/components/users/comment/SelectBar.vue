@@ -1,6 +1,7 @@
 <template>
   <v-card
     flat
+    outlined
     class="px-lg-0 px-4"
     :style="{
       width:

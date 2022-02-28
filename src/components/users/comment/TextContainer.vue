@@ -92,7 +92,7 @@
                 </v-icon>
               </v-card-title>
               <v-card-text
-                class="px-sm-6 px-2"
+                class="px-sm-6 px-4"
                 ref="textDialog"
                 @scroll="scrollDetect()"
                 :style="{ background: dark ? '#1e1e1e' : '#f9f9f9' }"
