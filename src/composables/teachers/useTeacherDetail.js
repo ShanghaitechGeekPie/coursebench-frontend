@@ -16,7 +16,7 @@ export default () => {
         "id": 1,
         "credit": 5,
         "institute": "数学科学研究所", 
-        "score": [4.1, 3.3, 2.5, 1.1]
+        "score": [5, 0.3, 4.5, 2.1]
       }, 
       {
         "name": "数学分析II",
@@ -24,7 +24,7 @@ export default () => {
         "id": 2,
         "credit": 5,
         "institute": "数学科学研究所", 
-        "score": [4.1, 3.3, 2.5, 1.1]
+        "score": [4.9, 4.5, 4.3, 4.1]
       }, 
     ]
   } // Just for test
@@ -51,7 +51,7 @@ export default () => {
         "id": 4,
         "credit": 2,
         "institute": "物质科学与技术学院", 
-        "score": [4.1, 3.3, 2.5, 1.1]
+        "score": [2.2, 3.3, 4.4, 1.1]
       }, 
     ]
   } // Just for test
@@ -70,7 +70,7 @@ export default () => {
         "id": 5,
         "credit": 2,
         "institute": "生命科学与技术学院", 
-        "score": [4.1, 3.3, 2.5, 1.1]
+        "score": [0.1, 2.3, 2.5, 1.1]
       }, 
     ],
   } // Just for test
@@ -89,7 +89,7 @@ export default () => {
         "id": 6,
         "credit": 4,
         "institute": "信息科学与技术学院", 
-        "score": [4.1, 3.3, 2.5, 1.1]
+        "score": [4.1, 2.3, 0.5, 1.1]
       }, 
       {
         "name": "可再生能源系统",
@@ -97,7 +97,7 @@ export default () => {
         "id": 7,
         "credit": 4,
         "institute": "信息科学与技术学院", 
-        "score": [4.1, 3.3, 2.5, 1.1]
+        "score": [5, 3.3, 2.5, 1.1]
       }, 
       {
         "name": "信息科学技术导论",
@@ -105,7 +105,7 @@ export default () => {
         "id": 8,
         "credit": 4,
         "institute": "信息科学与技术学院", 
-        "score": [4.1, 3.3, 2.5, 1.1]
+        "score": [5, 4.5, 0.3, 0]
       }, 
       {
         "name": "可再生能源系统",
@@ -113,7 +113,7 @@ export default () => {
         "id": 9,
         "credit": 4,
         "institute": "信息科学与技术学院", 
-        "score": [4.1, 3.3, 2.5, 1.1]
+        "score": [3.1, 1.3, 2.5, 1.1]
       }, 
       {
         "name": "中华文明通论", 
@@ -121,7 +121,7 @@ export default () => {
         "id": 10, 
         "credit": 3, 
         "institute": "人文科学研究院",
-        "score": [4.1, 3.3, 2.5, 1.1]
+        "score": [0.1, 0.3, 0.5, 0.2]
       }, 
       {
         "name": "数学分析I", 
@@ -129,8 +129,8 @@ export default () => {
         "id": 11, 
         "credit": 4, 
         "institute": "数学科学研究所", 
-        "score": [4.1, 3.3, 2.5, 0.1]
-      }
+        "score": [1.1, 3.3, 2.5, 0.1]
+      }, 
     ],
   } // Just for test
 
