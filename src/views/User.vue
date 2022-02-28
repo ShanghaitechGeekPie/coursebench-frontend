@@ -1,15 +1,20 @@
 <template>
-  <div :style="{ background: theme.isDark ? '' : '#f9f9f9', 'min-height': '100%' }">
+  <div
+    :style="{ background: theme.isDark ? '' : '#f9f9f9', 'min-height': '100%' }"
+  >
     <BackgroundImage />
-    <div style="flex-wrap: wrap;" class="d-flex justify-center">
+    <div style="flex-wrap: wrap" class="d-flex justify-center">
       <div class="pa-lg-3 pb-3">
         <v-card
           :style="{
-            transform: breakpoint.mdAndDown ? '' : `translate(0, ${
-              -160 + (scrollTop <= 40 ? 0 : scrollTop - 40)
-            }px)`
+            transform: breakpoint.mdAndDown
+              ? ''
+              : `translate(0, ${
+                  -160 + (scrollTop <= 40 ? 0 : scrollTop - 40)
+                }px)`,
           }"
           flat
+          outlined
           class="pt-6 pb-3 px-7"
           :width="breakpoint.mdAndDown ? '100vw' : '360'"
         >
@@ -26,12 +31,18 @@
           </v-row>
           <v-row>
             <v-col class="pl-sm-0 pr-lg-3 pr-0 pl-0 pr-0 pt-sm-3 pt-0">
-              <CommentCard
-                v-for="(comment, index) in commentText"
-                :key="comment.id"
-                :comment="comment"
-                v-if="status.selected.some((school) => school === comment.course.institute)"
-              />
+              <div v-for="(comment, index) in commentText" :key="comment.id">
+                <v-fade-transition>
+                  <CommentCard
+                    :comment="comment"
+                    v-if="
+                      status.selected.some(
+                        (school) => school === comment.course.institute
+                      )
+                    "
+                  />
+                </v-fade-transition>
+              </div>
             </v-col>
           </v-row>
         </v-container>
@@ -55,8 +66,8 @@ export default {
   data() {
     return {
       scrollTop: document.documentElement.scrollTop,
-      breakpoint: this.$vuetify.breakpoint, 
-      theme: this.$vuetify.theme
+      breakpoint: this.$vuetify.breakpoint,
+      theme: this.$vuetify.theme,
     };
   },
   components: {
