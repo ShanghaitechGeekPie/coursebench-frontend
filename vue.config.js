@@ -21,8 +21,7 @@ module.exports = {
   devServer: {
     hot: true,
     port: 8000,
-    compress: true,
-    disableHostCheck: true
+    compress: true
   },
   "transpileDependencies": [
     "vuetify"
