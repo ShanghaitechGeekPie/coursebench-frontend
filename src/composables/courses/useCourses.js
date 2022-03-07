@@ -1,6 +1,5 @@
 import { ref, computed } from "@vue/composition-api"
-import { useQuery } from "vue-query"
-import axios from "axios"
+import useFetching from "@/composables/global/useFetching"
 
 export default () => {
 
@@ -23,12 +22,17 @@ export default () => {
 
   const fetchStatus = ref()
 
+  const checkData = ref([])
+
+  const initCheckData = () => {
+    
+  }
+
   const getCourses = () => {
-    const {status, data} = useQuery("course_all", async () => 
-      await axios.get("https://cb.wa-am.com:2/api/v1/course/all")
-    )
-    fetchStatus = status
-    courses = data.data
+    useFetching("course_all", "/course/all", (result) => {
+      fetchStatus.value = result.status
+      courses.value = result.data.data
+    })
   }
 
   const getCourseLinkPath = (id) => {

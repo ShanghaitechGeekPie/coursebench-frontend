@@ -3,7 +3,6 @@
     <Loading v-if="fetchStatus === 'loading'" />
     <Failed v-else-if="fetchStatus === 'error'" />
     <v-row v-else>
-      {{ courses }}
       <v-col cols="12" md="4" order-md="last">
         <v-card>
           <v-card-text>
@@ -29,10 +28,12 @@
               <v-card-title>
                 <router-link :to="getCourseLinkPath(course.id)">{{ course.name }}</router-link>
                 <v-spacer></v-spacer>
+                <!--
                 <v-checkbox
                   v-model="course.checked"
                   :label="`Checked: ${course.checked.toString()}`"
                 ></v-checkbox>
+                -->
               </v-card-title>
               <v-card-text>{{ course.id }}</v-card-text>
             </v-card>
