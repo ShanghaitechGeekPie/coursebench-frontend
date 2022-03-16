@@ -82,7 +82,6 @@
                   justify-space-between
                   px-sm-6 px-2
                   pt-sm-4 pt-2
-                  pb-sm-2 pb-1
                 "
                 :style="{ background: dark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)' }"
               >
@@ -92,14 +91,14 @@
                 </v-icon>
               </v-card-title>
               <v-card-text
-                class="px-sm-6 px-4"
+                class="px-sm-6 px-4 pt-3"
                 ref="textDialog"
                 @scroll="scrollDetect()"
                 :style="{ background: dark ? '#1e1e1e' : '#f9f9f9' }"
               >
                 <v-fade-transition>
                   <v-sheet
-                    class="dialog-overlay"
+                    class="dialog-overlay mt-n3"
                     :style="{ background: `linear-gradient(${ dark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)' }, transparent)` }"
                     v-if="status.showDialogOverlay"
                   ></v-sheet>
