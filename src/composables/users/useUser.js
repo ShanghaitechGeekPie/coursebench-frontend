@@ -8,7 +8,7 @@ export default () => {
     grade: 1,
     nickname: "小明",
     realname: "吴迪",
-    avatar: "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+    avatar: "",
     show_email: true, 
     show_year: true, 
     show_grade: true, 

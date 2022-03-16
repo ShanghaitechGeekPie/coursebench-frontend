@@ -10,14 +10,14 @@
   >
     <v-container>
       <v-row class="pt-lg-2 pt-0">
-        <v-col md="2" sm="3" cols="6" class="pb-0 pt-lg-3 pt-0">
+        <v-col md="2" sm="3" cols="6" class="pb-0 pt-3 pl-lg-4">
           <v-select
             v-model="status.sortKey"
             :items="statics.sortKeyItem"
             label="排序方式"
           ></v-select>
         </v-col>
-        <v-col md="2" sm="3" cols="6" class="pb-0 pt-lg-3 pt-0">
+        <v-col md="2" sm="3" cols="6" class="pb-0 pt-3 pt-0">
           <v-select
             v-model="status.order"
             :items="statics.orderItem"

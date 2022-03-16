@@ -19,11 +19,13 @@ export default () => {
   }
 
   const status = inject("commentStatus")
+  let lastStatus = Object.assign({}, status)
 
-  watch(status, (oldValue, newValue) => {
-    if (oldValue.sortKey == newValue.sortKey && oldValue.order == oldValue.order) {
-      return;
-    } commentText.sort(sortFunc)
+  watch(status, () => {
+    if ((lastStatus.sortKey != status.sortKey) || (lastStatus.order != status.order)) {
+      commentText.sort(sortFunc)
+      lastStatus = Object.assign({}, status)
+    }
   })
 
   commentText.sort(sortFunc)
