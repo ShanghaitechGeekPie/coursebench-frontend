@@ -32,9 +32,9 @@
 </template>
 <script>
 import useEditProfile from "@/composables/users/profile/useEditProfile";
-import EditProfileCard from "@/components/users/profile/EditProfileCard";
-import EditPasswordCard from "@/components/users/profile/EditPasswordCard";
-import CaptchaCard from "@/components/users/profile/CaptchaCard";
+import EditProfileCard from "@/components/users/profile/EditProfileCard.vue";
+import EditPasswordCard from "@/components/users/profile/EditPasswordCard.vue";
+import CaptchaCard from "@/components/users/profile/CaptchaCard.vue";
 
 export default {
   setup() {

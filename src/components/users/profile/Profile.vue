@@ -44,8 +44,8 @@
 </template>
 <script>
 import useProfile from "@/composables/users/profile/useProfile";
-import EditProfile from "@/components/users/profile/EditProfile";
-import AvatarContainer from "@/components/users/profile/AvatarContainer";
+import EditProfile from "@/components/users/profile/EditProfile.vue";
+import AvatarContainer from "@/components/users/profile/AvatarContainer.vue";
 
 export default {
   setup() {

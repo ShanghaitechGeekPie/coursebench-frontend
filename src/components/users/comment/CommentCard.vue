@@ -7,8 +7,8 @@
   </v-lazy>
 </template>
 <script>
-import CommentCardContent from "@/components/users/comment/CommentCardContent";
-import CommentCardBar from "@/components/users/comment/CommentCardBar";
+import CommentCardContent from "@/components/users/comment/CommentCardContent.vue";
+import CommentCardBar from "@/components/users/comment/CommentCardBar.vue";
 
 export default {
   props: {

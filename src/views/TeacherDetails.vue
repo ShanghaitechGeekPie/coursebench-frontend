@@ -59,10 +59,10 @@
   </div>
 </template>
 <script>
-import Detail from "@/components/teachers/detail/Detail";
-import BackgroundImage from "@/components/teachers/detail/BackgroundImage";
-import CourseCard from "@/components/teachers/course/CourseCard";
-import StatisticCard from "@/components/teachers/course/StatisticCard";
+import Detail from "@/components/teachers/detail/Detail.vue";
+import BackgroundImage from "@/components/teachers/detail/BackgroundImage.vue";
+import CourseCard from "@/components/teachers/course/CourseCard.vue";
+import StatisticCard from "@/components/teachers/course/StatisticCard.vue";
 import useTeacherDetail from "@/composables/teachers/useTeacherDetail";
 
 export default {

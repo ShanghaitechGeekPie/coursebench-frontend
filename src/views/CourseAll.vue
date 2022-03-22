@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import Loading from "@/components/global/Loading"
-import Failed from "@/components/global/Failed"
+import Loading from "@/components/global/Loading.vue"
+import Failed from "@/components/global/Failed.vue"
 import useCourses from "@/composables/courses/useCourses"
 import { onMounted } from "@vue/composition-api"
 

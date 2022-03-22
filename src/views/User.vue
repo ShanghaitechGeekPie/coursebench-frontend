@@ -51,11 +51,11 @@
   </div>
 </template>
 <script>
-import Profile from "@/components/users/profile/Profile";
-import BackgroundImage from "@/components/users/profile/BackgroundImage";
-import CommentCard from "@/components/users/comment/CommentCard";
-import SelectBar from "@/components/users/comment/SelectBar";
-import StatisticCard from "@/components/users/comment/StatisticCard";
+import Profile from "@/components/users/profile/Profile.vue";
+import BackgroundImage from "@/components/users/profile/BackgroundImage.vue";
+import CommentCard from "@/components/users/comment/CommentCard.vue";
+import SelectBar from "@/components/users/comment/SelectBar.vue";
+import StatisticCard from "@/components/users/comment/StatisticCard.vue";
 import useUser from "@/composables/users/useUser";
 
 export default {

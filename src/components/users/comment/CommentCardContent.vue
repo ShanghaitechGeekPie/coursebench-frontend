@@ -167,7 +167,7 @@
 </template>
 <script>
 import useCommentCardContent from "@/composables/users/comment/useCommentCardContent";
-import TextContainer from "@/components/users/comment/TextContainer";
+import TextContainer from "@/components/users/comment/TextContainer.vue";
 
 export default {
   setup() {

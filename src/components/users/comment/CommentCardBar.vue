@@ -44,7 +44,7 @@
 </template>
 <script>
 import useCommentCardBar from "@/composables/users/comment/useCommentCardBar";
-import AvatarContainer from '@/components/users/profile/AvatarContainer';
+import AvatarContainer from '@/components/users/profile/AvatarContainer.vue';
 
 export default {
   components: { AvatarContainer },

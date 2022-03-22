@@ -9,6 +9,13 @@ import 'nprogress/nprogress.css'
 import '@/styles/markdown.css'
 import '@/styles/prism.css'
 
+import '@fontsource/roboto/latin-100.css'
+import '@fontsource/roboto/latin-300.css'
+import '@fontsource/roboto/latin-400.css'
+import '@fontsource/roboto/latin-500.css'
+import '@fontsource/roboto/latin-700.css'
+import '@fontsource/roboto/latin-900.css'
+
 const vueQueryPluginOptions = {
   queryClientConfig: {
     defaultOptions: {

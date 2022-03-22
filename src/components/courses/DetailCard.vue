@@ -37,9 +37,9 @@
 
 <script>
 import ScoreBoard from '@/components/courses/ScoreBoard.vue';
-import DetailChips from "@/components/courses/DetailChips";
-import ReviewDetail from "@/components/courses/ReviewDetail";
-import TeacherSelect from "@/components/courses/TeacherSelect";
+import DetailChips from "@/components/courses/DetailChips.vue";
+import ReviewDetail from "@/components/courses/ReviewDetail.vue";
+import TeacherSelect from "@/components/courses/TeacherSelect.vue";
 
 export default {
   name: "DetailCard",

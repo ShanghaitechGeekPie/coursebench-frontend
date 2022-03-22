@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import WritingBox from '@/components/courses/WritingBox'
+import WritingBox from '@/components/courses/WritingBox.vue'
 
 export default {
   name: "SelectBar",

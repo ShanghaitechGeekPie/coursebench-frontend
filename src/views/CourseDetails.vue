@@ -18,7 +18,7 @@
 
 <script>
 import DetailCard from '@/components/courses/DetailCard.vue';
-import CommentBoard from "@/components/courses/CommentBoard";
+import CommentBoard from "@/components/courses/CommentBoard.vue";
 import useCourseDetails from "@/composables/courses/comment/useCourseDetails";
 
 

@@ -171,7 +171,7 @@
 </template>
 <script>
 import useCourseCard from "@/composables/teachers/course/useCourseCard";
-import AvatarContainer from "@/components/users/profile/AvatarContainer";
+import AvatarContainer from "@/components/users/profile/AvatarContainer.vue";
 
 export default {
   setup() {

@@ -10,8 +10,8 @@
 <script>
 import useUser from '@/composables/users/useUser'
 import useComment from "@/composables/courses/comment/useComment";
-import CommentBox from '@/components/courses/CommentBox'
-import SelectBar from '@/components/courses/SelectBar'
+import CommentBox from '@/components/courses/CommentBox.vue'
+import SelectBar from '@/components/courses/SelectBar.vue'
 
 export default {
   setup() {
