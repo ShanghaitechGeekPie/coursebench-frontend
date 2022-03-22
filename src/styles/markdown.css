@@ -1,9 +1,13 @@
-.markdown-body a:hover {
+.markdown-body h1, h2, h3, h4, h5, h6 {
+  padding-bottom: 16px;
+}
+
+.markdown-body a :hover {
   outline-width: 0;
 }
 
 .markdown-body strong {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .markdown-body img {
@@ -16,36 +20,52 @@
   line-height: 1.8em;
 }
 
-.markdown-body a:hover {
+.markdown-body a :hover {
   text-decoration: underline;
 }
 
-.markdown-body img[align=right] {
+.markdown-body img [align = right] {
   padding-left: 20px;
 }
 
-.markdown-body img[align=left] {
+.markdown-body img [align = left] {
   padding-right: 20px;
 }
 
 .markdown-body a {
-  margin: 0;
-  color: #d32f2f;
   -webkit-text-decoration: none;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9em;
+  font-weight: 700;
+  letter-spacing: .5px;
+  font-size: 0.95em;
 }
 
 .markdown-body blockquote {
   margin-left: 0;
-  padding: .1em 0 .1em 1.5em;
-  color: #7b848e;
+  margin-bottom: 16px;
+  padding-left: 16px;
+  color: rgb(128, 128, 128);
+  background-color: rgba(128, 128, 128, .05);
   border-left: .3em solid rgba(128, 128, 128, .6);
+}
+
+.markdown-body blockquote > p {
+  padding: 16px 0;
+}
+
+.markdown-body p {
+  margin: 0;
+  font-size: .95rem;
+  padding-bottom: 16px;
+}
+
+.markdown-body hr {
+  margin-bottom: 16px;
 }
 
 .markdown-body ul, ol {
   padding-left: 1em;
+  padding-bottom: 16px;
 }
 
 .markdown-body ul > li {
@@ -68,17 +88,16 @@
   font-size: 0.95em;
 }
 
-.markdown-body table tr:nth-child(2n) {
-  background-color: rgba(128, 128, 128, .15);
+.markdown-body table tr :nth-child(2n) {
+  background-color: rgba(128, 128, 128, .1);
 }
 
 .markdown-body table th {
-  background-color: rgba(128, 128, 128, .3);
-  font-weight: 600;
+  background-color: rgba(128, 128, 128, .15);
+  font-weight: 700;
 }
 
-.markdown-body table th,
-.markdown-body table td {
+.markdown-body table th, .markdown-body table td {
   padding: .5em 1.5em;
   border: .5px solid rgba(128, 128, 128, .5);
 }
