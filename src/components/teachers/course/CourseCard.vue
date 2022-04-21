@@ -69,6 +69,7 @@
                         v-model="course.score[0] * 20"
                         :color="statics.color[score[0]]"
                         class="mt-2"
+                        style="pointer-events: none;"
                       >
                       </v-progress-linear>
                     </div>
@@ -94,6 +95,7 @@
                         v-model="course.score[1] * 20"
                         :color="statics.color[score[1]]"
                         class="mt-2"
+                        style="pointer-events: none;"
                       >
                       </v-progress-linear>
                     </div>
@@ -119,6 +121,7 @@
                         v-model="course.score[2] * 20"
                         :color="statics.color[score[2]]"
                         class="mt-2"
+                        style="pointer-events: none;"
                       >
                       </v-progress-linear>
                     </div>
@@ -144,10 +147,10 @@
                         v-model="course.score[3] * 20"
                         :color="statics.color[score[3]]"
                         class="mt-2"
+                        style="pointer-events: none;"
                       >
                       </v-progress-linear>
                     </div>
-                    </v-slider>
                     <div>
                       <v-chip
                         x-small
