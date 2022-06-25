@@ -21,6 +21,7 @@
             "
             flat
             outlined
+            :width="breakpoint.mdAndDown ? '100vw' : '360px'"
             class="pt-6 pb-3 px-7"
           >
             <Profile />
