@@ -5,11 +5,11 @@ const gradeItems = [ "本科生", "硕士研究生", "博士研究生" ]
 export default () => {
 
   const testUserProfile = {
-    email: "1@shanghaitech.edu.cn",
+    email: "aReallyReallyReallyLongName@shanghaitech.edu.cn",
     year: 2022,
     grade: 1,
-    nickname: "小明",
-    realname: "吴迪",
+    nickname: "一个很长很长很长很长很长的名字叫做小明",
+    realname: "阿仆杜拉-吴迪",
     avatar: "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
     show_email: true, 
     show_year: true, 

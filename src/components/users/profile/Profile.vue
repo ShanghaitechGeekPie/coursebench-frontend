@@ -12,7 +12,7 @@
       />
     </div>
     <div class="d-flex justify-center pt-5" :style="{ 'margin-top': breakpoint.mdAndDown ? '-76px' : '0' }">
-      <div class="text-h5 font-weight-bold">
+      <div class="text-h5 font-weight-bold single-line-limit">
         {{ userProfile.nickname }}
       </div>
     </div>
@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="d-flex justify-center pt-3" v-if="userProfile.show_email">
-      <div class="grey--text text--darken-2">
+      <div class="grey--text text--darken-2 single-line-limit">
         <span>{{ userProfile.email }}</span>
       </div>
     </div>
@@ -67,3 +67,10 @@ export default {
   },
 };
 </script>
+<style>
+.single-line-limit {
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+</style>
