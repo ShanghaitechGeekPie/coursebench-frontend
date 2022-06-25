@@ -27,7 +27,16 @@
     </v-row>
     <v-row v-if="status.isOverflow">
       <v-col cols="12" :class="dense ? 'px-sm-4 px-2 py-0' : ''">
-        <v-sheet class="overlay" :style="{ background: `linear-gradient(transparent, ${ dark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)' })` }" v-if="!status.showAll"> </v-sheet>
+        <v-sheet
+          class="overlay"
+          :style="{
+            background: `linear-gradient(transparent, ${
+              dark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)'
+            })`,
+          }"
+          v-if="!status.showAll"
+        >
+        </v-sheet>
         <div
           :class="['d-flex', 'justify-space-between', 'mt-n8']"
           v-if="!status.showAll"
@@ -77,32 +86,28 @@
           >
             <v-card tile flat>
               <v-card-title
-                class="
-                  d-flex
-                  justify-space-between
-                  px-sm-6 px-2
-                  pt-sm-4 pt-2
-                "
-                :style="{ background: dark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)' }"
+                class="d-flex justify-space-between px-sm-6 px-2 pt-sm-4 pt-2"
+                :style="{ background: dark ? '#1e1e1e' : '#ffffff' }"
               >
-                <span> 阅读全文 </span>
+                <span class="text-h6"> 阅读全文 </span>
                 <v-icon @click="status.showDialog = false">
                   {{ statics.icons.mdiClose }}
                 </v-icon>
               </v-card-title>
+              <v-divider></v-divider>
               <v-card-text
                 class="px-sm-6 px-4 pt-3"
                 ref="textDialog"
                 @scroll="scrollDetect()"
-                :style="{ background: dark ? '#1e1e1e' : '#f9f9f9' }"
+                :style="{ background: dark ? '#1e1e1e' : '#ffffff' }"
               >
-                <v-fade-transition>
+                <!-- <v-fade-transition>
                   <v-sheet
                     class="dialog-overlay mt-n3"
                     :style="{ background: `linear-gradient(${ dark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)' }, transparent)` }"
                     v-if="status.showDialogOverlay"
                   ></v-sheet>
-                </v-fade-transition>
+                </v-fade-transition> -->
                 <span class="text-h5">{{ title }}</span>
                 <span
                   v-html="markdown ? useMarkdown(text) : text"
@@ -162,9 +167,9 @@ export default {
       default: "",
     },
     dark: {
-      type: Boolean, 
-      default: false, 
-    }
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     overflowDetect() {
@@ -172,9 +177,9 @@ export default {
         this.status.isOverflow = true;
       }
     },
-    scrollDetect() {
-      this.status.showDialogOverlay = this.$refs.textDialog.scrollTop > 0;
-    },
+    // scrollDetect() {
+    //   this.status.showDialogOverlay = this.$refs.textDialog.scrollTop > 0;
+    // },
   },
   mounted() {
     setTimeout(() => {

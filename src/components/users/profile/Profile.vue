@@ -67,7 +67,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .single-line-limit {
   white-space: nowrap; 
   overflow: hidden; 

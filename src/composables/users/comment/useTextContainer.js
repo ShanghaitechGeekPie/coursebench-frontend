@@ -17,7 +17,7 @@ export default () => {
     isOverflow: false,
     showAll: false,
     showDialog: false,
-    showDialogOverlay: false
+    // showDialogOverlay: false
   })
 
   return { statics, status }
