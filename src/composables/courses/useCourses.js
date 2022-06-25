@@ -1,4 +1,4 @@
-import { ref, computed } from "@vue/composition-api"
+import { ref, toRefs, toRef, effectScope, watch, watchEffect, reactive, computed } from "@vue/composition-api"
 import useFetching from "@/composables/global/useFetching"
 
 export default () => {
@@ -7,10 +7,10 @@ export default () => {
 
   const iterator = ref({
     pageNow: 1,
-    itemsPerPage: 5,
+    itemsPerPage: 10,
     disableFiltering: true,
     lengthFiltered: computed(() => {
-      return iterator.value.disableFiltering ? courses.value.length : coursesMatchingFilter().length
+      return iterator.value.disableFiltering ? getLength(courses.value) : getLength(coursesMatchingFilter())
     }),
     numberOfPages: computed(() => {
       return getNumberOfPages(iterator.value.lengthFiltered)
@@ -25,14 +25,17 @@ export default () => {
   const checkData = ref([])
 
   const initCheckData = () => {
-    
+
+  }
+
+  const getLength = (value) => {
+    return value ? value.length : 0
   }
 
   const getCourses = () => {
-    useFetching("course_all", "/course/all", (result) => {
-      fetchStatus.value = result.status
-      courses.value = result.data.data
-    })
+    const response = useFetching("course_all", "/course/all", (result) => result.data)
+    fetchStatus.value = response.status
+    courses.value = reactive(response.data)
   }
 
   const getCourseLinkPath = (id) => {
