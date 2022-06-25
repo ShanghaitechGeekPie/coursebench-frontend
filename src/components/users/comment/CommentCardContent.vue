@@ -142,7 +142,7 @@
                         <v-icon size="16">
                           {{ statics.icons.mdiAccountOutline }}
                         </v-icon>
-                        <span>
+                        <span class="text-caption">
                           {{ comment.user_nickname }}
                         </span>
                       </v-col>
@@ -150,7 +150,7 @@
                         <v-icon size="16">
                           {{ statics.icons.mdiClockOutline }}
                         </v-icon>
-                        <span>
+                        <span class="text-caption">
                           {{ semester }}
                         </span>
                       </v-col>

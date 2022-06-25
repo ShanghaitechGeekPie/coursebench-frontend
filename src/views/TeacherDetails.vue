@@ -8,22 +8,28 @@
     <BackgroundImage />
     <div style="flex-wrap: wrap" class="d-flex justify-center">
       <div class="pa-lg-3">
-        <v-card
-          :style="{
-            transform: breakpoint.mdAndDown
-              ? ''
-              : `translate(0, ${
-                  -160 + (scrollTop <= 40 ? 0 : scrollTop - 40)
-                }px)`,
-          }"
-          flat
-          class="pt-6 pb-3 px-7"
-          :width="breakpoint.mdAndDown ? '100vw' : '360'"
-          outlined
-        >
-          <Detail />
-          <StatisticCard />
-        </v-card>
+        <div :style="{ width: breakpoint.mdAndDown ? '100vw' : '360px' }">
+          <v-card
+            :style="
+              breakpoint.mdAndDown
+                ? {}
+                : scrollTop <= 40
+                ? {
+                    transform: 'translate(0, -160px)',
+                  }
+                : {
+                    position: 'fixed',
+                    top: '90px',
+                  }
+            "
+            flat
+            outlined
+            class="pt-6 pb-3 px-7"
+          >
+            <Detail />
+            <StatisticCard />
+          </v-card>
+        </div>
       </div>
       <div class="pa-3 px-0">
         <v-container class="py-sm-3 py-0">

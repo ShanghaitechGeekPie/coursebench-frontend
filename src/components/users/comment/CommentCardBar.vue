@@ -20,7 +20,7 @@
           <v-col sm="3" class="pa-0 d-flex justify-end">
             <div class="d-flex flex-column">
               <div class="mt-n1">
-                <v-icon size="14">
+                <v-icon size="16">
                   {{ statics.icons.mdiUpdate }}
                 </v-icon>
                 <span class="text-caption">
@@ -28,7 +28,7 @@
                 </span>
               </div>
               <div>
-                <v-icon size="14">
+                <v-icon size="16">
                   {{ statics.icons.mdiCommentEditOutline }}
                 </v-icon>
                 <span class="text-caption">
