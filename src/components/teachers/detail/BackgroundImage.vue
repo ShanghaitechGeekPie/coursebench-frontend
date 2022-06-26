@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-sheet
-      :color="theme.isDark ? statics.backgroundDark : statics.background"
+      :color="theme.isDark ? statics.backgroundDark : statics.backgroundLight"
       :height="breakpoint.xsOnly ? 91 : (breakpoint.mdAndDown ? 121 : 211)"
     ></v-sheet>
   </div>
