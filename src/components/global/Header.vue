@@ -11,13 +11,13 @@
         </v-btn>
       </template>
       <v-list close-on-click>
-        <v-list-item link @click="login.dialog = true">
+        <v-list-item link @click="dialog.login = true">
           <v-list-item-icon>
             <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
           </v-list-item-icon>
           <v-list-item-title>登录</v-list-item-title>
         </v-list-item>
-        <v-list-item link @click="register.dialog = true">
+        <v-list-item link @click="dialog.register = true">
           <v-list-item-icon>
             <v-icon>{{ icons.mdiAccountPlusOutline }}</v-icon>
           </v-list-item-icon>
@@ -43,10 +43,10 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-dialog v-model="login.dialog" max-width="600">
+    <v-dialog v-model="dialog.login" max-width="600">
       <Login />
     </v-dialog>
-    <v-dialog v-model="register.dialog" max-width="600">
+    <v-dialog v-model="dialog.register" max-width="600">
       <Register />
     </v-dialog>
   </v-app-bar>
@@ -73,6 +73,10 @@ export default {
   },
   data() {
     return {
+      dialog: {
+        login: false,
+        register: false
+      },
       icons: {
         mdiLoginVariant,
         mdiLogoutVariant,

@@ -7,8 +7,7 @@ export default () => {
 
   const login = ref({
     loading: false,
-    step: 0,
-    dialog: false
+    step: 0
   })
 
   const doLogin = (response) => {
