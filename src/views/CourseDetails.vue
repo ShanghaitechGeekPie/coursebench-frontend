@@ -43,8 +43,8 @@ export default {
       }
       result[0] = this.comments;
       this.comments.forEach((value) => {
-        for (const x of value.teachers) {
-            result[reverseMap[x]].push(value);
+        for (const x of value.group.teachers) {
+          result[reverseMap[x.id]].push(value);
         }
       })
       return result;
