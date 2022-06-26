@@ -8,7 +8,6 @@ export default () => {
   const register = ref({
     loading: false,
     step: 0,
-    dialog: false,
     year: 2022,
     grade: 1,
     year_items: [2022, 2021],
