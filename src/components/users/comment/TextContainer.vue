@@ -31,7 +31,7 @@
           class="overlay"
           :style="{
             background: `linear-gradient(transparent, ${
-              dark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)'
+              theme.isDark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)'
             })`,
           }"
           v-if="!status.showAll"
@@ -86,19 +86,22 @@
           >
             <v-card tile flat>
               <v-card-title
-                class="d-flex justify-space-between px-sm-6 px-2 pt-sm-4 pt-2"
-                :style="{ background: dark ? '#1e1e1e' : '#ffffff' }"
+                class="pa-0"
+                :style="{ background: theme.isDark ? '#1e1e1e' : '#ffffff' }"
               >
-                <span class="text-h6"> 阅读全文 </span>
-                <v-icon @click="status.showDialog = false">
-                  {{ statics.icons.mdiClose }}
-                </v-icon>
+                <v-toolbar elevation="">
+                  <v-icon @click="status.showDialog = false"
+                    style="transform: translate(0, 2px)"
+                  >
+                    {{ statics.icons.mdiClose }}
+                  </v-icon>
+                  <v-toolbar-title class="pl-4"> 阅读全文 </v-toolbar-title>
+                </v-toolbar>
               </v-card-title>
-              <v-divider></v-divider>
               <v-card-text
                 class="px-sm-6 px-4 pt-3"
-                ref="textDialog"                
-                :style="{ background: dark ? '#1e1e1e' : '#ffffff' }"
+                ref="textDialog"
+                :style="{ background: theme.isDark ? '#1e1e1e' : '#ffffff' }"
               >
                 <span class="text-h5">{{ title }}</span>
                 <span
@@ -131,6 +134,7 @@ export default {
   data() {
     return {
       breakpoint: this.$vuetify.breakpoint,
+      theme: this.$vuetify.theme
     };
   },
   props: {
@@ -157,10 +161,6 @@ export default {
     title: {
       type: String,
       default: "",
-    },
-    dark: {
-      type: Boolean,
-      default: false,
     },
   },
   methods: {
@@ -193,11 +193,5 @@ export default {
 .overlay {
   height: 40px;
   transform: translate(0, -40px);
-}
-
-.dialog-overlay {
-  height: 60px;
-  width: 100%;
-  position: fixed;
 }
 </style>
