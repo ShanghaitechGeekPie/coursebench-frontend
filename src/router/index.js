@@ -27,6 +27,10 @@ export default new VueRouter({
       component: () => import('@/views/User.vue')
     },
     {
+      path: '/verify', 
+      component: () => import('@/views/Verify.vue')
+    }, 
+    {
       path: '*',
       component: () => import('@/views/NotFound.vue')
     }
