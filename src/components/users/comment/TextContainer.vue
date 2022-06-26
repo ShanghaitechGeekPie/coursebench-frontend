@@ -97,17 +97,9 @@
               <v-divider></v-divider>
               <v-card-text
                 class="px-sm-6 px-4 pt-3"
-                ref="textDialog"
-                @scroll="scrollDetect()"
+                ref="textDialog"                
                 :style="{ background: dark ? '#1e1e1e' : '#ffffff' }"
               >
-                <!-- <v-fade-transition>
-                  <v-sheet
-                    class="dialog-overlay mt-n3"
-                    :style="{ background: `linear-gradient(${ dark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)' }, transparent)` }"
-                    v-if="status.showDialogOverlay"
-                  ></v-sheet>
-                </v-fade-transition> -->
                 <span class="text-h5">{{ title }}</span>
                 <span
                   v-html="markdown ? useMarkdown(text) : text"
@@ -177,9 +169,6 @@ export default {
         this.status.isOverflow = true;
       }
     },
-    // scrollDetect() {
-    //   this.status.showDialogOverlay = this.$refs.textDialog.scrollTop > 0;
-    // },
   },
   mounted() {
     setTimeout(() => {

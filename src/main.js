@@ -35,7 +35,7 @@ router.afterEach(() => {
   NProgress.done()
 })
 
-new Vue({
+export default new Vue({
   vuetify,
   router,
   render: h => h(App)
