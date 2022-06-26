@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      isShow: false,
+      isShow: true,
     }
   },
   watch: {
@@ -64,9 +64,6 @@ export default {
     }
   },
   mounted() {
-    setTimeout(()=>{
-      this.isShow = true;
-    }, 300);
   }
 }
 </script>
