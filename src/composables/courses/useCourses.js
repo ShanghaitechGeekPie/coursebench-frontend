@@ -1,5 +1,7 @@
-import { ref, watch, computed } from "@vue/composition-api"
+import { ref, reactive, watch, computed } from "@vue/composition-api"
 import useFetching from "@/composables/global/useFetching"
+import useSearch from "@/composables/global/useSearch"
+import useRefBinding from "@/composables/global/useRefBinding"
 
 export default () => {
 
@@ -7,19 +9,25 @@ export default () => {
 
   const fetchStatus = ref("loading")
 
-  const iterator = ref({
+  const pageProps = reactive({
     pageNow: 1,
     itemsPerPage: 10,
     disableFiltering: true,
     showPagination: computed(() => {
-      return iterator.value.lengthFiltered > 0
+      return pageProps.lengthFiltered > 0
     }),
     numberOfPages: computed(() => {
-      return getNumberOfPages(iterator.value.lengthFiltered)
+      return getNumberOfPages(pageProps.lengthFiltered)
     }),
     lengthFiltered: computed(() => {
-      return iterator.value.disableFiltering ? courses.value.length : coursesMatchingFilter().length
+      return pageProps.disableFiltering ? coursesSearched.value.length : coursesMatchingFilter().length
     })
+  })
+
+  const searchUtils = useSearch()
+
+  const coursesSearched = computed(() => {
+    return searchUtils.handleSearch(courses.value)
   })
 
   const appendCheckedProp = (courses) => courses.map(course => {
@@ -27,12 +35,10 @@ export default () => {
     return course
   })
 
-  const getCourses = () => {
+  const fetchCourses = () => {
     const { status, data } = useFetching("course_all", "/course/all")
-    fetchStatus.value = status
-    watch(() => data, () => {
-      courses.value = data.value ? appendCheckedProp(data.value.data) : []
-    }, { deep: true, immediate: true })
+    useRefBinding(status, () => { fetchStatus.value = status.value })
+    useRefBinding(data, () => { courses.value = data.value ? appendCheckedProp(data.value.data) : [] })
   }
 
   const getCourseLinkPath = (id) => {
@@ -40,12 +46,12 @@ export default () => {
   }
 
   const getNumberOfPages = (length) => {
-    return Math.ceil(length / iterator.value.itemsPerPage)
+    return Math.ceil(length / pageProps.itemsPerPage)
   }
 
   const coursesMatchingFilter = () => {
-    return courses.value.filter(course => course.checked)
+    return coursesSearched.value.filter(course => course.checked)
   }
 
-  return { courses, iterator, getCourses, getCourseLinkPath, coursesMatchingFilter, fetchStatus }
+  return { coursesSearched, fetchStatus, pageProps, searchUtils, fetchCourses, getCourseLinkPath, coursesMatchingFilter }
 }

@@ -7,19 +7,32 @@
         <v-card>
           <v-card-text>
             <v-checkbox
-              v-model="iterator.disableFiltering"
-              :label="`Filter Disabled: ${iterator.disableFiltering.toString()}`"
+              v-model="pageProps.disableFiltering"
+              :label="`Filter Disabled: ${pageProps.disableFiltering.toString()}`"
             ></v-checkbox>
+            <v-text-field
+              v-model="searchUtils.searchText.value"
+              :error-messages="searchUtils.isRegExpError.value ? 'Invalid regexp pattern!' : []"
+              placeholder="Search..."
+              outlined
+              dense
+            >
+              <template v-slot:append>
+                <v-btn icon @click="searchUtils.regExpMode.value = !searchUtils.regExpMode.value">
+                  <v-icon :color="searchUtils.regExpMode.value ? 'primary' : 'default'">{{ icons.mdiCodeJson }}</v-icon>
+                </v-btn>
+              </template>
+            </v-text-field>
           </v-card-text>
         </v-card>
       </v-col>
       <v-col cols="12" md="8" order-md="first">
         <v-data-iterator
-          :items="courses"
-          :page="iterator.pageNow"
+          :items="coursesSearched"
+          :page="pageProps.pageNow"
           :custom-filter="coursesMatchingFilter"
-          :disable-filtering="iterator.disableFiltering"
-          :items-per-page="iterator.itemsPerPage"
+          :disable-filtering="pageProps.disableFiltering"
+          :items-per-page="pageProps.itemsPerPage"
           sort-by="id"
           hide-default-footer
         >
@@ -28,19 +41,21 @@
               <v-card-title>
                 <router-link :to="getCourseLinkPath(course.id)">{{ course.name }}</router-link>
                 <v-spacer></v-spacer>
-                <v-checkbox
-                  v-model="course.checked"
-                  :label="`Checked: ${course.checked.toString()}`"
-                ></v-checkbox>
+                {{ course.code }}
               </v-card-title>
-              <v-card-text>{{ course.id }}</v-card-text>
+              <v-card-subtitle>{{ course.institute }}</v-card-subtitle>
+              <v-card-text>
+                Score: {{ course.score }}
+                <v-checkbox v-model="course.checked" :label="`Checked: ${course.checked.toString()}`"></v-checkbox>
+              </v-card-text>
             </v-card>
           </template>
           <template #footer>
             <v-pagination
-              v-model="iterator.pageNow"
-              v-if="iterator.showPagination"
-              :length="iterator.numberOfPages"
+              v-model="pageProps.pageNow"
+              v-if="pageProps.showPagination"
+              :length="pageProps.numberOfPages"
+              :total-visible="7"
             ></v-pagination>
           </template>
           <template #no-results>
@@ -60,13 +75,36 @@ import Loading from "@/components/global/Loading"
 import Failed from "@/components/global/Failed"
 import useCourses from "@/composables/courses/useCourses"
 import { onMounted } from "@vue/composition-api"
+import { mdiCodeJson } from "@mdi/js"
 
 export default {
   components: { Loading, Failed },
   setup() {
-    const { courses, iterator, getCourses, getCourseLinkPath, getNumberOfPages, coursesMatchingFilter, fetchStatus } = useCourses()
-    onMounted(getCourses)
-    return { courses, iterator, getCourseLinkPath, getNumberOfPages, coursesMatchingFilter, fetchStatus }
+    const {
+      coursesSearched,
+      fetchStatus,
+      pageProps,
+      searchUtils,
+      fetchCourses,
+      getCourseLinkPath,
+      getNumberOfPages,
+      coursesMatchingFilter
+    } = useCourses()
+    onMounted(fetchCourses)
+    return {
+      coursesSearched,
+      fetchStatus,
+      pageProps,
+      searchUtils,
+      getCourseLinkPath,
+      getNumberOfPages,
+      coursesMatchingFilter
+    }
+  },
+  data() {
+    return {
+      icons: { mdiCodeJson }
+    }
   }
 }
 </script>
