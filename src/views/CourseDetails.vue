@@ -9,7 +9,7 @@
       </v-tabs>
       <v-tabs-items v-model="currentTab"  class="transparent d-flex align-center justify-center">
         <v-tab-item v-for="(item, index) in teachers" :key="index">
-          <CommentBoard :currentTab="teachers[currentTab]"></CommentBoard>
+          <CommentBoard :comments="alignedComment[currentTab]"></CommentBoard>
         </v-tab-item>
       </v-tabs-items>
     </div>
@@ -24,12 +24,31 @@ import useCourseDetails from "@/composables/courses/comment/useCourseDetails";
 
 export default {
   setup() {
-    const { teachers } = useCourseDetails();
-    return { teachers };
+    const { teachers, comments} = useCourseDetails();
+    return { teachers, comments };
   },
   components: {
     DetailCard,
     CommentBoard,
+  },
+  computed : {
+    alignedComment() {
+      let result = new Array(this.teachers.length);
+      let reverseMap = {};
+      for (let i = 0; i < result.length; ++i) {
+        result[i] = [];
+        if (i > 0) {
+          reverseMap[this.teachers[i].id] = i;
+        }
+      }
+      result[0] = this.comments;
+      this.comments.forEach((value) => {
+        for (const x of value.teachers) {
+            result[reverseMap[x]].push(value);
+        }
+      })
+      return result;
+    }
   },
   data() {
     return {
