@@ -1,5 +1,5 @@
-import backgroundLight from "@/assets/UserBackgroundLight.png"
-import backgroundDark from "@/assets/UserBackgroundDark.jpg"
+import backgroundLight from "@/assets/UserBackgroundLightCompressed.jpg"
+import backgroundDark from "@/assets/UserBackgroundDarkCompressed.jpg"
 
 export default () => {
 
