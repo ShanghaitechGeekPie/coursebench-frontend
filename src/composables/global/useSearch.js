@@ -10,11 +10,12 @@ export default () => {
 
   const handleSearch = (data) => {
     if (!regExpMode.value) {
+      isRegExpError.value = false
       return data.filter((item) => item.name.includes(searchText.value))
     }
     else {
-      try { eval(searchText.value) } catch { isRegExpError.value = true; return [] }
       isRegExpError.value = false
+      try { eval(searchText.value) } catch { isRegExpError.value = true; return [] }
       return data.filter((item) => item.name.match(eval(searchText.value)))
     }
   }

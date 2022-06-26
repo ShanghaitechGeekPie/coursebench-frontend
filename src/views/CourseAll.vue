@@ -17,11 +17,12 @@
               outlined
               dense
             >
-              <template v-slot:append>
-                <v-btn icon @click="searchUtils.regExpMode.value = !searchUtils.regExpMode.value">
-                  <v-icon :color="searchUtils.regExpMode.value ? 'primary' : 'default'">{{ icons.mdiCodeJson }}</v-icon>
-                </v-btn>
-              </template>
+              <v-icon
+                slot="append"
+                :color="searchUtils.regExpMode.value ? 'primary' : 'default'"
+                @click="searchUtils.regExpMode.value = !searchUtils.regExpMode.value"
+                >{{ icons.mdiCodeJson }}</v-icon
+              >
             </v-text-field>
           </v-card-text>
         </v-card>

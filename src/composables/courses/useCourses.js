@@ -1,7 +1,8 @@
 import { ref, reactive, watch, computed } from "@vue/composition-api"
 import useFetching from "@/composables/global/useFetching"
 import useSearch from "@/composables/global/useSearch"
-import useRefBinding from "@/composables/global/useRefBinding"
+import useWatching from "@/composables/global/useWatching"
+import useDebounce from "@/composables/global/useDebounce"
 
 export default () => {
 
@@ -26,9 +27,11 @@ export default () => {
 
   const searchUtils = useSearch()
 
-  const coursesSearched = computed(() => {
-    return searchUtils.handleSearch(courses.value)
-  })
+  const coursesSearched = ref([])
+
+  useWatching(searchUtils.searchText, useDebounce(() => {
+    coursesSearched.value = searchUtils.handleSearch(courses.value)
+  }, 200))
 
   const appendCheckedProp = (courses) => courses.map(course => {
     course.checked = false
@@ -37,8 +40,8 @@ export default () => {
 
   const fetchCourses = () => {
     const { status, data } = useFetching("course_all", "/course/all")
-    useRefBinding(status, () => { fetchStatus.value = status.value })
-    useRefBinding(data, () => { courses.value = data.value ? appendCheckedProp(data.value.data) : [] })
+    useWatching(status, () => { fetchStatus.value = status.value })
+    useWatching(data, () => { courses.value = data.value ? appendCheckedProp(data.value.data) : [] })
   }
 
   const getCourseLinkPath = (id) => {

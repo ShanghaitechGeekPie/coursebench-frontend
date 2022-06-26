@@ -44,107 +44,17 @@
       </v-list>
     </v-menu>
     <v-dialog v-model="login.dialog" max-width="600">
-      <v-card>
-        <v-card-title>登录</v-card-title>
-        <v-window v-model="login.step">
-          <v-window-item :value="0">
-            <v-card-text class="px-6">
-              <v-text-field label="邮箱">
-                <v-icon slot="append">{{ icons.mdiEmail }}</v-icon>
-              </v-text-field>
-            </v-card-text>
-          </v-window-item>
-          <v-window-item :value="1">
-            <v-card-text class="px-6">
-              <v-text-field label="密码" type="password">
-                <v-icon slot="append">{{ icons.mdiFormTextboxPassword }}</v-icon>
-              </v-text-field>
-            </v-card-text>
-          </v-window-item>
-          <v-window-item :value="2">
-            <v-card-text class="px-6">
-              <v-row>
-                <v-col cols="12" sm="4" offset-sm="4">
-                  <v-img src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"></v-img>
-                </v-col>
-                <v-col cols="12" sm="6" offset-sm="3">
-                  <v-otp-input length="4" @finish="doLogin"></v-otp-input>
-                </v-col>
-              </v-row>
-              <v-overlay absolute :value="login.loading">
-                <v-progress-circular indeterminate color="primary"></v-progress-circular>
-              </v-overlay>
-            </v-card-text>
-          </v-window-item>
-        </v-window>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn v-if="login.step !== 0" text @click="login.step -= 1">上一步</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn v-if="login.step !== 2" text @click="login.step += 1">下一步</v-btn>
-        </v-card-actions>
-      </v-card>
+      <Login />
     </v-dialog>
     <v-dialog v-model="register.dialog" max-width="600">
-      <v-card>
-        <v-card-title>注册</v-card-title>
-        <v-window v-model="register.step">
-          <v-window-item :value="0">
-            <v-card-text class="px-6">
-              <v-text-field label="邮箱"></v-text-field>
-            </v-card-text>
-          </v-window-item>
-          <v-window-item :value="1">
-            <v-card-text class="px-6">
-              <v-row>
-                <v-col cols="12">
-                  <v-text-field label="用户名"></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-select v-model="register.year" :items="register.year_items" label="入学时间"></v-select>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-select v-model="register.grade" :items="register.grade_items" label="年级"></v-select>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field label="密码" type="password"></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field label="确认密码" type="password"></v-text-field>
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-window-item>
-          <v-window-item :value="2">
-            <v-card-text class="px-6">
-              <v-row>
-                <v-col cols="12" sm="4" offset-sm="4">
-                  <v-img src="https://www.yishuzi.cn/image.png?fsize=100&font=mlmm.ttf&text=1234"></v-img>
-                </v-col>
-                <v-col cols="12" sm="6" offset-sm="3">
-                  <v-otp-input length="4" @finish="doRegister"></v-otp-input>
-                </v-col>
-              </v-row>
-              <v-overlay absolute :value="register.loading">
-                <v-progress-circular indeterminate color="primary"></v-progress-circular>
-              </v-overlay>
-            </v-card-text>
-          </v-window-item>
-        </v-window>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn v-if="register.step !== 0" text @click="register.step -= 1">上一步</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn v-if="register.step !== 2" text @click="register.step += 1">下一步</v-btn>
-        </v-card-actions>
-      </v-card>
+      <Register />
     </v-dialog>
   </v-app-bar>
 </template>
 
 <script>
-import useLogin from "@/composables/users/useLogin"
-import useRegister from "@/composables/users/useRegister"
+import Login from "@/components/users/Login.vue"
+import Register from "@/components/users/Register.vue"
 import useLogout from "@/composables/users/useLogout"
 
 import {
@@ -152,17 +62,14 @@ import {
   mdiLogoutVariant,
   mdiAccountPlusOutline,
   mdiAccountOutline,
-  mdiMessageAlertOutline,
-  mdiEmail,
-  mdiFormTextboxPassword,
+  mdiMessageAlertOutline
 } from "@mdi/js"
 
 export default {
+  components: { Login, Register },
   setup() {
-    const { login, doLogin } = useLogin()
-    const { register, doRegister } = useRegister()
     const { doLogout } = useLogout()
-    return { login, register, doLogin, doRegister, doLogout }
+    return { doLogout }
   },
   data() {
     return {
@@ -171,10 +78,8 @@ export default {
         mdiLogoutVariant,
         mdiAccountPlusOutline,
         mdiAccountOutline,
-        mdiMessageAlertOutline,
-        mdiEmail,
-        mdiFormTextboxPassword,
-      },
+        mdiMessageAlertOutline
+      }
     }
   }
 }
