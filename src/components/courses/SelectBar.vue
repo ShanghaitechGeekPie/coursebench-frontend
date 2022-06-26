@@ -2,14 +2,14 @@
   <v-row class="pl-5">
     <v-col cols="2">
       <v-select
-          v-model="selected"
+          v-model="commentOrder.sortBy"
           :items="items"
           label="排序方式"
       ></v-select>
     </v-col>
     <v-col cols="2">
       <v-select
-          v-model="reverse"
+          v-model="commentOrder.reverse"
           :items="['升序', '降序']"
       ></v-select>
     </v-col>
@@ -21,24 +21,28 @@
 
 <script>
 import WritingBox from '@/components/courses/WritingBox'
+import {inject} from "@vue/composition-api";
 
 export default {
+  setup() {
+    const commentOrder = inject('commentOrder')
+    return { commentOrder }
+  },
   name: "SelectBar",
   components: { WritingBox },
+  props : {
+  },
   data() {
     return {
-      items : ["评分", "时间", "点赞数"],
-      selected: "",
-      reverse: "降序",
+      items : ["评分", "时间"],
     }
   },
   watch: {
-    selected() {
-      console.log(this.selected);
-    }
   },
   created() {
-    this.selected = this.items[2];
+    // setInterval(()=>{
+    //   console.log(this.commentOrder.sortBy);
+    // }, 300)
   }
 }
 </script>
