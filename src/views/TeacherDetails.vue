@@ -43,8 +43,16 @@
                     : Math.floor((breakpoint.width - 428) / 428) * 428 + 'px',
                 }"
               >
-                <div class="d-flex flex-wrap justify-center justify-lg-start">
-                  <div v-for="(course, index) in courseText" :key="course.id">
+                <div class="d-flex flex-wrap justify-center justify-lg-start" v-if="true">
+                  <div v-for="index in Math.floor((breakpoint.width - 428) / 428)">
+                    <CourseCardLoading />
+                  </div>
+                </div>
+                <div class="d-flex flex-wrap justify-center justify-lg-start" v-else>
+                  <div
+                    v-for="(course, index) in courseText"
+                    :key="course.id"                  
+                  >
                     <v-fade-transition>
                       <CourseCard
                         :course="course"
@@ -69,6 +77,7 @@
 import Detail from "@/components/teachers/detail/Detail";
 import BackgroundImage from "@/components/teachers/detail/BackgroundImage";
 import CourseCard from "@/components/teachers/course/CourseCard";
+import CourseCardLoading from "@/components/teachers/course/CourseCardLoading";
 import StatisticCard from "@/components/teachers/course/StatisticCard";
 import useTeacherDetail from "@/composables/teachers/useTeacherDetail";
 
@@ -90,6 +99,7 @@ export default {
     BackgroundImage,
     StatisticCard,
     CourseCard,
+    CourseCardLoading,
   },
   mounted() {
     document.addEventListener("scroll", () => {

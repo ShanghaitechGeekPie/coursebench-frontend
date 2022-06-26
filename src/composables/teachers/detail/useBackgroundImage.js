@@ -1,4 +1,5 @@
-import { inject } from "@vue/composition-api"
+import { inject, reactive } from "@vue/composition-api"
+import useWatching from "@/composables/global/useWatching"
 
 export default () => {
 
@@ -16,10 +17,14 @@ export default () => {
 
   const teacherDetail = inject("teacherDetail")
 
-  const statics = {
+  const statics = reactive({
     backgroundLight: background[teacherDetail.institute], 
     backgroundDark: 'grey darken-3', 
-  }
+  })
+
+  useWatching(teacherDetail, () => {
+    statics.backgroundLight = background[teacherDetail.institute]
+  })
 
   return { statics }
 }

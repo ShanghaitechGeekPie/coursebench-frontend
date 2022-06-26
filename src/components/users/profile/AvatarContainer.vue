@@ -8,8 +8,12 @@
     >
       <span
         :class="[
-          !small
-            ? size > 50 ? 'text-h3' : 'text-h6'
+          fontSize
+            ? fontSize
+            : !small
+            ? size > 50
+              ? 'text-h3'
+              : 'text-h6'
             : name.length >= 3
             ? 'text-body-2'
             : 'text-body-1',
@@ -38,7 +42,7 @@ export default {
       default: 1,
     },
     size: {
-      type: [ Number, String ], 
+      type: [Number, String],
       default: 160,
     },
     tile: {
@@ -50,17 +54,21 @@ export default {
       default: "blue",
     },
     fontColor: {
-      type: String, 
-      default: 'white--text',
-    }, 
+      type: String,
+      default: "white--text",
+    },
+    fontSize: {
+      type: String,
+      default: undefined,
+    },    
     small: {
       type: Boolean,
       default: false,
     },
     outlined: {
-      default: Boolean, 
-      default: false, 
-    }
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
