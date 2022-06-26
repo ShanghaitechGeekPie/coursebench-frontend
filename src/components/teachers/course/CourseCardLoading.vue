@@ -19,22 +19,21 @@
               <v-col class="d-flex justify-space-between">
                 <div style="transform: translate(8px, 0)">
                   <AvatarContainer
-                    :name="statics.short[course.institute]"
-                    :color="statics.background[course.institute]"
+                    color="#e2e2e2"
                     font-size="text-body-1"
                     size="45"
                   />
                 </div>
                 <div class="pr-2">
-                  <div class="text-caption">{{ course.code }}</div>
+                  <!-- <div class="text-caption">{{ course.code }}</div>
                   <div class="text-caption" style="text-align: end">
                     {{ course.credit }}学分
-                  </div>
+                  </div> -->
                 </div>
               </v-col>
             </v-row>
           </v-container>
-          <v-container>
+          <!-- <v-container>
             <v-row>
               <v-col cols="12" class="pt-0">
                 <div
@@ -168,42 +167,22 @@
                 </div>
               </v-col>
             </v-row>
-          </v-container>
+          </v-container> -->
         </v-card>
     </div>
   </v-lazy>
 </template>
 <script>
-import useCourseCard from "@/composables/teachers/course/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
 
 export default {
-  setup() {
-    const { statics } = useCourseCard();
-    return { statics };
-  },
   data() {
     return {
-      score: new Array(),
       breakpoint: this.$vuetify.breakpoint,
     };
   },
-  props: {
-    course: Object,
-  },
   components: {
     AvatarContainer,
-  },
-  created() {
-    // TODO: Change this into real data
-    // for (let element of this.course.score) {
-    for (let element of [0, 1, 2, 3]) {
-      let rounded = Math.floor(element) + 1;
-      if (element == 0) {
-        rounded = 0;
-      }
-      this.score.push(rounded);
-    }
   },
 };
 </script>

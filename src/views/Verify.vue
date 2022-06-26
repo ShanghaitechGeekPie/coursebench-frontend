@@ -13,13 +13,27 @@
             您的账号已经注册成功，欢迎您使用本系统。
           </div>
         </div>
-        <div class="d-flex justify-center pt-8">
-          <router-link to="/">返回首页</router-link>
+        <div class="d-flex justify-center pt-16">
+          <v-btn
+            width="90px"
+            elevation="1"
+            color="primary"
+            @click="$router.push('/')"
+          >
+            返回首页
+          </v-btn>
         </div>
       </div>
     </div>
   </div>
-  <div :class="[theme.isDark ? 'wrapper-dark' : 'wrapper-light']" v-else>
+  <div
+    :style="{ background: theme.isDark ? '' : '#f9f9f9', 'min-height': '100%' }"
+    v-else
+  >
+    <v-sheet
+      :color="theme.isDark ? statics.backgroundDark : statics.backgroundLight"
+      :height="breakpoint.xsOnly ? 91 : 360"
+    ></v-sheet>
     <div class="main-card">
       <v-card width="600px" height="400px" elevation="2">
         <div class="pa-16 d-flex justify-space-between" style="height: 100%">
@@ -39,7 +53,14 @@
               </div>
             </div>
             <div class="d-flex justify-end pb-6 pr-4">
-              <router-link to="/">返回首页</router-link>
+              <v-btn
+                width="90px"
+                elevation="1"
+                color="primary"
+                @click="$router.push('/')"
+              >
+                返回首页
+              </v-btn>
             </div>
           </div>
         </div>

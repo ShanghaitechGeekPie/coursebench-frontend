@@ -46,7 +46,7 @@
             :key="index"
             :class="index !== 0 ? 'mt-n4' : ''"
           >
-            <div v-if="value">
+            <div v-if="value" class="py-2">
               <v-checkbox dense v-model="status.selected" :value="key">
                 <template #label>
                   <div class="d-flex justify-space-between" style="width: 100%">
