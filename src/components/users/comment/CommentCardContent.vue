@@ -27,7 +27,6 @@
             <TextContainer
               :text="comment.comment"
               :title="comment.title"
-              :dark="theme.isDark"
               markdown
               dense
               :dialog="breakpoint.name === 'xs'"
@@ -180,7 +179,6 @@ export default {
   data() {
     return {
       breakpoint: this.$vuetify.breakpoint, 
-      theme: this.$vuetify.theme, 
     }
   }, 
   computed: {
