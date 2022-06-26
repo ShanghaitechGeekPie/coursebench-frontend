@@ -1,41 +1,38 @@
-import { ref, toRefs, toRef, effectScope, watch, watchEffect, reactive, computed } from "@vue/composition-api"
+import { ref, watch, computed } from "@vue/composition-api"
 import useFetching from "@/composables/global/useFetching"
 
 export default () => {
 
   const courses = ref([])
 
+  const fetchStatus = ref("loading")
+
   const iterator = ref({
     pageNow: 1,
     itemsPerPage: 10,
     disableFiltering: true,
-    lengthFiltered: computed(() => {
-      return iterator.value.disableFiltering ? getLength(courses.value) : getLength(coursesMatchingFilter())
+    showPagination: computed(() => {
+      return iterator.value.lengthFiltered > 0
     }),
     numberOfPages: computed(() => {
       return getNumberOfPages(iterator.value.lengthFiltered)
     }),
-    showPagination: computed(() => {
-      return iterator.value.lengthFiltered > 0
+    lengthFiltered: computed(() => {
+      return iterator.value.disableFiltering ? courses.value.length : coursesMatchingFilter().length
     })
   })
 
-  const fetchStatus = ref()
-
-  const checkData = ref([])
-
-  const initCheckData = () => {
-
-  }
-
-  const getLength = (value) => {
-    return value ? value.length : 0
-  }
+  const appendCheckedProp = (courses) => courses.map(course => {
+    course.checked = false
+    return course
+  })
 
   const getCourses = () => {
-    const response = useFetching("course_all", "/course/all", (result) => result.data)
-    fetchStatus.value = response.status
-    courses.value = reactive(response.data)
+    const { status, data } = useFetching("course_all", "/course/all")
+    fetchStatus.value = status
+    watch(() => data, () => {
+      courses.value = data.value ? appendCheckedProp(data.value.data) : []
+    }, { deep: true, immediate: true })
   }
 
   const getCourseLinkPath = (id) => {
