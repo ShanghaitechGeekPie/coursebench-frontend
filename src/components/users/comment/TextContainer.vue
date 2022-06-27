@@ -95,10 +95,12 @@ export default {
     const { statics, status } = useTextContainer()
     return { statics, status, useMarkdown }
   },
-  data: () => ({
-    breakpoint: this.$vuetify.breakpoint,
-    theme: this.$vuetify.theme
-  }),
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint,
+      theme: this.$vuetify.theme
+    }
+  },
   props: {
     text: {
       type: String,

@@ -87,11 +87,13 @@ export default {
     const { statics, userProfile, scoreDims, teachers } = useWritingBox()
     return { statics, userProfile, scoreDims, teachers }
   },
-  data: () => ({
-    slider: [5, 5, 5, 5],
-    satisfactionEmojis: ["😭", "☹️", "🙁", "🙂", "😊"],
-    target: ""
-  }),
+  data() {
+    return {
+      slider: [5, 5, 5, 5],
+      satisfactionEmojis: ["😭", "☹️", "🙁", "🙂", "😊"],
+      target: ""
+    }
+  },
   computed: {
     selections() {
       let res = []

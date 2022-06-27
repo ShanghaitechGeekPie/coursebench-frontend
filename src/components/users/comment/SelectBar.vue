@@ -25,8 +25,10 @@ export default {
     const { statics, status } = useSelectBar()
     return { statics, status }
   },
-  data: () => ({
-    breakpoint: this.$vuetify.breakpoint
-  })
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint
+    }    
+  }
 }
 </script>

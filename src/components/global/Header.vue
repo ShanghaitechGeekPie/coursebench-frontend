@@ -55,10 +55,10 @@
 </template>
 
 <script>
-import { reactive } from "@vue/composition-api"
-import Login from "@/components/users/forms/Login.vue"
-import Register from "@/components/users/forms/Register.vue"
-import useLogout from "@/composables/users/forms/useLogout"
+import { reactive } from "@vue/composition-api";
+import Login from "@/components/users/forms/Login.vue";
+import Register from "@/components/users/forms/Register.vue";
+import useLogout from "@/composables/users/forms/useLogout";
 
 import {
   mdiAccount,
@@ -66,25 +66,27 @@ import {
   mdiLogoutVariant,
   mdiAccountPlusOutline,
   mdiAccountOutline,
-  mdiMessageAlertOutline
-} from "@mdi/js"
+  mdiMessageAlertOutline,
+} from "@mdi/js";
 
 export default {
   components: { Login, Register },
   setup() {
-    const dialog = reactive({ login: false, register: false })
-    const { doLogout } = useLogout()
-    return { dialog, doLogout }
+    const dialog = reactive({ login: false, register: false });
+    const { doLogout } = useLogout();
+    return { dialog, doLogout };
   },
-  data: () => ({
-    icons: {
-      mdiAccount,
-      mdiLoginVariant,
-      mdiLogoutVariant,
-      mdiAccountPlusOutline,
-      mdiAccountOutline,
-      mdiMessageAlertOutline
-    }
-  })
-}
+  data() {
+    return {
+      icons: {
+        mdiAccount,
+        mdiLoginVariant,
+        mdiLogoutVariant,
+        mdiAccountPlusOutline,
+        mdiAccountOutline,
+        mdiMessageAlertOutline,
+      },
+    };
+  },
+};
 </script>
