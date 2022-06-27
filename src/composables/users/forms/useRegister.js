@@ -2,7 +2,7 @@ import { reactive, inject } from "@vue/composition-api"
 
 export default () => {
 
-  // Get the function to show snackbar from global/useSnackbar.js
+  const closeDialog = inject("closeDialog")
   const showSnackbar = inject("showSnackbar")
 
   const userData = reactive({
@@ -33,7 +33,7 @@ export default () => {
       if (response != "1234") {
         showSnackbar("error", "验证码错误！", 5000)
       } else {
-        $emit('update:dialog', false)
+        closeDialog("register")
         formStatus.windowStep = 0
       }
     }, 1000)
