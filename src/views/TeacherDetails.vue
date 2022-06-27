@@ -2,7 +2,7 @@
   <div
     :style="{
       background: theme.isDark ? '' : '#f9f9f9',
-      'min-height': '100%',
+      'min-height': '100%'
     }"
   >
     <BackgroundImage />
@@ -15,11 +15,11 @@
                 ? {}
                 : scrollTop <= 40
                 ? {
-                    transform: 'translate(0, -160px)',
+                    transform: 'translate(0, -160px)'
                   }
                 : {
                     position: 'fixed',
-                    top: '90px',
+                    top: '90px'
                   }
             "
             flat
@@ -40,18 +40,12 @@
             <v-col class="px-0">
               <div
                 :style="{
-                  width: breakpoint.mdAndDown
-                    ? ''
-                    : Math.floor((breakpoint.width - 428) / 428) * 428 + 'px',
+                  width: breakpoint.mdAndDown ? '' : Math.floor((breakpoint.width - 428) / 428) * 428 + 'px'
                 }"
               >
-                <div
-                  class="d-flex flex-wrap justify-center justify-lg-start"
-                  v-if="status.loading"
-                >
+                <div class="d-flex flex-wrap justify-center justify-lg-start" v-if="status.loading">
                   <div
-                    v-for="index in breakpoint.width >= 600 &&
-                    breakpoint.width < 1260
+                    v-for="index in breakpoint.width >= 600 && breakpoint.width < 1260
                       ? 2
                       : Math.floor((breakpoint.width - 428) / 428) > 1
                       ? Math.floor((breakpoint.width - 428) / 428)
@@ -66,11 +60,7 @@
                     <v-fade-transition>
                       <CourseCard
                         :course="course"
-                        v-if="
-                          status.selected.some(
-                            (school) => school === course.institute
-                          )
-                        "
+                        v-if="status.selected.some((school) => school === course.institute)"
                       />
                     </v-fade-transition>
                   </div>
@@ -85,14 +75,14 @@
 </template>
 
 <script>
-import Detail from "@/components/teachers/detail/Detail";
-import DetailLoading from "@/components/teachers/detail/DetailLoading";
-import BackgroundImage from "@/components/teachers/detail/BackgroundImage";
-import CourseCard from "@/components/teachers/course/CourseCard";
-import CourseCardLoading from "@/components/teachers/course/CourseCardLoading";
-import StatisticCard from "@/components/teachers/course/StatisticCard";
-import StatisticCardLoading from "@/components/teachers/course/StatisticCardLoading";
-import useTeacherDetail from "@/composables/teachers/useTeacherDetail";
+import Detail from "@/components/teachers/detail/Detail"
+import DetailLoading from "@/components/teachers/detail/DetailLoading"
+import BackgroundImage from "@/components/teachers/detail/BackgroundImage"
+import CourseCard from "@/components/teachers/course/CourseCard"
+import CourseCardLoading from "@/components/teachers/course/CourseCardLoading"
+import StatisticCard from "@/components/teachers/course/StatisticCard"
+import StatisticCardLoading from "@/components/teachers/course/StatisticCardLoading"
+import useTeacherDetail from "@/composables/teachers/useTeacherDetail"
 
 export default {
   components: {
@@ -103,23 +93,23 @@ export default {
     StatisticCard,
     StatisticCardLoading,
     CourseCard,
-    CourseCardLoading,
+    CourseCardLoading
   },
   setup() {
-    const { courseText, status } = useTeacherDetail();
-    return { courseText, status };
+    const { courseText, status } = useTeacherDetail()
+    return { courseText, status }
   },
   data() {
     return {
       scrollTop: document.documentElement.scrollTop,
       breakpoint: this.$vuetify.breakpoint,
-      theme: this.$vuetify.theme,
-    };
+      theme: this.$vuetify.theme
+    }
   },
   mounted() {
     document.addEventListener("scroll", () => {
-      this.scrollTop = document.documentElement.scrollTop;
-    });
-  },
-};
+      this.scrollTop = document.documentElement.scrollTop
+    })
+  }
+}
 </script>
