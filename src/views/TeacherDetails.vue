@@ -27,8 +27,10 @@
             :width="breakpoint.mdAndDown ? '100vw' : '360px'"
             class="pt-6 pb-3 px-7"
           >
-            <Detail />
-            <StatisticCard />
+            <DetailLoading v-if="status.loading" />
+            <Detail v-else />
+            <StatisticCardLoading v-if="status.loading" />
+            <StatisticCard v-else />
           </v-card>
         </div>
       </div>
@@ -43,16 +45,26 @@
                     : Math.floor((breakpoint.width - 428) / 428) * 428 + 'px',
                 }"
               >
-                <div class="d-flex flex-wrap justify-center justify-lg-start" v-if="true">
-                  <div v-for="index in Math.floor((breakpoint.width - 428) / 428)">
+                <div
+                  class="d-flex flex-wrap justify-center justify-lg-start"
+                  v-if="status.loading"
+                >
+                  <div
+                    v-for="index in breakpoint.width >= 600 &&
+                    breakpoint.width < 1260
+                      ? 2
+                      : Math.floor((breakpoint.width - 428) / 428) > 1
+                      ? Math.floor((breakpoint.width - 428) / 428)
+                      : 1"
+                    :key="index"
+                  >
                     <CourseCardLoading />
                   </div>
                 </div>
-                <div class="d-flex flex-wrap justify-center justify-lg-start" v-else>
-                  <div
-                    v-for="(course, index) in courseText"
-                    :key="course.id"                  
-                  >
+                <div
+                  class="d-flex flex-wrap justify-center justify-lg-start"                  
+                > 
+                  <div v-for="(course, index) in courseText" :key="course.id">
                     <v-fade-transition>
                       <CourseCard
                         :course="course"
@@ -75,10 +87,12 @@
 </template>
 <script>
 import Detail from "@/components/teachers/detail/Detail";
+import DetailLoading from "@/components/teachers/detail/DetailLoading";
 import BackgroundImage from "@/components/teachers/detail/BackgroundImage";
 import CourseCard from "@/components/teachers/course/CourseCard";
 import CourseCardLoading from "@/components/teachers/course/CourseCardLoading";
 import StatisticCard from "@/components/teachers/course/StatisticCard";
+import StatisticCardLoading from "@/components/teachers/course/StatisticCardLoading";
 import useTeacherDetail from "@/composables/teachers/useTeacherDetail";
 
 export default {
@@ -95,9 +109,11 @@ export default {
   },
   components: {
     Detail,
+    DetailLoading, 
     Comment,
     BackgroundImage,
     StatisticCard,
+    StatisticCardLoading,
     CourseCard,
     CourseCardLoading,
   },

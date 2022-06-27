@@ -12,7 +12,8 @@ export default () => {
     "人文科学研究院": '#a40050', 
     "生物医学工程学院": '#101f5b', 
     "数学科学研究所": '#2800ae', 
-    "其他学院": '#757575'
+    "其他学院": '#757575', 
+    "": "#B0B0B0"
   }
 
   const teacherDetail = inject("teacherDetail")
