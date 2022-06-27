@@ -7,7 +7,14 @@
           <v-col class="pa-0" cols="12">
             <v-list dense flat class="pa-0">
               <v-list-item class="pb-0 px-0">
-                <span class="text-sm-subtitle-1 text-subtitle-2 font-weight-bold pr-sm-14 pr-5">用户名</span>
+                <span
+                  class="
+                    text-sm-subtitle-1 text-subtitle-2
+                    font-weight-bold
+                    pr-sm-14 pr-5
+                  "
+                  >用户名</span
+                >
                 <v-text-field
                   single-line
                   dense
@@ -18,12 +25,19 @@
                     'text-body-2',
                     'pt-2',
                     'pl-0',
-                    breakpoint.name === 'xs' ? 'input-limit' : ''
+                    breakpoint.name === 'xs' ? 'input-limit' : '',
                   ]"
                 ></v-text-field>
               </v-list-item>
               <v-list-item class="pb-0 px-0">
-                <span class="text-sm-subtitle-1 text-subtitle-2 font-weight-bold pr-sm-10 pr-2">真实姓名</span>
+                <span
+                  class="
+                    text-sm-subtitle-1 text-subtitle-2
+                    font-weight-bold
+                    pr-sm-10 pr-2
+                  "
+                  >真实姓名</span
+                >
                 <v-text-field
                   single-line
                   dense
@@ -34,12 +48,19 @@
                     'text-body-2',
                     'pt-2',
                     'pl-0',
-                    breakpoint.name === 'xs' ? 'input-limit' : ''
+                    breakpoint.name === 'xs' ? 'input-limit' : '',
                   ]"
                 ></v-text-field>
               </v-list-item>
               <v-list-item class="pb-0 px-0">
-                <span class="text-sm-subtitle-1 text-subtitle-2 font-weight-bold pr-sm-10 pr-2">入学时间</span>
+                <span
+                  class="
+                    text-sm-subtitle-1 text-subtitle-2
+                    font-weight-bold
+                    pr-sm-10 pr-2
+                  "
+                  >入学时间</span
+                >
                 <v-select
                   :items="statics.yearItems"
                   dense
@@ -49,12 +70,19 @@
                     'text-body-2',
                     'pt-2',
                     'pl-0',
-                    breakpoint.name === 'xs' ? 'input-limit' : ''
+                    breakpoint.name === 'xs' ? 'input-limit' : '',
                   ]"
                 ></v-select>
               </v-list-item>
               <v-list-item class="pb-0 px-0">
-                <span class="text-sm-subtitle-1 text-subtitle-2 font-weight-bold pr-sm-10 pr-2">所属年级</span>
+                <span
+                  class="
+                    text-sm-subtitle-1 text-subtitle-2
+                    font-weight-bold
+                    pr-sm-10 pr-2
+                  "
+                  >所属年级</span
+                >
                 <v-select
                   :items="statics.gradeItems"
                   dense
@@ -64,7 +92,7 @@
                     'text-body-2',
                     'pt-2',
                     'pl-0',
-                    breakpoint.name === 'xs' ? 'input-limit' : ''
+                    breakpoint.name === 'xs' ? 'input-limit' : '',
                   ]"
                 ></v-select>
               </v-list-item>
@@ -72,7 +100,13 @@
                 <v-container>
                   <v-row>
                     <v-col
-                      class="pa-0 text-sm-subtitle-1 text-subtitle-2 font-weight-bold pr-sm-10 pr-2 pt-1"
+                      class="
+                        pa-0
+                        text-sm-subtitle-1 text-subtitle-2
+                        font-weight-bold
+                        pr-sm-10 pr-2
+                        pt-1
+                      "
                       sm="2"
                       cols="3"
                       >可见性</v-col
@@ -81,22 +115,41 @@
                       class="pa-0"
                       sm="10"
                       :style="{
-                        transform: breakpoint.name === 'xs' ? 'translate(-6px, -4px)' : 'translate(11px, -2px)'
+                        transform:
+                          breakpoint.name === 'xs'
+                            ? 'translate(-6px, -4px)'
+                            : 'translate(11px, -2px)',
                       }"
                     >
                       <v-container>
                         <v-row>
                           <v-col class="pa-0" sm="3" cols="6">
-                            <v-checkbox label="电子邮箱" dense v-model="status.profile['show_email']"></v-checkbox>
+                            <v-checkbox
+                              label="电子邮箱"
+                              dense
+                              v-model="status.profile['show_email']"
+                            ></v-checkbox>
                           </v-col>
                           <v-col class="pa-0" sm="3" cols="6">
-                            <v-checkbox label="真实姓名" dense v-model="status.profile['show_realname']"></v-checkbox>
+                            <v-checkbox
+                              label="真实姓名"
+                              dense
+                              v-model="status.profile['show_realname']"
+                            ></v-checkbox>
                           </v-col>
                           <v-col class="pa-0 mt-sm-0 mt-n4" sm="3" cols="6">
-                            <v-checkbox label="入学时间" dense v-model="status.profile['show_year']"></v-checkbox>
+                            <v-checkbox
+                              label="入学时间"
+                              dense
+                              v-model="status.profile['show_year']"
+                            ></v-checkbox>
                           </v-col>
                           <v-col class="pa-0 mt-sm-0 mt-n4" sm="3" cols="6">
-                            <v-checkbox label="所属年级" dense v-model="status.profile['show_grade']"></v-checkbox>
+                            <v-checkbox
+                              label="所属年级"
+                              dense
+                              v-model="status.profile['show_grade']"
+                            ></v-checkbox>
                           </v-col>
                         </v-row>
                       </v-container>
@@ -108,7 +161,10 @@
           </v-col>
         </v-row>
         <v-overlay absolute :value="status.loading">
-          <v-progress-circular indeterminate color="primary"></v-progress-circular>
+          <v-progress-circular
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
         </v-overlay>
       </v-container>
     </v-card-text>
@@ -117,7 +173,9 @@
         <v-row>
           <v-col class="d-flex justify-space-between pa-0" cols="12">
             <div>
-              <v-btn text @click="$emit('editPassword')" class="ml-sm-0 ml-n4"> 修改密码 </v-btn>
+              <v-btn text @click="$emit('editPassword')" class="ml-sm-0 ml-n4">
+                修改密码
+              </v-btn>
             </div>
             <div class="d-flex justify-start pl-sm-5 pl-0">
               <div class="pr-sm-4">
@@ -134,17 +192,19 @@
   </v-card>
 </template>
 <script>
-import useEditProfileCard from "@/composables/users/profile/useEditProfileCard"
+import useEditProfileCard from "@/composables/users/profile/useEditProfileCard";
 
 export default {
   setup() {
-    const { statics, status, doReset, doEditProfile } = useEditProfileCard()
-    return { statics, status, doReset, doEditProfile }
+    const { statics, status, doReset, doEditProfile } = useEditProfileCard();
+    return { statics, status, doReset, doEditProfile };
   },
-  data: () => ({
-    breakpoint: this.$vuetify.breakpoint
-  })
-}
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint,
+    };
+  },
+};
 </script>
 
 <style scoped>

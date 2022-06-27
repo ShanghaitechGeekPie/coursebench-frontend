@@ -7,16 +7,18 @@
   </div>
 </template>
 <script>
-import useBackgroundImage from "@/composables/teachers/detail/useBackgroundImage.js"
+import useBackgroundImage from "@/composables/teachers/detail/useBackgroundImage.js";
 
 export default {
   setup() {
-    const { statics } = useBackgroundImage()
-    return { statics }
+    const { statics } = useBackgroundImage();
+    return { statics };
   },
-  data: () => ({
-    breakpoint: this.$vuetify.breakpoint,
-    theme: this.$vuetify.theme
-  })
-}
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint,
+      theme: this.$vuetify.theme,
+    };
+  },
+};
 </script>

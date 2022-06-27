@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="d-flex justify-center" :style="{ transform: breakpoint.mdAndDown ? 'translate(0, -76px)' : '' }">
+    <div
+      class="d-flex justify-center"
+      :style="{ transform: breakpoint.mdAndDown ? 'translate(0, -76px)' : '' }"
+    >
       <AvatarContainer
         :name="isChinese"
         :src="userProfile.avatar"
@@ -8,14 +11,23 @@
         :outlined="breakpoint.mdAndDown"
       />
     </div>
-    <div class="d-flex justify-center pt-5" :style="{ 'margin-top': breakpoint.mdAndDown ? '-76px' : '0' }">
+    <div
+      class="d-flex justify-center pt-5"
+      :style="{ 'margin-top': breakpoint.mdAndDown ? '-76px' : '0' }"
+    >
       <div class="text-h5 font-weight-bold single-line-limit">
         {{ userProfile.nickname }}
       </div>
     </div>
     <div
       class="d-flex justify-center pt-3"
-      v-if="!(!userProfile['show_year'] & !userProfile['show_grade'] & !userProfile['show_realname'])"
+      v-if="
+        !(
+          !userProfile['show_year'] &
+          !userProfile['show_grade'] &
+          !userProfile['show_realname']
+        )
+      "
     >
       <div class="grey--text text--darken-2">
         <span v-if="userProfile.show_year">{{ userProfile.year }}级</span>
@@ -34,27 +46,29 @@
   </div>
 </template>
 <script>
-import useProfile from "@/composables/users/profile/useProfile"
-import EditProfile from "@/components/users/profile/EditProfile"
-import AvatarContainer from "@/components/users/profile/AvatarContainer"
+import useProfile from "@/composables/users/profile/useProfile";
+import EditProfile from "@/components/users/profile/EditProfile";
+import AvatarContainer from "@/components/users/profile/AvatarContainer";
 
 export default {
   components: { EditProfile, AvatarContainer },
   setup() {
-    const { userProfile } = useProfile()
-    return { userProfile }
+    const { userProfile } = useProfile();
+    return { userProfile };
   },
-  data: () => ({
-    breakpoint: this.$vuetify.breakpoint
-  }),
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint,
+    };
+  },
   computed: {
     isChinese() {
       return escape(this.userProfile.nickname.slice(0, 2)).indexOf("%u") >= 0
         ? this.userProfile.nickname.slice(0, 1)
-        : this.userProfile.nickname.slice(0, 2)
-    }
-  }
-}
+        : this.userProfile.nickname.slice(0, 2);
+    },
+  },
+};
 </script>
 
 <style scoped>

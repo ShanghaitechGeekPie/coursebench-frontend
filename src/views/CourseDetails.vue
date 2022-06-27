@@ -27,9 +27,11 @@ export default {
     const { teachers, comments } = useCourseDetails()
     return { teachers, comments }
   },
-  data: () => ({
-    currentTab: 0
-  }),
+  data() {
+    return {
+      currentTab: 0
+    }    
+  },
   computed: {
     alignedComment() {
       let result = new Array(this.teachers.length)

@@ -137,9 +137,11 @@ export default {
     const { statics } = useCommentCardContent()
     return { statics }
   },
-  data: () => ({
-    breakpoint: this.$vuetify.breakpoint
-  }),
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint
+    }    
+  },
   computed: {
     semester() {
       let sem = new String(this.comment.semester)

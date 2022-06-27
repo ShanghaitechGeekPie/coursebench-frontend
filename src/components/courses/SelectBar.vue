@@ -23,9 +23,11 @@ export default {
     const commentOrder = inject("commentOrder")
     return { commentOrder }
   },
-  data: () => ({
-    items: ["评分", "时间"]
-  })
+  data() {
+    return {
+      items: ["评分", "时间"]
+    }    
+  }
 }
 </script>
 

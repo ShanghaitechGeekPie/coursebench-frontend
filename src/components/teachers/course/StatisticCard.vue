@@ -38,7 +38,6 @@
         </div>        
       </div>      
       <v-expand-transition>
-<<<<<<< HEAD
         <div class="pl-2" v-if="status.showAll && !isEmpty">
           <div
             v-for="(value, key, index) in courseStatistic.count"
@@ -46,11 +45,6 @@
             :class="index !== 0 ? 'mt-n4' : ''"
           >
             <div v-if="value" class="pt-2">
-=======
-        <div class="pl-2" v-if="status.showAll">
-          <div v-for="(value, key, index) in courseStatistic.count" :key="index" :class="index !== 0 ? 'mt-n4' : ''">
-            <div v-if="value" class="py-2">
->>>>>>> 489b771 (Unusable login and register page)
               <v-checkbox dense v-model="status.selected" :value="key">
                 <template #label>
                   <div class="d-flex justify-space-between" style="width: 100%">
@@ -74,7 +68,12 @@ export default {
     const { courseStatistic, statics, status } = useStatisticCard()
     return { courseStatistic, statics, status }
   },
-<<<<<<< HEAD
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint,
+      theme: this.$vuetify.theme,
+    }
+  }, 
   computed: {
     isEmpty() {
       for (let key in this.courseStatistic.count) {
@@ -85,11 +84,6 @@ export default {
       return true
     }
   }, 
-=======
-  data: () => ({
-    breakpoint: this.$vuetify.breakpoint
-  }),
->>>>>>> 489b771 (Unusable login and register page)
   created() {
     if (this.breakpoint.mdAndDown) {
       this.status.showAll = false

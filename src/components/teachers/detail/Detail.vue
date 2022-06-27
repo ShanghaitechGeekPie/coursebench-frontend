@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="d-flex justify-center" :style="{ transform: breakpoint.mdAndDown ? 'translate(0, -76px)' : '' }">
+    <div
+      class="d-flex justify-center"
+      :style="{ transform: breakpoint.mdAndDown ? 'translate(0, -76px)' : '' }"
+    >
       <AvatarContainer
         :name="isChinese"
         src=""
@@ -8,7 +11,10 @@
         :outlined="breakpoint.mdAndDown"
       />
     </div>
-    <div class="d-flex justify-center pt-5" :style="{ 'margin-top': breakpoint.mdAndDown ? '-76px' : '0' }">
+    <div
+      class="d-flex justify-center pt-5"
+      :style="{ 'margin-top': breakpoint.mdAndDown ? '-76px' : '0' }"
+    >
       <div class="text-h5 font-weight-bold">
         {{ teacherDetail.name }}
       </div>
@@ -31,26 +37,28 @@
   </div>
 </template>
 <script>
-import useDetail from "@/composables/teachers/detail/useDetail"
-import AvatarContainer from "@/components/users/profile/AvatarContainer"
+import useDetail from "@/composables/teachers/detail/useDetail";
+import AvatarContainer from "@/components/users/profile/AvatarContainer";
 
 export default {
   components: { AvatarContainer },
   setup() {
-    const { teacherDetail } = useDetail()
-    return { teacherDetail }
+    const { teacherDetail } = useDetail();
+    return { teacherDetail };
   },
-  data: () => ({
-    breakpoint: this.$vuetify.breakpoint
-  }),
+  data() {
+    return {
+      breakpoint: this.$vuetify.breakpoint,
+    };
+  },
   computed: {
     isChinese() {
       return escape(this.teacherDetail.name.slice(0, 2)).indexOf("%u") >= 0
         ? this.teacherDetail.name.slice(0, 1)
-        : this.teacherDetail.name.slice(0, 2)
-    }
-  }
-}
+        : this.teacherDetail.name.slice(0, 2);
+    },
+  },
+};
 </script>
 
 <style scoped>

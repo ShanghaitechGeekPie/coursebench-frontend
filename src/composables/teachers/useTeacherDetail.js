@@ -71,7 +71,7 @@ export default () => {
         status.loading = false
       } else if (fetchStatus.value == "error") {
         if (error.value.code === "ECONNABORTED") {
-          showSnackbar("error", "网络连接失效，请检查本地网络设置")
+          showSnackbar("error", "网络连接失败")
         } else {
           showSnackbar("error", error.value.response.data.msg)
         }

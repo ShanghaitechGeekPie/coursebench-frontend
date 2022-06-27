@@ -60,9 +60,11 @@ export default {
       }
     }
   },
-  data: () => ({
-    isShow: true
-  }),
+  data() {
+    return {
+      isShow: true
+    }    
+  },
   watch: {
     model() {
       console.log(this.model)
