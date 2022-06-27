@@ -31,7 +31,7 @@ export default () => {
     setTimeout(() => {
       formStatus.loading = false
       if (response != "1234") {
-        showSnackbar("error", "验证码错误！")
+        showSnackbar("error", "验证码错误！", 5000)
       } else {
         $emit('update:dialog', false)
         formStatus.windowStep = 0
