@@ -102,10 +102,8 @@ export default {
       coursesMatchingFilter
     }
   },
-  data() {
-    return {
-      icons: { mdiCodeJson }
-    }
-  }
+  data: () => ({
+    icons: { mdiCodeJson }
+  })
 }
 </script>

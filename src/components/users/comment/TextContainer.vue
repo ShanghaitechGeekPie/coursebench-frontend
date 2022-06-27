@@ -3,17 +3,11 @@
     <v-row>
       <v-col cols="12" :class="dense ? 'px-sm-4 px-2 pb-0 pt-0' : ''">
         <span
-          :class="[
-            'text-body-1',
-            markdown ? 'markdown-body' : '',
-            'text-container',
-          ]"
+          :class="['text-body-1', markdown ? 'markdown-body' : '', 'text-container']"
           ref="textContainer"
           v-html="markdown ? useMarkdown(text) : text"
           :style="{
-            'max-height':
-              (status.isOverflow & !status.showAll ? maxHeight : statics.inf) +
-              'px',
+            'max-height': (status.isOverflow & !status.showAll ? maxHeight : statics.inf) + 'px'
           }"
         ></span>
       </v-col>
@@ -30,42 +24,23 @@
         <v-sheet
           class="overlay"
           :style="{
-            background: `linear-gradient(transparent, ${
-              theme.isDark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)'
-            })`,
+            background: `linear-gradient(transparent, ${theme.isDark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)'})`
           }"
           v-if="!status.showAll"
         >
         </v-sheet>
-        <div
-          :class="['d-flex', 'justify-space-between', 'mt-n8']"
-          v-if="!status.showAll"
-        >
+        <div :class="['d-flex', 'justify-space-between', 'mt-n8']" v-if="!status.showAll">
           <slot :overflow="status.isOverflow">
             <div></div>
           </slot>
-          <v-chip
-            outlined
-            label
-            :small="dense"
-            @click="
-              dialog ? (status.showDialog = true) : (status.showAll = true)
-            "
-          >
+          <v-chip outlined label :small="dense" @click="dialog ? (status.showDialog = true) : (status.showAll = true)">
             <v-icon :dense="dense" :small="dense">
-              {{
-                dialog
-                  ? statics.icons.mdiFullscreen
-                  : statics.icons.mdiChevronDown
-              }}
+              {{ dialog ? statics.icons.mdiFullscreen : statics.icons.mdiChevronDown }}
             </v-icon>
             <span class="text-body-2">阅读全文</span>
           </v-chip>
         </div>
-        <div
-          :class="['d-flex', 'justify-space-between', dense ? 'pr-sm-1' : '']"
-          v-if="status.showAll"
-        >
+        <div :class="['d-flex', 'justify-space-between', dense ? 'pr-sm-1' : '']" v-if="status.showAll">
           <slot :overflow="status.isOverflow">
             <div></div>
           </slot>
@@ -85,14 +60,9 @@
             :fullscreen="breakpoint.name === 'xs'"
           >
             <v-card tile flat>
-              <v-card-title
-                class="pa-0"
-                :style="{ background: theme.isDark ? '#1e1e1e' : '#ffffff' }"
-              >
+              <v-card-title class="pa-0" :style="{ background: theme.isDark ? '#1e1e1e' : '#ffffff' }">
                 <v-toolbar elevation="">
-                  <v-icon @click="status.showDialog = false"
-                    style="transform: translate(0, 2px)"
-                  >
+                  <v-icon @click="status.showDialog = false" style="transform: translate(0, 2px)">
                     {{ statics.icons.mdiClose }}
                   </v-icon>
                   <v-toolbar-title class="pl-4"> 阅读全文 </v-toolbar-title>
@@ -106,13 +76,7 @@
                 <span class="text-h5">{{ title }}</span>
                 <span
                   v-html="markdown ? useMarkdown(text) : text"
-                  :class="[
-                    'text-body-1',
-                    markdown ? 'markdown-body' : '',
-                    'text-dialog',
-                    'pt-sm-0',
-                    'pt-2',
-                  ]"
+                  :class="['text-body-1', markdown ? 'markdown-body' : '', 'text-dialog', 'pt-sm-0', 'pt-2']"
                 ></span>
               </v-card-text>
             </v-card>
@@ -123,63 +87,62 @@
   </v-container>
 </template>
 <script>
-import useTextContainer from "@/composables/users/comment/useTextContainer";
-import useMarkdown from "@/composables/global/useMarkdown";
+import useTextContainer from "@/composables/users/comment/useTextContainer"
+import useMarkdown from "@/composables/global/useMarkdown"
 
 export default {
   setup() {
-    const { statics, status } = useTextContainer();
-    return { statics, status, useMarkdown };
+    const { statics, status } = useTextContainer()
+    return { statics, status, useMarkdown }
   },
-  data() {
-    return {
-      breakpoint: this.$vuetify.breakpoint,
-      theme: this.$vuetify.theme
-    };
-  },
+  data: () => ({
+    breakpoint: this.$vuetify.breakpoint,
+    theme: this.$vuetify.theme
+  }),
   props: {
     text: {
       type: String,
-      default: "",
+      default: ""
     },
     dense: {
       type: Boolean,
-      default: false,
+      default: false
     },
     markdown: {
       type: Boolean,
-      default: false,
+      default: false
     },
     maxHeight: {
       type: [Number, String],
-      default: 100,
+      default: 100
     },
     dialog: {
       type: Boolean,
-      default: false,
+      default: false
     },
     title: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   methods: {
     overflowDetect() {
       if (this.$refs.textContainer.offsetHeight > this.maxHeight) {
-        this.status.isOverflow = true;
+        this.status.isOverflow = true
       }
-    },
+    }
   },
   mounted() {
     setTimeout(() => {
-      this.overflowDetect();
+      this.overflowDetect()
       setTimeout(() => {
-        this.overflowDetect();
-      }, 50);
-    }, 50);
-  },
-};
+        this.overflowDetect()
+      }, 50)
+    }, 50)
+  }
+}
 </script>
+
 <style scoped>
 .text-container {
   display: block;

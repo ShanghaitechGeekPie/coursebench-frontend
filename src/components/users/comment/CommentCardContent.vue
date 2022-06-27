@@ -45,7 +45,7 @@
                     v-for="(teacher, index) in comment.group.teachers"
                     class="pl-1 router-container text-caption"
                     :key="index"
-                    @click="$router.push({ path: `teacher/${ teacher.id }` })"
+                    @click="$router.push({ path: `teacher/${teacher.id}` })"
                   >
                     {{ teacher.name }}
                   </span>
@@ -61,67 +61,35 @@
                 <v-col class="pa-0" :cols="breakpoint.width > 420 ? 7 : 8" sm="8">
                   <v-container>
                     <v-row>
-                      <v-col
-                        cols="6"
-                        sm="3"
-                        class="py-0 pl-sm-3 pl-2 pr-lg-3 pr-md-0 pr-sm-1 pr-0"
-                      >
+                      <v-col cols="6" sm="3" class="py-0 pl-sm-3 pl-2 pr-lg-3 pr-md-0 pr-sm-1 pr-0">
                         <div>
-                          <span
-                            class="pr-1 pr-md-0 pr-lg-1 font-weight-bold text-body-2"
-                            >课程质量</span
-                          >
+                          <span class="pr-1 pr-md-0 pr-lg-1 font-weight-bold text-body-2">课程质量</span>
                           <v-chip x-small label :color="statics.color[comment.score[0] - 1]" class="px-1">
-                            <span class="text-caption white--text">{{
-                              statics.grade[0][comment.score[0] - 1]
-                            }}</span>
+                            <span class="text-caption white--text">{{ statics.grade[0][comment.score[0] - 1] }}</span>
                           </v-chip>
                         </div>
                       </v-col>
                       <v-col cols="6" sm="3" class="py-0 px-lg-3 px-md-0 px-sm-1 px-0">
                         <div>
-                          <span
-                            class="pr-1 font-weight-bold text-body-2"
-                            >作业用时</span
-                          >
+                          <span class="pr-1 font-weight-bold text-body-2">作业用时</span>
                           <v-chip x-small label :color="statics.color[comment.score[1] - 1]" class="px-1">
-                            <span class="text-caption white--text">{{
-                              statics.grade[1][comment.score[1] - 1]
-                            }}</span>
+                            <span class="text-caption white--text">{{ statics.grade[1][comment.score[1] - 1] }}</span>
                           </v-chip>
                         </div>
                       </v-col>
-                      <v-col
-                        cols="6"
-                        sm="3"
-                        class="py-0 pl-lg-3 pl-md-0 pl-sm-1 pl-2 pr-lg-3 pr-md-0 pr-sm-1 pr-0"
-                      >
+                      <v-col cols="6" sm="3" class="py-0 pl-lg-3 pl-md-0 pl-sm-1 pl-2 pr-lg-3 pr-md-0 pr-sm-1 pr-0">
                         <div>
-                          <span
-                            class="pr-1 font-weight-bold text-body-2"
-                            >考核难度</span
-                          >
+                          <span class="pr-1 font-weight-bold text-body-2">考核难度</span>
                           <v-chip x-small label :color="statics.color[comment.score[2] - 1]" class="px-1">
-                            <span class="text-caption white--text">{{
-                              statics.grade[2][comment.score[2] - 1]
-                            }}</span>
+                            <span class="text-caption white--text">{{ statics.grade[2][comment.score[2] - 1] }}</span>
                           </v-chip>
                         </div>
                       </v-col>
-                      <v-col
-                        cols="6"
-                        sm="3"
-                        class="py-0 px-lg-3 px-md-0 px-sm-1 px-0"
-                      >
+                      <v-col cols="6" sm="3" class="py-0 px-lg-3 px-md-0 px-sm-1 px-0">
                         <div>
-                          <span
-                            class="pr-1 font-weight-bold text-body-2"
-                            >给分情况</span
-                          >
+                          <span class="pr-1 font-weight-bold text-body-2">给分情况</span>
                           <v-chip x-small label :color="statics.color[comment.score[3] - 1]" class="px-1">
-                            <span class="text-caption white--text">{{
-                              statics.grade[3][comment.score[3] - 1]
-                            }}</span>
+                            <span class="text-caption white--text">{{ statics.grade[3][comment.score[3] - 1] }}</span>
                           </v-chip>
                         </div>
                       </v-col>
@@ -131,13 +99,7 @@
                 <v-col class="pa-0" cols="4">
                   <v-container>
                     <v-row class="d-flex justify-end">
-                      <v-col
-                        class="py-0 mr-sm-n6"
-                        cols="12"
-                        sm="4"
-                        md="5"
-                        lg="4"
-                      >
+                      <v-col class="py-0 mr-sm-n6" cols="12" sm="4" md="5" lg="4">
                         <v-icon size="16">
                           {{ statics.icons.mdiAccountOutline }}
                         </v-icon>
@@ -165,35 +127,30 @@
   </v-card>
 </template>
 <script>
-import useCommentCardContent from "@/composables/users/comment/useCommentCardContent";
-import TextContainer from "@/components/users/comment/TextContainer";
+import useCommentCardContent from "@/composables/users/comment/useCommentCardContent"
+import TextContainer from "@/components/users/comment/TextContainer"
 
 export default {
+  components: { TextContainer },
+  props: { comment: Object },
   setup() {
-    const { statics } = useCommentCardContent();
-    return { statics };
+    const { statics } = useCommentCardContent()
+    return { statics }
   },
-  props: {
-    comment: Object,
-  },
-  data() {
-    return {
-      breakpoint: this.$vuetify.breakpoint, 
-    }
-  }, 
+  data: () => ({
+    breakpoint: this.$vuetify.breakpoint
+  }),
   computed: {
     semester() {
-      let sem = new String(this.comment.semester);
-      let year = sem.substring(0, 4);
-      let season = sem.substring(4);
-      return `${year}年${season == "02" ? "秋" : "春"}`;
-    },
-  },
-  components: {
-    TextContainer,
-  },
-};
+      let sem = new String(this.comment.semester)
+      let year = sem.substring(0, 4)
+      let season = sem.substring(4)
+      return `${year}年${season == "02" ? "秋" : "春"}`
+    }
+  }
+}
 </script>
+
 <style scoped>
 .overflow {
   display: -webkit-box;
