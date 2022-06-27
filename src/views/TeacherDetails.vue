@@ -2,7 +2,7 @@
   <div
     :style="{
       background: theme.isDark ? '' : '#f9f9f9',
-      'min-height': '100%',
+      'min-height': '100%'
     }"
   >
     <BackgroundImage />
@@ -15,11 +15,11 @@
                 ? {}
                 : scrollTop <= 40
                 ? {
-                    transform: 'translate(0, -160px)',
+                    transform: 'translate(0, -160px)'
                   }
                 : {
                     position: 'fixed',
-                    top: '90px',
+                    top: '90px'
                   }
             "
             flat
@@ -40,9 +40,7 @@
             <v-col class="px-0">
               <div
                 :style="{
-                  width: breakpoint.mdAndDown
-                    ? ''
-                    : Math.floor((breakpoint.width - 428) / 428) * 428 + 'px',
+                  width: breakpoint.mdAndDown ? '' : Math.floor((breakpoint.width - 428) / 428) * 428 + 'px'
                 }"
               >
                 <div
@@ -68,11 +66,7 @@
                     <v-fade-transition>
                       <CourseCard
                         :course="course"
-                        v-if="
-                          status.selected.some(
-                            (school) => school === course.institute
-                          )
-                        "
+                        v-if="status.selected.some((school) => school === course.institute)"
                       />
                     </v-fade-transition>
                   </div>
@@ -85,7 +79,9 @@
     </div>
   </div>
 </template>
+
 <script>
+<<<<<<< HEAD
 import Detail from "@/components/teachers/detail/Detail";
 import DetailLoading from "@/components/teachers/detail/DetailLoading";
 import BackgroundImage from "@/components/teachers/detail/BackgroundImage";
@@ -94,19 +90,16 @@ import CourseCardLoading from "@/components/teachers/course/CourseCardLoading";
 import StatisticCard from "@/components/teachers/course/StatisticCard";
 import StatisticCardLoading from "@/components/teachers/course/StatisticCardLoading";
 import useTeacherDetail from "@/composables/teachers/useTeacherDetail";
+=======
+import Detail from "@/components/teachers/detail/Detail"
+import BackgroundImage from "@/components/teachers/detail/BackgroundImage"
+import CourseCard from "@/components/teachers/course/CourseCard"
+import CourseCardLoading from "@/components/teachers/course/CourseCardLoading"
+import StatisticCard from "@/components/teachers/course/StatisticCard"
+import useTeacherDetail from "@/composables/teachers/useTeacherDetail"
+>>>>>>> 489b771 (Unusable login and register page)
 
 export default {
-  setup() {
-    const { courseText, status } = useTeacherDetail();
-    return { courseText, status };
-  },
-  data() {
-    return {
-      scrollTop: document.documentElement.scrollTop,
-      breakpoint: this.$vuetify.breakpoint,
-      theme: this.$vuetify.theme,
-    };
-  },
   components: {
     Detail,
     DetailLoading, 
@@ -115,12 +108,21 @@ export default {
     StatisticCard,
     StatisticCardLoading,
     CourseCard,
-    CourseCardLoading,
+    CourseCardLoading
   },
+  setup() {
+    const { courseText, status } = useTeacherDetail()
+    return { courseText, status }
+  },
+  data: () => ({
+    scrollTop: document.documentElement.scrollTop,
+    breakpoint: this.$vuetify.breakpoint,
+    theme: this.$vuetify.theme
+  }),
   mounted() {
     document.addEventListener("scroll", () => {
-      this.scrollTop = document.documentElement.scrollTop;
-    });
-  },
-};
+      this.scrollTop = document.documentElement.scrollTop
+    })
+  }
+}
 </script>

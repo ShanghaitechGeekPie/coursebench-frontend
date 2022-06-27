@@ -7,7 +7,9 @@
     <v-menu left bottom offset-y transition="slide-y-transition">
       <template #activator="{ on }">
         <v-btn icon v-on="on">
-          <v-avatar color="white">123</v-avatar>
+          <v-avatar color="grey darken-1">
+            <v-icon size="32">{{ icons.mdiAccount }}</v-icon>
+          </v-avatar>
         </v-btn>
       </template>
       <v-list close-on-click>
@@ -44,20 +46,22 @@
       </v-list>
     </v-menu>
     <v-dialog v-model="dialog.login" max-width="600">
-      <Login />
+      <Login :dialog.sync="dialog.login" />
     </v-dialog>
     <v-dialog v-model="dialog.register" max-width="600">
-      <Register />
+      <Register :dialog.sync="dialog.register" />
     </v-dialog>
   </v-app-bar>
 </template>
 
 <script>
-import Login from "@/components/users/Login.vue"
-import Register from "@/components/users/Register.vue"
-import useLogout from "@/composables/users/useLogout"
+import { reactive } from "@vue/composition-api"
+import Login from "@/components/users/forms/Login.vue"
+import Register from "@/components/users/forms/Register.vue"
+import useLogout from "@/composables/users/forms/useLogout"
 
 import {
+  mdiAccount,
   mdiLoginVariant,
   mdiLogoutVariant,
   mdiAccountPlusOutline,
@@ -68,23 +72,19 @@ import {
 export default {
   components: { Login, Register },
   setup() {
+    const dialog = reactive({ login: false, register: false })
     const { doLogout } = useLogout()
-    return { doLogout }
+    return { dialog, doLogout }
   },
-  data() {
-    return {
-      dialog: {
-        login: false,
-        register: false
-      },
-      icons: {
-        mdiLoginVariant,
-        mdiLogoutVariant,
-        mdiAccountPlusOutline,
-        mdiAccountOutline,
-        mdiMessageAlertOutline
-      }
+  data: () => ({
+    icons: {
+      mdiAccount,
+      mdiLoginVariant,
+      mdiLogoutVariant,
+      mdiAccountPlusOutline,
+      mdiAccountOutline,
+      mdiMessageAlertOutline
     }
-  }
+  })
 }
 </script>

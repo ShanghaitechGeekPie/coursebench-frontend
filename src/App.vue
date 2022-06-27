@@ -3,7 +3,7 @@
     <Header :snackbar.sync="snackbar" />
     <v-main>
       <router-view />
-      <v-snackbar v-model="snackbar.show" :color="snackbar.color">
+      <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout">
         {{ snackbar.text }}
         <template #action="{ attrs }">
           <v-btn text v-bind="attrs" @click="snackbar.show = false">Close</v-btn>

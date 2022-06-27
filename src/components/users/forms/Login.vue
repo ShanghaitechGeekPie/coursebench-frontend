@@ -1,19 +1,23 @@
 <template>
   <v-card>
     <v-card-title>登录</v-card-title>
-    <v-window v-model="login.step">
+    <v-window v-model="formStatus.windowStep">
       <v-window-item :value="0">
         <v-card-text class="px-6">
-          <v-text-field label="邮箱">
-            <v-icon slot="append">{{ icons.mdiEmail }}</v-icon>
-          </v-text-field>
+          <v-text-field
+            v-model="userData.email"
+            label="邮箱"
+            :rules="[formRules.required, formRules.email]"
+          ></v-text-field>
         </v-card-text>
       </v-window-item>
       <v-window-item :value="1">
         <v-card-text class="px-6">
-          <v-text-field label="密码" type="password">
-            <v-icon slot="append">{{ icons.mdiFormTextboxPassword }}</v-icon>
-          </v-text-field>
+          <v-text-field
+            v-model="userData.password"
+            label="密码"
+            :rules="[formRules.required, formRules.password]"
+          ></v-text-field>
         </v-card-text>
       </v-window-item>
       <v-window-item :value="2">
@@ -26,7 +30,7 @@
               <v-otp-input length="4" @finish="doLogin"></v-otp-input>
             </v-col>
           </v-row>
-          <v-overlay absolute :value="login.loading">
+          <v-overlay absolute :value="formStatus.loading">
             <v-progress-circular indeterminate color="primary"></v-progress-circular>
           </v-overlay>
         </v-card-text>
@@ -34,29 +38,22 @@
     </v-window>
     <v-divider></v-divider>
     <v-card-actions>
-      <v-btn v-if="login.step !== 0" text @click="login.step -= 1">上一步</v-btn>
+      <v-btn v-if="formStatus.windowStep !== 0" text @click="formStatus.windowStep -= 1">上一步</v-btn>
       <v-spacer></v-spacer>
-      <v-btn v-if="login.step !== 2" text @click="login.step += 1">下一步</v-btn>
+      <v-btn v-if="formStatus.windowStep !== 2" text @click="formStatus.windowStep += 1">下一步</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-import useLogin from "@/composables/users/useLogin"
-import { mdiEmail, mdiFormTextboxPassword } from "@mdi/js"
+import useLogin from "@/composables/users/forms/useLogin"
+import useForms from "@/composables/users/forms/useForms"
 
 export default {
   setup() {
-    const { login, doLogin } = useLogin()
-    return { login, doLogin }
-  },
-  data() {
-    return {
-      icons: {
-        mdiEmail,
-        mdiFormTextboxPassword
-      }
-    }
+    const { userData, formStatus, doLogin } = useLogin()
+    const { formRules } = useForms()
+    return { userData, formStatus, formRules, doLogin }
   }
 }
 </script>

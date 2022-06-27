@@ -1,5 +1,5 @@
 <template>
-  <div :class="[ breakpoint.mdOnly ? 'd-flex' : '', 'justify-center' ]">
+  <div :class="[breakpoint.mdOnly ? 'd-flex' : '', 'justify-center']">
     <div class="pt-4" :style="{ width: breakpoint.mdOnly ? '812px' : '' }">
       <!-- <div class="d-flex justify-space-between pt-2">
         <div>
@@ -13,20 +13,18 @@
       <div class="d-flex justify-space-between pt-2">
         <div>
           <div>
-            <v-icon size="18">{{
-              statics.icons.mdiClipboardOutline
-            }}</v-icon>
+            <v-icon size="18">{{ statics.icons.mdiClipboardOutline }}</v-icon>
             <span class="text-sm-subtitle-1 pl-1">开课总数</span>
           </div>
         </div>
-        <div class="font-weight-bold" style="width: 16px;">
+        <div class="font-weight-bold" style="width: 16px">
           {{ courseStatistic.total }}
         </div>
       </div>
       <div class="d-flex justify-space-between py-2">
         <div>
           <div>
-            <v-icon size="18">{{ statics.icons.mdiClipboardText}}</v-icon>
+            <v-icon size="18">{{ statics.icons.mdiClipboardText }}</v-icon>
             <span class="text-sm-subtitle-1 pl-1">开课统计</span>
           </div>
         </div>
@@ -40,6 +38,7 @@
         </div>        
       </div>      
       <v-expand-transition>
+<<<<<<< HEAD
         <div class="pl-2" v-if="status.showAll && !isEmpty">
           <div
             v-for="(value, key, index) in courseStatistic.count"
@@ -47,6 +46,11 @@
             :class="index !== 0 ? 'mt-n4' : ''"
           >
             <div v-if="value" class="pt-2">
+=======
+        <div class="pl-2" v-if="status.showAll">
+          <div v-for="(value, key, index) in courseStatistic.count" :key="index" :class="index !== 0 ? 'mt-n4' : ''">
+            <div v-if="value" class="py-2">
+>>>>>>> 489b771 (Unusable login and register page)
               <v-checkbox dense v-model="status.selected" :value="key">
                 <template #label>
                   <div class="d-flex justify-space-between" style="width: 100%">
@@ -63,18 +67,14 @@
   </div>
 </template>
 <script>
-import useStatisticCard from "@/composables/teachers/course/useStatisticCard";
+import useStatisticCard from "@/composables/teachers/course/useStatisticCard"
 
 export default {
   setup() {
-    const { courseStatistic, statics, status } = useStatisticCard();
-    return { courseStatistic, statics, status };
+    const { courseStatistic, statics, status } = useStatisticCard()
+    return { courseStatistic, statics, status }
   },
-  data() {
-    return {
-      breakpoint: this.$vuetify.breakpoint,
-    };
-  },
+<<<<<<< HEAD
   computed: {
     isEmpty() {
       for (let key in this.courseStatistic.count) {
@@ -85,10 +85,15 @@ export default {
       return true
     }
   }, 
+=======
+  data: () => ({
+    breakpoint: this.$vuetify.breakpoint
+  }),
+>>>>>>> 489b771 (Unusable login and register page)
   created() {
     if (this.breakpoint.mdAndDown) {
-      this.status.showAll = false;
+      this.status.showAll = false
     }
-  },
-};
+  }
+}
 </script>
