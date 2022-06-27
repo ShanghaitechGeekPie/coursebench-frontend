@@ -1,4 +1,4 @@
-import { provide, reactive, onMounted, computed } from "@vue/composition-api"
+import { provide, reactive, onMounted, computed, inject } from "@vue/composition-api"
 import vue from "@/main.js"
 import useFetching from "@/composables/global/useFetching"
 import useWatching from "@/composables/global/useWatching"
@@ -6,13 +6,15 @@ import useRefCopy from "@/composables/global/useRefCopy"
 
 export default () => {
 
+  const showSnackbar = inject("showSnackbar")
+
   let teacherDetail = reactive({
     "id": 0,
     "name": "",
     "avatar": "",
     "institute": "",
     "job": "",
-    "introduction": "其他学院", 
+    "introduction": "",
     "courses": [],
   })
 
@@ -22,15 +24,15 @@ export default () => {
     total: 0,
     score: 0,
     count: {
-      "信息科学与技术学院": 0, 
+      "信息科学与技术学院": 0,
       "物质科学与技术学院": 0,
       "生命科学与技术学院": 0,
-      "创意与艺术学院": 0, 
-      "创业与管理学院": 0, 
-      "人文科学研究院": 0, 
-      "生物医学工程学院": 0, 
-      "数学科学研究所": 0, 
-      "其他学院": 0, 
+      "创意与艺术学院": 0,
+      "创业与管理学院": 0,
+      "人文科学研究院": 0,
+      "生物医学工程学院": 0,
+      "数学科学研究所": 0,
+      "其他学院": 0,
     }
   })
 
@@ -41,17 +43,14 @@ export default () => {
         if (courseStatistic.count[key]) {
           ret.push(key)
         }
-      } 
+      }
       return ret
-    }), 
+    }),
     loading: true
   })
 
   const getCourseStatistic = () => {
     courseStatistic.total = teacherDetail.courses.length
-    if (teacherDetail.institute == "") {
-      teacherDetail.institute = "其他学院"
-    }
     const schools = Object.getOwnPropertyNames(courseStatistic.count).filter((key) => {
       return key != "__ob__" && key != "其他学院"
     })
@@ -63,24 +62,30 @@ export default () => {
       }
     }
   }
-  
+
   const getTeacherDetail = () => {
     const id = vue.$route.params.id
-    const { status: fetchStatus, data } = useFetching("teacher_" + id, "/teacher/" + id)
+    const { status: fetchStatus, data, error } = useFetching("teacher_" + id, "/teacher/" + id)
     useWatching(fetchStatus, () => {
-      if (fetchStatus != "loading") {
+      if (fetchStatus.value == "success") {
         status.loading = false
-        if (fetchStatus.value == "error") {
-          vue.$router.push("/404NotFound")
+      } else if (fetchStatus.value == "error") {
+        if (error.value.code === "ECONNABORTED") {
+          showSnackbar("error", "网络连接失效，请检查本地网络设置")
+        } else {
+          showSnackbar("error", error.value.response.data.msg)
         }
+        setTimeout(() => {
+          vue.$router.push("/")
+        }, 5000)
       }
     })
     useWatching(data, () => {
       if (data.value) {
         useRefCopy(data.value.data, teacherDetail)
         getCourseStatistic()
-        useRefCopy(teacherDetail.courses, courseText)        
-      }      
+        useRefCopy(teacherDetail.courses, courseText)
+      }
     })
   }
 
@@ -95,5 +100,5 @@ export default () => {
   provide("teacherDetail", teacherDetail)
 
   return { courseText, status }
-  
+
 }

@@ -40,7 +40,7 @@
         </div>
       </div>
       <v-expand-transition>
-        <div class="pl-2" v-if="status.showAll">
+        <div class="pl-2" v-if="status.showAll && !isEmpty">
           <div
             v-for="(value, key, index) in commentStatistic.count"
             :key="index"
@@ -75,6 +75,16 @@ export default {
       breakpoint: this.$vuetify.breakpoint,
     };
   },
+  computed: {
+    isEmpty() {
+      for (let key in this.commentStatistic.count) {
+        if (this.commentStatistic.count[key]) {
+          return false;
+        }
+      }
+      return true
+    }
+  },  
   created() {
     if (this.breakpoint.mdAndDown) {
       this.status.showAll = false;
