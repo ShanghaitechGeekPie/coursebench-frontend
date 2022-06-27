@@ -51,8 +51,8 @@ import useForms from "@/composables/users/forms/useForms"
 
 export default {
   setup() {
-    const { userData, formStatus, doLogin } = useLogin()
     const { formRules } = useForms()
+    const { userData, formStatus, doLogin } = useLogin()
     return { userData, formStatus, formRules, doLogin }
   }
 }

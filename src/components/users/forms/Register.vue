@@ -78,20 +78,22 @@
       <v-btn v-if="formStatus.windowStep !== 0" text @click="formStatus.windowStep -= 1">上一步</v-btn>
       <v-spacer></v-spacer>
       <v-btn v-if="formStatus.windowStep !== 3" text @click="formStatus.windowStep += 1">下一步</v-btn>
-      <v-btn v-if="formStatus.windowStep === 3" color="primary" @click="$emit('update:dialog', false)">完成</v-btn>
+      <v-btn v-if="formStatus.windowStep === 3" color="primary" @click="closeDialog('register')">完成</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import { inject } from "@vue/composition-api"
 import useRegister from "@/composables/users/forms/useRegister"
 import useForms from "@/composables/users/forms/useForms"
 
 export default {
   setup() {
-    const { userData, formStatus, doRegister } = useRegister()
     const { formRules } = useForms()
-    return { userData, formStatus, formRules, doRegister }
+    const closeDialog = inject("closeDialog")
+    const { userData, formStatus, doRegister } = useRegister()
+    return { userData, formStatus, formRules, closeDialog, doRegister }
   }
 }
 </script>
