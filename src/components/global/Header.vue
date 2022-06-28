@@ -45,20 +45,16 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-dialog v-model="dialog.login" max-width="600">
-      <Login :dialog.sync="dialog.login" />
-    </v-dialog>
-    <v-dialog v-model="dialog.register" max-width="600">
-      <Register :dialog.sync="dialog.register" />
-    </v-dialog>
+    <v-dialog v-model="dialog.login" max-width="600"><Login /></v-dialog>
+    <v-dialog v-model="dialog.register" max-width="600"><Register /></v-dialog>
   </v-app-bar>
 </template>
 
 <script>
-import { reactive } from "@vue/composition-api";
-import Login from "@/components/users/forms/Login.vue";
-import Register from "@/components/users/forms/Register.vue";
-import useLogout from "@/composables/users/forms/useLogout";
+import { reactive, provide } from "@vue/composition-api"
+import Login from "@/components/users/forms/Login.vue"
+import Register from "@/components/users/forms/Register.vue"
+import useLogout from "@/composables/users/forms/useLogout"
 
 import {
   mdiAccount,
@@ -66,15 +62,16 @@ import {
   mdiLogoutVariant,
   mdiAccountPlusOutline,
   mdiAccountOutline,
-  mdiMessageAlertOutline,
-} from "@mdi/js";
+  mdiMessageAlertOutline
+} from "@mdi/js"
 
 export default {
   components: { Login, Register },
   setup() {
-    const dialog = reactive({ login: false, register: false });
-    const { doLogout } = useLogout();
-    return { dialog, doLogout };
+    const { doLogout } = useLogout()
+    const dialog = reactive({ login: false, register: false })
+    provide("closeDialog", (type) => (dialog[type] = false))
+    return { dialog, doLogout }
   },
   data() {
     return {
@@ -84,9 +81,9 @@ export default {
         mdiLogoutVariant,
         mdiAccountPlusOutline,
         mdiAccountOutline,
-        mdiMessageAlertOutline,
-      },
-    };
-  },
-};
+        mdiMessageAlertOutline
+      }
+    }
+  }
+}
 </script>
