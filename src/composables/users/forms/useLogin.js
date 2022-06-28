@@ -2,7 +2,6 @@ import { reactive, inject } from "@vue/composition-api"
 
 export default () => {
 
-  // Get the function to show snackbar from useSnackbar.js
   const showSnackbar = inject("showSnackbar")
 
   const userData = reactive({
@@ -19,15 +18,15 @@ export default () => {
 
   const doLogin = (response) => {
     formStatus.loading = true
-    setTimeout(() => {
+    const realLogin = () => {
       formStatus.loading = false
       if (response != "1234") {
         showSnackbar("error", "验证码错误！")
       } else {
-        $emit('update:dialog', false)
-        formStatus.windowStep = 0
+        showSnackbar("success", "登陆成功")
       }
-    }, 1000)
+    }
+    setTimeout(realLogin, 1000)
   }
 
   return { userData, formStatus, doLogin }
