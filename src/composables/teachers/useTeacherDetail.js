@@ -1,11 +1,13 @@
 import { provide, reactive, onMounted, computed, inject } from "@vue/composition-api"
-import vue from "@/main.js"
 import useFetching from "@/composables/global/useFetching"
 import useWatching from "@/composables/global/useWatching"
 import useRefCopy from "@/composables/global/useRefCopy"
+import { useRouter, useRoute } from "@/router/migrateRouter"
 
 export default () => {
 
+  const router = useRouter()
+  const route = useRoute()
   const showSnackbar = inject("showSnackbar")
 
   let teacherDetail = reactive({
@@ -64,7 +66,7 @@ export default () => {
   }
 
   const getTeacherDetail = () => {
-    const id = vue.$route.params.id
+    const id = route.params.id
     const { status: fetchStatus, data, error } = useFetching("teacher_" + id, "/teacher/" + id)
     useWatching(fetchStatus, () => {
       if (fetchStatus.value == "success") {
@@ -76,7 +78,7 @@ export default () => {
           showSnackbar("error", error.value.response.data.msg, 3000)
         }
         setTimeout(() => {
-          vue.$router.push("/")
+          router.push("/")
         }, 3000)
       }
     })

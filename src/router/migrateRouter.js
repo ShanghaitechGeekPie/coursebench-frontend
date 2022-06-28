@@ -7,11 +7,10 @@ const useRoute = () => currentRoute
 
 const useRouter = () => router
 
-router.beforeEach((to, from, next) => {
+router.afterEach((to, from, next) => {
   Object.keys(to).forEach((key) => {
     currentRoute[key] = to[key]
   })
-  next()
 })
 
 export { useRoute, useRouter }

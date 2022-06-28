@@ -1,7 +1,9 @@
-import vue from "@/main"
 import { mdiCheckboxMarkedCircleOutline } from "@mdi/js"
+import { useRoute } from "@/router/migrateRouter"
 
 export default () => {
+
+  const route = useRoute()
 
   const statics = {
     backgroundLight: "#aaaaaa",
@@ -11,7 +13,7 @@ export default () => {
     }
   }
 
-  console.log(vue.$route.query)
+  console.log(route.query)
 
   return { statics }
 }
