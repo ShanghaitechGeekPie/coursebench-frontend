@@ -2,6 +2,7 @@ import { reactive, inject } from "@vue/composition-api"
 import axios from "axios"
 import Config from "Config"
 import { setPreset } from "@/composables/global/useCookie"
+import { isNetworkError } from "@/composables/global/useHttpError"
 
 export default () => {
 
@@ -32,28 +33,29 @@ export default () => {
     }
     setTimeout(async () => {
       try {
-        const response = await axios.post(Config.serverUrl + "/login", {
+        const response = await axios.post(Config.serverUrl + "/user/login", {
           email: userData.email,
           password: userData.password, 
           captcha_token: "", 
           captcha: ""
         })
         formStatus.loading = false
-      } catch {
+        setPreset({
+          id: response.data.data.id, 
+          name: response.data.data.nickname
+        })
+        global.id = response.data.data.id
+        global.name = response.data.data.nickname        
+      } catch (error) {
+        const response = error.response
         formStatus.loading = false
-        if (response.code === "ECONNABORTED") {
+        if ((!response) || (response && isNetworkError(response))) {
           showSnackbar("error", "网络连接失败")
         } else {
           showSnackbar("error", response.data.msg)
         }
         return
       }
-      setPreset({
-        id: response.data.data.id, 
-        name: response.data.data.nickname
-      })
-      global.id = response.data.data.id
-      global.name = response.data.data.nickname
     }, 1000)
   }
 
