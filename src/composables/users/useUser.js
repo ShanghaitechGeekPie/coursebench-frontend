@@ -3,7 +3,7 @@ import { provide, reactive } from "@vue/composition-api"
 const gradeItems = [ "本科生", "硕士研究生", "博士研究生" ]
 
 export default () => {
-
+  
   const testUserProfile = {
     email: "aReallyReallyReallyLongName@shanghaitech.edu.cn",
     year: 2022,
