@@ -1,8 +1,12 @@
 import { reactive, inject } from "@vue/composition-api"
+import axios from "axios"
+import Config from "Config"
+import { setPreset } from "@/composables/global/useCookie"
 
 export default () => {
 
   const showSnackbar = inject("showSnackbar")
+  const global = inject("global")
 
   const userData = reactive({
     email: "",
@@ -26,7 +30,31 @@ export default () => {
         showSnackbar("success", "登陆成功")
       }
     }
-    setTimeout(realLogin, 1000)
+    setTimeout(async () => {
+      try {
+        const response = await axios.post(Config.serverUrl + "/login", {
+          email: userData.email,
+          password: userData.password, 
+          captcha_token: "", 
+          captcha: ""
+        })
+        formStatus.loading = false
+      } catch {
+        formStatus.loading = false
+        if (response.code === "ECONNABORTED") {
+          showSnackbar("error", "网络连接失败")
+        } else {
+          showSnackbar("error", response.data.msg)
+        }
+        return
+      }
+      setPreset({
+        id: response.data.data.id, 
+        name: response.data.data.nickname
+      })
+      global.id = response.data.data.id
+      global.name = response.data.data.nickname
+    }, 1000)
   }
 
   return { userData, formStatus, doLogin }

@@ -48,9 +48,45 @@ function getCookies(keys) {
     return res
 }
 
+/**
+ * Set preset data to cookie
+ * @param {Number | String} id
+ * @param {String} name 
+ */
+function setPreset({ id = "", name = "" }) {
+    setCookies({ id, name })
+}
+
+/**
+ * Get preset data from cookie
+ * @returns Object { id, name }
+ */
+function getPreset() {
+    return getCookie(["id", "name"])
+}
+
+/**
+ * Clear preset data to cookie
+ */
+function clearPreset() {
+    setCookies({ id: "", name: "" })
+}
+
+/**
+ * Get if the preset is available
+ * @returns Boolean
+ */
+function hasPreset() {
+    return getCookie("id") !== "" && getCookie("name") !== ""
+}
+
 export {
     setCookie, 
-    setCookies, 
     getCookie,
-    getCookies
+    setCookies,     
+    getCookies, 
+    setPreset,
+    getPreset, 
+    clearPreset, 
+    hasPreset
 }
