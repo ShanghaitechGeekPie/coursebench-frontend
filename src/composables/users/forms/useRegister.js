@@ -2,7 +2,6 @@ import { reactive, inject } from "@vue/composition-api"
 
 export default () => {
 
-  const closeDialog = inject("closeDialog")
   const showSnackbar = inject("showSnackbar")
 
   const userData = reactive({
@@ -17,9 +16,6 @@ export default () => {
   })
 
   const formStatus = reactive({
-    // For first two steps, the validation is handled by the form itself.
-    // After the validation and registration in the third step,
-    // the window will automatically move to the latest step.
     emailFormValid: false,
     passwordFormValid: false,
     loading: false,
@@ -28,15 +24,15 @@ export default () => {
 
   const doRegister = (response) => {
     formStatus.loading = true
-    setTimeout(() => {
+    const realRegister = () => {
       formStatus.loading = false
       if (response != "1234") {
         showSnackbar("error", "验证码错误！", 5000)
       } else {
-        closeDialog("register")
-        formStatus.windowStep = 0
+        formStatus.windowStep += 1
       }
-    }, 1000)
+    }
+    setTimeout(realRegister, 1000)
   }
 
   return { userData, formStatus, doRegister }

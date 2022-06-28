@@ -3,13 +3,9 @@
     <v-card-title>注册</v-card-title>
     <v-window v-model="formStatus.windowStep">
       <v-window-item :value="0">
-        <v-form v-model="formStatus.isFormValid">
+        <v-form v-model="formStatus.emailFormValid">
           <v-card-text class="px-6">
-            <v-text-field
-              v-model="userData.email"
-              label="邮箱"
-              :rules="[formRules.required, formRules.email]"
-            ></v-text-field>
+            <v-text-field v-model="userData.email" label="邮箱" :rules="[formRules.required, formRules.email]"></v-text-field>
           </v-card-text>
         </v-form>
       </v-window-item>
@@ -18,11 +14,7 @@
           <v-card-text class="px-6">
             <v-row>
               <v-col cols="12">
-                <v-text-field
-                  v-model="userData.username"
-                  label="用户名"
-                  :rules="[formRules.required, formRules.username]"
-                ></v-text-field>
+                <v-text-field v-model="userData.username" label="用户名" :rules="[formRules.required, formRules.username]"></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select v-model="userData.year" :items="userData.yearItems" label="入学时间"></v-select>
@@ -43,7 +35,7 @@
                   v-model="userData.confirmPassword"
                   label="确认密码"
                   type="password"
-                  :rules="[(value) => value === userData.password || '两次输入的密码不一致']"
+                  :rules="[formRules.required, (value) => value === userData.password || '两次输入的密码不一致']"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -75,10 +67,17 @@
     </v-window>
     <v-divider></v-divider>
     <v-card-actions>
-      <v-btn v-if="formStatus.windowStep !== 0" text @click="formStatus.windowStep -= 1">上一步</v-btn>
+      <v-btn v-if="formStatus.windowStep != 0 && formStatus.windowStep != 3" text @click="formStatus.windowStep -= 1">上一步</v-btn>
       <v-spacer></v-spacer>
-      <v-btn v-if="formStatus.windowStep !== 3" text @click="formStatus.windowStep += 1">下一步</v-btn>
-      <v-btn v-if="formStatus.windowStep === 3" color="primary" @click="closeDialog('register')">完成</v-btn>
+      <v-btn
+        v-if="formStatus.windowStep <= 1"
+        @click="formStatus.windowStep += 1"
+        text
+        :disabled="formStatus.windowStep === 0 ? !formStatus.emailFormValid : !formStatus.passwordFormValid"
+      >
+        下一步
+      </v-btn>
+      <v-btn v-if="formStatus.windowStep == 3" color="primary" @click="closeDialog('register')">完成</v-btn>
     </v-card-actions>
   </v-card>
 </template>

@@ -19,7 +19,7 @@ export default () => {
 
   const doLogin = (response) => {
     formStatus.loading = true
-    setTimeout(() => {
+    const realLogin = () => {
       formStatus.loading = false
       if (response != "1234") {
         showSnackbar("error", "验证码错误！")
@@ -27,7 +27,8 @@ export default () => {
         closeDialog("login")
         formStatus.windowStep = 0
       }
-    }, 1000)
+    }
+    setTimeout(realLogin, 1000)
   }
 
   return { userData, formStatus, doLogin }
