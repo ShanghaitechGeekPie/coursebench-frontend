@@ -4,7 +4,7 @@
     <Failed v-else-if="fetchStatus === 'error'" />
     <v-row v-else>
       <v-col cols="12" md="4" order-md="last">
-        <v-card>
+        <v-card class="mb-4">
           <v-card-text>
             <v-checkbox
               v-model="pageProps.disableFiltering"
@@ -21,9 +21,20 @@
                 slot="append"
                 :color="searchUtils.regExpMode.value ? 'primary' : 'default'"
                 @click="searchUtils.regExpMode.value = !searchUtils.regExpMode.value"
-                >{{ icons.mdiCodeJson }}</v-icon
               >
+                {{ icons.mdiCodeJson }}
+              </v-icon>
             </v-text-field>
+          </v-card-text>
+        </v-card>
+        <v-card>
+          <v-card-text>
+            <v-chip class="ma-2" color="primary">生物医学工程学院</v-chip>
+            <v-chip class="ma-2" color="primary">创意与艺术学院</v-chip>
+            <v-chip class="ma-2">上道书院</v-chip>
+            <v-chip class="ma-2">创意与艺术学院</v-chip>
+            <v-chip class="ma-2">创意与艺术学院</v-chip>
+            <v-chip class="ma-2">创意与艺术学院</v-chip>
           </v-card-text>
         </v-card>
       </v-col>

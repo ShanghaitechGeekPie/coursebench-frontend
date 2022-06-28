@@ -7,7 +7,7 @@
     <v-menu left bottom offset-y transition="slide-y-transition">
       <template #activator="{ on }">
         <v-btn icon v-on="on">
-          <v-avatar color="grey darken-1">
+          <v-avatar color="pink darken-2">
             <v-icon size="32">{{ icons.mdiAccount }}</v-icon>
           </v-avatar>
         </v-btn>

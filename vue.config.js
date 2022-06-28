@@ -27,6 +27,9 @@ module.exports = {
     "vuetify"
   ],
   configureWebpack: {
+    cache: {
+      type: "filesystem"
+    },
     resolve: {
       alias: {
         '@': path.join(__dirname, './src')
