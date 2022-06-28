@@ -19,7 +19,7 @@
     "nprogress": "^0.2.0",
     "vue": "^2.6.11",
     "vue-query": "^1.25.0",
-    "vue-router": "^3.2.0",
+    "vue-router": "^3.5.4",
     "vuetify": "^2.6.6"
   },
   "devDependencies": {
@@ -30,7 +30,7 @@
     "eslint": "^8.18.0",
     "eslint-plugin-vue": "^9.1.1",
     "sass": "~1.32.0",
-    "sass-loader": "13.0.1",
+    "sass-loader": "13.0.2",
     "vue-cli-plugin-vuetify": "~2.5.1",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.7.0"
