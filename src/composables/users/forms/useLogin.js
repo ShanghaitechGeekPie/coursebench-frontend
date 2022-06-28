@@ -2,7 +2,6 @@ import { reactive, inject } from "@vue/composition-api"
 
 export default () => {
 
-  const closeDialog = inject("closeDialog")
   const showSnackbar = inject("showSnackbar")
 
   const userData = reactive({
@@ -24,8 +23,7 @@ export default () => {
       if (response != "1234") {
         showSnackbar("error", "验证码错误！")
       } else {
-        closeDialog("login")
-        formStatus.windowStep = 0
+        showSnackbar("success", "登陆成功")
       }
     }
     setTimeout(realLogin, 1000)
