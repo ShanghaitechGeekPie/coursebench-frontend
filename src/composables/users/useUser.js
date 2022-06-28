@@ -221,6 +221,7 @@ export default () => {
       "user_score_ranking": 0,
     }, 
   ] // Just for test
+  
   const testCommmentStatistic = {
     total: 6,
     score: 2956,
