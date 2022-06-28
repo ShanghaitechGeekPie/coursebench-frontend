@@ -5,14 +5,23 @@
       <v-window-item :value="0">
         <v-form v-model="formStatus.emailFormValid">
           <v-card-text class="px-6">
-            <v-text-field v-model="userData.email" label="邮箱" :rules="[formRules.required, formRules.email]"></v-text-field>
+            <v-text-field
+              v-model="userData.email"
+              label="邮箱"
+              :rules="[formRules.required, formRules.email]"
+            ></v-text-field>
           </v-card-text>
         </v-form>
       </v-window-item>
       <v-window-item :value="1">
         <v-form v-model="formStatus.passwordFormValid">
           <v-card-text class="px-6">
-            <v-text-field v-model="userData.password" label="密码" :rules="[formRules.required, formRules.password]"></v-text-field>
+            <v-text-field
+              v-model="userData.password"
+              label="密码" 
+              type="password"
+              :rules="[formRules.required, formRules.password]"
+            ></v-text-field>
           </v-card-text>
         </v-form>
       </v-window-item>
