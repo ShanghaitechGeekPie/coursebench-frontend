@@ -73,7 +73,10 @@
                 ref="textDialog"
                 :style="{ background: theme.isDark ? '#1e1e1e' : '#ffffff' }"
               >
-                <span class="text-h5">{{ title }}</span>
+                <span class="text-h5">
+                  <v-icon size="32" style="transform: translate(0, -2px)">{{ statics.icons.mdiSubtitlesOutline }}</v-icon>
+                  <span class="pl-2">{{ title }}</span>
+                </span>
                 <span
                   v-html="markdown ? useMarkdown(text) : text"
                   :class="['text-body-1', markdown ? 'markdown-body' : '', 'text-dialog', 'pt-sm-0', 'pt-2']"

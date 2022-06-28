@@ -1,5 +1,11 @@
 import { reactive } from "@vue/composition-api"
-import { mdiChevronDown, mdiChevronUp, mdiFullscreen, mdiClose } from "@mdi/js"
+import { 
+  mdiChevronDown, 
+  mdiChevronUp, 
+  mdiFullscreen, 
+  mdiClose, 
+  mdiSubtitlesOutline 
+} from "@mdi/js"
 
 export default () => {
 
@@ -9,6 +15,7 @@ export default () => {
       mdiChevronUp,
       mdiFullscreen,
       mdiClose,
+      mdiSubtitlesOutline,
     },
     inf: 100000,
   }
