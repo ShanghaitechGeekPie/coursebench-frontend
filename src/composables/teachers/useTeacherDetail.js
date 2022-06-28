@@ -3,6 +3,9 @@ import useFetching from "@/composables/global/useFetching"
 import useWatching from "@/composables/global/useWatching"
 import useRefCopy from "@/composables/global/useRefCopy"
 import { useRouter, useRoute } from "@/router/migrateRouter"
+import { 
+  isNetworkError 
+} from "@/composables/global/useHttpError"
 
 export default () => {
 
@@ -72,10 +75,11 @@ export default () => {
       if (fetchStatus.value == "success") {
         status.loading = false
       } else if (fetchStatus.value == "error") {
-        if (error.value.code === "ECONNABORTED") {
+        const response = error.value.response
+        if ((!response) || (response && isNetworkError(response)))      {
           showSnackbar("error", "网络连接失败", 3000)
         } else {
-          showSnackbar("error", error.value.response.data.msg, 3000)
+          showSnackbar("error", response.data.msg, 3000)
         }
         setTimeout(() => {
           router.push("/")
