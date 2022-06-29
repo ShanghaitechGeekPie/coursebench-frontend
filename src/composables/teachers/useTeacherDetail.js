@@ -76,7 +76,7 @@ export default () => {
         status.loading = false
       } else if (fetchStatus.value == "error") {
         const response = error.value.response
-        if ((!response) || (response && isNetworkError(response)))      {
+        if (isNetworkError(response)) {
           showSnackbar("error", "网络连接失败", 3000)
         } else {
           showSnackbar("error", response.data.msg, 3000)

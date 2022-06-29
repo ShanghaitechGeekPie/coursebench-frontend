@@ -10,7 +10,7 @@ const setCookie = (key, value) => {
 
 /**
  * Set cookie from an object
- * @param {Object, with String values} object 
+ * @param {Object{String | Symbol: String}} object 
  */
 const setCookies = (object) => {
     for (let key in object) setCookie(key, object[key])
@@ -18,14 +18,16 @@ const setCookies = (object) => {
 
 /**
  * Get a piece of data from cookie
- * @param {String} key 
+ * @param {String | Symbol} key 
  * @returns String
  */
 const getCookie = (key) => {
-    const cookies = document.cookie.split("; ")
+    const cookies = decodeURIComponent(document.cookie).split("; ")
     for (let cookie of cookies) {
         const [name, value] = cookie.split("=")
-        if (name === key) return value
+        if (name === key) {
+            return value
+        }
     }
     return ""
 }
@@ -37,7 +39,9 @@ const getCookie = (key) => {
  */
 const getCookies = (keys) => {
     let cookies = {}
-    for (let key of keys) cookies[key] = getCookie(key)
+    for (let key of keys) {
+        cookies[key] = getCookie(key)
+    }
     return cookies
 }
 
@@ -53,11 +57,13 @@ const setPreset = ({ id = "", nickname = "" }) => {
 
 /**
  * Get preset data from cookie
- * @returns Object { id, name }
+ * @returns Object { id, nickname }
  */
 const getPreset = () => {
     const preset = getCookie("preset")
-    if (preset === "") return { id: "", name: "" }
+    if (preset === "") {
+        return { id: "", nickname: "" }
+    }
     return JSON.parse(atob(preset, "base64"))
 }
 

@@ -48,7 +48,7 @@ export default () => {
       } catch (error) {
         const response = error.response
         formStatus.loading = false
-        if ((!response) || (response && isNetworkError(response))) {
+        if (isNetworkError(response)) {
           showSnackbar("error", "网络连接失败")
         } else {
           showSnackbar("error", response.data.msg)
