@@ -7,7 +7,6 @@ import { isNetworkError } from "@/composables/global/useHttpError"
 export default () => {
 
   const showSnackbar = inject("showSnackbar")
-  const global = inject("global")
 
   const userData = reactive({
     email: "",
@@ -35,17 +34,17 @@ export default () => {
       try {
         const response = await axios.post(Config.serverUrl + "/user/login", {
           email: userData.email,
-          password: userData.password, 
-          captcha_token: "", 
+          password: userData.password,
+          captcha_token: "",
           captcha: ""
         })
         formStatus.loading = false
         setPreset({
-          id: response.data.data.id, 
+          id: response.data.data.id,
           name: response.data.data.nickname
         })
         global.id = response.data.data.id
-        global.name = response.data.data.nickname        
+        global.name = response.data.data.nickname
       } catch (error) {
         const response = error.response
         formStatus.loading = false

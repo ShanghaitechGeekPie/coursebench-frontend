@@ -3,7 +3,7 @@
     <Loading v-if="fetchStatus === 'loading'" />
     <Failed v-else-if="fetchStatus === 'error'" />
     <v-row v-else>
-      <v-col cols="12" md="4" order-md="last">
+      <v-col cols="12" lg="4" order-lg="last">
         <v-card class="mb-4">
           <v-card-text>
             <v-checkbox
@@ -38,7 +38,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12" md="8" order-md="first">
+      <v-col cols="12" lg="8" order-lg="first">
         <v-data-iterator
           :items="coursesSearched"
           :page="pageProps.pageNow"
@@ -89,9 +89,28 @@ import useCourses from "@/composables/courses/useCourses"
 import { onMounted } from "@vue/composition-api"
 import { mdiCodeJson } from "@mdi/js"
 
+import { setCookie, getCookie, setCookies, getCookies, setPreset, getPreset, clearPreset, hasPreset } from "@/composables/global/useCookie"
+
 export default {
   components: { Loading, Failed },
   setup() {
+    /*
+     *Full test of the useCookie
+     */
+    const testCookie = () => {
+      setCookie("test", "test")
+      console.log(getCookie("test"))
+      setCookies({ test: "test", test2: "test2" })
+      console.log(getCookies(["test", "test2"]))
+      setPreset({ id: "1", nickname: "test" })
+      console.log(getPreset())
+      clearPreset()
+      console.log(getCookie("preset"))
+      console.log(hasPreset())
+    }
+
+    testCookie()
+
     const {
       coursesSearched,
       fetchStatus,
