@@ -21,17 +21,9 @@ export default () => {
     windowStep: 0
   })
 
-  const doLogin = (response) => {
+  const doLogin = () => {
     formStatus.loading = true
-    const realLogin = () => {
-      formStatus.loading = false
-      if (response != "1234") {
-        showSnackbar("error", "验证码错误！")
-      } else {
-        showSnackbar("success", "登陆成功")
-      }
-    }
-    useMutation(() => axios.post(Config.serverUrl + "/user/login", {
+    useMutation(() => axios.post(Config.serverUrl + "/user/login"), {
       email: userData.email,
       password: userData.password,
       captcha_token: "",
@@ -47,18 +39,18 @@ export default () => {
         })
         global.id = response.data.data.id
         global.name = response.data.data.nickname
+        showSnackbar("success", "登录成功")
       },
       onError: (response) => {
-        const response = error.response
         formStatus.loading = false
         if (isNetworkError(response)) {
           showSnackbar("error", "网络连接失败")
         } else {
           showSnackbar("error", response.data.msg)
         }
-        onSettled: () => {
-          formStatus.loading = false
-        }
+      }, 
+      onSettled: () => {
+        formStatus.loading = false
       }
     })
   }
