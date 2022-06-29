@@ -41,7 +41,7 @@ export default () => {
         formStatus.loading = false
         setPreset({
           id: response.data.data.id,
-          name: response.data.data.nickname
+          nickname: response.data.data.nickname
         })
         global.id = response.data.data.id
         global.name = response.data.data.nickname
