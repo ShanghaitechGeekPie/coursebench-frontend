@@ -1,3 +1,9 @@
+<style>
+body {
+  overflow-x: hidden;
+}
+</style>
+
 <template>
   <v-app>
     <Header :snackbar.sync="snackbar" />
@@ -18,30 +24,19 @@
 import { VueQueryDevTools } from "vue-query/devtools"
 import useSnackbar from "@/composables/global/useSnackbar"
 import Header from "@/components/global/Header"
-import { getPreset } from "@/composables/global/useCookie"
-import { provide } from "@vue/composition-api"
 
 export default {
   name: "App",
   components: { VueQueryDevTools, Header },
   setup() {
     const { snackbar } = useSnackbar()
-    provide("global", getPreset())
     return { snackbar }
   },
   created() {
     try {
-      this.$vuetify.theme.dark = window.matchMedia("(prefers-color-scheme: dark)").matches
       document.body.removeChild(document.getElementById("app-loader"))
-    } catch {
-      console.log("Have a nice day!")
-    }    
+      this.$vuetify.theme.dark = window.matchMedia("(prefers-color-scheme: dark)").matches
+    } catch {}
   }
 }
 </script>
-
-<style>
-body {
-  overflow-x: hidden;
-}
-</style>
