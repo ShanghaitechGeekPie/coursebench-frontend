@@ -1,8 +1,9 @@
 import { reactive, inject } from "@vue/composition-api"
-import axios from "axios"
-import Config from "Config"
 import { setPreset } from "@/composables/global/useCookie"
 import { isNetworkError } from "@/composables/global/useHttpError"
+import { useMutation } from "vue-query"
+import axios from "axios"
+import Config from "Config"
 
 export default () => {
 
@@ -30,22 +31,24 @@ export default () => {
         showSnackbar("success", "登陆成功")
       }
     }
-    setTimeout(async () => {
-      try {
-        const response = await axios.post(Config.serverUrl + "/user/login", {
-          email: userData.email,
-          password: userData.password,
-          captcha_token: "",
-          captcha: ""
-        })
-        formStatus.loading = false
+    useMutation(() => axios.post(Config.serverUrl + "/user/login", {
+      email: userData.email,
+      password: userData.password,
+      captcha_token: "",
+      captcha: ""
+    }, {
+      onMutate: () => {
+        formStatus.loading = true
+      },
+      onSuccess: (response) => {
         setPreset({
           id: response.data.data.id,
           nickname: response.data.data.nickname
         })
         global.id = response.data.data.id
         global.name = response.data.data.nickname
-      } catch (error) {
+      },
+      onError: (response) => {
         const response = error.response
         formStatus.loading = false
         if (isNetworkError(response)) {
@@ -53,9 +56,11 @@ export default () => {
         } else {
           showSnackbar("error", response.data.msg)
         }
-        return
+        onSettled: () => {
+          formStatus.loading = false
+        }
       }
-    }, 1000)
+    })
   }
 
   return { userData, formStatus, doLogin }
