@@ -3,9 +3,7 @@ import useFetching from "@/composables/global/useFetching"
 import useWatching from "@/composables/global/useWatching"
 import useRefCopy from "@/composables/global/useRefCopy"
 import { useRouter, useRoute } from "@/router/migrateRouter"
-import { 
-  isNetworkError 
-} from "@/composables/global/useHttpError"
+import { isNetworkError } from "@/composables/global/useHttpError"
 
 export default () => {
 
