@@ -8,7 +8,9 @@ const instituteInfo = reactive({
     SEM: { name: "创业与管理学院", color: "#7d3c92" },
     GE: { name: "人文科学研究院", color: "#a40050" },
     BME: { name: "生物医学工程学院", color: "#101f5b" },
-    IMS: { name: "数学科学研究所", color: "#2800ae" }
+    IMS: { name: "数学科学研究所", color: "#2800ae" },
+    Other: { name: "其他学院", color: "#757575" },
+    None: { name: "", color: "#B0B0B0" }
 })
 
 const scoreInfo = reactive([
@@ -21,4 +23,12 @@ const scoreInfo = reactive([
     { label: "特别好评", color: "#1B5E20" }
 ])
 
-export { instituteInfo, scoreInfo }
+const gradeInfo = reactive({
+    quality: ["很差", "较差", "一般", "较好", "很好"],
+    workload: [">8h ", "4-8h", "2-4h", "1-2h", "<1h "],
+    difficulty: ["很难", "较难", "适中", "偏易", "简单"],
+    distribution: ["很差", "较差", "一般", "较好", "很好"],
+    color: ["#FF5252", "#FF892F", "#FFC107", "#A4BE23", "#709800"], 
+})
+
+export { instituteInfo, scoreInfo, gradeInfo }
