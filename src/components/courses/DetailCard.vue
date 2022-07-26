@@ -23,18 +23,19 @@
         <v-divider vertical inset class="my-6 d-none d-sm-block"></v-divider>
         <v-col class="d-flex flex-column my-auto px-0" sm="6" cols="12">
           <TeacherSelect class="pt-sm-10 pt-0" />
-          <v-row class="my-2">
-            <v-spacer></v-spacer>
+          <v-row class="my-2 mx-5">
             <v-col>
-              <ScoreBoard fontColor="#D4E157" text="工作量" value="40" />
+              <ScoreBoard fontColor="#D4E157" text="课程质量" value="40" cols="3"/>
             </v-col>
             <v-col>
-              <ScoreBoard fontColor="pink" text="内容质量" value="93" />
+              <ScoreBoard fontColor="pink" text="作业用时" value="93" cols="3"/>
             </v-col>
             <v-col>
-              <ScoreBoard fontColor="#00E676" text="推荐指数" value="74" />
+              <ScoreBoard fontColor="#00E676" text="考核难度" value="74" cols="3" />
             </v-col>
-            <v-spacer></v-spacer>
+            <v-col>
+              <ScoreBoard fontColor="#66ccff" text="给分情况" value="74" cols="3"/>
+            </v-col>
           </v-row>
         </v-col>
       </v-row>
@@ -63,7 +64,7 @@ export default {
   data() {
     return {
       isShow: true
-    }    
+    }
   },
   watch: {
     model() {
