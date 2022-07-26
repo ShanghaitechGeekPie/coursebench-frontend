@@ -33,5 +33,5 @@ export default () => {
     }
   }
 
-  return { statics }
+  return { statics, gradeItems}
 }
