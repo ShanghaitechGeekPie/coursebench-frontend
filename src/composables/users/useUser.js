@@ -39,6 +39,8 @@ export default () => {
       "is_anonymous": false,
       "user_nickname": "小明",  // 匿名时这个没有
       "user_id": 123, // 匿名时这个没有（例外：本人查询自己的评论时）
+      "avatar" : "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+      "grade": 1,
       "score": [5,4,3,2],
       "user_score_ranking": 2,
     }, 
@@ -90,8 +92,10 @@ export default () => {
       "update_time": "2021-09-08",//unix时间戳 最后更新时间
       "semester": 202102, 
       "is_anonymous": false,
-      "user_nickname": "小明",  // 匿名时这个没有
+      "user_nickname": "小黑",  // 匿名时这个没有
       "user_id": 123, // 匿名时这个没有（例外：本人查询自己的评论时）
+      "avatar" : "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+      "grade": 1,
       "score": [5,4,3,2],
       "user_score_ranking": 2,
     },
@@ -143,8 +147,10 @@ export default () => {
       "update_time": "2021-12-23",//unix时间戳 最后更新时间
       "semester": 202102, 
       "is_anonymous": false,
-      "user_nickname": "小明",  // 匿名时这个没有
+      "user_nickname": "傻逼",  // 匿名时这个没有
       "user_id": 123, // 匿名时这个没有（例外：本人查询自己的评论时）
+      "avatar" : "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+      "grade": 1,
       "score": [5,4,3,2],
       "user_score_ranking": 2,
     },
@@ -169,6 +175,8 @@ export default () => {
       "is_anonymous": false,
       "user_nickname": "小明",  // 匿名时这个没有
       "user_id": 123, // 匿名时这个没有（例外：本人查询自己的评论时）
+      "avatar" : "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+      "grade": 1,
       "score": [5,4,3,1],
       "user_score_ranking": -1,
     },
@@ -191,8 +199,10 @@ export default () => {
       "update_time": "2021-09-07",//unix时间戳 最后更新时间
       "semester": 202102, 
       "is_anonymous": false,
-      "user_nickname": "小明",  // 匿名时这个没有
+      "user_nickname": "小紫",  // 匿名时这个没有
       "user_id": 123, // 匿名时这个没有（例外：本人查询自己的评论时）
+      "avatar" : "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+      "grade": 1,
       "score": [5,4,3,1],
       "user_score_ranking": 2,
     },    
@@ -215,8 +225,10 @@ export default () => {
       "update_time": "2021-10-23",//unix时间戳 最后更新时间
       "semester": 202102, 
       "is_anonymous": false,
-      "user_nickname": "小明",  // 匿名时这个没有
+      "user_nickname": "小白",  // 匿名时这个没有
       "user_id": 123, // 匿名时这个没有（例外：本人查询自己的评论时）
+      "avatar" : "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+      "grade": 1,
       "score": [1,3,2,4],
       "user_score_ranking": 0,
     }, 
