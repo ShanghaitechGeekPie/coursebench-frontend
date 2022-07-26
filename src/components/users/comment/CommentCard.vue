@@ -13,6 +13,10 @@ import CommentCardBar from "@/components/users/comment/CommentCardBar";
 export default {
   props: {
     comment: Object,
+    showType: {
+      type: String,
+      default: "user"
+    }
   },
   components: {
     CommentCardContent,

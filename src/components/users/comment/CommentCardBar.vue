@@ -3,18 +3,38 @@
     <v-card-text class="px-sm-4 px-2 py-3 pb-sm-3 pb-0">
       <v-container>
         <v-row class="d-flex justify-space-between">
-          <v-col sm="4" cols="8" class="pa-0 d-flex router-container" 
-            order-sm="0" order="0" 
-            @click="$router.push({ path: `course/${comment.course.id}` })"
+          <v-col sm="4" cols="8" class="pa-0 d-flex router-container"
+                 order-sm="0" order="0"
+                 v-if="showType === 'user'"
+                 @click="$router.push({ path: `course/${comment.course.id}` })"
           >
-            <AvatarContainer :name="statics.short[comment.course.institute]" :color="statics.background[comment.course.institute]" small tile size="38"/>
+            <AvatarContainer
+                :name="statics.short[comment.course.institute]"
+                :color="statics.background[comment.course.institute]" small tile size="38"/>
             <div class="pl-2">
               <div class="text-caption mt-n1">{{
                 comment.course.code
               }}</div>
-              <div class="text-body-1 font-weight-bold">{{ 
-                comment.course.name 
+              <div class="text-body-1 font-weight-bold">{{
+                comment.course.name
               }}</div>
+            </div>
+          </v-col>
+          <v-col sm="4" cols="8" class="pa-0 d-flex router-container"
+                 order-sm="0" order="0"
+                 v-else-if="showType === 'course'"
+                 @click="$router.push({ path: `/user/${comment.user_id}` })"
+          >
+            <AvatarContainer
+                :name="comment.user_nickname"
+                :src="comment.avatar" small tile size="38"/>
+            <div class="pl-2">
+              <div class="text-caption mt-n1">{{
+                gradeItems[comment.grade]
+                }}</div>
+              <div class="text-body-1 font-weight-bold">{{
+                  comment.user_nickname
+                }}</div>
             </div>
           </v-col>
           <v-col sm="3" class="pa-0 d-flex justify-end">
@@ -49,11 +69,15 @@ import AvatarContainer from '@/components/users/profile/AvatarContainer';
 export default {
   components: { AvatarContainer },
   setup() {
-    const { statics } = useCommentCardBar();
-    return { statics };
+    const { statics, gradeItems} = useCommentCardBar();
+    return { statics, gradeItems};
   },
   props: {
     comment: Object,
+    showType: {
+      type: String,
+      default: "user"
+    }
   },
 };
 </script>
