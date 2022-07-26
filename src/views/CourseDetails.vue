@@ -1,17 +1,30 @@
 <template>
-  <div>
+  <div style="overflow: hidden">
     <div class="upper-wrp d-flex justify-center align-end">
       <DetailCard class="mt-sm-10 pb-sm-8 pt-sm-2" />
     </div>
-    <div>
-      <v-tabs centered v-model="currentTab">
-        <v-tab v-for="(teacher, index) in teachers" :key="index">{{ teacher.name }}</v-tab>
-      </v-tabs>
-      <v-tabs-items v-model="currentTab" class="transparent d-flex align-center justify-center">
-        <v-tab-item v-for="(item, index) in teachers" :key="index">
-          <CommentBoard :comments="alignedComment[currentTab]"></CommentBoard>
-        </v-tab-item>
-      </v-tabs-items>
+    <div class="d-flex justify-center">
+<!--      <v-tabs centered v-model="currentTab">-->
+<!--        <v-tab v-for="(teacher, index) in teachers" :key="index">{{ teacher.name }}</v-tab>-->
+<!--      </v-tabs>-->
+<!--      <v-tabs-items v-model="currentTab" class="transparent d-flex align-center justify-center">-->
+<!--        <v-tab-item v-for="(item, index) in teachers" :key="index">-->
+<!--          <CommentBoard :comments="alignedComment[currentTab]"></CommentBoard>-->
+<!--        </v-tab-item>-->
+<!--      </v-tabs-items>-->
+      <v-row class="">
+        <v-col class="pl-sm-0 pr-lg-3 pr-0 pl-0 pr-0 pt-sm-3 pt-0" v-for="(comment, index) in commentText" :key="comment.id" cols="12">
+              <CommentCard
+                  :comment="comment"
+                  :showType="'course'"
+                  v-if="
+                      status.selected.some(
+                        (school) => school === comment.course.institute
+                      )
+                    "
+              />
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
@@ -21,16 +34,20 @@ import DetailCard from "@/components/courses/DetailCard.vue"
 import CommentBoard from "@/components/courses/CommentBoard"
 import useCourseDetails from "@/composables/courses/comment/useCourseDetails"
 
+import CommentCard from "@/components/users/comment/CommentCard";
+import useUser from "@/composables/users/useUser";
+
 export default {
-  components: { DetailCard, CommentBoard },
+  components: { DetailCard, CommentBoard, CommentCard},
   setup() {
     const { teachers, comments } = useCourseDetails()
-    return { teachers, comments }
+    const { commentText, status } = useUser();
+    return { teachers, comments, commentText, status}
   },
   data() {
     return {
       currentTab: 0
-    }    
+    }
   },
   computed: {
     alignedComment() {
