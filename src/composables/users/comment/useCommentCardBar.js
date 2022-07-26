@@ -2,6 +2,8 @@ import { mdiUpdate, mdiCommentEditOutline } from "@mdi/js";
 
 export default () => {
 
+  const gradeItems = [ "本科生", "硕士研究生", "博士研究生" ]
+
   const statics = {
     background: {
       "信息科学与技术学院": '#b0c4de',
