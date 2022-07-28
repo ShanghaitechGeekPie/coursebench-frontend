@@ -44,8 +44,10 @@ module.exports = {
     },
     module: {
       rules: [
-        { test: /\.js$/, use: ['thread-loader'] },
-        { test: /\.md$/, use: ['./src/plugins/markdown-loader'] }
+        { 
+          test: /\.md$/,
+          use: ['./src/plugins/markdown-loader']
+        }
       ]
     }
   }

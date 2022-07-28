@@ -86,7 +86,7 @@
 import Loading from "@/components/global/Loading"
 import Failed from "@/components/global/Failed"
 import useCourses from "@/composables/courses/useCourses"
-import { onMounted } from "@vue/composition-api"
+import { onMounted } from "vue"
 import { mdiCodeJson } from "@mdi/js"
 
 export default {

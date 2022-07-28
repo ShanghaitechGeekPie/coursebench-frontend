@@ -14,7 +14,7 @@
 
 <script>
 import WritingBox from "@/components/courses/WritingBox"
-import { inject } from "@vue/composition-api"
+import { inject } from "vue"
 
 export default {
   name: "SelectBar",

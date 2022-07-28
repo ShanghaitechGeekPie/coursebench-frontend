@@ -1,4 +1,4 @@
-import { inject, reactive, toRefs, watchEffect } from "@vue/composition-api"
+import { inject, reactive, toRefs, watchEffect } from "vue"
 
 export default () => {
 

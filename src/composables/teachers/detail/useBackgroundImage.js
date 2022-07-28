@@ -1,4 +1,4 @@
-import { inject, reactive } from "@vue/composition-api"
+import { inject, reactive } from "vue"
 import useWatching from "@/composables/global/useWatching"
 
 export default () => {

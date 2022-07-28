@@ -1,4 +1,4 @@
-import {provide, reactive} from "@vue/composition-api"
+import {provide, reactive} from "vue"
 
 export default () => {
 

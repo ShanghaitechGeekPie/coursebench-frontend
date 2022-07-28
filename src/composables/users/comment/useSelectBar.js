@@ -1,4 +1,4 @@
-import { inject, watch } from "@vue/composition-api"
+import { inject, watch } from "vue"
 
 export default () => {
 

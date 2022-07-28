@@ -1,5 +1,4 @@
-import { reactive } from "@vue/composition-api"
-import {provide} from "@vue/composition-api/dist/vue-composition-api";
+import { reactive, provide } from "vue"
 
 export default () => {
 
