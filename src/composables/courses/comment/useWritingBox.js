@@ -1,5 +1,6 @@
 import {inject, reactive} from "vue"
 import { mdiChevronRight } from "@mdi/js"
+import { gradeItems } from "@/composables/global/useStaticData"
 
 export default () => {
 
@@ -21,7 +22,6 @@ export default () => {
 
   const getUserProfile = () => {
     const userProfile = testUserProfile
-    const gradeItems = [ "本科生", "硕士研究生", "博士研究生" ]
     userProfile.grade = gradeItems[userProfile.grade]
     return userProfile
   }

@@ -1,6 +1,6 @@
-import { provide, reactive } from "vue"
-
-const gradeItems = [ "本科生", "硕士研究生", "博士研究生" ]
+import { onMounted, provide, reactive, ref } from "vue"
+import useRefCopy from "@/composables/global/useRefCopy"
+import { instituteInfo, gradeItems } from "@/composables/global/useStaticData"
 
 export default () => {
   
@@ -269,21 +269,34 @@ export default () => {
     return userProfile
   }
 
-  const userProfile = reactive(getUserProfile())
+  const userProfile = reactive({
+    email: "", 
+    year: 1970, 
+    grade: 0, 
+    nickname: "", 
+    realname: "", 
+    avatar: "", 
+    show_email: true, 
+    show_year: true, 
+    show_grade: true, 
+    show_realname: true, 
+  })
 
-  const commentText = reactive(getCommentText())
+  const commentText = ref([])
 
-  const commentStatistic = reactive(getCommentStatistic())
+  const commentStatistic = reactive({
+    total: 0,
+    score: 0,
+    count: (() => {
+      let ret = {}
+      for (let key in instituteInfo) {
+        ret[instituteInfo[key].name] = 0
+      }
+    }), 
+  })
 
   const status = reactive({
-    selected: (() => {
-      let ret = new Array()
-      for (let key in commentStatistic.count) {
-        if (commentStatistic.count[key]) {
-          ret.push(key)
-        }
-      } return ret
-    })(), 
+    selected: new Array(), 
     sortKey: '发布时间', 
     order: '从后往前',
   })
@@ -295,6 +308,20 @@ export default () => {
   provide("commentText", commentText)
 
   provide("userProfile", userProfile)
+
+  onMounted(() => {
+    useRefCopy(getUserProfile(), userProfile)
+    commentText.value = getCommentText()
+    useRefCopy(getCommentStatistic(), commentStatistic)
+    status.selected = (() => {
+      let ret = new Array()
+      for (let key in commentStatistic.count) {
+        if (commentStatistic.count[key]) {
+          ret.push(key)
+        }
+      } return ret
+    })()
+  })
 
   return { commentText, status }
   

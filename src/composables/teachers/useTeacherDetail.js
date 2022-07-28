@@ -1,9 +1,10 @@
-import { provide, reactive, onMounted, computed, inject } from "vue"
+import { provide, reactive, ref, onMounted, computed, inject } from "vue"
 import useFetching from "@/composables/global/useFetching"
 import useWatching from "@/composables/global/useWatching"
 import useRefCopy from "@/composables/global/useRefCopy"
 import { useRouter, useRoute } from "@/router/migrateRouter"
 import { isNetworkError } from "@/composables/global/useHttpError"
+import { instituteInfo } from "@/composables/global/useStaticData"
 
 export default () => {
 
@@ -21,22 +22,18 @@ export default () => {
     "courses": [],
   })
 
-  let courseText = reactive([])
+  let courseText = ref([])
 
   const courseStatistic = reactive({
     total: 0,
     score: 0,
-    count: {
-      "信息科学与技术学院": 0,
-      "物质科学与技术学院": 0,
-      "生命科学与技术学院": 0,
-      "创意与艺术学院": 0,
-      "创业与管理学院": 0,
-      "人文科学研究院": 0,
-      "生物医学工程学院": 0,
-      "数学科学研究所": 0,
-      "其他学院": 0,
-    }
+    count: (() => {
+      let ret = {}
+      for (let key in instituteInfo) {
+        ret[instituteInfo[key].name] = 0
+      }
+      return ret
+    })(), 
   })
 
   const status = reactive({
@@ -88,7 +85,7 @@ export default () => {
       if (data.value) {
         useRefCopy(data.value.data, teacherDetail)
         getCourseStatistic()
-        useRefCopy(teacherDetail.courses, courseText)
+        courseText.value = teacherDetail.courses
       }
     })
   }

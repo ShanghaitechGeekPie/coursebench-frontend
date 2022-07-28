@@ -23,12 +23,12 @@ export default () => {
 
   watch(status, () => {
     if ((lastStatus.sortKey != status.sortKey) || (lastStatus.order != status.order)) {
-      commentText.sort(sortFunc)
+      commentText.value.sort(sortFunc)
       lastStatus = Object.assign({}, status)
     }
   })
 
-  commentText.sort(sortFunc)
+  commentText.value.sort(sortFunc)
 
   return { statics, status }
 }

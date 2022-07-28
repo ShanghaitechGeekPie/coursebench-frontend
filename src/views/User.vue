@@ -38,7 +38,7 @@
           </v-row>
           <v-row>
             <v-col class="pl-sm-0 pr-lg-3 pr-0 pl-0 pr-0 pt-sm-3 pt-0">
-              <div v-for="(comment, index) in commentText" :key="comment.id">
+              <div v-for="(comment, index) in commentText" :key="comment.id">       
                 <v-fade-transition>
                   <CommentCard
                     :comment="comment"
