@@ -1,4 +1,4 @@
-import { provide, reactive } from "@vue/composition-api"
+import { provide, reactive } from "vue"
 
 const gradeItems = [ "本科生", "硕士研究生", "博士研究生" ]
 

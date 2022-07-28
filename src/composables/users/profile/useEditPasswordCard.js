@@ -1,4 +1,4 @@
-import { reactive, watchEffect } from "@vue/composition-api"
+import { reactive, watchEffect } from "vue"
 
 export default () => {
 

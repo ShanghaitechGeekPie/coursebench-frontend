@@ -15,19 +15,17 @@ body {
           <v-btn text v-bind="attrs" @click="snackbar.show = false">Close</v-btn>
         </template>
       </v-snackbar>
-      <VueQueryDevTools />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import { VueQueryDevTools } from "vue-query/devtools"
-import useSnackbar from "@/composables/global/useSnackbar"
 import Header from "@/components/global/Header"
+import useSnackbar from "@/composables/global/useSnackbar"
 
 export default {
   name: "App",
-  components: { VueQueryDevTools, Header },
+  components: { Header },
   setup() {
     const { snackbar } = useSnackbar()
     return { snackbar }

@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { inject } from "@vue/composition-api"
+import { inject } from "vue"
 import useRegister from "@/composables/users/forms/useRegister"
 import useForms from "@/composables/users/forms/useForms"
 

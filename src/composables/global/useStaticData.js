@@ -1,4 +1,4 @@
-import { reactive } from "@vue/composition-api"
+import { reactive } from "vue"
 
 const instituteInfo = reactive({
     SIST: { name: "信息科学与技术学院", color: "#b0c4de" },

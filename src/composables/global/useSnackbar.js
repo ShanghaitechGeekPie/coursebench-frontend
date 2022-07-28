@@ -1,4 +1,4 @@
-import { provide, ref } from "@vue/composition-api"
+import { provide, ref } from "vue"
 
 export default () => {
 

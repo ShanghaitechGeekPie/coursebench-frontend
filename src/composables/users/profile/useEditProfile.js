@@ -1,4 +1,4 @@
-import { provide, reactive, watchEffect } from "@vue/composition-api"
+import { provide, reactive, watchEffect } from "vue"
 import { mdiAccountEditOutline } from "@mdi/js";
 
 export default () => {

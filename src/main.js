@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from '@/App.vue'
 import vuetify from '@/plugins/vuetify'
 import router from '@/router/index'
-import VueCompositionAPI from '@vue/composition-api'
 import NProgress from 'nprogress'
 import { VueQueryPlugin } from "vue-query"
 import 'nprogress/nprogress.css'
@@ -22,7 +21,6 @@ const vueQueryPluginOptions = {
 }
 
 Vue.config.productionTip = false
-Vue.use(VueCompositionAPI)
 Vue.use(VueQueryPlugin, vueQueryPluginOptions)
 
 router.beforeEach((to, from, next) => {

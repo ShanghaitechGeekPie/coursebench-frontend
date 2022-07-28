@@ -1,4 +1,4 @@
-import { ref, reactive, computed } from "@vue/composition-api"
+import { ref, reactive, computed } from "vue"
 import useFetching from "@/composables/global/useFetching"
 import useSearch from "@/composables/global/useSearch"
 import useWatching from "@/composables/global/useWatching"

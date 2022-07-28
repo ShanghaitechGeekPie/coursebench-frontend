@@ -1,4 +1,4 @@
-import { reactive } from "@vue/composition-api"
+import { reactive } from "vue"
 import router from "@/router/index"
 
 const currentRoute = reactive({ ...router.currentRoute })

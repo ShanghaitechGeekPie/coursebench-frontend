@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { reactive, provide } from "@vue/composition-api"
+import { reactive, provide } from "vue"
 import Login from "@/components/users/forms/Login.vue"
 import Register from "@/components/users/forms/Register.vue"
 import useLogout from "@/composables/users/forms/useLogout"

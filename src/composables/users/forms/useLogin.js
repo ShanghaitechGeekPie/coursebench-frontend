@@ -1,4 +1,4 @@
-import { reactive, inject } from "@vue/composition-api"
+import { reactive, inject } from "vue"
 import { setPreset } from "@/composables/global/useCookie"
 import { isNetworkError } from "@/composables/global/useHttpError"
 import { useMutation } from "vue-query"

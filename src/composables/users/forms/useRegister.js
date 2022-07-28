@@ -1,4 +1,4 @@
-import { reactive, inject } from "@vue/composition-api"
+import { reactive, inject } from "vue"
 
 export default () => {
 

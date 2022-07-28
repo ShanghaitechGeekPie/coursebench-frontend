@@ -1,4 +1,4 @@
-import { provide, reactive, onMounted, computed, inject } from "@vue/composition-api"
+import { provide, reactive, onMounted, computed, inject } from "vue"
 import useFetching from "@/composables/global/useFetching"
 import useWatching from "@/composables/global/useWatching"
 import useRefCopy from "@/composables/global/useRefCopy"
