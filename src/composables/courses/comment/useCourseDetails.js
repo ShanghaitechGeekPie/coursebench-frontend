@@ -1,4 +1,4 @@
-import {provide, reactive} from "vue"
+import {onMounted, provide, ref } from "vue"
 
 export default () => {
 
@@ -168,9 +168,9 @@ export default () => {
         return commentText
     }
 
-    const teachers = reactive(getTeachers())
+    const teachers = ref([])
 
-    const comments = reactive(getCommentText())
+    const comments = ref([])
 
 
     const scoreDims = [ "课程质量", "工作量", "考核难度", "给分情况" ]
@@ -178,6 +178,12 @@ export default () => {
     provide('scoreDims', scoreDims);
 
     provide('teachers', teachers);
+
+
+    onMounted(() => {
+        teachers.value = getTeachers()
+        comments.value = getCommentText()
+    })
 
     return { teachers, comments}
 }

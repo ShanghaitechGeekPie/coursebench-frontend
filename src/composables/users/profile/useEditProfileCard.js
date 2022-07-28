@@ -1,4 +1,5 @@
 import { inject, reactive, toRefs, watchEffect } from "vue"
+import { gradeItems, yearItems } from "@/composables/global/useStaticData"
 
 export default () => {
 
@@ -8,8 +9,8 @@ export default () => {
   const userProfile = inject("userProfile")
 
   const statics = {
-    yearItems: [2021, 2022],
-    gradeItems: ["本科生", "硕士研究生", "博士研究生"],
+    yearItems,
+    gradeItems, 
   }
 
   const status = reactive({
