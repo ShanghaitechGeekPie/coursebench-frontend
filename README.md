@@ -7,13 +7,13 @@ The frontend of the CourseBench.
 Fetch the dependencies first by using the command below.
 
 ```
-yarn
+pnpm
 ```
 
 Run this command to build it.
 
 ```
-yarn build
+pnpm build
 ```
 
 You will get the `dist` folder. Upload it to your server.
@@ -21,5 +21,5 @@ You will get the `dist` folder. Upload it to your server.
 Run this command if you feel like debuging it.
 
 ```
-yarn serve
+pnpm serve
 ```
