@@ -22,36 +22,32 @@ export default () => {
   })
 
   const doLogin = (response) => {
-    if (response != "1234") {
-      showSnackbar("error", "验证码错误！")
-    } else {
-      return useMutation(() => axios.post(Config.serverUrl + "/user/login"), {
-        email: userData.email,
-        password: userData.password,
-        captcha_token: "",
-        captcha: ""
-      }, {
-        onMutate: () => {
-          formStatus.loading = true
-        },
-        onSuccess: (response) => {
-          setPreset({
-            id: response.data.data.id,
-            name: response.data.data.nickname
-          })
-          global.id = response.data.data.id
-          global.name = response.data.data.nickname
-          showSnackbar("success", "登陆成功")
-        },
-        onError: () => {
-          if (isNetworkError(error.response)) showSnackbar("error", "网络连接失败")
-          else showSnackbar("error", error.response.data.msg)
-        },
-        onSettled: () => {
-          formStatus.loading = false
-        }
-      })
-    }
+    useMutation(() => axios.post(Config.serverUrl + "/user/login"), {
+      email: userData.email,
+      password: userData.password,
+      captcha_token: "",
+      captcha: ""
+    }, {
+      onMutate: () => {
+        formStatus.loading = true
+      },
+      onSuccess: (response) => {
+        setPreset({
+          id: response.data.data.id,
+          name: response.data.data.nickname
+        })
+        global.id = response.data.data.id
+        global.name = response.data.data.nickname
+        showSnackbar("success", "登陆成功")
+      },
+      onError: () => {
+        if (isNetworkError(error.response)) showSnackbar("error", "网络连接失败")
+        else showSnackbar("error", error.response.data.msg)
+      },
+      onSettled: () => {
+        formStatus.loading = false
+      }
+    })
   }
 
   return { userData, formStatus, doLogin }

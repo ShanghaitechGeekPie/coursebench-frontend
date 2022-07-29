@@ -33,16 +33,14 @@ export default () => {
         ret[instituteInfo[key].name] = 0
       }
       return ret
-    })(), 
+    })(),
   })
 
   const status = reactive({
     selected: computed(() => {
       let ret = new Array()
       for (let key in courseStatistic.count) {
-        if (courseStatistic.count[key]) {
-          ret.push(key)
-        }
+        if (courseStatistic.count[key]) ret.push(key)
       }
       return ret
     }),
@@ -65,20 +63,13 @@ export default () => {
 
   const getTeacherDetail = () => {
     const id = route.params.id
-    const { status: fetchStatus, data, error } = useFetching("teacher_" + id, "/teacher/" + id)
+    const { status: fetchStatus, data, error } = useFetching(["teacher_detail", id], "/teacher/" + id)
     useWatching(fetchStatus, () => {
-      if (fetchStatus.value == "success") {
-        status.loading = false
-      } else if (fetchStatus.value == "error") {
+      if (fetchStatus.value == "success") status.loading = false
+      else if (fetchStatus.value == "error") {
         const response = error.value.response
-        if (isNetworkError(response)) {
-          showSnackbar("error", "网络连接失败", 3000)
-        } else {
-          showSnackbar("error", response.data.msg, 3000)
-        }
-        setTimeout(() => {
-          router.push("/")
-        }, 3000)
+        showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
+        setTimeout(() => { router.push("/") }, 3000)
       }
     })
     useWatching(data, () => {

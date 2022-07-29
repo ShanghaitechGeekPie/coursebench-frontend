@@ -39,7 +39,7 @@ export default () => {
   })
 
   const fetchCourses = () => {
-    const { status, data } = useFetching("course_all", "/course/all")
+    const { status, data } = useFetching(["course_all"], "/course/all")
     useWatching(status, () => { fetchStatus.value = status.value })
     useWatching(data, () => { courses.value = data.value ? appendCheckedProp(data.value.data) : [] })
   }
