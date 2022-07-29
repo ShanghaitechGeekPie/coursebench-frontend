@@ -58,15 +58,22 @@
           </v-row>
           <v-row>
             <v-col>
-              <div>
-                <div class="d-flex justify-space-between px-2 pb-3">
+              <div v-for="index in judgeItems.length" :key="index">
+                <div
+                  :class="[
+                    'd-flex',
+                    'justify-space-between',
+                    'px-2',
+                    index !== 1 ? 'py-3' : 'pb-3',
+                  ]"
+                >
                   <div class="text-body-2" style="min-width: 57px">
-                    课程质量
-                  </div>
+                    {{ judgeItems[index - 1] }}
+                  </div>                  
                   <div style="width: 64%">
                     <v-progress-linear
-                      v-model="course.score[0] * 20"
-                      :color="statics.color[score[0]]"
+                      v-model="course.score[index - 1] * 20"
+                      :color="statics.color[score[index - 1]]"
                       class="mt-2"
                       style="pointer-events: none"
                     >
@@ -76,95 +83,11 @@
                     <v-chip
                       x-small
                       label
-                      :color="statics.color[score[0]]"
+                      :color="statics.color[score[index - 1]]"
                       class="px-1 mt-n2"
                     >
                       <span class="text-caption white--text">{{
-                        statics.label[score[0]]
-                      }}</span>
-                    </v-chip>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="d-flex justify-space-between px-2 py-3">
-                  <div class="text-body-2" style="min-width: 57px">
-                    作业用时
-                  </div>
-                  <div style="width: 64%">
-                    <v-progress-linear
-                      v-model="course.score[1] * 20"
-                      :color="statics.color[score[1]]"
-                      class="mt-2"
-                      style="pointer-events: none"
-                    >
-                    </v-progress-linear>
-                  </div>
-                  <div>
-                    <v-chip
-                      x-small
-                      label
-                      :color="statics.color[score[1]]"
-                      class="px-1 mt-n2"
-                    >
-                      <span class="text-caption white--text">{{
-                        statics.label[score[1]]
-                      }}</span>
-                    </v-chip>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="d-flex justify-space-between px-2 py-3">
-                  <div class="text-body-2" style="min-width: 57px">
-                    考核难度
-                  </div>
-                  <div style="width: 64%">
-                    <v-progress-linear
-                      v-model="course.score[2] * 20"
-                      :color="statics.color[score[2]]"
-                      class="mt-2"
-                      style="pointer-events: none"
-                    >
-                    </v-progress-linear>
-                  </div>
-                  <div>
-                    <v-chip
-                      x-small
-                      label
-                      :color="statics.color[score[2]]"
-                      class="px-1 mt-n2"
-                    >
-                      <span class="text-caption white--text">{{
-                        statics.label[score[2]]
-                      }}</span>
-                    </v-chip>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="d-flex justify-space-between px-2 py-3">
-                  <div class="text-body-2" style="min-width: 57px">
-                    给分情况
-                  </div>
-                  <div style="width: 64%">
-                    <v-progress-linear
-                      v-model="course.score[3] * 20"
-                      :color="statics.color[score[3]]"
-                      class="mt-2"
-                      style="pointer-events: none"
-                    >
-                    </v-progress-linear>
-                  </div>
-                  <div>
-                    <v-chip
-                      x-small
-                      label
-                      :color="statics.color[score[3]]"
-                      class="px-1 mt-n2"
-                    >
-                      <span class="text-caption white--text">{{
-                        statics.label[score[3]]
+                        statics.label[score[index - 1]]
                       }}</span>
                     </v-chip>
                   </div>
@@ -180,11 +103,12 @@
 <script>
 import useCourseCard from "@/composables/teachers/course/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
+import { judgeItems } from "@/composables/global/useStaticData";
 
 export default {
   setup() {
     const { statics } = useCourseCard();
-    return { statics };
+    return { statics, judgeItems };
   },
   data() {
     return {
@@ -199,9 +123,7 @@ export default {
     AvatarContainer,
   },
   created() {
-    // TODO: Change this into real data
-    // for (let element of this.course.score) {
-    for (let element of [0, 1, 2, 3]) {
+    for (let element of this.course.score) {
       let rounded = Math.floor(element) + 1;
       if (element == 0) rounded = 0;
       this.score.push(rounded);
