@@ -35,7 +35,7 @@ export default () => {
     },
     onError: (error) => {
       formStatus.loading = false
-      if (isNetworkError(error)) showSnackbar("error", "网络连接失败")
+      if (isNetworkError(error.response)) showSnackbar("error", "网络连接失败")
       else showSnackbar("error", error.response.data.msg)
     }
   })
