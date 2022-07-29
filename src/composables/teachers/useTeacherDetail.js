@@ -37,13 +37,7 @@ export default () => {
   })
 
   const status = reactive({
-    selected: computed(() => {
-      let ret = new Array()
-      for (let key in courseStatistic.count) {
-        if (courseStatistic.count[key]) ret.push(key)
-      }
-      return ret
-    }),
+    selected: [],
     loading: true
   })
 
@@ -77,6 +71,14 @@ export default () => {
         useRefCopy(data.value.data, teacherDetail)
         getCourseStatistic()
         courseText.value = teacherDetail.courses
+        status.selected = (() => {
+          let ret = new Array()
+          for (let key in courseStatistic.count) {
+            if (courseStatistic.count[key]) {
+              ret.push(key)
+            }
+          } return ret
+        })()
       }
     })
   }
