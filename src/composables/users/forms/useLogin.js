@@ -2,8 +2,8 @@ import { reactive, inject } from "vue"
 import { setPreset } from "@/composables/global/useCookie"
 import { isNetworkError } from "@/composables/global/useHttpError"
 import useMutation from "@/composables/global/useMutation"
-import useFetching from "../../global/useFetching"
-import useWatching from "../../global/useWatching"
+import useFetching from "@/composables/global/useFetching"
+import useWatching from "@/composables/global/useWatching"
 
 export default () => {
 
@@ -32,7 +32,7 @@ export default () => {
       global.name = response.data.data.nickname
       showSnackbar("success", "登陆成功")
     },
-    onError: () => {
+    onError: (error) => {
       if (isNetworkError(error.response)) showSnackbar("error", "网络连接失败")
       else showSnackbar("error", error.response.data.msg)
     },

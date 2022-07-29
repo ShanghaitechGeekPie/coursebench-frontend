@@ -43,7 +43,7 @@
                   </v-icon>
                   <span
                     v-for="(teacher, index) in comment.group.teachers"
-                    class="pl-1 router-container text-caption"
+                    class="pl-1 router-container text-caption font-weight-bold"
                     :key="index"
                     @click="$router.push({ path: `/teacher/${teacher.id}` })"
                   >
