@@ -23,21 +23,20 @@ export default () => {
     onMutate: () => {
       formStatus.loading = true
     },
-    onSuccess: (response) => {
+    onSuccess: (data) => {
+      formStatus.loading = false
       setPreset({
-        id: response.data.data.id,
-        name: response.data.data.nickname
+        id: data.response.data.data.id,
+        name: data.response.data.data.nickname
       })
-      global.id = response.data.data.id
-      global.name = response.data.data.nickname
+      global.id = data.response.data.data.id
+      global.name = data.response.data.data.nickname
       showSnackbar("success", "登陆成功")
     },
     onError: (error) => {
-      if (isNetworkError(error.response)) showSnackbar("error", "网络连接失败")
-      else showSnackbar("error", error.response.data.msg)
-    },
-    onSettled: () => {
       formStatus.loading = false
+      if (isNetworkError(error)) showSnackbar("error", "网络连接失败")
+      else showSnackbar("error", error.response.data.msg)
     }
   })
 
@@ -46,11 +45,11 @@ export default () => {
     useWatching(status, () => { formStatus.captchaBase64 = data.value ? data.value.data.img : "" })
   }
 
-  const doLogin = (captcha) => {
+  const doLogin = (captchaValue) => {
     loginMutation.mutate({
       email: userData.email,
       password: userData.password,
-      captcha: captcha
+      captcha: captchaValue
     })
   }
 
