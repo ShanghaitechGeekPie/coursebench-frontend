@@ -19,6 +19,6 @@ export default () => {
       return pattern.test(value) || '密码必须包含字母及数字，长度为8-16位'
     }
   })
-
+  
   return { formRules }
 }
