@@ -24,10 +24,10 @@
       <v-window-item :value="2">
         <v-card-text class="px-6">
           <v-row>
-            <v-col cols="12" sm="4" offset-sm="4">
+            <v-col cols="12" sm="6" offset-sm="3">
               <v-img :src="`data:image/png;base64,${formStatus.captchaBase64}`"></v-img>
             </v-col>
-            <v-col cols="12" sm="6" offset-sm="3">
+            <v-col cols="12" sm="8" offset-sm="2">
               <v-otp-input length="6" @finish="doLogin"></v-otp-input>
             </v-col>
           </v-row>
