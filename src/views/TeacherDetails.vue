@@ -76,12 +76,12 @@
 
 <script>
 import Detail from "@/components/teachers/detail/Detail"
-import DetailLoading from "@/components/teachers/detail/DetailLoading"
+import DetailLoading from "@/components/teachers/loading/DetailLoading"
 import BackgroundImage from "@/components/teachers/detail/BackgroundImage"
 import CourseCard from "@/components/teachers/course/CourseCard"
-import CourseCardLoading from "@/components/teachers/course/CourseCardLoading"
+import CourseCardLoading from "@/components/teachers/loading/CourseCardLoading"
 import StatisticCard from "@/components/teachers/course/StatisticCard"
-import StatisticCardLoading from "@/components/teachers/course/StatisticCardLoading"
+import StatisticCardLoading from "@/components/teachers/loading/StatisticCardLoading"
 import useTeacherDetail from "@/composables/teachers/useTeacherDetail"
 
 export default {

@@ -1,4 +1,5 @@
 import {onMounted, provide, ref } from "vue"
+import { judgeItems } from "@/composables/global/useStaticData"
 
 export default () => {
 
@@ -172,10 +173,7 @@ export default () => {
 
     const comments = ref([])
 
-
-    const scoreDims = [ "课程质量", "工作量", "考核难度", "给分情况" ]
-
-    provide('scoreDims', scoreDims);
+    provide('scoreDims', judgeItems);
 
     provide('teachers', teachers);
 

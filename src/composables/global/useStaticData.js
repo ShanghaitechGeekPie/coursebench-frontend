@@ -28,10 +28,11 @@ const gradingInfo = {
     workload: [">8h ", "4-8h", "2-4h", "1-2h", "<1h "],
     difficulty: ["很难", "较难", "适中", "偏易", "简单"],
     distribution: ["很差", "较差", "一般", "较好", "很好"],
-    color: ["#FF5252", "#FF892F", "#FFC107", "#A4BE23", "#709800"], 
+    color: ["#FF5252", "#FF892F", "#FFC107", "#A4BE23", "#709800"],
 }
 
+const judgeItems = ["课程质量", "作业用时", "考核难度", "给分情况"]
 const gradeItems = ["本科生", "硕士研究生", "博士研究生"]
 const yearItems = [2021, 2022]
 
-export { instituteInfo, scoreInfo, gradingInfo, gradeItems, yearItems }
+export { instituteInfo, scoreInfo, gradingInfo, judgeItems, gradeItems, yearItems }
