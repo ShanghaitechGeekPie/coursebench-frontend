@@ -37,8 +37,8 @@ module.exports = {
     },
     externals: {
       'Config': JSON.stringify({
-        // serverUrl: "http://localhost:3500/v1", 
-        serverUrl: "https://coursebench.geekpie.club/v1"
+        serverUrl: "http://localhost:3500/v1", 
+        // serverUrl: "https://coursebench.geekpie.club/v1"
         // serverUrl: "https://cb.wa-am.com:2/api/v1"
       })
     },

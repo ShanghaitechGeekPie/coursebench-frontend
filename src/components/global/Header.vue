@@ -45,8 +45,8 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-dialog v-model="dialog.login" max-width="600"><Login /></v-dialog>
-    <v-dialog v-model="dialog.register" max-width="600"><Register /></v-dialog>
+    <v-dialog v-model="dialog.login" max-width="440"><Login /></v-dialog>
+    <v-dialog v-model="dialog.register" max-width="440"><Register /></v-dialog>
   </v-app-bar>
 </template>
 
@@ -71,6 +71,7 @@ export default {
     const { doLogout } = useLogout()
     const dialog = reactive({ login: false, register: false })
     provide("closeDialog", (type) => (dialog[type] = false))
+    provide("openDialog", (type) => (dialog[type] = true))
     return { dialog, doLogout }
   },
   data() {

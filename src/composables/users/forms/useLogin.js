@@ -1,4 +1,4 @@
-import { reactive, inject } from "vue"
+import { reactive, inject, onMounted } from "vue"
 import { setPreset } from "@/composables/global/useCookie"
 import { isNetworkError } from "@/composables/global/useHttpError"
 import useMutation from "@/composables/global/useMutation"
@@ -41,7 +41,7 @@ export default () => {
   })
 
   const getCaptcha = () => {
-    const { status, data } = useFetching(["captcha"], "/user/get_captcha", "post")
+    const { status, data } = useFetching(["login", "captcha"], "/user/get_captcha", "post")
     useWatching(status, () => { formStatus.captchaBase64 = data.value ? data.value.data.img : "" })
   }
 
@@ -53,5 +53,9 @@ export default () => {
     })
   }
 
-  return { userData, formStatus, doLogin, getCaptcha }
+  onMounted(() => {
+    getCaptcha()
+  })
+
+  return { userData, formStatus, doLogin }
 }
