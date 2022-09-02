@@ -1,61 +1,102 @@
 import { reactive, inject, onMounted } from "vue"
 import { setPreset } from "@/composables/global/useCookie"
 import { isNetworkError } from "@/composables/global/useHttpError"
+import useCaptcha from "@/composables/global/useCaptcha"
+import { mdiArrowLeft, mdiEye, mdiEyeOff, mdiWindowClose } from "@mdi/js"
 import useMutation from "@/composables/global/useMutation"
-import useFetching from "@/composables/global/useFetching"
-import useWatching from "@/composables/global/useWatching"
+
 
 export default () => {
 
   const showSnackbar = inject("showSnackbar")
 
-  const userData = reactive({ email: "", password: "" })
+
+  const statics = {
+    icons: {
+      mdiArrowLeft,
+      mdiEye,
+      mdiEyeOff, 
+      mdiWindowClose
+    }
+  }
+
+  const userData = reactive({
+    email: "",
+    password: "",
+    captcha: ""
+  })
+
+
 
   const formStatus = reactive({
     emailFormValid: false,
     passwordFormValid: false,
+    passwordVisible: false,
     loading: false,
     captchaBase64: "",
-    windowStep: 0
+    windowStep: 0,
   })
+
 
   const loginMutation = useMutation("/user/login", {
     onMutate: () => {
       formStatus.loading = true
     },
-    onSuccess: (data) => {
+    onSuccess: (response) => { // ! By wxj, not tested yet
       formStatus.loading = false
       setPreset({
-        id: data.response.data.data.id,
-        name: data.response.data.data.nickname
+        id: response.data.data.id,
+        name: response.data.data.nickname
       })
-      global.id = data.response.data.data.id
-      global.name = data.response.data.data.nickname
+      global.id = response.data.data.id
+      global.name = response.data.data.nickname
       showSnackbar("success", "登陆成功")
     },
     onError: (error) => {
       formStatus.loading = false
-      if (isNetworkError(error.response)) showSnackbar("error", "网络连接失败")
-      else showSnackbar("error", error.response.data.msg)
+      userData.captcha = ""
+      getCaptcha()
+      if (isNetworkError(error.response)) {
+        showSnackbar("error", "网络连接失败")
+      } else {
+        if (error.response.data.code === "UserPasswordIncorrect") {
+          formStatus.windowStep = 1
+        } else if (error.response.data.code === "UserNotExists" || error.response.data.code === "InvalidArgument") {
+          formStatus.windowStep = 0
+        }
+        showSnackbar("error", error.response.data.msg)
+      }
     }
   })
 
-  const getCaptcha = () => {
-    const { status, data } = useFetching(["login", "captcha"], "/user/get_captcha", "post")
-    useWatching(status, () => { formStatus.captchaBase64 = data.value ? data.value.data.img : "" })
-  }
 
-  const doLogin = (captchaValue) => {
+  const getCaptcha = useCaptcha("/user/get_captcha", {
+    onSuccess: (response) => {
+      formStatus.captchaBase64 = response.data.data.img
+    },
+    onError: (error) => {
+      if (isNetworkError(error)) {
+        showSnackbar("error", "网络连接失败")
+      } else {
+        showSnackbar(error.response.data.message)
+      }
+    }
+  })
+
+
+  const doLogin = () => {
     loginMutation.mutate({
       email: userData.email,
       password: userData.password,
-      captcha: captchaValue
+      captcha: userData.captcha
     })
   }
+
 
   onMounted(() => {
     getCaptcha()
   })
 
-  return { userData, formStatus, doLogin }
+
+  return { statics, userData, formStatus, doLogin, getCaptcha }
 }
