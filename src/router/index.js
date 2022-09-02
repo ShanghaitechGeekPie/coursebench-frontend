@@ -28,7 +28,7 @@ export default new VueRouter({
     },
     {
       path: '/active', 
-      component: () => import('@/views/Verify.vue')
+      component: () => import('@/views/Active.vue')
     }, 
     {
       path: '*',

@@ -35,9 +35,9 @@ export default () => {
     }, 
     onError: (error) => {
       if (isNetworkError(error.response)) {
-        status.errorMessage = "网络连接失败"            
+        status.errorMessage = "网络连接失败，请稍后重试。"
       } else {        
-        status.errorMessage = error.response.data.msg
+        status.errorMessage = error.response.data.msg + "，请稍后重试。"
       }
     }, 
     onSettled: () => {
@@ -47,10 +47,15 @@ export default () => {
 
   const doVerify = () => {
     const query = route.query
-    verifyMutation.mutate({
-      id: query.id,
-      code: query.code
-    })
+    if (query.id && query.code) {
+      verifyMutation.mutate({
+        id: new Number(query.id),
+        code: query.code
+      })
+    } else {
+      status.loading = false
+      status.errorMessage = "激活链接无效，请检查链接是否正确。"
+    }
   }
 
   onMounted(() => {

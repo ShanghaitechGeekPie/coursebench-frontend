@@ -58,7 +58,7 @@
   >
     <v-sheet
       :color="theme.isDark ? statics.backgroundDark : statics.backgroundLight"
-      :height="breakpoint.xsOnly ? 91 : 360"
+      :height="breakpoint.xsOnly ? 91 : '40vh'"
     ></v-sheet>
     <v-fade-transition>
       <div class="main-card">
@@ -94,7 +94,7 @@
               <div v-else>
                 <div class="text-h4 pt-6">发生错误!</div>
                 <div class="pt-6 word-wrap">
-                  {{ status.errorMessage }}，请稍后重试。
+                  {{ status.errorMessage }}
                 </div>
               </div>
             </div>
@@ -118,11 +118,11 @@
 </template>
 
 <script>
-import useVerify from "@/composables/users/useVerify";
+import useActive from "@/composables/users/useActive";
 
 export default {
   setup() {
-    const { statics, status } = useVerify();
+    const { statics, status } = useActive();
     return { statics, status };
   },
   data() {
