@@ -45,16 +45,27 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-dialog v-model="dialog.login" max-width="440"><Login /></v-dialog>
-    <v-dialog v-model="dialog.register" max-width="440"><Register /></v-dialog>
+    <v-dialog
+      v-model="dialog.login"
+      :fullscreen="breakpoint.name === 'xs'"
+      max-width="440"
+      :transition=" breakpoint.name === 'xs' ? 'dialog-bottom-transition' : 'scale-transition'"
+      ><Login
+    /></v-dialog>
+    <v-dialog v-model="dialog.register"
+      :fullscreen="breakpoint.name === 'xs'"
+      max-width="440"
+      :transition=" breakpoint.name === 'xs' ? 'dialog-bottom-transition' : 'scale-transition'"
+      ><Register 
+    /></v-dialog>
   </v-app-bar>
 </template>
 
 <script>
-import { reactive, provide } from "vue"
-import Login from "@/components/users/forms/Login.vue"
-import Register from "@/components/users/forms/Register.vue"
-import useLogout from "@/composables/users/forms/useLogout"
+import { reactive, provide } from "vue";
+import Login from "@/components/users/forms/Login.vue";
+import Register from "@/components/users/forms/Register.vue";
+import useLogout from "@/composables/users/forms/useLogout";
 
 import {
   mdiAccount,
@@ -62,29 +73,30 @@ import {
   mdiLogoutVariant,
   mdiAccountPlusOutline,
   mdiAccountOutline,
-  mdiMessageAlertOutline
-} from "@mdi/js"
+  mdiMessageAlertOutline,
+} from "@mdi/js";
 
 export default {
   components: { Login, Register },
   setup() {
-    const { doLogout } = useLogout()
-    const dialog = reactive({ login: false, register: false })
-    provide("closeDialog", (type) => (dialog[type] = false))
-    provide("openDialog", (type) => (dialog[type] = true))
-    return { dialog, doLogout }
+    const { doLogout } = useLogout();
+    const dialog = reactive({ login: false, register: false });
+    provide("closeDialog", (type) => (dialog[type] = false));
+    provide("openDialog", (type) => (dialog[type] = true));
+    return { dialog, doLogout };
   },
   data() {
     return {
+      breakpoint: this.$vuetify.breakpoint,
       icons: {
         mdiAccount,
         mdiLoginVariant,
         mdiLogoutVariant,
         mdiAccountPlusOutline,
         mdiAccountOutline,
-        mdiMessageAlertOutline
-      }
-    }
-  }
-}
+        mdiMessageAlertOutline,
+      },
+    };
+  },
+};
 </script>

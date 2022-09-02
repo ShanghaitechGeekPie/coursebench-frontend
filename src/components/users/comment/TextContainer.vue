@@ -92,6 +92,7 @@
 <script>
 import useTextContainer from "@/composables/users/comment/useTextContainer"
 import useMarkdown from "@/composables/global/useMarkdown"
+import useAfterRender from "@/composables/global/useAfterRender"
 
 export default {
   setup() {
@@ -130,20 +131,14 @@ export default {
       default: ""
     }
   },
-  methods: {
-    overflowDetect() {
+  mounted() {
+    useAfterRender(() => {
       if (this.$refs.textContainer.offsetHeight > this.maxHeight) {
         this.status.isOverflow = true
       }
-    }
-  },
-  mounted() {
-    setTimeout(() => {
-      this.overflowDetect()
-      setTimeout(() => {
-        this.overflowDetect()
-      }, 50)
-    }, 50)
+    }, {
+      retry: true
+    })
   }
 }
 </script>
