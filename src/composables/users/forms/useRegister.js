@@ -1,27 +1,39 @@
 import { reactive, inject, onMounted } from "vue"
 import { isNetworkError } from "@/composables/global/useHttpError"
+import useCaptcha from "@/composables/global/useCaptcha"
+import { mdiArrowLeft, mdiEye, mdiEyeOff, mdiWindowClose, mdiEmailAlertOutline } from "@mdi/js"
 import useMutation from "@/composables/global/useMutation"
-import useFetching from "@/composables/global/useFetching"
-import useWatching from "@/composables/global/useWatching"
+import { gradeItems, yearItems } from "@/composables/global/useStaticData"
 
 export default () => {
 
   const showSnackbar = inject("showSnackbar")
 
+
+  const statics = {
+    icons: {
+      mdiArrowLeft,
+      mdiEye,
+      mdiEyeOff, 
+      mdiWindowClose, 
+      mdiEmailAlertOutline
+    }, 
+    yearItems, 
+    gradeItems
+  }
+
   const userData = reactive({
     email: "",
     username: "",
     password: "",
-    confirmPassword: "",
-    year: 2022,
-    grade: 1,
-    yearItems: [2022, 2021],
-    gradeItems: [1, 2, 3, 4],
+    year: undefined,
+    grade: undefined,
   })
 
   const formStatus = reactive({
     emailFormValid: false,
     passwordFormValid: false,
+    passwordVisible: false,
     loading: false,
     captchaBase64: "",
     windowStep: 0
@@ -40,23 +52,36 @@ export default () => {
       if (isNetworkError(error.response)) {
         showSnackbar("error", "网络连接失败")
       } else {
+        userData.captcha = ""
+        getCaptcha()
+        if (error.response.data.code === "UserAlreadyExists" || error.response.data.code === "UserEmailDuplicated") {
+          formStatus.windowStep = 0;
+        }                
         showSnackbar("error", error.response.data.msg)
       }
     }
   });
 
-  const getCaptcha = () => {
-    const { status, data } = useFetching(["register", "captcha"], "/user/get_captcha", "post")
-    useWatching(status, () => { formStatus.captchaBase64 = data.value ? data.value.data.img : "" })
-  }  
+  const getCaptcha = useCaptcha("/user/get_captcha", {
+    onSuccess: (response) => {
+      formStatus.captchaBase64 = response.data.data.img
+    },
+    onError: (error) => {
+      if (isNetworkError(error)) {
+        showSnackbar("error", "网络连接失败")
+      } else {
+        showSnackbar(error.response.data.message)
+      }
+    }
+  })
 
-  const doRegister = (captchaValue) => {
+  const doRegister = () => {
     registerMutation.mutate({
       email: userData.email,
       password: userData.password,
       year: userData.year,
-      grade: userData.grade,
-      captcha: captchaValue
+      grade: statics.gradeItems.indexOf(userData.grade),
+      captcha: userData.captcha
     })
   }
 
@@ -64,5 +89,5 @@ export default () => {
     getCaptcha()
   })
 
-  return { userData, formStatus, doRegister }
+  return { statics, userData, formStatus, doRegister, getCaptcha }
 }

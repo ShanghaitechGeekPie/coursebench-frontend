@@ -32,7 +32,13 @@ const gradingInfo = {
 }
 
 const judgeItems = ["课程质量", "作业用时", "考核难度", "给分情况"]
-const gradeItems = ["本科生", "硕士研究生", "博士研究生"]
-const yearItems = [2021, 2022]
+const gradeItems = ["暂不透露", "本科生", "硕士研究生", "博士研究生"]
+const yearItems = (() => {
+    const startYear = 2014
+    const nowYear = new Date().getFullYear()
+    return ["暂不透露"].concat(
+        new Array(nowYear - startYear + 1).fill(0).map((_, index) => startYear + index)
+    )
+})()
 
 export { instituteInfo, scoreInfo, gradingInfo, judgeItems, gradeItems, yearItems }
