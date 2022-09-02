@@ -27,7 +27,7 @@
     >
       <v-window-item :value="0" style="height: 100%">
         <v-card-text
-          class="px-6 px-sm-11 py-0 d-flex justify-space-between flex-column"
+          class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
           style="height: 100%; max-height: 338px"
         >
           <div>
@@ -42,7 +42,7 @@
               </v-card-text>
             </v-form>
             <div class="text-body-2 py-1">
-              <span>没有账户？</span>
+              <span>没有账号？</span>
               <span
                 class="inline-link"
                 @click="closeDialog('login'), openDialog('register')"
@@ -51,8 +51,7 @@
             </div>
           </div>
           <div
-            class="px-0 pt-0 pb-6 pb-sm-11 d-flex justify-end"
-            v-if="formStatus.windowStep !== 2"
+            class="px-0 pt-0 pb-6 pb-sm-11 pt-8 pt-sm-0 d-flex justify-end"
           >
             <v-btn
               @click="clickNextStep()"
@@ -67,7 +66,7 @@
       </v-window-item>
       <v-window-item :value="1" style="height: 100%">
         <v-card-text           
-          class="px-6 px-sm-11 py-0 d-flex justify-space-between flex-column"
+          class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
           style="height: 100%; max-height: 338px"
         >
           <div>
@@ -103,8 +102,7 @@
             </div>
           </div>
           <div
-            class="px-0 pt-0 pb-6 pb-sm-11 d-flex justify-end"
-            v-if="formStatus.windowStep !== 2"
+            class="px-0 pt-0 pb-6 pb-sm-11 pt-8 pt-sm-0 d-flex justify-end"
           >
             <v-btn
               @click="clickNextStep()"
@@ -118,8 +116,8 @@
         </v-card-text>
       </v-window-item>
       <v-window-item :value="2" style="height: 100%">
-        <v-card-text           
-          class="px-6 px-sm-11 py-0 d-flex justify-space-between flex-column"
+        <v-card-text  
+          class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
           style="height: 100%; max-height: 338px"
         > 
           <div>
@@ -133,9 +131,9 @@
             </div>
             <div class="text-body-2 py-0">
               <span>看不清？</span>
-              <span class="inline-link" @click="getCaptcha()">点击刷新</span>
+              <span class="inline-link" @click="formStatus.loading ? '' : getCaptcha()">点击刷新</span>
             </div>
-            <div class="d-flex justify-center pt-3">
+            <div class="d-flex justify-center pt-4 pt-sm-3">
               <div style="width: 200px" class="d-flex justify-center">
                 <v-img
                   :src="`data:image/png;base64,${formStatus.captchaBase64}`"
@@ -143,7 +141,7 @@
               </div>
             </div>  
           </div>
-          <div class="pb-6 pb-sm-11">
+          <div class="pb-6 pb-sm-11 pt-4 pt-sm-0">
             <v-otp-input
               length="6"
               v-model="userData.captcha"

@@ -1,9 +1,9 @@
 const isInvalidRequest = (response) => {
-  return response && /^40\d+$/.test(new String(response.status))
+  return response && (response.status >= 400 && response.status < 410)
 }
 
 const isBackendError = (response) => {
-  return response && /^50\d+$/.test(new String(response.status))
+  return response && (response.status >= 500 && response.status < 510)
 }
 
 const isNetworkError = (response) => {

@@ -54,11 +54,11 @@ export default () => {
     },
     onError: (error) => {
       formStatus.loading = false
-      userData.captcha = ""
-      getCaptcha()
       if (isNetworkError(error.response)) {
         showSnackbar("error", "网络连接失败")
       } else {
+        userData.captcha = ""
+        getCaptcha()        
         if (error.response.data.code === "UserPasswordIncorrect") {
           formStatus.windowStep = 1
         } else if (error.response.data.code === "UserNotExists" || error.response.data.code === "InvalidArgument") {
