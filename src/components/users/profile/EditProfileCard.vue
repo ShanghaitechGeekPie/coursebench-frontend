@@ -25,7 +25,7 @@
                     'text-body-2',
                     'pt-2',
                     'pl-0',
-                    breakpoint.name === 'xs' ? 'input-limit' : '',
+                    $vuetify.breakpoint.name === 'xs' ? 'input-limit' : '',
                   ]"
                 ></v-text-field>
               </v-list-item>
@@ -48,7 +48,7 @@
                     'text-body-2',
                     'pt-2',
                     'pl-0',
-                    breakpoint.name === 'xs' ? 'input-limit' : '',
+                    $vuetify.breakpoint.name === 'xs' ? 'input-limit' : '',
                   ]"
                 ></v-text-field>
               </v-list-item>
@@ -70,7 +70,7 @@
                     'text-body-2',
                     'pt-2',
                     'pl-0',
-                    breakpoint.name === 'xs' ? 'input-limit' : '',
+                    $vuetify.breakpoint.name === 'xs' ? 'input-limit' : '',
                   ]"
                 ></v-select>
               </v-list-item>
@@ -92,7 +92,7 @@
                     'text-body-2',
                     'pt-2',
                     'pl-0',
-                    breakpoint.name === 'xs' ? 'input-limit' : '',
+                    $vuetify.breakpoint.name === 'xs' ? 'input-limit' : '',
                   ]"
                 ></v-select>
               </v-list-item>
@@ -116,7 +116,7 @@
                       sm="10"
                       :style="{
                         transform:
-                          breakpoint.name === 'xs'
+                          $vuetify.breakpoint.name === 'xs'
                             ? 'translate(-6px, -4px)'
                             : 'translate(11px, -2px)',
                       }"
@@ -198,11 +198,6 @@ export default {
   setup() {
     const { statics, status, doReset, doEditProfile } = useEditProfileCard();
     return { statics, status, doReset, doEditProfile };
-  },
-  data() {
-    return {
-      breakpoint: this.$vuetify.breakpoint,
-    };
   },
 };
 </script>

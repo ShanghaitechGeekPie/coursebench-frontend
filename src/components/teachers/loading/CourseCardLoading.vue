@@ -1,16 +1,6 @@
 <template>
   <v-lazy class="px-3">
-    <div
-      :style="{
-        width: breakpoint.mdAndDown
-          ? breakpoint.xsOnly
-            ? 'calc(100vw - 24px)'
-            : 404 * 2 > breakpoint.width
-            ? '300px'
-            : '404px'
-          : '404px'
-      }"
-    >
+    <div :style="{ width: adoptiveCardWidth }">
       <v-card class="mb-3" flat height="303" outlined>
         <v-container>
           <v-row class="d-flex justify-space-between">
@@ -48,18 +38,24 @@
   </v-lazy>
 </template>
 <script>
-// TODO: Replace this with skeleton loader
-
 import AvatarContainer from "@/components/users/profile/AvatarContainer"
 
 export default {
-  data() {
-    return {
-      breakpoint: this.$vuetify.breakpoint
-    }
-  },
   components: {
     AvatarContainer
+  }, 
+  computed: {
+    adoptiveCardWidth() {
+      if (this.$vuetify.breakpoint.mdAndDown) {
+        if (this.$vuetify.breakpoint.xsOnly) {
+          return "calc(100vw - 24px)"
+        } else {
+          return 404 * 2 > this.$vuetify.breakpoint.width ? "300px" : "404px"
+        }
+      } else {
+        return "404px"
+      }
+    }
   }
 }
 </script>

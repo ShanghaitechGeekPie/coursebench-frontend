@@ -2,19 +2,19 @@
   <div>
     <div
       class="d-flex justify-center"
-      :style="{ transform: breakpoint.mdAndDown ? 'translate(0, -76px)' : '' }"
+      :style="{ transform: $vuetify.breakpoint.mdAndDown ? 'translate(0, -76px)' : '' }"
     >
       <AvatarContainer
         :name="userProfile.nickname"
         slice
         :src="userProfile.avatar"
-        :size="breakpoint.name === 'xs' ? 110 : 120"
-        :outlined="breakpoint.mdAndDown"
+        :size="$vuetify.breakpoint.name === 'xs' ? 110 : 120"
+        :outlined="$vuetify.breakpoint.mdAndDown"
       />
     </div>
     <div
       class="d-flex justify-center pt-5"
-      :style="{ 'margin-top': breakpoint.mdAndDown ? '-76px' : '0' }"
+      :style="{ 'margin-top': $vuetify.breakpoint.mdAndDown ? '-76px' : '0' }"
     >
       <div class="text-h5 font-weight-bold single-line-limit">
         {{ userProfile.nickname }}
@@ -56,11 +56,6 @@ export default {
   setup() {
     const { userProfile } = useProfile();
     return { userProfile };
-  },
-  data() {
-    return {
-      breakpoint: this.$vuetify.breakpoint,
-    };
   },
 };
 </script>

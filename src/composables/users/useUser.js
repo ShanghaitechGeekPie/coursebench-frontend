@@ -290,7 +290,9 @@ export default () => {
     count: (() => {
       let ret = {}
       for (let key in instituteInfo) {
-        ret[instituteInfo[key].name] = 0
+        if (key !== "None") {
+          ret[instituteInfo[key].name] = 0
+        }
       }
     }), 
   })

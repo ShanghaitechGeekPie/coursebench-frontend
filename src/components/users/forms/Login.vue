@@ -4,7 +4,7 @@
     :loading="formStatus.loading"
     style="overflow-y: hidden"
     :class="
-      breakpoint.name === 'xs' ? '' : 'd-flex justify-space-between flex-column'
+      $vuetify.breakpoint.name === 'xs' ? '' : 'd-flex justify-space-between flex-column'
     "
   >
     <v-card-title
@@ -16,7 +16,7 @@
           icon
           style="transform: translate(0, -1px)"
           @click="closeDialog('login')"
-          v-if="breakpoint.name === 'xs'"
+          v-if="$vuetify.breakpoint.name === 'xs'"
         >
           <v-icon>{{ statics.icons.mdiWindowClose }}</v-icon>
         </v-btn>
@@ -195,11 +195,6 @@ export default {
       formRules,
       doLogin,
       getCaptcha,
-    };
-  },
-  data() {
-    return {
-      breakpoint: this.$vuetify.breakpoint,
     };
   },
   methods: {

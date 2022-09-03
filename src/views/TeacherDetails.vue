@@ -1,25 +1,14 @@
 <template>
-  <div style="'min-height': '100%'">
+  <div style="min-height: 100%">
     <BackgroundImage />
     <div style="flex-wrap: wrap" class="d-flex justify-center">
       <div class="pa-lg-3">
-        <div :style="{ width: breakpoint.mdAndDown ? '100vw' : '360px' }">
+        <div :style="{ width: $vuetify.breakpoint.mdAndDown ? '100vw' : '360px' }">
           <v-card
-            :style="
-              breakpoint.mdAndDown
-                ? {}
-                : scrollTop <= 40
-                ? {
-                    transform: 'translate(0, -160px)'
-                  }
-                : {
-                    position: 'fixed',
-                    top: '90px'
-                  }
-            "
+            :style="adoptiveCardPosition"
             flat
             outlined
-            :width="breakpoint.mdAndDown ? '100vw' : '360px'"
+            :width="$vuetify.breakpoint.mdAndDown ? '100vw' : '360px'"
             class="pt-6 pb-3 px-7"
           >
             <DetailLoading v-if="status.loading" />
@@ -35,16 +24,12 @@
             <v-col class="px-0">
               <div
                 :style="{
-                  width: breakpoint.mdAndDown ? '' : Math.floor((breakpoint.width - 428) / 428) * 428 + 'px'
+                  width: $vuetify.breakpoint.mdAndDown ? '' : Math.floor(($vuetify.breakpoint.width - 428) / 428) * 428 + 'px'
                 }"
               >
                 <div class="d-flex flex-wrap justify-center justify-lg-start" v-if="status.loading">
                   <div
-                    v-for="index in breakpoint.width >= 600 && breakpoint.width < 1260
-                      ? 2
-                      : Math.floor((breakpoint.width - 428) / 428) > 1
-                      ? Math.floor((breakpoint.width - 428) / 428)
-                      : 1"
+                    v-for="index in adoptiveCardNumber"
                     :key="index"
                   >
                     <CourseCardLoading />
@@ -97,10 +82,33 @@ export default {
   data() {
     return {
       scrollTop: document.documentElement.scrollTop,
-      breakpoint: this.$vuetify.breakpoint,
-      theme: this.$vuetify.theme
     }
   },
+  computed: {
+    adoptiveCardPosition() {
+      if (this.$vuetify.breakpoint.mdAndDown) {
+        return {}
+      } else if (this.scrollTop <= 40) {
+        return {
+          transform: "translate(0, -160px)"
+        }
+      } else {
+        return {
+          position: "fixed",
+          top: "90px"
+        }
+      }
+    }, 
+    adoptiveCardNumber() {
+      if (this.$vuetify.breakpoint.width >= 600 && this.$vuetify.breakpoint.width < 1260) {
+        return 2
+      } else if (Math.floor((this.$vuetify.breakpoint.width - 428) / 428) > 1) {
+        return Math.floor((this.$vuetify.breakpoint.width - 428) / 428)
+      } else {
+        return 1
+      }
+    }
+  }, 
   mounted() {
     document.addEventListener("scroll", () => {
       this.scrollTop = document.documentElement.scrollTop
