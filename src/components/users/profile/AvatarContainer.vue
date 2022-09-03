@@ -52,7 +52,7 @@ export default {
       type: String,
       default: "white--text",
     },
-    fontSize: {
+    'font-size': {
       type: String,
       default: undefined,
     },    
@@ -71,14 +71,16 @@ export default {
   },
   computed: {
     slicedName() {
-      return escape(this.name.slice(0, 2)).indexOf("%u") >= 0
-        ? this.name.slice(0, 1)
-        : this.name.slice(0, 2);
+      // now we use the simpler policy to slice the name
+      return this.name.slice(0, 1);
+      // return escape(this.name.slice(0, 2)).indexOf("%u") >= 0
+      //   ? this.name.slice(0, 1)
+      //   : this.name.slice(0, 2);
     },
   }, 
   methods: {
     adoptiveFont() {
-      if (!this.fontSize) {
+      if (!this['font-size']) {
         if (!this.small) {
           if (this.size > 50) {
             return "text-h3";
@@ -93,7 +95,7 @@ export default {
           }
         }
       } else {
-        return this.fontSize
+        return this['font-size']
       }
     }
   }

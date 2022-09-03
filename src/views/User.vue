@@ -1,7 +1,5 @@
 <template>
-  <div
-    :style="{ background: theme.isDark ? '' : '#f9f9f9', 'min-height': '100%' }"
-  >
+  <div style="min-height: 100%">
     <BackgroundImage />
     <div style="flex-wrap: wrap" class="d-flex justify-center">
       <div class="pa-lg-3 pb-3">

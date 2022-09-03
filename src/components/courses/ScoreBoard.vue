@@ -6,10 +6,10 @@
           :value="value"
           :size="40"
           :width="6"
-          :style="{ 'color': fontColor, fontSize: '13px' }"
+          :style="{ 'color': fontColor, 'font-size': '13px' }"
         >{{ value }}</v-progress-circular>
       </div>
-      <div :style="{ 'color': fontColor, fontSize: '14px' }" class="mt-1 font-weight-black">{{ text }}</div>
+      <div :style="{ 'color': fontColor, 'font-size': '14px' }" class="mt-1 font-weight-black">{{ text }}</div>
     </div>
   </div>
 </template>
