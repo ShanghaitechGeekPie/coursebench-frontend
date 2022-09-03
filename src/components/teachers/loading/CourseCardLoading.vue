@@ -48,6 +48,8 @@
   </v-lazy>
 </template>
 <script>
+// TODO: Replace this with skeleton loader
+
 import AvatarContainer from "@/components/users/profile/AvatarContainer"
 
 export default {
