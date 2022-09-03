@@ -41,4 +41,11 @@ const yearItems = (() => {
     )
 })()
 
-export { instituteInfo, scoreInfo, gradingInfo, judgeItems, gradeItems, yearItems }
+export { 
+    instituteInfo, 
+    scoreInfo, 
+    gradingInfo, 
+    judgeItems, 
+    gradeItems, 
+    yearItems 
+}

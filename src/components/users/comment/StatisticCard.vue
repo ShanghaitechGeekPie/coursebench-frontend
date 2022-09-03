@@ -1,6 +1,6 @@
 <template>
-  <div :class="[breakpoint.mdOnly ? 'd-flex' : '', 'justify-center']">
-    <div class="pt-4" :style="{ width: breakpoint.mdOnly ? '812px' : '' }">
+  <div :class="[$vuetify.breakpoint.mdOnly ? 'd-flex' : '', 'justify-center']">
+    <div class="pt-4" :style="{ width: $vuetify.breakpoint.mdOnly ? '812px' : '' }">
       <!-- <div class="d-flex justify-space-between pt-2">
       <div>
         <v-icon size="18">{{ statics.icons.mdiThumbUpOutline }}</v-icon>
@@ -68,12 +68,6 @@ export default {
     const { commentStatistic, statics, status } = useStatisticCard()
     return { commentStatistic, statics, status }
   },
-  data() {
-    return {
-      breakpoint: this.$vuetify.breakpoint,
-      theme: this.$vuetify.theme,
-    }
-  }, 
   computed: {
     isEmpty() {
       for (let key in this.commentStatistic.count) {
@@ -85,7 +79,7 @@ export default {
     }
   },  
   created() {
-    if (this.breakpoint.mdAndDown) {
+    if (this.$vuetify.breakpoint.mdAndDown) {
       this.status.showAll = false
     }
   }

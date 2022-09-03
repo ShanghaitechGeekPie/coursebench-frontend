@@ -126,10 +126,10 @@
     </v-menu>
     <v-dialog
       v-model="dialog.login"
-      :fullscreen="breakpoint.name === 'xs'"
+      :fullscreen="$vuetify.breakpoint.name === 'xs'"
       max-width="440"
       :transition="
-        breakpoint.name === 'xs'
+        $vuetify.breakpoint.name === 'xs'
           ? 'dialog-bottom-transition'
           : 'scale-transition'
       "
@@ -139,10 +139,10 @@
     /></v-dialog>
     <v-dialog
       v-model="dialog.register"
-      :fullscreen="breakpoint.name === 'xs'"
+      :fullscreen="$vuetify.breakpoint.name === 'xs'"
       max-width="440"
       :transition="
-        breakpoint.name === 'xs'
+        $vuetify.breakpoint.name === 'xs'
           ? 'dialog-bottom-transition'
           : 'scale-transition'
       "
@@ -186,7 +186,6 @@ export default {
   },
   data() {
     return {
-      breakpoint: this.$vuetify.breakpoint,
       icons: {
         mdiAccount,
         mdiLoginVariant,
@@ -199,7 +198,6 @@ export default {
   },
   methods: {
     isCurrentPath(path) {
-      console.log(this.$route.path, new RegExp(path).test(this.$route.path));
       return !new RegExp(path).test(this.$route.path);
     },
   },

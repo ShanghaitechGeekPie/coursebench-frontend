@@ -2,21 +2,21 @@
   <div
     v-if="status.loading"
     :style="
-      breakpoint.xsOnly
+      $vuetify.breakpoint.xsOnly
         ? {}
-        : { background: theme.isDark ? '' : '#f9f9f9', 'min-height': '100%' }
+        : { background: $vuetify.theme.isDark ? '' : '#f9f9f9', 'min-height': '100%' }
     "
   >
     <v-sheet
-      v-if="!breakpoint.xsOnly"
-      :color="theme.isDark ? statics.backgroundDark : statics.backgroundLight"
-      :height="breakpoint.xsOnly ? 91 : 360"
+      v-if="!$vuetify.breakpoint.xsOnly"
+      :color="$vuetify.theme.isDark ? statics.backgroundDark : statics.backgroundLight"
+      :height="$vuetify.breakpoint.xsOnly ? 91 : 360"
     ></v-sheet>
     <v-overlay :value="status.loading">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
   </div>
-  <div v-else-if="breakpoint.xsOnly">
+  <div v-else-if="$vuetify.breakpoint.xsOnly">
     <div class="main-card" style="min-width: 300px">
       <div class="d-flex justify-center">
         <v-icon v-if="status.errorMessage == ''" size="160" color="success">
@@ -53,12 +53,12 @@
     </div>
   </div>
   <div
-    :style="{ background: theme.isDark ? '' : '#f9f9f9', 'min-height': '100%' }"
+    :style="{ background: $vuetify.theme.isDark ? '' : '#f9f9f9', 'min-height': '100%' }"
     v-else
   >
     <v-sheet
-      :color="theme.isDark ? statics.backgroundDark : statics.backgroundLight"
-      :height="breakpoint.xsOnly ? 91 : '40vh'"
+      :color="$vuetify.theme.isDark ? statics.backgroundDark : statics.backgroundLight"
+      :height="$vuetify.breakpoint.xsOnly ? 91 : '40vh'"
     ></v-sheet>
     <v-fade-transition>
       <div class="main-card">
@@ -124,12 +124,6 @@ export default {
   setup() {
     const { statics, status } = useActive();
     return { statics, status };
-  },
-  data() {
-    return {
-      breakpoint: this.$vuetify.breakpoint,
-      theme: this.$vuetify.theme,
-    };
   },
 };
 </script>

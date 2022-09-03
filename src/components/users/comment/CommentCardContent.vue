@@ -29,7 +29,7 @@
               :title="comment.title"
               markdown
               dense
-              :dialog="breakpoint.name === 'xs'"
+              :dialog="$vuetify.breakpoint.name === 'xs'"
               #default="{ overflow }"
             >
               <v-row>
@@ -60,7 +60,7 @@
               <v-row class="d-flex justify-space-between">
                 <v-col
                   class="pa-0"
-                  :cols="breakpoint.width > 420 ? 7 : 8"
+                  :cols="$vuetify.breakpoint.width > 420 ? 7 : 8"
                   sm="8"
                 >
                   <v-container>
@@ -152,11 +152,6 @@ export default {
   },
   components: { TextContainer },
   props: { comment: Object },
-  data() {
-    return {
-      breakpoint: this.$vuetify.breakpoint,
-    };
-  },
   computed: {
     semester() {
       let sem = new String(this.comment.semester);

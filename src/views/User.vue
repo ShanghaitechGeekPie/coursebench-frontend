@@ -3,23 +3,12 @@
     <BackgroundImage />
     <div style="flex-wrap: wrap" class="d-flex justify-center">
       <div class="pa-lg-3 pb-3">
-        <div :style="{ width: breakpoint.mdAndDown ? '100vw' : '360px' }">
+        <div :style="{ width: $vuetify.breakpoint.mdAndDown ? '100vw' : '360px' }">
           <v-card
-            :style="
-              breakpoint.mdAndDown
-                ? {}
-                : scrollTop <= 40
-                ? {
-                    transform: 'translate(0, -160px)',
-                  }
-                : {
-                    position: 'fixed',
-                    top: '90px',
-                  }
-            "
+            :style="adoptiveCardPosition"
             flat
             outlined
-            :width="breakpoint.mdAndDown ? '100vw' : '360px'"
+            :width="$vuetify.breakpoint.mdAndDown ? '100vw' : '360px'"
             class="pt-6 pb-3 px-7"
           >
             <Profile />
@@ -80,8 +69,6 @@ export default {
   data() {
     return {
       scrollTop: document.documentElement.scrollTop,
-      breakpoint: this.$vuetify.breakpoint,
-      theme: this.$vuetify.theme,
     };
   },
   mounted() {
@@ -89,5 +76,21 @@ export default {
       this.scrollTop = document.documentElement.scrollTop;
     });
   },
+  methods: {
+    adoptiveCardPosition() {
+      if (this.$vuetify.breakpoint.mdAndDown) {
+        return {};
+      } else if (this.scrollTop <= 40) {
+        return {
+          transform: "translate(0, -160px)",
+        };
+      } else {
+        return {
+          position: "fixed",
+          top: "90px",
+        };
+      }
+    }
+  }
 };
 </script>

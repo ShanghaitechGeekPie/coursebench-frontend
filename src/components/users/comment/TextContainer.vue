@@ -24,7 +24,7 @@
         <v-sheet
           class="overlay"
           :style="{
-            background: `linear-gradient(transparent, ${theme.isDark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)'})`
+            background: `linear-gradient(transparent, ${$vuetify.theme.isDark ? '#1e1e1e' : 'rgba(255, 255, 255, 1)'})`
           }"
           v-if="!status.showAll"
         >
@@ -57,10 +57,10 @@
             transition="slide-y-reverse-transition"
             scrollable
             width="50vw"
-            :fullscreen="breakpoint.name === 'xs'"
+            :fullscreen="$vuetify.breakpoint.name === 'xs'"
           >
             <v-card tile flat>
-              <v-card-title class="pa-0" :style="{ background: theme.isDark ? '#1e1e1e' : '#ffffff' }">
+              <v-card-title class="pa-0" :style="{ background: $vuetify.theme.isDark ? '#1e1e1e' : '#ffffff' }">
                 <v-toolbar elevation="">
                   <v-icon @click="status.showDialog = false" style="transform: translate(0, 2px)">
                     {{ statics.icons.mdiClose }}
@@ -71,7 +71,7 @@
               <v-card-text
                 class="px-sm-6 px-4 pt-3"
                 ref="textDialog"
-                :style="{ background: theme.isDark ? '#1e1e1e' : '#ffffff' }"
+                :style="{ background: $vuetify.theme.isDark ? '#1e1e1e' : '#ffffff' }"
               >
                 <span class="text-h5">
                   <v-icon size="32" style="transform: translate(0, -2px)">{{ statics.icons.mdiSubtitlesOutline }}</v-icon>
@@ -98,12 +98,6 @@ export default {
   setup() {
     const { statics, status } = useTextContainer()
     return { statics, status, useMarkdown }
-  },
-  data() {
-    return {
-      breakpoint: this.$vuetify.breakpoint,
-      theme: this.$vuetify.theme
-    }
   },
   props: {
     text: {

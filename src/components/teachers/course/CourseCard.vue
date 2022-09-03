@@ -1,16 +1,6 @@
 <template>
   <v-lazy class="px-3">
-    <div
-      :style="{
-        width: breakpoint.mdAndDown
-          ? breakpoint.xsOnly
-            ? 'calc(100vw - 24px)'
-            : 404 * 2 > breakpoint.width
-            ? '300px'
-            : '404px'
-          : '404px',
-      }"
-    >
+    <div :style="{ width: adoptiveCardWidth }">
       <v-card class="mb-3" flat height="303" outlined>
         <v-container>
           <v-row class="d-flex justify-space-between">
@@ -69,7 +59,7 @@
                 >
                   <div class="text-body-2" style="min-width: 57px">
                     {{ judgeItems[index - 1] }}
-                  </div>                  
+                  </div>
                   <div style="width: 64%">
                     <v-progress-linear
                       v-model="course.score[index - 1] * 20"
@@ -113,7 +103,6 @@ export default {
   data() {
     return {
       score: new Array(),
-      breakpoint: this.$vuetify.breakpoint,
     };
   },
   props: {
@@ -128,6 +117,21 @@ export default {
       if (element == 0) rounded = 0;
       this.score.push(rounded);
     }
+  },
+  computed: {
+    adoptiveCardWidth() {
+      if (this.$vuetify.breakpoint.mdAndDown) {
+        if (this.$vuetify.breakpoint.xsOnly) {
+          return "calc(100vw - 24px)";
+        } else if (404 * 2 > this.$vuetify.breakpoint.width) {
+          return "300px";
+        } else {
+          return "404px";
+        }
+      } else {
+        return "404px";
+      }
+    },
   },
 };
 </script>
