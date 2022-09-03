@@ -14,6 +14,8 @@
   </div>
 </template>
 <script>
+// TODO: Replace this with skeleton loader
+
 import useStatisticCard from "@/composables/teachers/course/useStatisticCard";
 
 export default {
