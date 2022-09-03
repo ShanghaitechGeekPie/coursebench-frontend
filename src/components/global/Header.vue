@@ -1,10 +1,37 @@
 <template>
-  <v-app-bar app color="white" elevate-on-scroll>
+  <v-app-bar app color="white" elevate-on-scroll elevation="2">
     <v-toolbar-title class="px-8">!!LOGO!!</v-toolbar-title>
     <v-tabs>
-      <v-tab to="/">全部课程</v-tab>
-      <v-tab to="/course/1">课程详情</v-tab>
-      <v-tab to="/about">关于我们</v-tab>
+      <SliderButton
+        tile
+        plain
+        height="100%"
+        :hover-only="isCurrentPath('^\/$')"
+        to="/"
+        class="px-1 black--text"
+      >
+        全部课程
+      </SliderButton>
+      <SliderButton
+        plain
+        tile
+        height="100%"
+        :hover-only="isCurrentPath('^\/course\/[0-9]+$')"
+        to="/course/1"
+        class="px-1"
+      >
+        课程详情
+      </SliderButton>
+      <SliderButton
+        plain
+        tile
+        height="100%"
+        :hover-only="isCurrentPath('^\/about')"
+        to="/about"
+        class="px-1"
+      >
+        关于我们
+      </SliderButton>
     </v-tabs>
     <v-spacer></v-spacer>
     <v-btn
@@ -42,7 +69,7 @@
           <div class="d-flex justify-center over">
             <AvatarContainer
               size="80"
-              fontSize="text-h4"
+              font-size="text-h4"
               :name="useShortName(global.userProfile)"
               slice
               :src="global.userProfile.avatar"
@@ -50,12 +77,23 @@
           </div>
           <div class="d-flex justify-center">
             <div class="overflow-ellipsis font-weight-bold pt-4">
-              {{ global.userProfile.nickname }}Zhangyhduludulu111111111111111
+              {{
+                global.userProfile.nickname
+                  ? global.userProfile.nickname
+                  : `User_${global.userProfile.id}`
+              }}
             </div>
           </div>
           <div class="d-flex justify-center">
-            <div class="text-body-2 text--darken-1 grey--text overflow-ellipsis py-1">
-              {{ global.userProfile.email }}aaaaaaaaaaaaaaaaaaa
+            <div
+              class="
+                text-body-2 text--darken-1
+                grey--text
+                overflow-ellipsis
+                py-1
+              "
+            >
+              {{ global.userProfile.email }}
             </div>
           </div>
         </v-list-item>
@@ -78,9 +116,10 @@
           </v-list-item-icon>
           <v-list-item-title class="text-body-1">注销</v-list-item-title>
         </v-list-item>
-        <v-list-item class="d-flex justify-center">            
+        <v-divider></v-divider>
+        <v-list-item class="d-flex justify-center">
           <v-btn text x-small class="text-caption">隐私政策</v-btn>
-          <div class="px-1">•</div>            
+          <div class="px-1">•</div>
           <v-btn text x-small class="text-caption">服务条款</v-btn>
         </v-list-item>
       </v-list>
@@ -121,6 +160,7 @@ import Register from "@/components/users/forms/Register";
 import useLogout from "@/composables/users/forms/useLogout";
 import useShortName from "@/composables/global/useShortName";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
+import SliderButton from "@/components/global/SliderButton";
 
 import {
   mdiAccount,
@@ -132,7 +172,7 @@ import {
 } from "@mdi/js";
 
 export default {
-  components: { Login, Register, AvatarContainer },
+  components: { Login, Register, AvatarContainer, SliderButton },
   setup() {
     const { doLogout } = useLogout();
     const dialog = reactive({
@@ -156,6 +196,12 @@ export default {
         mdiMessageAlertOutline,
       },
     };
+  },
+  methods: {
+    isCurrentPath(path) {
+      console.log(this.$route.path, new RegExp(path).test(this.$route.path));
+      return !new RegExp(path).test(this.$route.path);
+    },
   },
 };
 </script>
