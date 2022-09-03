@@ -1,84 +1,57 @@
-/**
- * Set a piece of data to cookie
- * @param {String | Symbol} key 
- * @param {String} value 
- */
-const setCookie = (key, value) => {
-    const expireAge = 60 * 60 * 24
-    document.cookie = `${key}=${value}; max-age=${expireAge}`
+
+function setCookie(key, value, expire = 60 * 60 * 24) {
+    document.cookie = `${key}=${value}; max-age=${expire}`
 }
 
-/**
- * Set cookie from an object
- * @param {Object{String | Symbol: String}} object 
- */
-const setCookies = (object) => {
-    for (let key in object) setCookie(key, object[key])
+function setCookies(cookies, expire) {
+    for (const key in cookies) {
+        setCookie(key, cookies[key], expire)
+    }
 }
 
-/**
- * Get a piece of data from cookie
- * @param {String | Symbol} key 
- * @returns String
- */
-const getCookie = (key) => {
+function getCookie(key) {
     const cookies = decodeURIComponent(document.cookie).split("; ")
-    for (let cookie of cookies) {
-        const [name, value] = cookie.split("=")
-        if (name === key) {
-            return value
+    for (const cookie of cookies) {
+        const [cookieKey, cookieValue] = cookie.split("=")
+        if (cookieKey === key) {
+            return cookieValue
         }
     }
     return ""
 }
 
-/**
- * Get cookie from an array
- * @param {Array} keys 
- * @returns Object
- */
-const getCookies = (keys) => {
-    let cookies = {}
-    for (let key of keys) {
+function getCookies(keys) {
+    const cookies = {}
+    for (const key of keys) {
         cookies[key] = getCookie(key)
     }
     return cookies
 }
 
-/**
- * Set preset data to cookie
- * @param {Number | String} id
- * @param {String} nickname 
- */
-const setPreset = ({ id = "", nickname = "" }) => {
-    const preset = JSON.stringify({ id, nickname })
-    setCookie("preset", btoa(preset, "base64"))
-}
-
-/**
- * Get preset data from cookie
- * @returns Object { id, nickname }
- */
-const getPreset = () => {
-    const preset = getCookie("preset")
-    if (preset === "") {
-        return { id: "", nickname: "" }
+function setPreset(preset) {
+    let dst = getPreset()
+    for (let key in preset) {
+        dst[key] = preset[key]
     }
-    return JSON.parse(atob(preset, "base64"))
+    setCookie("preset", btoa(JSON.stringify(dst)), 60 * 60 * 24)
 }
 
-/**
- * Clear preset data to cookie
- */
-const clearPreset = () => {
+function getPreset() {
+    const preset = getCookie("preset") ? JSON.parse(atob(getCookie("preset"))) : {}
+    const result = {}
+    for (let key in preset) {
+        if (preset[key]) {
+            result[key] = preset[key]
+        }
+    }
+    return result
+}
+
+function clearPreset() {
     setCookie("preset", "")
 }
 
-/**
- * Get if the preset is available
- * @returns Boolean
- */
-const hasPreset = () => {
+function hasPreset() {
     return getCookie("preset") !== ""
 }
 

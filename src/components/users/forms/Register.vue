@@ -177,14 +177,38 @@
               </v-btn>
               {{ userData.email }}
             </div>
-            <div class="text-body-2 py-0">
+            <div class="text-body-2 py-0" v-if="
+              (!formStatus.loading) && 
+              (!formStatus.captchaLoading) && 
+              (formStatus.captchaBase64 !== '')"
+            >
               <span>看不清？</span>
-              <span class="inline-link" @click="formStatus.loading ? '' : getCaptcha()">点击刷新</span>
+              <span class="inline-link" @click="getCaptcha()"
+              >点击刷新</span>
             </div>
+            <div v-else style="height: 20px; width: 100%;"></div>            
             <div class="d-flex justify-center pt-4 pt-sm-3">
               <div style="width: 200px" class="d-flex justify-center">
-                <v-img
+                <div v-if="formStatus.captchaLoading"
+                  class="pt-5"
+                >
+                  <v-progress-circular
+                    indeterminate
+                    color="primary"
+                    size="48"
+                  ></v-progress-circular>
+                </div>
+                <div v-else-if="formStatus.captchaBase64 === ''"
+                  class="pt-5"
+                >
+                  <div>验证码获取失败</div>
+                  <div class="inline-link d-flex justify-center"
+                    @click="getCaptcha()"
+                  >点击重试</div>
+                </div>
+                <v-img                  
                   :src="`data:image/png;base64,${formStatus.captchaBase64}`"
+                  v-else
                 ></v-img>
               </div>
             </div>  

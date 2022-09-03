@@ -35,6 +35,7 @@ export default () => {
     passwordFormValid: false,
     passwordVisible: false,
     loading: false,
+    captchaLoading: false,
     captchaBase64: "",
     windowStep: 0
   })
@@ -63,23 +64,31 @@ export default () => {
   });
 
   const getCaptcha = useCaptcha("/user/get_captcha", {
+    onMutate: () => {
+      formStatus.captchaLoading = true
+    },
     onSuccess: (response) => {
+      formStatus.captchaLoading = false
       formStatus.captchaBase64 = response.data.data.img
     },
     onError: (error) => {
+      formStatus.captchaLoading = false
+      formStatus.captchaBase64 = ""
       if (isNetworkError(error)) {
         showSnackbar("error", "网络连接失败")
       } else {
-        showSnackbar(error.response.data.message)
+        showSnackbar(error.response.data.msg)
       }
     }
   })
 
+  // ? Fuck I randomly typed a password and it worked
+  // ? so I have to use this password temporarily : aaaaaaaaaaa1
   const doRegister = () => {
     registerMutation.mutate({
       email: userData.email,
       password: userData.password,
-      year: userData.year,
+      year: userData.year === "暂不透露" ? 0 : userData.year,
       grade: statics.gradeItems.indexOf(userData.grade),
       captcha: userData.captcha
     })

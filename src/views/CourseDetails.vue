@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import DetailCard from "@/components/courses/DetailCard.vue"
+import DetailCard from "@/components/courses/DetailCard"
 import CommentBoard from "@/components/courses/CommentBoard"
 import useCourseDetails from "@/composables/courses/comment/useCourseDetails"
 

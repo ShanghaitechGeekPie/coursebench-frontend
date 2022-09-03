@@ -1,5 +1,5 @@
 import { reactive, inject, onMounted } from "vue"
-import { setPreset } from "@/composables/global/useCookie"
+import { setPreset, getPreset } from "@/composables/global/useCookie"
 import { isNetworkError } from "@/composables/global/useHttpError"
 import useCaptcha from "@/composables/global/useCaptcha"
 import { mdiArrowLeft, mdiEye, mdiEyeOff, mdiWindowClose } from "@mdi/js"
@@ -9,6 +9,8 @@ import useMutation from "@/composables/global/useMutation"
 export default () => {
 
   const showSnackbar = inject("showSnackbar")
+  const closeDialog = inject("closeDialog");
+  const global = inject("global")
 
 
   const statics = {
@@ -33,6 +35,7 @@ export default () => {
     passwordFormValid: false,
     passwordVisible: false,
     loading: false,
+    captchaLoading: false,
     captchaBase64: "",
     windowStep: 0,
   })
@@ -42,15 +45,22 @@ export default () => {
     onMutate: () => {
       formStatus.loading = true
     },
-    onSuccess: (response) => { // ! By wxj, not tested yet
+    onSuccess: (response) => {
       formStatus.loading = false
       setPreset({
-        id: response.data.data.id,
-        name: response.data.data.nickname
+        id: response.data.data.user_id,
+        email: response.data.data.email,
+        nickname: response.data.data.nickname, 
+        avatar: response.data.data.avatar, 
+        anonymous: response.data.data.is_anonymous, 
+        year: response.data.data.year,
+        grade: response.data.data.grade,
+        realname: response.data.data.realname,
       })
-      global.id = response.data.data.id
-      global.name = response.data.data.nickname
-      showSnackbar("success", "登陆成功")
+      global.isLogin = true
+      global.userProfile = getPreset()
+      closeDialog('login')
+      showSnackbar("success", "登陆成功")      
     },
     onError: (error) => {
       formStatus.loading = false
@@ -71,14 +81,20 @@ export default () => {
 
 
   const getCaptcha = useCaptcha("/user/get_captcha", {
+    onMutate: () => {
+      formStatus.captchaLoading = true
+    }, 
     onSuccess: (response) => {
+      formStatus.captchaLoading = false
       formStatus.captchaBase64 = response.data.data.img
     },
     onError: (error) => {
+      formStatus.captchaLoading = false
+      formStatus.captchaBase64 = ""
       if (isNetworkError(error)) {
         showSnackbar("error", "网络连接失败")
       } else {
-        showSnackbar(error.response.data.message)
+        showSnackbar(error.response.data.msg)
       }
     }
   })
