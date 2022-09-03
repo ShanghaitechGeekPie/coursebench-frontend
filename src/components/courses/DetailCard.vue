@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import ScoreBoard from "@/components/courses/ScoreBoard.vue"
+import ScoreBoard from "@/components/courses/ScoreBoard"
 import DetailChips from "@/components/courses/DetailChips"
 import ReviewDetail from "@/components/courses/ReviewDetail"
 import TeacherSelect from "@/components/courses/TeacherSelect"

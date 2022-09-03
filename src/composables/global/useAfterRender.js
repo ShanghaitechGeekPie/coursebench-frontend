@@ -1,4 +1,13 @@
-export default (actionFunc, { 
+/**
+ * Sometimes you need to do something after the render is done.
+ * Otherwise the DOM will be undefined.
+ * 
+ * @param {Function} callback
+ * @param {Boolean} retry
+ * @param {Number} timeout
+ */
+
+export default (callback, { 
   retry, 
   timeout 
 } = {
@@ -6,10 +15,10 @@ export default (actionFunc, {
   timeout: 50
 }) => {
   setTimeout(() => {
-    actionFunc()
+    callback()
     if (retry) {
       setTimeout(() => {
-        actionFunc()
+        callback()
       }, timeout)
     }
   }, timeout)

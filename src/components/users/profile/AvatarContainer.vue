@@ -1,5 +1,8 @@
 <template>
-  <v-card flat :outlined="outlined" :class="[tile ? '' : 'rounded-circle']">
+  <v-card flat :outlined="outlined" :class="[tile ? '' : 'rounded-circle']"
+    :width="size"
+    :height="size"
+  >
     <v-avatar
       :tile="tile"
       :color="color"
@@ -8,19 +11,11 @@
     >
       <span
         :class="[
-          fontSize
-            ? fontSize
-            : !small
-            ? size > 50
-              ? 'text-h3'
-              : 'text-h6'
-            : name.length >= 3
-            ? 'text-body-2'
-            : 'text-body-1',
+          adoptiveFont(slice ? slicedName : name),
           fontColor,
         ]"
         v-if="src === ''"
-        >{{ name }}</span
+        >{{ slice ? slicedName : name }}</span
       >
       <v-img :src="src" alt="Avatar" :aspect-ratio="aspectRatio" v-else></v-img>
     </v-avatar>
@@ -69,6 +64,38 @@ export default {
       type: Boolean,
       default: false,
     },
+    slice: {
+      type: Boolean, 
+      default: false
+    }
   },
+  computed: {
+    slicedName() {
+      return escape(this.name.slice(0, 2)).indexOf("%u") >= 0
+        ? this.name.slice(0, 1)
+        : this.name.slice(0, 2);
+    },
+  }, 
+  methods: {
+    adoptiveFont() {
+      if (!this.fontSize) {
+        if (!this.small) {
+          if (this.size > 50) {
+            return "text-h3";
+          } else {
+            return "text-h6";
+          }
+        } else {
+          if (this.name.length >= 3) {
+            return "text-body-2";
+          } else {
+            return "text-body-1";
+          }
+        }
+      } else {
+        return this.fontSize
+      }
+    }
+  }
 };
 </script>

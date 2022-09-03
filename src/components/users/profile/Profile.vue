@@ -5,7 +5,8 @@
       :style="{ transform: breakpoint.mdAndDown ? 'translate(0, -76px)' : '' }"
     >
       <AvatarContainer
-        :name="isChinese"
+        :name="userProfile.nickname"
+        slice
         :src="userProfile.avatar"
         :size="breakpoint.name === 'xs' ? 110 : 120"
         :outlined="breakpoint.mdAndDown"
@@ -60,13 +61,6 @@ export default {
     return {
       breakpoint: this.$vuetify.breakpoint,
     };
-  },
-  computed: {
-    isChinese() {
-      return escape(this.userProfile.nickname.slice(0, 2)).indexOf("%u") >= 0
-        ? this.userProfile.nickname.slice(0, 1)
-        : this.userProfile.nickname.slice(0, 2);
-    },
   },
 };
 </script>
