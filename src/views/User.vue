@@ -76,7 +76,7 @@ export default {
       this.scrollTop = document.documentElement.scrollTop;
     });
   },
-  methods: {
+  computed: {
     adoptiveCardPosition() {
       if (this.$vuetify.breakpoint.mdAndDown) {
         return {};

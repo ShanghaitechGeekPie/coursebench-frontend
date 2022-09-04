@@ -1,12 +1,7 @@
 <template>
   <v-card
     class="px-lg-0 px-4"
-    :style="{
-      width:
-        $vuetify.breakpoint.width - 24 > 800
-          ? '800px'
-          : $vuetify.breakpoint.width - 24 + 'px',
-    }"
+    :style="{ width: adoptiveCardContainerWidth }"
     outlined
     flat
   >
@@ -30,12 +25,25 @@
   </v-card>
 </template>
 <script>
-import useSelectBar from "@/composables/users/comment/useSelectBar";
+import useSelectBar from "@/composables/courses/all/useSelectBar";
 
 export default {
   setup() {
     const { statics, status } = useSelectBar();
     return { statics, status };
   },
+  computed: {
+    adoptiveCardNumber() {
+      return Math.min(Math.floor((this.$vuetify.breakpoint.width - 428) / 428), 3);
+    },
+
+    adoptiveCardContainerWidth() {
+      if (this.$vuetify.breakpoint.mdAndDown) {
+        return "";
+      } else {
+        return this.adoptiveCardNumber * 428 + "px";
+      }
+    },
+  },  
 };
 </script>

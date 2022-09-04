@@ -2,6 +2,7 @@
   <v-app>
     <Header :snackbar.sync="snackbar" />
     <v-main>
+      <InsiderBanner />
       <router-view />
       <v-snackbar
         v-model="snackbar.show"
@@ -23,6 +24,7 @@
 </template>
 <script>
 import Header from "@/components/global/Header";
+import InsiderBanner from "@/components/global/InsiderBanner";
 import useSnackbar from "@/composables/global/useSnackbar";
 import { getPreset } from "@/composables/global/useCookie";
 import { provide, reactive } from "vue";
@@ -30,14 +32,15 @@ import { mdiClose } from "@mdi/js";
 
 export default {
   name: "App",
-  components: { Header },
+  components: { Header, InsiderBanner },
   setup() {
     const { snackbar } = useSnackbar();
     const global = reactive({
       userProfile: getPreset(),
-      isLogin: Object.getOwnPropertyNames(getPreset())
-            .filter((key) => key !== "__ob__")
-            .length !== 0
+      isLogin:
+        Object.getOwnPropertyNames(getPreset()).filter(
+          (key) => key !== "__ob__"
+        ).length !== 0,
     });
     provide("global", global);
     return { snackbar };

@@ -1,4 +1,4 @@
-import { provide, reactive, ref, onMounted, computed, inject } from "vue"
+import { provide, reactive, ref, onMounted, inject } from "vue"
 import useFetching from "@/composables/global/useFetching"
 import useWatching from "@/composables/global/useWatching"
 import useRefCopy from "@/composables/global/useRefCopy"
@@ -12,7 +12,7 @@ export default () => {
   const route = useRoute()
   const showSnackbar = inject("showSnackbar")
 
-  let teacherDetail = reactive({
+  const teacherDetail = reactive({
     "id": 0,
     "name": "",
     "avatar": "",
@@ -22,7 +22,7 @@ export default () => {
     "courses": [],
   })
 
-  let courseText = ref([])
+  const courseText = ref([])
 
   const courseStatistic = reactive({
     total: 0,

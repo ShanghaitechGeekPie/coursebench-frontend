@@ -18,32 +18,25 @@
           </v-card>
         </div>
       </div>
-      <div class="pa-3 px-0">
+      <div class="pa-3 px-0"  :style="{ width: adoptiveCardContainerWidth }">
         <v-container class="py-sm-3 py-0">
           <v-row>
             <v-col class="px-0">
-              <div
-                :style="{
-                  width: $vuetify.breakpoint.mdAndDown ? '' : Math.floor(($vuetify.breakpoint.width - 428) / 428) * 428 + 'px'
-                }"
-              >
+              <div :style="{ width: adoptiveCardContainerWidth }">
                 <div class="d-flex flex-wrap justify-center justify-lg-start" v-if="status.loading">
-                  <div
-                    v-for="index in adoptiveCardNumber"
-                    :key="index"
-                  >
+                  <div v-for="index in adoptiveFakeCardNumber" :key="index">
                     <CourseCardLoading />
                   </div>
                 </div>
-                <div class="d-flex flex-wrap justify-center justify-lg-start">
-                  <div v-for="(course, index) in courseText" :key="course.id">
-                    <v-fade-transition>
-                      <CourseCard
-                        :course="course"
-                        v-if="status.selected.some((school) => school === course.institute)"
-                      />
-                    </v-fade-transition>
-                  </div>
+                <div class="d-flex flex-wrap justify-center justify-sm-start">
+                    <div v-for="(course, index) in courseText" :key="course.id" class="d-flex">
+                      <v-fade-transition>
+                        <CourseCard
+                          :course="course"
+                          v-if="status.selected.some((school) => school === course.institute)"
+                        />
+                      </v-fade-transition>
+                  </div>                  
                 </div>
               </div>
             </v-col>
@@ -85,6 +78,7 @@ export default {
     }
   },
   computed: {
+
     adoptiveCardPosition() {
       if (this.$vuetify.breakpoint.mdAndDown) {
         return {}
@@ -99,16 +93,32 @@ export default {
         }
       }
     }, 
-    adoptiveCardNumber() {
+
+    adoptiveFakeCardNumber() {
       if (this.$vuetify.breakpoint.width >= 600 && this.$vuetify.breakpoint.width < 1260) {
         return 2
       } else if (Math.floor((this.$vuetify.breakpoint.width - 428) / 428) > 1) {
-        return Math.floor((this.$vuetify.breakpoint.width - 428) / 428)
+        return Math.min(Math.floor((this.$vuetify.breakpoint.width - 428) / 428), 3)
       } else {
         return 1
       }
-    }
+    }, 
+
+    adoptiveCardNumber() {
+      return Math.min(Math.floor((this.$vuetify.breakpoint.width - 428) / 428), 3);
+    },
+
+    adoptiveCardContainerWidth() {
+      if (this.$vuetify.breakpoint.smAndDown) {
+        return "";
+      } else if (this.$vuetify.breakpoint.mdOnly) {
+        return (this.adoptiveCardNumber + 1) * 428 + "px"
+      } else {
+        return this.adoptiveCardNumber * 428 + "px";
+      }
+    },     
   }, 
+
   mounted() {
     document.addEventListener("scroll", () => {
       this.scrollTop = document.documentElement.scrollTop
