@@ -101,11 +101,13 @@ export default () => {
 
 
   const doLogin = () => {
-    loginMutation.mutate({
-      email: userData.email,
-      password: userData.password,
-      captcha: userData.captcha
-    })
+    if (formStatus.emailFormValid && formStatus.passwordFormValid && userData.captcha !== "") {
+      loginMutation.mutate({
+        email: userData.email,
+        password: userData.password,
+        captcha: userData.captcha
+      })
+    }
   }
 
 

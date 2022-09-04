@@ -32,7 +32,7 @@
         >
           <div>
             <div class="font-weight-bold text-h5 pt-2">注册</div>
-            <v-form v-model="formStatus.emailFormValid">
+            <v-form v-model="formStatus.emailFormValid" @submit="handleFormSubmit($event)">
               <v-card-text class="pa-0">
                 <v-text-field
                   v-model="userData.email"
@@ -79,7 +79,7 @@
               {{ userData.email }}
             </div>
             <div class="font-weight-bold text-h5">输入密码</div>
-            <v-form v-model="formStatus.passwordFormValid">
+            <v-form v-model="formStatus.passwordFormValid" @submit="handleFormSubmit($event)">
               <v-card-text class="pa-0">
                 <v-text-field
                   v-model="userData.password"
@@ -127,27 +127,25 @@
               {{ userData.email }}
             </div>
             <div class="text-body-1 mt-n2"
-            >我们还需要一些信息才设置你的帐户</div>
-            <v-form v-model="formStatus.passwordFormValid">
-              <v-card-text class="pa-0">
-                <div>
-                  <v-select
-                    hide-details
-                    v-model="userData.year"
-                    :items="statics.yearItems"
-                    label="入学时间"
-                  ></v-select>
-                </div>
-                <div class="pt-2">
-                  <v-select
-                    hide-details
-                    v-model="userData.grade"
-                    :items="statics.gradeItems"
-                    label="年级"
-                  ></v-select>
-                </div>
-              </v-card-text>
-            </v-form>
+            >我们还需要一些信息才能设置你的帐户</div>
+            <v-card-text class="pa-0">
+              <div>
+                <v-select
+                  hide-details
+                  v-model="userData.year"
+                  :items="statics.yearItems"
+                  label="入学时间"
+                ></v-select>
+              </div>
+              <div class="pt-2">
+                <v-select
+                  hide-details
+                  v-model="userData.grade"
+                  :items="statics.gradeItems"
+                  label="年级"
+                ></v-select>
+              </div>
+            </v-card-text>
           </div>
           <div
             class="px-0 pt-0 pb-6 pb-sm-11 pt-8 pt-sm-0 d-flex justify-end"
@@ -218,6 +216,7 @@
               length="6"
               v-model="userData.captcha"
               @finish="doRegister"
+              ref="captchaOptInput"
             ></v-otp-input>
           </div>                  
         </v-card-text>
@@ -243,8 +242,7 @@
               激活邮件已发送至您的邮箱，请点击其中的激活链接以激活您的帐号
             </div>
           </div>
-        </v-card-text>        
-
+        </v-card-text>
       </v-window-item>
     </v-window>
   </v-card>
@@ -262,42 +260,36 @@ export default {
     const closeDialog = inject("closeDialog");
     const openDialog = inject("openDialog");
     const { statics, userData, formStatus, doRegister, getCaptcha } = useRegister();
-    return { statics, userData, formStatus, formRules, closeDialog, openDialog, doRegister, getCaptcha };
+    return { statics, userData, formStatus, formRules, closeDialog, openDialog, doRegister, getCaptcha, console };
   },
   methods: {
+    
     clickLastStep() {
       if (this.formStatus.windowStep > 0) {
         this.formStatus.windowStep -= 1;
       }
     },
+
     clickNextStep() {
-      if (this.formStatus.windowStep === 0) {
-        if (!this.formStatus.emailFormValid) {
-          return;
-        } else {
-          this.formStatus.windowStep += 1;
-          // autofocus will break the transition animation, so we do it manually
-          useAfterRender(
-            () => {
-              this.$refs.passwordTextField.focus();
-            }, { retry: true, timeout: 300 }
-          );
-        }
-      } else if (this.formStatus.windowStep === 1) {
-        if (!this.formStatus.passwordFormValid) {
-          return;
-        } else {
-          this.formStatus.windowStep += 1;
-        }
-      } else {
+      if (this.formStatus.windowStep === 0 && this.formStatus.emailFormValid) {
         this.formStatus.windowStep += 1;
+        // autofocus will break the transition animation, so we do it manually
+        useAfterRender(() => this.$refs.passwordTextField.focus(), { retry: true, timeout: 300 });        
+      } else if (this.formStatus.windowStep === 1 && this.formStatus.passwordFormValid) {
+        this.formStatus.windowStep += 1;        
+      } else if (this.formStatus.windowStep === 2 && this.userData.year && this.userData.grade) {        
+        this.formStatus.windowStep += 1;
+        useAfterRender(() => this.$refs.captchaOptInput.focus(), { retry: true, timeout: 300 })
       }
     },
+
+    handleFormSubmit(event) {
+      event.preventDefault();
+      this.clickNextStep();
+    }
   },
   mounted() {
-    useAfterRender(() => {
-      this.$refs.emailTextField.focus();
-    }, { retry: true });
+    useAfterRender(() => this.$refs.emailTextField.focus(), { retry: true });
   },
 };
 </script>
