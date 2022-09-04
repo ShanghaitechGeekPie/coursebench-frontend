@@ -3,7 +3,7 @@
     flat
     outlined
     :width="$vuetify.breakpoint.mdAndDown ? '100vw' : '360px'"
-    class="pt-6 pb-3 px-7"
+    class="pt-6 pb-3 px-6"
   >
     <div>
       <div class="text-h6 d-flex">
@@ -29,17 +29,16 @@
         </div>
       </div>
     </div>
-    <div>!!ORDER!!</div>
   </v-card>
 </template>
 <script>
-import useCourseFilter from "@/composables/courses/all/useCourseFilter";
+import useStatisticCard from "@/composables/courses/all/useStatisticCard";
 
 export default {
   setup() {
-    const { statics, courseStatistic, status } = useCourseFilter();
+    const { statics, courseStatistic, status } = useStatisticCard();
     return {
-      statics, 
+      statics,
       courseStatistic,
       status,
     };

@@ -135,7 +135,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .router-container:hover {
   cursor: pointer;
