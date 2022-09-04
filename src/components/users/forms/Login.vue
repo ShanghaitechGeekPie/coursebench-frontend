@@ -32,7 +32,7 @@
         >
           <div>
             <div class="font-weight-bold text-h5 pt-2">登录</div>
-            <v-form v-model="formStatus.emailFormValid">
+            <v-form v-model="formStatus.emailFormValid" @submit="handleFormSubmit($event)">
               <v-card-text class="pa-0">
                 <v-text-field
                   v-model="userData.email"
@@ -79,7 +79,7 @@
               {{ userData.email }}
             </div>
             <div class="font-weight-bold text-h5">输入密码</div>
-            <v-form v-model="formStatus.passwordFormValid">
+            <v-form v-model="formStatus.passwordFormValid" @submit="handleFormSubmit($event)">
               <v-card-text class="pa-0">
                 <v-text-field
                   v-model="userData.password"
@@ -166,6 +166,7 @@
               length="6"
               v-model="userData.captcha"
               @finish="doLogin"
+              ref="captchaOptInput"
             ></v-otp-input>
           </div>                  
         </v-card-text>
@@ -198,37 +199,31 @@ export default {
     };
   },
   methods: {
+
     clickLastStep() {
       if (this.formStatus.windowStep > 0) {
         this.formStatus.windowStep -= 1;
       }
     },
+
     clickNextStep() {
-      if (this.formStatus.windowStep === 0) {
-        if (!this.formStatus.emailFormValid) {
-          return;
-        } else {
-          this.formStatus.windowStep += 1;
-          // autofocus will break the transition animation, so we do it manually
-          useAfterRender(
-            () => {
-              this.$refs.passwordTextField.focus();
-            }, { retry: true, timeout: 300 }
-          );
-        }
-      } else if (this.formStatus.windowStep === 1) {
-        if (!this.formStatus.passwordFormValid) {
-          return;
-        } else {
-          this.formStatus.windowStep += 1;
-        }
+      if (this.formStatus.windowStep === 0 && this.formStatus.emailFormValid) {
+        this.formStatus.windowStep += 1;
+        // autofocus will break the transition animation, so we do it manually
+        useAfterRender(() => this.$refs.passwordTextField.focus(), { retry: true, timeout: 300 });
+      } else if (this.formStatus.windowStep === 1 && this.formStatus.passwordFormValid) {
+        this.formStatus.windowStep += 1;
+        useAfterRender(() => this.$refs.captchaOptInput.focus(), { retry: true, timeout: 300 });        
       }
     },
+
+    handleFormSubmit(event) {
+      event.preventDefault();
+      this.clickNextStep();
+    }
   },
   mounted() {
-    useAfterRender(() => {
-      this.$refs.emailTextField.focus();
-    }, { retry: true });
+    useAfterRender(() => this.$refs.emailTextField.focus(), { retry: true });
   },
 };
 </script>

@@ -14,11 +14,11 @@ export default () => {
     icons: {
       mdiArrowLeft,
       mdiEye,
-      mdiEyeOff, 
-      mdiWindowClose, 
+      mdiEyeOff,
+      mdiWindowClose,
       mdiEmailAlertOutline
-    }, 
-    yearItems, 
+    },
+    yearItems,
     gradeItems
   }
 
@@ -43,11 +43,11 @@ export default () => {
   const registerMutation = useMutation("/user/register", {
     onMutate: () => {
       formStatus.loading = true
-    }, 
+    },
     onSuccess: (_) => {
       formStatus.loading = false
       formStatus.windowStep += 1
-    }, 
+    },
     onError: (error) => {
       formStatus.loading = false
       if (isNetworkError(error.response)) {
@@ -57,7 +57,7 @@ export default () => {
         getCaptcha()
         if (error.response.data.code === "UserAlreadyExists" || error.response.data.code === "UserEmailDuplicated") {
           formStatus.windowStep = 0;
-        }                
+        }
         showSnackbar("error", error.response.data.msg)
       }
     }
@@ -85,13 +85,17 @@ export default () => {
   // ? Fuck I randomly typed a password and it worked
   // ? so I have to use this password temporarily : aaaaaaaaaaa1
   const doRegister = () => {
-    registerMutation.mutate({
-      email: userData.email,
-      password: userData.password,
-      year: userData.year === "暂不透露" ? 0 : userData.year,
-      grade: statics.gradeItems.indexOf(userData.grade),
-      captcha: userData.captcha
-    })
+    if (formStatus.emailFormValid && formStatus.passwordFormValid && 
+      userData.captcha !== "" && userData.year && userData.grade
+    ) {
+      registerMutation.mutate({
+        email: userData.email,
+        password: userData.password,
+        year: userData.year === "暂不透露" ? 0 : userData.year,
+        grade: statics.gradeItems.indexOf(userData.grade),
+        captcha: userData.captcha
+      })
+    }
   }
 
   onMounted(() => {
