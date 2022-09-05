@@ -22,7 +22,7 @@
         <v-col md="2" sm="3" cols="6" class="pb-0 pt-lg-3 pt-0">
           <v-select
             v-model="status.order"
-            :items="statics.orderItem"
+            :items="statics.orderItem[status.sortKey]"
           ></v-select>
         </v-col>
       </v-row>
