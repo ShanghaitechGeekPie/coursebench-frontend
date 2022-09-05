@@ -25,6 +25,7 @@
                 :items="courseText"
                 :items-per-page="adoptiveCardNumber * 3"
                 :page="status.page"
+                hide-default-footer
               >
                 <template #default="{ items }">
                   <div class="d-flex flex-wrap justify-center justify-md-start">
@@ -38,30 +39,14 @@
                   </div>
                 </template>
                 <template #footer>
-                  <ElevatedPagination 
-                    v-model="status.page"
-                    :length="Math.ceil(courseText.length / (adoptiveCardNumber * 3))"
-                    :total-visible="5"
-                    elevation="0"
-                  />
-                  <v-pagination
-                    v-model="status.page"
-                    :length="Math.ceil(courseText.length / (adoptiveCardNumber * 3))"
-                    :total-visible="7"
-                    elevation="0"
-                  ></v-pagination>
-                  <div class="py-4 px-2 d-flex justify-end">
-                    <div>
-                      <div>共</div>
-                    </div>
-                    <div class="d-flex">
-                      <div class="mx-2 pr-1">
-                        <v-icon>{{ statics.icons.mdiChevronLeft }}</v-icon>
-                      </div>                      
-                      <div class="mx-2 pl-1">
-                        <v-icon>{{ statics.icons.mdiChevronRight }}</v-icon>
-                      </div>
-                    </div>
+                  <div class="py-1 mt-2 d-flex justify-center justify-lg-start">
+                    <ElevatedPagination 
+                      v-model="status.page"
+                      :length="Math.ceil(courseText.length / (adoptiveCardNumber * 3))"
+                      :total-visible="7"
+                      elevation="0"
+                      outlined
+                    />
                   </div>
                 </template>
               </v-data-iterator>
@@ -82,8 +67,8 @@ import { instituteInfo } from "@/composables/global/useStaticData";
 
 export default {
   setup() {
-    const { statics, courseText, status } = useCourseAll();
-    return { instituteInfo, statics, courseText, status };
+    const { courseText, status } = useCourseAll();
+    return { instituteInfo, courseText, status };
   },
   components: {
     SelectBar,

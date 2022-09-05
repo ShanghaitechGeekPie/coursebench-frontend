@@ -2,19 +2,12 @@ import { provide, reactive, ref, onMounted, inject, watch } from "vue"
 import { instituteInfo } from "@/composables/global/useStaticData";
 import useDebounce from "@/composables/global/useDebounce"
 import { sortCmp, averageOf } from "@/composables/global/useArrayUtils"
-import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
+
 
 export default () => {
 
     const showSnackbar = inject("showSnackbar")
 
-
-    const statics = {
-        icons: {
-            mdiChevronLeft, 
-            mdiChevronRight
-        }, 
-    }
 
 
     const courseText = ref([])
@@ -159,5 +152,5 @@ export default () => {
 
 
 
-    return { statics, courseText, status }
+    return { courseText, status }
 }
