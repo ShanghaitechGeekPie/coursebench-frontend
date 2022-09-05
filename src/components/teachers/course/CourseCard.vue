@@ -94,7 +94,6 @@
 import useCourseCard from "@/composables/teachers/course/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import { judgeItems } from "@/composables/global/useStaticData";
-import Config from "Config"
 
 export default {
   setup() {
@@ -136,7 +135,7 @@ export default {
   methods: {
     roundScore(score) {
       if (score == 0) {
-        if (this.course["comment_num"] < this.Config.enoughDataThreshold) {
+        if (this.course["comment_num"] < this.statics.enoughDataThreshold) {
           return 0; // 0 = no enough data
         } else {
           return 7; // 7 = extremely bad

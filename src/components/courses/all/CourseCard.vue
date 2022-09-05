@@ -112,7 +112,7 @@
               <div>
                 <div class="px-5 text-caption">
                   
-                  <div v-if="course.comments_num >= Config.enoughDataThreshold">
+                  <div v-if="course.comments_num >= statics.enoughDataThreshold">
                     共获评价{{course.comments_num}}条，综合评分：{{(averageScore / 20).toFixed(1)}}/5.0
                   </div>
                   <div v-else>
@@ -150,12 +150,11 @@
 import useCourseCard from "@/composables/courses/all/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import { judgeItems, instituteInfo } from "@/composables/global/useStaticData";
-import Config from "Config"
 
 export default {
   setup() {
     const { statics } = useCourseCard();
-    return { Config, statics, judgeItems, instituteInfo };
+    return { statics, judgeItems, instituteInfo };
   },
   data() {
     return {
@@ -194,7 +193,7 @@ export default {
   methods: {
     roundScore(score) {
       if (score == 0) {        
-        if (this.course["comments_num"] < this.Config.enoughDataThreshold) {
+        if (this.course["comments_num"] < this.statics.enoughDataThreshold) {
           return 0; // 0 = no enough data
         } else {
           return 7; // 7 = extremely bad

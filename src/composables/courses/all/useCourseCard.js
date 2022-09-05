@@ -12,7 +12,8 @@ export default () => {
         icons: {
             mdiSchool,
             mdiDotsHorizontal,
-        }
+        }, 
+        enoughDataThreshold: 3,
     }
 
 
