@@ -1,6 +1,8 @@
-import { onMounted, provide, reactive, ref } from "vue"
+import { onMounted, provide, reactive, ref, watch } from "vue"
 import useRefCopy from "@/composables/global/useRefCopy"
 import { instituteInfo, gradeItems } from "@/composables/global/useStaticData"
+import useDebounce from "@/composables/global/useDebounce"
+import { sortCmp } from "@/composables/global/useArrayUtils"
 
 export default () => {
   
@@ -250,6 +252,7 @@ export default () => {
     }
   } // Just for test
 
+
   const getCommentText = () => {
     const commentText = testCommentText
 
@@ -268,6 +271,7 @@ export default () => {
     userProfile.grade = gradeItems[userProfile.grade]
     return userProfile
   }
+
 
   const userProfile = reactive({
     email: "", 
@@ -297,19 +301,43 @@ export default () => {
     }), 
   })
 
+  
   const status = reactive({
     selected: new Array(), 
     sortKey: '发布时间', 
     order: '从后往前',
   })
 
+  
+  let lastStatus = Object.assign({}, status)
+  const sortPolicy = {
+    "发布时间": (x) => new Date(x.post_time), 
+    "修改时间": (x) => new Date(x.update_time)
+  }
+  const sortFunc = (x, y) => sortCmp(
+    sortPolicy[status.sortKey](x), sortPolicy[status.sortKey](y)
+  )
+
+  watch(status, useDebounce(() => {
+    if (lastStatus.order != status.order) {
+      commentText.value.reverse()
+      lastStatus = Object.assign({}, status)
+    } else if (lastStatus.sortKey != status.sortKey) {
+      status.order = statics.orderItem[status.sortKey][0]
+      commentText.value.sort(sortFunc)
+      lastStatus = Object.assign({}, status)
+    }
+  }))
+
+
+
   provide("commentStatistic", commentStatistic)
 
   provide("commentStatus", status)
 
-  provide("commentText", commentText)
-
   provide("userProfile", userProfile)
+
+
 
   onMounted(() => {
     useRefCopy(getUserProfile(), userProfile)
@@ -323,7 +351,9 @@ export default () => {
         }
       } return ret
     })()
+    commentText.value.sort(sortFunc)
   })
+
 
   return { commentText, status }
   

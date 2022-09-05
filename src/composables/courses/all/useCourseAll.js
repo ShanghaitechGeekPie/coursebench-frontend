@@ -1,5 +1,7 @@
-import { provide, reactive, ref, onMounted, inject } from "vue"
+import { provide, reactive, ref, onMounted, inject, watch } from "vue"
 import { instituteInfo } from "@/composables/global/useStaticData";
+import useDebounce from "@/composables/global/useDebounce"
+import { sortCmp, averageOf } from "@/composables/global/useArrayUtils"
 
 export default () => {
 
@@ -93,12 +95,36 @@ export default () => {
         getCourseStatistic()
     }
 
+
+    let lastStatus = Object.assign({}, status)
+    const sortPolicy = {
+      "综合评分": (x) => averageOf(x.score),
+      "评价总数": (x) => x.comments_num, 
+      "学分": (x) => x.credit
+    }
+    const sortFunc = (x, y) => sortCmp(
+      sortPolicy[status.sortKey](x), sortPolicy[status.sortKey](y)
+    )
+  
+    watch(status, useDebounce((to, from) => {
+      if (lastStatus.order != status.order) {
+        courseText.value.reverse()
+        lastStatus = Object.assign({}, status)
+      } else if (lastStatus.sortKey != status.sortKey) {
+        status.order = statics.orderItem[status.sortKey][0]
+        courseText.value.sort(sortFunc)
+        lastStatus = Object.assign({}, status)
+      }
+    }))    
+
+
     onMounted(() => {
         getCourseAll()
+        courseText.value.sort(sortFunc)
     })
 
+
     provide("courseStatistic", courseStatistic)
-    provide("courseText", courseText)
     provide("courseStatus", status)
 
 
