@@ -2,10 +2,20 @@ import { provide, reactive, ref, onMounted, inject, watch } from "vue"
 import { instituteInfo } from "@/composables/global/useStaticData";
 import useDebounce from "@/composables/global/useDebounce"
 import { sortCmp, averageOf } from "@/composables/global/useArrayUtils"
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 
 export default () => {
 
     const showSnackbar = inject("showSnackbar")
+
+
+    const statics = {
+        icons: {
+            mdiChevronLeft, 
+            mdiChevronRight
+        }, 
+    }
+
 
     const courseText = ref([])
 
@@ -22,12 +32,15 @@ export default () => {
         })(),
     })
 
+
+
     const status = reactive({
         selected: Object.getOwnPropertyNames(courseStatistic.count)
                         .filter((key) => key !== "__ob__" ),
         sortKey: "综合评分",
         order: "从高到低",
-        loading: true
+        loading: true, 
+        page: 1,
     })
 
     const getCourseStatistic = () => {
@@ -90,12 +103,27 @@ export default () => {
             }
         ]
         let testData = testDataSlice
+        for (let i = 0; i < 5; i++) {
+            testData.push(...testDataSlice)
+        }
+        for (let i = 0; i < 5 * 5; i++) {
+            testData[i].id = i
+        }
+        
 
         courseText.value = testData
         getCourseStatistic()
     }
 
 
+    const sortStatics = {
+        sortKeyItem: ['综合评分', '评价总数', "学分"],
+        orderItem: {
+            "综合评分": ["从高到低", "从低到高"],
+            "评价总数": ["从多到少", "从少到多"], 
+            "学分": ["从多到少", "从少到多"]
+        },
+    }
     let lastStatus = Object.assign({}, status)
     const sortPolicy = {
       "综合评分": (x) => averageOf(x.score),
@@ -111,11 +139,12 @@ export default () => {
         courseText.value.reverse()
         lastStatus = Object.assign({}, status)
       } else if (lastStatus.sortKey != status.sortKey) {
-        status.order = statics.orderItem[status.sortKey][0]
+        status.order = sortStatics.orderItem[status.sortKey][0]
         courseText.value.sort(sortFunc)
         lastStatus = Object.assign({}, status)
       }
     }))    
+
 
 
     onMounted(() => {
@@ -124,9 +153,11 @@ export default () => {
     })
 
 
+    provide("sortStatics", sortStatics)
     provide("courseStatistic", courseStatistic)
     provide("courseStatus", status)
 
 
-    return { courseText, status }
+
+    return { statics, courseText, status }
 }

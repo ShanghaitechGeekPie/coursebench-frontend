@@ -273,6 +273,8 @@ export default () => {
   }
 
 
+
+
   const userProfile = reactive({
     email: "", 
     year: 1970, 
@@ -309,6 +311,13 @@ export default () => {
   })
 
   
+  const sortStatics = {
+    sortKeyItem: ['发布时间', '修改时间'],
+    orderItem: {
+      "发布时间": ['从后往前', '从前往后'], 
+      "修改时间": ['从后往前', '从前往后']
+    },
+  }
   let lastStatus = Object.assign({}, status)
   const sortPolicy = {
     "发布时间": (x) => new Date(x.post_time), 
@@ -323,7 +332,7 @@ export default () => {
       commentText.value.reverse()
       lastStatus = Object.assign({}, status)
     } else if (lastStatus.sortKey != status.sortKey) {
-      status.order = statics.orderItem[status.sortKey][0]
+      status.order = sortStatics.orderItem[status.sortKey][0]
       commentText.value.sort(sortFunc)
       lastStatus = Object.assign({}, status)
     }
@@ -331,11 +340,10 @@ export default () => {
 
 
 
+  provide("sortStatics", sortStatics)
   provide("commentStatistic", commentStatistic)
-
   provide("commentStatus", status)
-
-  provide("userProfile", userProfile)
+  provide("userProfile", userProfile) 
 
 
 
