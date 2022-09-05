@@ -1,5 +1,5 @@
 import {
-  mdiChartBubble,  
+  mdiSchool,  
   mdiDotsHorizontal, 
 } from "@mdi/js";
 import { instituteInfo, scoreInfo } from "@/composables/global/useStaticData";
@@ -24,7 +24,7 @@ export default () => {
     color: scoreInfo.map(obj => obj.color), 
     label: scoreInfo.map(obj => obj.label), 
     icons: {
-      mdiChartBubble,  
+      mdiSchool,  
       mdiDotsHorizontal, 
     }
   }

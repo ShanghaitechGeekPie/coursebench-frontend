@@ -18,7 +18,7 @@
           </v-card>
         </div>
       </div>
-      <div class="pa-3 px-0"  :style="{ width: adoptiveCardContainerWidth }">
+      <div class="pa-3 px-0" :style="{ width: adoptiveCardContainerWidth }">
         <v-container class="py-sm-3 py-0">
           <v-row>
             <v-col class="px-0">
@@ -29,13 +29,13 @@
                   </div>
                 </div>
                 <div class="d-flex flex-wrap justify-center justify-sm-start">
-                    <div v-for="(course, index) in courseText" :key="course.id" class="d-flex">
-                      <v-fade-transition>
-                        <CourseCard
-                          :course="course"
-                          v-if="status.selected.some((school) => school === course.institute)"
-                        />
-                      </v-fade-transition>
+                  <div v-for="(course, index) in courseText" :key="course.id" class="d-flex">
+                    <v-fade-transition>
+                      <CourseCard
+                        :course="course"
+                        v-if="status.selected.some((school) => school === course.institute)"
+                      />
+                    </v-fade-transition>
                   </div>                  
                 </div>
               </div>
@@ -46,7 +46,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import Detail from "@/components/teachers/detail/Detail"
 import DetailLoading from "@/components/teachers/loading/DetailLoading"
@@ -118,7 +117,6 @@ export default {
       }
     },     
   }, 
-
   mounted() {
     document.addEventListener("scroll", () => {
       this.scrollTop = document.documentElement.scrollTop

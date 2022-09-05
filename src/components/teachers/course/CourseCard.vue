@@ -32,7 +32,7 @@
                 <div>
                   <div style="transform: translate(0, -2px)" class="pr-2">
                     <v-icon size="20">
-                      {{ statics.icons.mdiChartBubble }}
+                      {{ statics.icons.mdiSchool }}
                     </v-icon>
                   </div>
                 </div>
@@ -60,10 +60,10 @@
                   <div class="text-body-2" style="min-width: 57px">
                     {{ judgeItems[index - 1] }}
                   </div>
-                  <div style="width: 64%">
+                  <div style="width: 64%" class="px-0 px-sm-1 px-md-0">
                     <v-progress-linear
                       v-model="course.score[index - 1] * 20"
-                      :color="statics.color[score[index - 1]]"
+                      :color="statics.color[roundedScore[index - 1]]"
                       class="mt-2"
                       style="pointer-events: none"
                     >
@@ -73,11 +73,11 @@
                     <v-chip
                       x-small
                       label
-                      :color="statics.color[score[index - 1]]"
+                      :color="statics.color[roundedScore[index - 1]]"
                       class="px-1 mt-n2"
                     >
                       <span class="text-caption white--text">{{
-                        statics.label[score[index - 1]]
+                        statics.label[roundedScore[index - 1]]
                       }}</span>
                     </v-chip>
                   </div>
@@ -94,15 +94,16 @@
 import useCourseCard from "@/composables/teachers/course/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import { judgeItems } from "@/composables/global/useStaticData";
+import Config from "Config"
 
 export default {
   setup() {
     const { statics } = useCourseCard();
-    return { statics, judgeItems };
+    return { statics, judgeItems, Config };
   },
   data() {
     return {
-      score: new Array(),
+      roundedScore: new Array(),
     };
   },
   props: {
@@ -112,10 +113,9 @@ export default {
     AvatarContainer,
   },
   created() {
-    for (let element of this.course.score) {
-      let rounded = Math.floor(element) + 1;
-      if (element == 0) rounded = 0;
-      this.score.push(rounded);
+    for (let score of this.course.score) {
+      let rounded = this.roundScore(score);
+      this.roundedScore.push(rounded);
     }
   },
   computed: {
@@ -133,6 +133,19 @@ export default {
       }
     },
   },
+  methods: {
+    roundScore(score) {
+      if (score == 0) {
+        if (this.course["comment_num"] < this.Config.enoughDataThreshold) {
+          return 0; // 0 = no enough data
+        } else {
+          return 7; // 7 = extremely bad
+        }
+      } else {
+        return Math.floor(score) + 1
+      }
+    }
+  }  
 };
 </script>
 <style scoped>
