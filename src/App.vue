@@ -42,7 +42,13 @@ export default {
           (key) => key !== "__ob__"
         ).length !== 0,
     });
+    const searchInput = reactive({
+      isRegexp: false, 
+      keys: [""]
+    })
+
     provide("global", global);
+    provide("searchInput", searchInput)
     return { snackbar };
   },
   data() {

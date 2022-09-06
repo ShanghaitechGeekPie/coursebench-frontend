@@ -329,12 +329,12 @@ export default () => {
 
   watch(status, useDebounce(() => {
     if (lastStatus.order != status.order) {
-      commentText.value.reverse()
       lastStatus = Object.assign({}, status)
+      commentText.value.reverse()      
     } else if (lastStatus.sortKey != status.sortKey) {
-      status.order = sortStatics.orderItem[status.sortKey][0]
-      commentText.value.sort(sortFunc)
       lastStatus = Object.assign({}, status)
+      status.order = sortStatics.orderItem[status.sortKey][0]
+      commentText.value.sort(sortFunc)      
     }
   }))
 

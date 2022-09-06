@@ -99,8 +99,9 @@ export default {
   }, 
   computed: {
     paginationLabels() {
-      const lengthInUse = this.totalVisible > 0 ? this.totalVisible : length
-      const mid = Math.floor((lengthInUse + 1) / 2)
+      const lengthInUse = this.totalVisible > 0 
+        ? Math.min(this.length, this.totalVisible) : length
+      const mid = Math.ceil((lengthInUse + 1) / 2)
       if (this.page - mid + 1 < 1) {
         return new Array(lengthInUse).fill(0, 0, lengthInUse).map((_, index) => index + 1)
       } else if (this.page + mid - 1 > this.length) {

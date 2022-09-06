@@ -32,21 +32,25 @@
                     <div v-for="(course, index) in items" :key="course.id" class="d-flex">
                       <v-fade-transition>
                         <CourseCard :course="course" 
-                          v-if="status.selected.some((item) => item === instituteInfo[course.institute].name)"
+                          v-if="courseFilterStatus.selected.some((item) => item === course.institute)"                          
                         />
                       </v-fade-transition>
                     </div>
                   </div>
                 </template>
                 <template #footer>
-                  <div class="py-1 mt-2 d-flex justify-center justify-lg-start">
-                    <ElevatedPagination 
-                      v-model="status.page"
-                      :length="Math.ceil(courseText.length / (adoptiveCardNumber * 3))"
-                      :total-visible="7"
-                      elevation="0"
-                      outlined
-                    />
+                  <div class="py-1 mt-2 d-flex justify-center justify-lg-start"
+                    v-if="adoptiveCoursePage > 1"
+                  >
+                    <div class="mx-1">
+                      <ElevatedPagination 
+                        v-model="status.page"
+                        :length="adoptiveCoursePage"
+                        :total-visible="6"
+                        elevation="0"
+                        outlined
+                      />
+                    </div>
                   </div>
                 </template>
               </v-data-iterator>
@@ -67,8 +71,9 @@ import { instituteInfo } from "@/composables/global/useStaticData";
 
 export default {
   setup() {
-    const { courseText, status } = useCourseAll();
-    return { instituteInfo, courseText, status };
+    const { courseText, status, courseFilterStatus } = useCourseAll();
+    
+    return { instituteInfo, courseText, status, courseFilterStatus };
   },
   components: {
     SelectBar,
@@ -103,7 +108,11 @@ export default {
       } else {
         return this.adoptiveCardNumber * 428 + "px";
       }
-    },  
+    },
+
+    adoptiveCoursePage() {
+      return Math.ceil(this.courseText.length / (this.adoptiveCardNumber * 3))
+    }
   },
 };
 </script>

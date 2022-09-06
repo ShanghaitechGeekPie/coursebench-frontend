@@ -98,7 +98,7 @@ import { judgeItems } from "@/composables/global/useStaticData";
 export default {
   setup() {
     const { statics } = useCourseCard();
-    return { statics, judgeItems, Config };
+    return { statics, judgeItems };
   },
   data() {
     return {
