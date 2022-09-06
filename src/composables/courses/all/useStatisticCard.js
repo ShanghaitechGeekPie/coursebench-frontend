@@ -13,7 +13,7 @@ export default () => {
     }
 
     const status = reactive({
-        ...toRefs(inject("courseStatus"))
+        ...toRefs(inject("courseFilterStatus"))
     })
 
 

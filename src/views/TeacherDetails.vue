@@ -33,7 +33,7 @@
                     <v-fade-transition>
                       <CourseCard
                         :course="course"
-                        v-if="status.selected.some((school) => school === course.institute)"
+                        v-if="courseFilterStatus.selected.some((school) => school === course.institute)"
                       />
                     </v-fade-transition>
                   </div>                  
@@ -68,8 +68,8 @@ export default {
     CourseCardLoading
   },
   setup() {
-    const { courseText, status } = useTeacherDetail()
-    return { courseText, status }
+    const { courseText, status, courseFilterStatus } = useTeacherDetail()
+    return { courseText, status, courseFilterStatus }
   },
   data() {
     return {

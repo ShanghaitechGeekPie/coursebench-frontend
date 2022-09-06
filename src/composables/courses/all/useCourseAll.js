@@ -1,14 +1,20 @@
-import { provide, reactive, ref, onMounted, inject, watch } from "vue"
+import { provide, reactive, ref, onMounted, inject, watch, computed } from "vue"
 import { instituteInfo } from "@/composables/global/useStaticData";
 import useDebounce from "@/composables/global/useDebounce"
+import useWatching from "@/composables/global/useWatching"
 import { sortCmp, averageOf } from "@/composables/global/useArrayUtils"
+import useFetching from "@/composables/global/useFetching"
+import { isNetworkError } from "@/composables/global/useHttpError"
 
 
 export default () => {
 
     const showSnackbar = inject("showSnackbar")
+    const searchInput = inject("searchInput")
 
 
+
+    const courseRawText = ref([])
 
     const courseText = ref([])
 
@@ -28,85 +34,75 @@ export default () => {
 
 
     const status = reactive({
-        selected: Object.getOwnPropertyNames(courseStatistic.count)
-                        .filter((key) => key !== "__ob__" ),
+        loading: true, 
+        page: 1,    
+    })
+
+    const courseFilterStatus = reactive({
+        selected: [],
         sortKey: "综合评分",
         order: "从高到低",
-        loading: true, 
-        page: 1,
     })
+
+
 
     const getCourseStatistic = () => {
         courseStatistic.total = courseText.value.length
+        const schools = Object.getOwnPropertyNames(courseStatistic.count).filter((key) => {
+            return key != "__ob__" && key != "其他学院"
+        })
+        for (let key in courseStatistic.count) {
+            courseStatistic.count[key] = 0
+        }
         for (let course of courseText.value) {
-            if (instituteInfo[course.institute]) {
-                courseStatistic.count[instituteInfo[course.institute].name]++
+            if (schools.indexOf(course.institute) >= 0) {
+                courseStatistic.count[course.institute]++
             } else {
+                course.institute = "其他学院"
                 courseStatistic.count["其他学院"]++
             }
         }
     }
 
     const getCourseAll = () => {
-        let testDataSlice = [
-            {
-                "name": "计算机编程",
-                "code": "CS100",
-                "id": 123,
-                "credit": 4,
-                "score": [4,1,4.2,4.3,4.4], //若 comments_num 为0,则该项无意义
-                "comments_num": 10, // 可见的评论数
-                "institute": "SIST"
-            }, 
-            {
-                "name": "大学物理I",
-                "code": "SP1101",
-                "id": 1234,
-                "credit": 4,
-                "score": [5,2,4.3,3.4,4.4], //若 comments_num 为0,则该项无意义
-                "comments_num": 8, // 可见的评论数
-                "institute": "SPST"
-            }, 
-            {
-                "name": "全球健康挑战",
-                "code": "SL1007",
-                "id": 1235,
-                "credit": 2,
-                "score": [5,5,5,5,5], //若 comments_num 为0,则该项无意义
-                "comments_num": 10, // 可见的评论数
-                "institute": "SLST"
-            }, 
-            {
-                "name": "经济学导论",
-                "code": "SE1001",
-                "id": 1231,
-                "credit": 3,
-                "score": [4,4,2,2,4.4], //若 comments_num 为0,则该项无意义
-                "comments_num": 12, // 可见的评论数
-                "institute": "SEM"
-            }, 
-            {
-                "name": "中华文明通论",
-                "code": "GEMA1001",
-                "id": 1230,
-                "credit": 3,
-                "score": [1,4,1,1,1], //若 comments_num 为0,则该项无意义
-                "comments_num": 18, // 可见的评论数
-                "institute": "GE"
+        const { status: fetchStatus, data, error } = useFetching(["course_all"],  "/course/all")
+        useWatching(fetchStatus, () => {
+            if (fetchStatus.value === "success") {
+                status.loading = false
+            } else if (fetchStatus.value == "error") {
+                const response = error.value.response
+                showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
             }
-        ]
-        let testData = testDataSlice
-        for (let i = 0; i < 5; i++) {
-            testData.push(...testDataSlice)
-        }
-        for (let i = 0; i < 5 * 5; i++) {
-            testData[i].id = i
-        }
-        
-
-        courseText.value = testData
-        getCourseStatistic()
+        })
+        useWatching(data, () => {
+            if (data.value) {
+                courseRawText.value = data.value.data
+                // Here we need to deep copy the data or the sort will mess up the original data
+                courseText.value = courseRawText.value.filter((_) => true)
+                getCourseStatistic()
+                courseText.value.sort(sortFunc)
+                courseFilterStatus.selected = (() => {
+                    let ret = new Array()
+                    for (let key in courseStatistic.count) {
+                        if (courseStatistic.count[key]) {
+                            ret.push(key)
+                        }
+                    } return ret
+                })()
+            }
+        })
     }
+
+
+    const matchSearchKeys = (policyFunc) => {
+        for (let i = 0; i < searchInput.keys.length; i++) {
+          if (!policyFunc(searchInput.keys[i])) {
+            return false;
+          }
+        } 
+        return true
+      }
+
 
 
     const sortStatics = {
@@ -117,40 +113,63 @@ export default () => {
             "学分": ["从多到少", "从少到多"]
         },
     }
-    let lastStatus = Object.assign({}, status)
+    let lastStatus = Object.assign({}, courseFilterStatus)
     const sortPolicy = {
       "综合评分": (x) => averageOf(x.score),
-      "评价总数": (x) => x.comments_num, 
+      "评价总数": (x) => x.comment_num, 
       "学分": (x) => x.credit
     }
     const sortFunc = (x, y) => sortCmp(
-      sortPolicy[status.sortKey](x), sortPolicy[status.sortKey](y)
+      sortPolicy[courseFilterStatus.sortKey](x), sortPolicy[courseFilterStatus.sortKey](y)
     )
   
-    watch(status, useDebounce((to, from) => {
-      if (lastStatus.order != status.order) {
-        courseText.value.reverse()
-        lastStatus = Object.assign({}, status)
-      } else if (lastStatus.sortKey != status.sortKey) {
-        status.order = sortStatics.orderItem[status.sortKey][0]
-        courseText.value.sort(sortFunc)
-        lastStatus = Object.assign({}, status)
+
+
+    watch(courseFilterStatus, useDebounce((to, from) => {
+      if (lastStatus.order != courseFilterStatus.order) {
+        lastStatus = Object.assign({}, courseFilterStatus)
+        courseText.value.reverse()        
+      } else if (lastStatus.sortKey != courseFilterStatus.sortKey) {
+        lastStatus = Object.assign({}, courseFilterStatus)
+        courseFilterStatus.order = sortStatics.orderItem[courseFilterStatus.sortKey][0]
+        courseText.value.sort(sortFunc)        
       }
-    }))    
+    }))
+
+    useWatching(searchInput, useDebounce((to, from) => {
+        courseText.value = courseRawText.value.filter((course) => {
+            if (searchInput.keys === 0) {      
+                return true;
+              } else if (searchInput.isRegexp) {
+                return matchSearchKeys((key) => {
+                  return new RegExp(key).test(course.name);
+                })
+              } else {
+                return matchSearchKeys((key) => {
+                  return course.name.includes(key);
+                })
+              }
+        })
+        getCourseStatistic()
+        courseText.value.sort(sortFunc)
+        if (courseFilterStatus.order != sortStatics.orderItem[courseFilterStatus.sortKey][0]) {
+            courseText.value.reverse()
+        }
+    }))
 
 
 
     onMounted(() => {
         getCourseAll()
-        courseText.value.sort(sortFunc)
     })
 
 
+    
     provide("sortStatics", sortStatics)
     provide("courseStatistic", courseStatistic)
-    provide("courseStatus", status)
+    provide("courseFilterStatus", courseFilterStatus)
 
 
 
-    return { courseText, status }
+    return { courseText, status, courseFilterStatus }
 }

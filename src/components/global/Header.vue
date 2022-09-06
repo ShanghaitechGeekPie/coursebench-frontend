@@ -1,7 +1,7 @@
 <template>
   <v-app-bar app color="white" elevate-on-scroll elevation="2">
     <v-toolbar-title class="px-8">!!LOGO!!</v-toolbar-title>
-    <v-tabs>
+    <div class="d-flex" style="height: calc(100% + 8px)">
       <SliderButton
         tile
         plain
@@ -32,7 +32,21 @@
       >
         关于我们
       </SliderButton>
-    </v-tabs>
+    </div>
+    <div class="search-bar">
+      <v-text-field 
+        hide-details 
+        solo 
+        flat 
+        background-color="#F1F3F4"
+        :prepend-inner-icon="icons.mdiMagnify"
+        ref="searchBar"
+        @input="searchParser"
+        @blur="isCurrentPath('^\/$') ? $router.push('/') : ''"
+        @keydown.enter="$refs.searchBar.blur(), isCurrentPath('^\/$') ? $router.push('/') : ''"
+      >
+      </v-text-field>
+    </div>
     <v-spacer></v-spacer>
     <v-btn
       color="primary"
@@ -159,6 +173,7 @@ import Login from "@/components/users/forms/Login";
 import Register from "@/components/users/forms/Register";
 import useLogout from "@/composables/users/forms/useLogout";
 import useShortName from "@/composables/global/useShortName";
+import useDebounce from "@/composables/global/useDebounce";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import SliderButton from "@/components/global/SliderButton";
 
@@ -169,6 +184,7 @@ import {
   mdiAccountPlusOutline,
   mdiAccountOutline,
   mdiMessageAlertOutline,
+  mdiMagnify
 } from "@mdi/js";
 
 export default {
@@ -179,10 +195,27 @@ export default {
       login: false,
       register: false,
     });
+
     provide("closeDialog", (type) => (dialog[type] = false));
     provide("openDialog", (type) => (dialog[type] = true));
+    
     const global = inject("global"); // global status
-    return { global, dialog, doLogout, useShortName };
+    const searchInput = inject("searchInput");
+
+    const searchParser = useDebounce((searchString) => {
+      const searchRawString = (() => {
+        if (searchString.startsWith("regexp:")) {
+          searchInput.isRegexp = true;
+          return searchString.slice(7).trim();
+        } else {
+          searchInput.isRegexp = false;
+          return searchString.trim();
+        }
+      })()
+      searchInput.keys = searchRawString.split(" ").filter((item) => item !== "");
+    })
+
+    return { global, dialog, doLogout, useShortName, searchParser };
   },
   data() {
     return {
@@ -193,7 +226,8 @@ export default {
         mdiAccountPlusOutline,
         mdiAccountOutline,
         mdiMessageAlertOutline,
-      },
+        mdiMagnify
+      },    
     };
   },
   methods: {
@@ -208,5 +242,12 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.search-bar {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 720px;
 }
 </style>
