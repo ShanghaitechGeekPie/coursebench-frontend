@@ -14,7 +14,7 @@
             <v-sheet
               width="100%"
               height="25%"
-              :color="instituteInfo[course.institute].color"
+              :color="statics.backgroundColor[course.institute]"
             ></v-sheet>
             <v-container>
               <v-row class="d-flex justify-space-between">
@@ -24,7 +24,7 @@
                       <div class="pr-4">
                         <v-icon
                           size="40"
-                          :color="instituteInfo[course.institute].color"
+                          :color="statics.backgroundColor[course.institute]"
                         >
                           {{ statics.icons.mdiSchool }}
                         </v-icon>
@@ -44,7 +44,7 @@
                           class="text-caption"
                           style="transform: translate(0, -2px)"
                         >
-                          {{ instituteInfo[course.institute].name }}
+                          {{ course.institute }}
                         </div>
                       </div>
                     </div>
@@ -72,7 +72,7 @@
                       <v-chip
                         x-small
                         label
-                        :color="statics.color[roundedScore[index]]"
+                        :color="statics.scoreColor[roundedScore[index]]"
                         class="px-1 mt-n2"
                       >
                         <span class="text-caption white--text">{{
@@ -96,7 +96,7 @@
                       <v-chip
                         x-small
                         label
-                        :color="statics.color[roundedScore[index]]"
+                        :color="statics.scoreColor[roundedScore[index]]"
                         class="px-1 mt-n2"
                       >
                         <span class="text-caption white--text">{{
@@ -112,8 +112,8 @@
               <div>
                 <div class="px-5 text-caption">
                   
-                  <div v-if="course.comments_num >= Config.enoughDataThreshold">
-                    共获评价{{course.comments_num}}条，综合评分：{{(averageScore / 20).toFixed(1)}}/5.0
+                  <div v-if="course.comment_num >= statics.enoughDataThreshold">
+                    共获评价{{course.comment_num}}条，综合评分：{{(averageScore / 20).toFixed(1)}}/5.0
                   </div>
                   <div v-else>
                     数据不足
@@ -124,7 +124,7 @@
                 <div style="width: 100%" class="px-5">
                   <v-progress-linear
                     v-model="averageScore"
-                    :color="statics.color[roundScore(averageScore / 20)]"
+                    :color="statics.scoreColor[roundScore(averageScore / 20)]"
                     class="mt-2"
                     style="pointer-events: none"
                   >
@@ -142,20 +142,19 @@
           </v-card>
         </template>
       </v-hover>
-
     </div>
   </v-lazy>
 </template>
 <script>
 import useCourseCard from "@/composables/courses/all/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
-import { judgeItems, instituteInfo } from "@/composables/global/useStaticData";
-import Config from "Config"
+import { judgeItems } from "@/composables/global/useStaticData";
+import { averageOf } from "@/composables/global/useArrayUtils";
 
 export default {
   setup() {
     const { statics } = useCourseCard();
-    return { Config, statics, judgeItems, instituteInfo };
+    return { statics, judgeItems };
   },
   data() {
     return {
@@ -174,7 +173,7 @@ export default {
       let rounded = this.roundScore(score);
       this.roundedScore.push(rounded);
     }
-    this.averageScore = this.course.score.reduce((a, b) => a + b, 0) / this.course.score.length * 20
+    this.averageScore = averageOf(this.course.score) * 20;
   },
   computed: {
     adoptiveCardWidth() {
@@ -193,8 +192,8 @@ export default {
   },
   methods: {
     roundScore(score) {
-      if (score == 0) {        
-        if (this.course["comments_num"] < this.Config.enoughDataThreshold) {
+      if (score == 0) {
+        if (this.course["comment_num"] < this.statics.enoughDataThreshold) {
           return 0; // 0 = no enough data
         } else {
           return 7; // 7 = extremely bad

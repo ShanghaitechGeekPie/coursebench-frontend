@@ -12,6 +12,8 @@ export default () => {
   const route = useRoute()
   const showSnackbar = inject("showSnackbar")
 
+
+
   const teacherDetail = reactive({
     "id": 0,
     "name": "",
@@ -38,11 +40,18 @@ export default () => {
     })(),
   })
 
+
+
   const status = reactive({
-    selected: [],
     loading: true
   })
 
+  const courseFilterStatus = reactive({
+    selected: [],
+  })
+
+
+  
   const getCourseStatistic = () => {
     courseStatistic.total = teacherDetail.courses.length
     const schools = Object.getOwnPropertyNames(courseStatistic.count).filter((key) => {
@@ -61,11 +70,12 @@ export default () => {
     const id = route.params.id
     const { status: fetchStatus, data, error } = useFetching(["teacher_detail", id], "/teacher/" + id)
     useWatching(fetchStatus, () => {
-      if (fetchStatus.value == "success") status.loading = false
-      else if (fetchStatus.value == "error") {
+      if (fetchStatus.value == "success") {
+        status.loading = false
+      } else if (fetchStatus.value == "error") {
         const response = error.value.response
         showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
-        setTimeout(() => { router.push("/") }, 3000)
+        setTimeout(() => router.push("/"), 3000)
       }
     })
     useWatching(data, () => {
@@ -73,7 +83,7 @@ export default () => {
         useRefCopy(data.value.data, teacherDetail)
         getCourseStatistic()
         courseText.value = teacherDetail.courses
-        status.selected = (() => {
+        courseFilterStatus.selected = (() => {
           let ret = new Array()
           for (let key in courseStatistic.count) {
             if (courseStatistic.count[key]) {
@@ -85,16 +95,18 @@ export default () => {
     })
   }
 
+
+
   onMounted(() => {
     getTeacherDetail()
   })
 
+
+
   provide("courseStatistic", courseStatistic)
-
-  provide("courseStatus", status)
-
+  provide("courseFilterStatus", courseFilterStatus)
   provide("teacherDetail", teacherDetail)
 
-  return { courseText, status }
+  return { courseText, status, courseFilterStatus }
 
 }
