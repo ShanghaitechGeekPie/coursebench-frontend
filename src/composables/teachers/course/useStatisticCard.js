@@ -23,7 +23,7 @@ export default () => {
 
   const status = reactive({
     showAll: true,
-    ...toRefs(inject("courseStatus"))
+    ...toRefs(inject("courseFilterStatus"))
   })
 
   return { courseStatistic, statics, status }
