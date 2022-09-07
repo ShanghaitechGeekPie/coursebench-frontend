@@ -1,6 +1,6 @@
 <template>
   <v-lazy>
-    <v-card class="mb-3 mx-auto" flat max-width="800" outlined>
+    <v-card class="mb-3" flat max-width="800" outlined>
       <CommentCardBar :comment="comment" :showType="showType" />
       <CommentCardContent :comment="comment" />
     </v-card>

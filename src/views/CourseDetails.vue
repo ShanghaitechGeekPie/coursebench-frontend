@@ -4,16 +4,11 @@
       <DetailCard class="mt-sm-10 pb-sm-8 pt-sm-2" />
     </div>
     <div class="d-flex justify-center">
-<!--      <v-tabs centered v-model="currentTab">-->
-<!--        <v-tab v-for="(teacher, index) in teachers" :key="index">{{ teacher.name }}</v-tab>-->
-<!--      </v-tabs>-->
-<!--      <v-tabs-items v-model="currentTab" class="transparent d-flex align-center justify-center">-->
-<!--        <v-tab-item v-for="(item, index) in teachers" :key="index">-->
-<!--          <CommentBoard :comments="alignedComment[currentTab]"></CommentBoard>-->
-<!--        </v-tab-item>-->
-<!--      </v-tabs-items>-->
+      <v-card>
+        Teachers
+      </v-card>
       <v-row class="">
-        <v-col class="pl-sm-0 pr-lg-3 pr-0 pl-0 pr-0 pt-sm-3 pt-0" v-for="(comment, index) in commentText" :key="comment.id" cols="12">
+        <v-col class="pl-sm-0 pr-0 pl-0 pr-0 mt-3" v-for="(comment, index) in commentText" :key="comment.id" cols="12">
               <CommentCard
                   :comment="comment"
                   :showType="'course'"
