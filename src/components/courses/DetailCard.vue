@@ -4,7 +4,7 @@
       class="info-wrp rounded-b-0"
       :class="screen"
       color="#11638B"
-      elevation="10"
+      elevation="0"
       v-show="isShow"
       max-width="800px"
     >
