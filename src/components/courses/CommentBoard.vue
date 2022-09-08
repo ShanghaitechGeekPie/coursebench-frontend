@@ -1,6 +1,5 @@
 <template>
   <v-container class="" style="background-color: white">
-    <select-bar></select-bar>
     <CommentBox v-for="(comment, index) in sortedComment" :key="index" :comment="comment" />
     <div class="text-center grey--text text-body-2">
       没有更多评论了
@@ -9,7 +8,6 @@
 </template>
 <script>
 import CommentBox from '@/components/courses/CommentBox'
-import SelectBar from '@/components/courses/SelectBar'
 import useCommentBoard from "@/composables/courses/comment/useCommentBoard";
 
 export default {
@@ -20,7 +18,7 @@ export default {
   props : {
     comments: Array,
   },
-  components: { CommentBox, SelectBar },
+  components: { CommentBox },
   computed: {
     sortedComment() {
       return this.sortComment();
