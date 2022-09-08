@@ -5,6 +5,7 @@
       :class="screen"
       color="#11638B"
       elevation="0"
+      outlined
       v-show="isShow"
       max-width="800px"
     >
@@ -22,7 +23,6 @@
         </v-col>
         <v-divider vertical inset class="my-6 d-none d-sm-block"></v-divider>
         <v-col class="d-flex flex-column my-auto px-0" sm="6" cols="12">
-          <TeacherSelect class="pt-sm-10 pt-0" />
           <v-row class="my-2 mx-5">
             <v-col>
               <ScoreBoard fontColor="#D4E157" text="课程质量" value="40" cols="3"/>
@@ -47,11 +47,10 @@
 import ScoreBoard from "@/components/courses/ScoreBoard"
 import DetailChips from "@/components/courses/DetailChips"
 import ReviewDetail from "@/components/courses/ReviewDetail"
-import TeacherSelect from "@/components/courses/TeacherSelect"
 
 export default {
   name: "DetailCard",
-  components: { ScoreBoard, DetailChips, ReviewDetail, TeacherSelect },
+  components: { ScoreBoard, DetailChips, ReviewDetail},
   computed: {
     screen() {
       if (this.$vuetify.breakpoint.width >= 600) {
