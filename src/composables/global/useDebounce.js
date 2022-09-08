@@ -1,4 +1,4 @@
-export default (callback, delay) => {
+export default (callback, delay = 200) => {
     let timeoutID = null
     return function () {
         const args = arguments
