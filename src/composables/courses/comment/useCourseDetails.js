@@ -1,7 +1,25 @@
-import {onMounted, provide, ref } from "vue"
+import {onMounted, provide, ref, reactive, watch } from "vue"
 import { judgeItems } from "@/composables/global/useStaticData"
+import { defaultStatus, sortStatics, sortPolicy } from "@/composables/global/useCommentSort"
+import useDebounce from "@/composables/global/useDebounce"
+import { sortCmp } from "@/composables/global/useArrayUtils"
 
 export default () => {
+
+    const testTeachers = [
+        {"name": "孙伟", "id":293},
+        {"name": "姚成建", "id":23},
+        {"name": "Ranjan Ritwik", "id":923},
+    ]
+    const getTeachers = () => {
+        const teachers = testTeachers
+
+        return teachers
+    }
+    const teachers = ref([])
+    provide('scoreDims', judgeItems);
+    provide('teachers', teachers);
+
 
     const testCommentText = [
         {
@@ -25,7 +43,9 @@ export default () => {
             "is_anonymous": false,
             "user_nickname": "小明",  // 匿名时这个没有
             "user_id": 123, // 匿名时这个没有（例外：本人查询自己的评论时）
-            "score": [5,4,3,2, 1],
+            "avatar" : "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+            "grade": 1,
+            "score": [5,4,3,2],
             "user_score_ranking": 2,
         },
         {
@@ -41,15 +61,46 @@ export default () => {
             "group": {
                 "id": 1,
                 "code": "GEMA1009.02",
-                "teachers": [{"name": "孙伟", "id":293},]
+                "teachers": [
+                    {
+                        "name": "高盛华",
+                        "id":23
+                    },
+                    {
+                        "name": "梁俊睿",
+                        "id":23
+                    },
+                    {
+                        "name": "陆林燕",
+                        "id":23
+                    },
+                    {
+                        "name": "娄鑫",
+                        "id":23
+                    },
+                    {
+                        "name": "刘闯",
+                        "id":23
+                    },
+                    {
+                        "name": "郑锐",
+                        "id": 24
+                    },
+                    {
+                        "name": "邱越",
+                        "id": 24
+                    },
+                ]
             },
             "post_time": "2021-06-04", //unix时间戳 初次发表时间
             "update_time": "2021-09-08",//unix时间戳 最后更新时间
             "semester": 202102,
             "is_anonymous": false,
-            "user_nickname": "小明",  // 匿名时这个没有
+            "user_nickname": "小黑",  // 匿名时这个没有
             "user_id": 123, // 匿名时这个没有（例外：本人查询自己的评论时）
-            "score": [5,4,3,2, 5],
+            "avatar" : "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+            "grade": 1,
+            "score": [5,4,3,2],
             "user_score_ranking": 2,
         },
         {
@@ -65,15 +116,46 @@ export default () => {
             "group": {
                 "id": 1,
                 "code": "SI100B.01",
-                "teachers": [{"name": "孙伟", "id":293},]
+                "teachers": [
+                    {
+                        "name": "高盛华",
+                        "id":23
+                    },
+                    {
+                        "name": "梁俊睿",
+                        "id":23
+                    },
+                    {
+                        "name": "陆林燕",
+                        "id":23
+                    },
+                    {
+                        "name": "娄鑫",
+                        "id":23
+                    },
+                    {
+                        "name": "刘闯",
+                        "id":23
+                    },
+                    {
+                        "name": "郑锐",
+                        "id": 24
+                    },
+                    {
+                        "name": "邱越",
+                        "id": 24
+                    },
+                ]
             },
             "post_time": "2020-01-07", //unix时间戳 初次发表时间
             "update_time": "2021-12-23",//unix时间戳 最后更新时间
             "semester": 202102,
             "is_anonymous": false,
-            "user_nickname": "小明",  // 匿名时这个没有
+            "user_nickname": "傻逼",  // 匿名时这个没有
             "user_id": 123, // 匿名时这个没有（例外：本人查询自己的评论时）
-            "score": [5,4,3,2, 3],
+            "avatar" : "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+            "grade": 1,
+            "score": [5,4,3,2],
             "user_score_ranking": 2,
         },
         {
@@ -97,7 +179,9 @@ export default () => {
             "is_anonymous": false,
             "user_nickname": "小明",  // 匿名时这个没有
             "user_id": 123, // 匿名时这个没有（例外：本人查询自己的评论时）
-            "score": [5,4,3,1, 2],
+            "avatar" : "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+            "grade": 1,
+            "score": [5,4,3,1],
             "user_score_ranking": -1,
         },
         {
@@ -119,9 +203,11 @@ export default () => {
             "update_time": "2021-09-07",//unix时间戳 最后更新时间
             "semester": 202102,
             "is_anonymous": false,
-            "user_nickname": "小明",  // 匿名时这个没有
+            "user_nickname": "小紫",  // 匿名时这个没有
             "user_id": 123, // 匿名时这个没有（例外：本人查询自己的评论时）
-            "score": [5,4,3,1, 1],
+            "avatar" : "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+            "grade": 1,
+            "score": [5,4,3,1],
             "user_score_ranking": 2,
         },
         {
@@ -143,25 +229,14 @@ export default () => {
             "update_time": "2021-10-23",//unix时间戳 最后更新时间
             "semester": 202102,
             "is_anonymous": false,
-            "user_nickname": "小明",  // 匿名时这个没有
+            "user_nickname": "小白",  // 匿名时这个没有
             "user_id": 123, // 匿名时这个没有（例外：本人查询自己的评论时）
-            "score": [1,3,2,4, 4],
+            "avatar" : "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
+            "grade": 1,
+            "score": [1,3,2,4],
             "user_score_ranking": 0,
         },
     ] // Just for test
-
-    const testTeachers = [
-        { name: '全部评价', id: 0},
-        {"name": "孙伟", "id":293},
-        {"name": "姚成建", "id":23},
-        {"name": "Ranjan Ritwik", "id":923},
-]
-
-    const getTeachers = () => {
-        const teachers = testTeachers
-
-        return teachers
-    }
 
     const getCommentText = () => {
         const commentText = testCommentText
@@ -169,19 +244,32 @@ export default () => {
         return commentText
     }
 
-    const teachers = ref([])
+    const commentText = ref([])
+    const status = reactive( defaultStatus )
 
-    const comments = ref([])
+    let lastStatus = Object.assign({}, status)
 
-    provide('scoreDims', judgeItems);
+    const commentSortFunc = (x, y) => sortCmp(
+        sortPolicy[status.sortKey](x), sortPolicy[status.sortKey](y)
+    )
 
-    provide('teachers', teachers);
-
+    watch(status, useDebounce(() => {
+        if (lastStatus.order !== status.order) {
+            lastStatus = Object.assign({}, status)
+            commentText.value.reverse()
+        } else if (lastStatus.sortKey !== status.sortKey) {
+            lastStatus = Object.assign({}, status)
+            status.order = sortStatics.orderItem[status.sortKey][0]
+            commentText.value.sort(commentSortFunc)
+        }
+    }))
+    provide("commentStatus", status)
 
     onMounted(() => {
         teachers.value = getTeachers()
-        comments.value = getCommentText()
+        commentText.value = getCommentText()
+        commentText.value.sort(commentSortFunc)
     })
 
-    return { teachers, comments}
+    return { teachers, commentText, status}
 }
