@@ -3,6 +3,7 @@ import useRefCopy from "@/composables/global/useRefCopy"
 import { instituteInfo, gradeItems } from "@/composables/global/useStaticData"
 import useDebounce from "@/composables/global/useDebounce"
 import { sortCmp } from "@/composables/global/useArrayUtils"
+import { defaultStatus, sortStatics, sortPolicy } from "@/composables/global/useCommentSort"
 
 export default () => {
   
@@ -272,9 +273,6 @@ export default () => {
     return userProfile
   }
 
-
-
-
   const userProfile = reactive({
     email: "", 
     year: 1970, 
@@ -304,62 +302,43 @@ export default () => {
   })
 
   
-  const status = reactive({
-    selected: new Array(), 
-    sortKey: '发布时间', 
-    order: '从后往前',
-  })
+  const status = reactive( defaultStatus )
 
-  
-  const sortStatics = {
-    sortKeyItem: ['发布时间', '修改时间'],
-    orderItem: {
-      "发布时间": ['从后往前', '从前往后'], 
-      "修改时间": ['从后往前', '从前往后']
-    },
-  }
   let lastStatus = Object.assign({}, status)
-  const sortPolicy = {
-    "发布时间": (x) => new Date(x.post_time), 
-    "修改时间": (x) => new Date(x.update_time)
-  }
-  const sortFunc = (x, y) => sortCmp(
-    sortPolicy[status.sortKey](x), sortPolicy[status.sortKey](y)
+
+  const commentSortFunc = (x, y) => sortCmp(
+      sortPolicy[status.sortKey](x), sortPolicy[status.sortKey](y)
   )
 
   watch(status, useDebounce(() => {
-    if (lastStatus.order != status.order) {
+    if (lastStatus.order !== status.order) {
       lastStatus = Object.assign({}, status)
       commentText.value.reverse()      
-    } else if (lastStatus.sortKey != status.sortKey) {
+    } else if (lastStatus.sortKey !== status.sortKey) {
       lastStatus = Object.assign({}, status)
       status.order = sortStatics.orderItem[status.sortKey][0]
-      commentText.value.sort(sortFunc)      
+      commentText.value.sort(commentSortFunc)
     }
   }))
-
-
 
   provide("sortStatics", sortStatics)
   provide("commentStatistic", commentStatistic)
   provide("commentStatus", status)
   provide("userProfile", userProfile) 
 
-
-
   onMounted(() => {
     useRefCopy(getUserProfile(), userProfile)
     commentText.value = getCommentText()
     useRefCopy(getCommentStatistic(), commentStatistic)
     status.selected = (() => {
-      let ret = new Array()
+      let ret = []
       for (let key in commentStatistic.count) {
         if (commentStatistic.count[key]) {
           ret.push(key)
         }
       } return ret
     })()
-    commentText.value.sort(sortFunc)
+    commentText.value.sort(commentSortFunc)
   })
 
 
