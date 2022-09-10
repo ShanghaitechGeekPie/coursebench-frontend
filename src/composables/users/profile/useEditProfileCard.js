@@ -1,5 +1,4 @@
 import { inject, reactive, toRefs, watchEffect } from "vue"
-import { gradeItems, yearItems } from "@/composables/global/useStaticData"
 
 export default () => {
 
@@ -8,10 +7,6 @@ export default () => {
   const showSnackbar = inject("showSnackbar")
   const userProfile = inject("userProfile")
 
-  const statics = {
-    yearItems,
-    gradeItems, 
-  }
 
   const status = reactive({
     profile: { ...userProfile },
@@ -49,5 +44,5 @@ export default () => {
     }
   })
 
-  return { statics, status, doReset, doEditProfile }
+  return { status, doReset, doEditProfile }
 }

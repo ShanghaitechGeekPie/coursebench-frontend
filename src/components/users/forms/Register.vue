@@ -133,7 +133,7 @@
                 <v-select
                   hide-details
                   v-model="userData.year"
-                  :items="statics.yearItems"
+                  :items="yearItems"
                   label="入学时间"
                 ></v-select>
               </div>
@@ -141,7 +141,7 @@
                 <v-select
                   hide-details
                   v-model="userData.grade"
-                  :items="statics.gradeItems"
+                  :items="gradeItems"
                   label="年级"
                 ></v-select>
               </div>
@@ -253,6 +253,7 @@ import { inject } from "vue";
 import useRegister from "@/composables/users/forms/useRegister";
 import useForms from "@/composables/users/forms/useForms";
 import useAfterRender from "@/composables/global/useAfterRender";
+import { gradeItems, yearItems } from "@/composables/global/useStaticData"
 
 export default {
   setup() {
@@ -260,7 +261,18 @@ export default {
     const closeDialog = inject("closeDialog");
     const openDialog = inject("openDialog");
     const { statics, userData, formStatus, doRegister, getCaptcha } = useRegister();
-    return { statics, userData, formStatus, formRules, closeDialog, openDialog, doRegister, getCaptcha, console };
+    return { 
+      statics, 
+      userData, 
+      formStatus, 
+      formRules, 
+      closeDialog, 
+      openDialog, 
+      doRegister, 
+      getCaptcha, 
+      yearItems, 
+      gradeItems 
+    };
   },
   methods: {
     

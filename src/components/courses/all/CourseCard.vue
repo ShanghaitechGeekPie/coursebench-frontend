@@ -14,7 +14,7 @@
             <v-sheet
               width="100%"
               height="25%"
-              :color="statics.backgroundColor[course.institute]"
+              :color="instituteInfo[course.institute].color"
             ></v-sheet>
             <v-container>
               <v-row class="d-flex justify-space-between">
@@ -24,7 +24,7 @@
                       <div class="pr-4">
                         <v-icon
                           size="40"
-                          :color="statics.backgroundColor[course.institute]"
+                          :color="instituteInfo[course.institute].color"
                         >
                           {{ statics.icons.mdiSchool }}
                         </v-icon>
@@ -72,11 +72,11 @@
                       <v-chip
                         x-small
                         label
-                        :color="statics.scoreColor[roundedScore[index]]"
+                        :color="scoreInfo[roundedScore[index]].color"
                         class="px-1 mt-n2"
                       >
                         <span class="text-caption white--text">{{
-                          statics.label[roundedScore[index]]
+                          scoreInfo[roundedScore[index]].label
                         }}</span>
                       </v-chip>
                     </div>
@@ -96,11 +96,11 @@
                       <v-chip
                         x-small
                         label
-                        :color="statics.scoreColor[roundedScore[index]]"
+                        :color="scoreInfo[roundedScore[index]].color"
                         class="px-1 mt-n2"
                       >
                         <span class="text-caption white--text">{{
-                          statics.label[roundedScore[index]]
+                          scoreInfo[roundedScore[index]].label
                         }}</span>
                       </v-chip>
                     </div>
@@ -124,7 +124,7 @@
                 <div style="width: 100%" class="px-5">
                   <v-progress-linear
                     v-model="averageScore"
-                    :color="statics.scoreColor[roundScore(averageScore / 20, course['comment_num'])]"
+                    :color="scoreInfo[roundScore(averageScore / 20, course['comment_num'])].color"
                     class="mt-2"
                     style="pointer-events: none"
                   >
@@ -148,14 +148,14 @@
 <script>
 import useCourseCard from "@/composables/courses/all/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
-import { judgeItems } from "@/composables/global/useStaticData";
+import { judgeItems, instituteInfo, scoreInfo } from "@/composables/global/useStaticData";
 import { averageOf } from "@/composables/global/useArrayUtils";
 import { roundScore, enoughDataThreshold } from "@/composables/global/useParseScore"
 
 export default {
   setup() {
     const { statics } = useCourseCard();
-    return { statics, judgeItems, roundScore, enoughDataThreshold };
+    return { statics, judgeItems, roundScore, enoughDataThreshold, instituteInfo, scoreInfo };
   },
   data() {
     return {

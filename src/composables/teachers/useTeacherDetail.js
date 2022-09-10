@@ -31,11 +31,9 @@ export default () => {
     score: 0,
     count: (() => {
       let ret = {}
-      for (let key in instituteInfo) {
-        if (key !== "None") {
-          ret[instituteInfo[key].name] = 0
-        }
-      }
+      Object.keys(instituteInfo).filter(key => key !== '').forEach(key => {
+        ret[key] = 0
+      })
       return ret
     })(),
   })

@@ -62,7 +62,7 @@
                   >入学时间</span
                 >
                 <v-select
-                  :items="statics.yearItems"
+                  :items="yearItems"
                   dense
                   v-model="status.profile.year"
                   :class="[
@@ -84,7 +84,7 @@
                   >所属年级</span
                 >
                 <v-select
-                  :items="statics.gradeItems"
+                  :items="gradeItems"
                   dense
                   v-model="status.profile.grade"
                   :class="[
@@ -193,11 +193,12 @@
 </template>
 <script>
 import useEditProfileCard from "@/composables/users/profile/useEditProfileCard";
+import { gradeItems, yearItems } from "@/composables/global/useStaticData"
 
 export default {
   setup() {
-    const { statics, status, doReset, doEditProfile } = useEditProfileCard();
-    return { statics, status, doReset, doEditProfile };
+    const { status, doReset, doEditProfile } = useEditProfileCard();
+    return { status, doReset, doEditProfile, gradeItems, yearItems };
   },
 };
 </script>

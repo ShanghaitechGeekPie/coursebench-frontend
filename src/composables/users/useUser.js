@@ -4,6 +4,7 @@ import { instituteInfo, gradeItems } from "@/composables/global/useStaticData"
 import useDebounce from "@/composables/global/useDebounce"
 import { sortCmp } from "@/composables/global/useArrayUtils"
 import { defaultStatus, sortStatics, sortPolicy } from "@/composables/global/useCommentSort"
+import useRecordWatch from "@/composables/global/useRecordWatch"
 
 export default () => {
   
@@ -293,30 +294,29 @@ export default () => {
     score: 0,
     count: (() => {
       let ret = {}
-      for (let key in instituteInfo) {
-        if (key !== "None") {
-          ret[instituteInfo[key].name] = 0
-        }
-      }
+      Object.keys(instituteInfo).filter(key => key !== '').forEach(key => {
+        ret[key] = 0
+      })
+      return ret
     }), 
   })
 
   
   const status = reactive( defaultStatus )
 
-  let lastStatus = Object.assign({}, status)
+
 
   const commentSortFunc = (x, y) => sortCmp(
       sortPolicy[status.sortKey](x), sortPolicy[status.sortKey](y)
   )
 
-  watch(status, useDebounce(() => {
+  // ! Fix: it seems that all the sort has the same bug as in course all, 
+  // !      the sortFunc will be called twice when the sort key is changed
+  useRecordWatch(status, useDebounce((lastStatus) => {
     if (lastStatus.order !== status.order) {
-      lastStatus = Object.assign({}, status)
       commentText.value.reverse()      
     } else if (lastStatus.sortKey !== status.sortKey) {
-      lastStatus = Object.assign({}, status)
-      status.order = sortStatics.orderItem[status.sortKey][0]
+      status.order = sortStatics.orderItem[status.sortKey][0] // ! because of here
       commentText.value.sort(commentSortFunc)
     }
   }))
