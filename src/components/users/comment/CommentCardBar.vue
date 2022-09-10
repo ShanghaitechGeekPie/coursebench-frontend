@@ -14,11 +14,11 @@
           >
             <AvatarContainer
               :name="
-                statics.short[comment.course.institute] === 'Other'
+                instituteInfo[comment.course.institute].name === 'Other'
                   ? '?'
-                  : statics.short[comment.course.institute]
+                  : instituteInfo[comment.course.institute].name
               "
-              :color="statics.background[comment.course.institute]"
+              :color="instituteInfo[comment.course.institute].color"
               small
               tile
               size="38"
@@ -83,12 +83,13 @@
 <script>
 import useCommentCardBar from "@/composables/users/comment/useCommentCardBar";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
+import { instituteInfo, gradeItems } from "@/composables/global/useStaticData"
 
 export default {
   components: { AvatarContainer },
   setup() {
-    const { statics, gradeItems } = useCommentCardBar();
-    return { statics, gradeItems };
+    const { statics } = useCommentCardBar();
+    return { statics, instituteInfo, gradeItems };
   },
   props: {
     comment: Object,

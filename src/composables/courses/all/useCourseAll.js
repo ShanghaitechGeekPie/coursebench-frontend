@@ -2,6 +2,7 @@ import { provide, reactive, ref, onMounted, inject, watch, computed } from "vue"
 import { instituteInfo } from "@/composables/global/useStaticData";
 import useDebounce from "@/composables/global/useDebounce"
 import useWatching from "@/composables/global/useWatching"
+import useRecordWatch from "@/composables/global/useRecordWatch"
 import { sortCmp, averageOf } from "@/composables/global/useArrayUtils"
 import useFetching from "@/composables/global/useFetching"
 import { isNetworkError } from "@/composables/global/useHttpError"
@@ -22,11 +23,9 @@ export default () => {
         total: 0,
         count: (() => {
             let ret = {}
-            for (let key in instituteInfo) {
-                if (key !== "None") {
-                    ret[instituteInfo[key].name] = 0
-                }
-            }
+            Object.keys(instituteInfo).filter(key => key !== '').forEach(key => {
+                ret[key] = 0
+            })
             return ret
         })(),
     })
@@ -113,7 +112,6 @@ export default () => {
             "学分": ["从多到少", "从少到多"]
         },
     }
-    let lastStatus = Object.assign({}, courseFilterStatus)
     const sortPolicy = {
         "综合评分": (x) => averageOf(x.score),
         "评价总数": (x) => x.comment_num,
@@ -123,22 +121,20 @@ export default () => {
         sortPolicy[courseFilterStatus.sortKey](x), sortPolicy[courseFilterStatus.sortKey](y)
     )
 
-
-
-    watch(courseFilterStatus, useDebounce((to, from) => {
-        if (lastStatus.selected !== courseFilterStatus.selected) {
+    // ! Fix: the sortFunc will be called twice when the sort key is changed
+    useRecordWatch(courseFilterStatus, useDebounce((lastStatus, from, to) => {
+        // the if order matters here, it seems that wrapped array is not equal to the unwrapped ones
+        if (lastStatus.order != courseFilterStatus.order && lastStatus.sortKey == courseFilterStatus.sortKey) {            
+            courseText.value.reverse()
+        } else if (lastStatus.sortKey != courseFilterStatus.sortKey) {
+            courseFilterStatus.order = sortStatics.orderItem[courseFilterStatus.sortKey][0] // ! because of here
+            courseText.value.sort(sortFunc)
+        } else if (lastStatus.selected != courseFilterStatus.selected) {
             courseText.value = courseRawText.value.filter(
                 (course) => courseFilterStatus.selected.some((item) => item === course.institute)
             )
             status.page = 1
-        } else if (lastStatus.order != courseFilterStatus.order) {
-            lastStatus = Object.assign({}, courseFilterStatus)
-            courseText.value.reverse()
-        } else if (lastStatus.sortKey != courseFilterStatus.sortKey) {
-            lastStatus = Object.assign({}, courseFilterStatus)
-            courseFilterStatus.order = sortStatics.orderItem[courseFilterStatus.sortKey][0]
-            courseText.value.sort(sortFunc)
-        }
+        }         
     }))
 
     useWatching(searchInput, useDebounce((to, from) => {

@@ -4,23 +4,15 @@ import { instituteInfo } from "@/composables/global/useStaticData"
 
 export default () => {
 
-  const background = (() => {
-    let ret = {}
-    for (let key in instituteInfo) {
-      ret[instituteInfo[key].name] = instituteInfo[key].color
-    }
-    return ret
-  })()
-
   const teacherDetail = inject("teacherDetail")
 
   const statics = reactive({
-    backgroundLight: background[teacherDetail.institute], 
+    backgroundLight: instituteInfo[teacherDetail.institute].color, 
     backgroundDark: 'grey darken-3', 
   })
 
   useWatching(teacherDetail, () => {
-    statics.backgroundLight = background[teacherDetail.institute]
+    statics.backgroundLight = instituteInfo[teacherDetail.institute].color
   })
 
   return { statics }

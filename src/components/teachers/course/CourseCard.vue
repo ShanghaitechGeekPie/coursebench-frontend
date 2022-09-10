@@ -7,8 +7,8 @@
             <v-col class="d-flex justify-space-between">
               <div style="transform: translate(8px, 0)">
                 <AvatarContainer
-                  :name="statics.short[course.institute]"
-                  :color="statics.background[course.institute]"
+                  :name="instituteInfo[course.institute].name"
+                  :color="instituteInfo[course.institute].color"
                   font-size="text-body-1"
                   size="45"
                 />
@@ -63,7 +63,7 @@
                   <div style="width: 64%" class="px-0 px-sm-1 px-md-0">
                     <v-progress-linear
                       v-model="course.score[index - 1] * 20"
-                      :color="statics.color[roundedScore[index - 1]]"
+                      :color="scoreInfo[roundedScore[index - 1]].color"
                       class="mt-2"
                       style="pointer-events: none"
                     >
@@ -73,11 +73,11 @@
                     <v-chip
                       x-small
                       label
-                      :color="statics.color[roundedScore[index - 1]]"
+                      :color="scoreInfo[roundedScore[index - 1]].color"
                       class="px-1 mt-n2"
                     >
                       <span class="text-caption white--text">{{
-                        statics.label[roundedScore[index - 1]]
+                        scoreInfo[roundedScore[index - 1]].label
                       }}</span>
                     </v-chip>
                   </div>
@@ -93,13 +93,13 @@
 <script>
 import useCourseCard from "@/composables/teachers/course/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
-import { judgeItems } from "@/composables/global/useStaticData";
+import { judgeItems, instituteInfo, scoreInfo } from "@/composables/global/useStaticData";
 import { roundScore } from "@/composables/global/useParseScore"
 
 export default {
   setup() {
     const { statics } = useCourseCard();
-    return { statics, judgeItems, roundScore };
+    return { statics, judgeItems, roundScore, instituteInfo, scoreInfo };
   },
   data() {
     return {

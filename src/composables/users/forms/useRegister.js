@@ -3,7 +3,7 @@ import { isNetworkError } from "@/composables/global/useHttpError"
 import useCaptcha from "@/composables/global/useCaptcha"
 import { mdiArrowLeft, mdiEye, mdiEyeOff, mdiWindowClose, mdiEmailAlertOutline } from "@mdi/js"
 import useMutation from "@/composables/global/useMutation"
-import { gradeItems, yearItems } from "@/composables/global/useStaticData"
+import { gradeItems } from "@/composables/global/useStaticData"
 
 export default () => {
 
@@ -18,8 +18,6 @@ export default () => {
       mdiWindowClose,
       mdiEmailAlertOutline
     },
-    yearItems,
-    gradeItems
   }
 
   const userData = reactive({
@@ -92,7 +90,7 @@ export default () => {
         email: userData.email,
         password: userData.password,
         year: userData.year === "暂不透露" ? 0 : userData.year,
-        grade: statics.gradeItems.indexOf(userData.grade),
+        grade: gradeItems.indexOf(userData.grade),
         captcha: userData.captcha
       })
     }
