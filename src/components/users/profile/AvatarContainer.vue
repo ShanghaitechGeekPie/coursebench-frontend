@@ -80,7 +80,7 @@ export default {
   }, 
   methods: {
     adoptiveFont() {
-      if (!this['font-size']) {
+      if (!this.fontSize) {
         if (!this.small) {
           if (this.size > 50) {
             return "text-h3";
@@ -95,7 +95,7 @@ export default {
           }
         }
       } else {
-        return this['font-size']
+        return this.fontSize
       }
     }
   }

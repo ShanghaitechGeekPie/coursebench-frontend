@@ -18,30 +18,39 @@
           </v-card>
         </div>
       </div>
-      <div class="pa-3 px-0" :style="{ width: adoptiveCardContainerWidth }">
-        <v-container class="py-sm-3 py-0">
-          <v-row>
-            <v-col class="px-0">
-              <div :style="{ width: adoptiveCardContainerWidth }">
+      <div class="pa-3 px-0" 
+        :style="{ width: this.$vuetify.breakpoint.smAndDown ? '' : this.adoptiveCardNumber * 428 + 'px' }"
+      >
+        <div class="py-sm-3 py-0">
+          <div>
+            <div class="px-0">
+              <div 
+                :style="{ width: this.$vuetify.breakpoint.smAndDown ? '' : this.adoptiveCardNumber * 428 + 'px' }"
+              >
                 <div class="d-flex flex-wrap justify-center justify-lg-start" v-if="status.loading">
                   <div v-for="index in adoptiveFakeCardNumber" :key="index">
                     <CourseCardLoading />
                   </div>
                 </div>
-                <div class="d-flex flex-wrap justify-center justify-sm-start">
-                  <div v-for="(course, index) in courseText" :key="course.id" class="d-flex">
-                    <v-fade-transition>
-                      <CourseCard
-                        :course="course"
-                        v-if="courseFilterStatus.selected.some((school) => school === course.institute)"
-                      />
-                    </v-fade-transition>
-                  </div>                  
+                <div class="d-flex justify-center">        
+                  <div :style="{ width: adoptiveCardContainerWidth + 24 + 'px' }">        
+                    <div class="d-flex flex-wrap justify-start">
+                      <div v-for="(course, index) in courseText" :key="course.id" class="d-flex">
+                        <v-fade-transition>
+                          <CourseCard
+                            :course="course"
+                            :width="adoptiveCardWidth + 'px'"
+                            v-if="courseFilterStatus.selected.some((school) => school === course.institute)"
+                          />
+                        </v-fade-transition>
+                      </div>                  
+                    </div>
+                  </div>
                 </div>
               </div>
-            </v-col>
-          </v-row>
-        </v-container>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -55,8 +64,6 @@ import CourseCardLoading from "@/components/teachers/loading/CourseCardLoading"
 import StatisticCard from "@/components/teachers/course/StatisticCard"
 import StatisticCardLoading from "@/components/teachers/loading/StatisticCardLoading"
 import useTeacherDetail from "@/composables/teachers/useTeacherDetail"
-
-// TODO: Update this with the fix from course all
 
 export default {
   components: {
@@ -105,19 +112,39 @@ export default {
       }
     }, 
 
+    adoptiveCardWidth() {
+      if (this.$vuetify.breakpoint.mdAndDown) {
+        if (this.$vuetify.breakpoint.xsOnly) {
+          return this.$vuetify.breakpoint.width - 24;
+        } else if (404 * 2 + 80 > this.$vuetify.breakpoint.width) {
+          return (this.$vuetify.breakpoint.width - 80) / 2;
+        } else {
+          return 404;
+        }
+      } else {
+        return 404;
+      }
+    },    
+
     adoptiveCardNumber() {
-      return Math.min(Math.floor((this.$vuetify.breakpoint.width - 428) / 428), 3);
+      if (this.$vuetify.breakpoint.xsOnly) {
+        return 1;
+      } else if (this.$vuetify.breakpoint.mdAndDown) {
+        return 2;
+      } else {
+        return Math.min(Math.floor((this.$vuetify.breakpoint.width - 428) / 428), 3);
+      }      
     },
 
     adoptiveCardContainerWidth() {
-      if (this.$vuetify.breakpoint.smAndDown) {
-        return "";
-      } else if (this.$vuetify.breakpoint.mdOnly) {
-        return (this.adoptiveCardNumber + 1) * 428 + "px"
+      if (this.$vuetify.breakpoint.xsOnly) {
+        return this.$vuetify.breakpoint.width - 24
+      } else if (this.$vuetify.breakpoint.smOnly) {
+        return this.adoptiveCardWidth * 2 + 24
       } else {
-        return this.adoptiveCardNumber * 428 + "px";
-      }
-    },     
+        return this.adoptiveCardNumber * 428 - 24;
+      }  
+    },
   }, 
   mounted() {
     document.addEventListener("scroll", () => {

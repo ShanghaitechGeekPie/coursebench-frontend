@@ -1,12 +1,6 @@
 <template>
-  <div
-    :style="{
-      width: $vuetify.breakpoint.mdAndDown
-        ? adoptiveStatisticCardContainerWidth
-        : '360px',
-    }"
-  >
-    <v-card class="pt-6 pb-3 px-6 mx-3 mx-sm-0 mx-md-3 mx-lg-0" outlined flat>
+  <div :style="{ width: $vuetify.breakpoint.mdAndDown ? width: '360px' }">
+    <v-card class="pt-6 pb-3 px-6" outlined flat>
       <div>
         <div class="text-h6 d-flex">
           <v-icon class="pr-2">
@@ -47,26 +41,10 @@ export default {
     };
   },
   props: {
-    "card-width": {
-      type: [String, Number],
-      default: "",
-    },
-    "card-number": {
-      type: [String, Number],
-      default: "",
-    },
-  },
-  computed: {
-    adoptiveStatisticCardContainerWidth() {
-      if (this.$vuetify.breakpoint.xsOnly) {
-        return "100vw"; // not the same with the original one,
-        // since the implementation of this is different
-      } else if (this.$vuetify.breakpoint.smOnly) {
-        return `${this.cardWidth * 2 + 24}px`;
-      } else {
-        return this.cardNumber * 428 + "px";
-      }
-    },
+    width: {
+      type: String, 
+      default: '',
+    }
   },
 };
 </script>

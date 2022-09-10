@@ -13,7 +13,6 @@ export default () => {
             mdiSchool,
             mdiDotsHorizontal,
         }, 
-        enoughDataThreshold: 3,
         backgroundColor: (() => {
             let res = {}
             for (let key in instituteInfo) {

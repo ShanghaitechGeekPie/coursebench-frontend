@@ -27,7 +27,6 @@ export default () => {
       mdiSchool,  
       mdiDotsHorizontal, 
     }, 
-    enoughDataThreshold: 3,
   }
 
   return { statics }

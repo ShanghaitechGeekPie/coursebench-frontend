@@ -1,6 +1,6 @@
 <template>
   <v-lazy class="px-3">
-    <div :style="{ width: adoptiveCardWidth }">
+    <div :style="{ width: width }">
       <v-card class="mb-3" flat height="303" outlined>
         <v-container>
           <v-row class="d-flex justify-space-between">
@@ -94,11 +94,12 @@
 import useCourseCard from "@/composables/teachers/course/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import { judgeItems } from "@/composables/global/useStaticData";
+import { roundScore } from "@/composables/global/useParseScore"
 
 export default {
   setup() {
     const { statics } = useCourseCard();
-    return { statics, judgeItems };
+    return { statics, judgeItems, roundScore };
   },
   data() {
     return {
@@ -106,45 +107,24 @@ export default {
     };
   },
   props: {
-    course: Object,
+    course: {
+      type: Object, 
+      required: true
+    },
+    width: {
+      type: String, 
+      default: ""
+    }
   },
   components: {
     AvatarContainer,
   },
   created() {
     for (let score of this.course.score) {
-      let rounded = this.roundScore(score);
+      let rounded = this.roundScore(score, this.course["comment_num"]);
       this.roundedScore.push(rounded);
     }
-  },
-  computed: {
-    adoptiveCardWidth() {
-      if (this.$vuetify.breakpoint.mdAndDown) {
-        if (this.$vuetify.breakpoint.xsOnly) {
-          return "calc(100vw - 24px)";
-        } else if (404 * 2 > this.$vuetify.breakpoint.width) {
-          return "300px";
-        } else {
-          return "404px";
-        }
-      } else {
-        return "404px";
-      }
-    },
-  },
-  methods: {
-    roundScore(score) {
-      if (score == 0) {
-        if (this.course["comment_num"] < this.statics.enoughDataThreshold) {
-          return 0; // 0 = no enough data
-        } else {
-          return 7; // 7 = extremely bad
-        }
-      } else {
-        return Math.floor(score) + 1
-      }
-    }
-  }  
+  }, 
 };
 </script>
 <style scoped>
