@@ -56,6 +56,8 @@ import StatisticCard from "@/components/teachers/course/StatisticCard"
 import StatisticCardLoading from "@/components/teachers/loading/StatisticCardLoading"
 import useTeacherDetail from "@/composables/teachers/useTeacherDetail"
 
+// TODO: Update this with the fix from course all
+
 export default {
   components: {
     Detail,
