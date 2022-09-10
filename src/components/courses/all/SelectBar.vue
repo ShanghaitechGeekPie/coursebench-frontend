@@ -1,13 +1,17 @@
 <template>
   <v-card
     class="px-lg-0 px-4"
-    :style="{ width: adoptiveCardContainerWidth }"
     outlined
     flat
+    :style="{ width: adoptiveSelectBarWidth }"
   >
     <v-container>
-      <v-row class="pt-lg-2 pt-0">
-        <v-col md="2" sm="3" cols="6" class="pb-0 pt-lg-3 pt-0 pl-4"
+      <v-row class="pt-lg-2 pt-4">
+        <v-col
+          md="2"
+          sm="3"
+          cols="6"
+          class="pb-0 pt-lg-3 pt-0 pl-4"
           style="max-width: 140px"
         >
           <v-select
@@ -16,7 +20,11 @@
             label="排序方式"
           ></v-select>
         </v-col>
-        <v-col md="2" sm="3" cols="6" class="pb-0 pt-lg-3 pt-0"
+        <v-col
+          md="2"
+          sm="3"
+          cols="6"
+          class="pb-0 pt-lg-3 pt-0"
           style="max-width: 140px"
         >
           <v-select
@@ -36,20 +44,22 @@ export default {
     const { statics, status } = useSelectBar();
     return { statics, status };
   },
+  props: {
+    'card-width': {
+      type: [Number, String],
+      default: ''
+    }
+  }, 
   computed: {
-    adoptiveCardNumber() {
-      return Math.min(Math.floor((this.$vuetify.breakpoint.width - 428) / 428), 3);
-    },
-
-    adoptiveCardContainerWidth() {
-      if (this.$vuetify.breakpoint.smAndDown) {
-        return "";
-      } else if (this.$vuetify.breakpoint.mdOnly) {
-        return (this.adoptiveCardNumber + 1) * 428 + "px"
+    adoptiveSelectBarWidth() {
+      if (this.$vuetify.breakpoint.xsOnly) {
+        return 'calc(100vw - 24px)'
+      } else if (this.$vuetify.breakpoint.smOnly) {
+        return `${this.cardWidth * 2 + 24}px`
       } else {
-        return this.adoptiveCardNumber * 428 + "px";
+        return ""
       }
-    },
-  },  
+    }
+  },
 };
 </script>

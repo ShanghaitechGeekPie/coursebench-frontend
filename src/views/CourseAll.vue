@@ -2,17 +2,25 @@
   <div style="min-height: 100%">
     <div style="flex-wrap: wrap" class="d-flex justify-center flex-row-reverse pt-16">
       <div class="pa-lg-3 pb-3">
-        <div :style="{ width: $vuetify.breakpoint.mdAndDown ? '100vw' : '360px' }">
-          <StatisticCard :style="$vuetify.breakpoint.mdAndDown ? {} : { position: 'fixed', top: '140px'}" />
+        <div :class="[$vuetify.breakpoint.mdAndDown ? '' : 'statistic-card-container']">
+          <StatisticCard 
+            :style="$vuetify.breakpoint.mdAndDown ? {} : { position: 'fixed', top: '140px'}" 
+            :card-width="adoptiveCardWidth"
+            :card-number="adoptiveCardNumber"
+          />
         </div>
       </div>
-      <div class="pa-3 px-0" :style="{ width: adoptiveCardContainerWidth }">
+      <div class="pa-3 px-0" 
+        :style="{ width: this.$vuetify.breakpoint.smAndDown ? '' : this.adoptiveCardNumber * 428 + 'px' }"
+      >
         <div>
-          <div class="mx-3">
-            <SelectBar />
+          <div class="mx-3 d-md-block d-block d-sm-flex justify-center">
+            <SelectBar :card-width="adoptiveCardWidth" />
           </div>
           <div class="pt-6 px-0">
-            <div :style="{ width: adoptiveCardContainerWidth }">
+            <div 
+              :style="{ width: this.$vuetify.breakpoint.smAndDown ? '' : this.adoptiveCardNumber * 428 + 'px' }"
+            >
               <!-- <div class="d-flex flex-wrap justify-center justify-lg-start" v-if="status.loading">
                 <div
                   v-for="index in adoptiveCardNumber"
@@ -26,14 +34,13 @@
                 :items-per-page="adoptiveCardNumber * 3"
                 :page="status.page"
                 hide-default-footer
+                v-if="courseText.length > 0"
               >
                 <template #default="{ items }">
                   <div class="d-flex flex-wrap justify-center justify-md-start">
                     <div v-for="(course, index) in items" :key="course.id" class="d-flex">
                       <v-fade-transition>
-                        <CourseCard :course="course" 
-                          v-if="courseFilterStatus.selected.some((item) => item === course.institute)"                          
-                        />
+                        <CourseCard :course="course" :width="adoptiveCardWidth + 'px'" />
                       </v-fade-transition>
                     </div>
                   </div>
@@ -98,21 +105,32 @@ export default {
       } else if (this.$vuetify.breakpoint.mdAndDown) {
         return 2;
       } else {
-        return Math.min(Math.floor((this.$vuetify.breakpoint.width - 428) / 428), 3);;
-      }
-    },
-
-    adoptiveCardContainerWidth() {
-      if (this.$vuetify.breakpoint.smAndDown) {
-        return "";
-      } else {
-        return this.adoptiveCardNumber * 428 + "px";
+        return Math.min(Math.floor((this.$vuetify.breakpoint.width - 428) / 428), 3);
       }
     },
 
     adoptiveCoursePage() {
       return Math.ceil(this.courseText.length / (this.adoptiveCardNumber * 3))
-    }
+    }, 
+
+    adoptiveCardWidth() {
+      if (this.$vuetify.breakpoint.mdAndDown) {
+        if (this.$vuetify.breakpoint.xsOnly) {
+          return this.$vuetify.breakpoint.width - 24;
+        } else if (404 * 2 + 80 > this.$vuetify.breakpoint.width) {
+          return (this.$vuetify.breakpoint.width - 80) / 2;
+        } else {
+          return 404;
+        }
+      } else {
+        return 404;
+      }
+    },    
   },
 };
 </script>
+<style scoped>
+.statistic-card-container {
+  width: 360px;
+}
+</style>

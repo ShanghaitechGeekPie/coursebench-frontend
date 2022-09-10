@@ -1,6 +1,6 @@
 <template>
   <v-lazy class="px-3">
-    <div :style="{ width: adoptiveCardWidth }">
+    <div :style="{ width: width }">
       <v-hover>
         <template #default="{ hover }">
           <v-card 
@@ -112,7 +112,7 @@
               <div>
                 <div class="px-5 text-caption">
                   
-                  <div v-if="course.comment_num >= statics.enoughDataThreshold">
+                  <div v-if="course.comment_num >= enoughDataThreshold">
                     共获评价{{course.comment_num}}条，综合评分：{{(averageScore / 20).toFixed(1)}}/5.0
                   </div>
                   <div v-else>
@@ -124,7 +124,7 @@
                 <div style="width: 100%" class="px-5">
                   <v-progress-linear
                     v-model="averageScore"
-                    :color="statics.scoreColor[roundScore(averageScore / 20)]"
+                    :color="statics.scoreColor[roundScore(averageScore / 20, course['comment_num'])]"
                     class="mt-2"
                     style="pointer-events: none"
                   >
@@ -150,11 +150,12 @@ import useCourseCard from "@/composables/courses/all/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import { judgeItems } from "@/composables/global/useStaticData";
 import { averageOf } from "@/composables/global/useArrayUtils";
+import { roundScore, enoughDataThreshold } from "@/composables/global/useParseScore"
 
 export default {
   setup() {
     const { statics } = useCourseCard();
-    return { statics, judgeItems };
+    return { statics, judgeItems, roundScore, enoughDataThreshold };
   },
   data() {
     return {
@@ -163,46 +164,25 @@ export default {
     };
   },
   props: {
-    course: Object,
+    course: {
+      type: Object, 
+      required: true
+    },
+    width: {
+      type: String, 
+      default: ""
+    }
   },
   components: {
     AvatarContainer,
   },
   created() {
     for (let score of this.course.score) {
-      let rounded = this.roundScore(score);
+      let rounded = roundScore(score, this.course["comment_num"]);
       this.roundedScore.push(rounded);
     }
     this.averageScore = averageOf(this.course.score) * 20;
   },
-  computed: {
-    adoptiveCardWidth() {
-      if (this.$vuetify.breakpoint.mdAndDown) {
-        if (this.$vuetify.breakpoint.xsOnly) {
-          return "calc(100vw - 24px)";
-        } else if (404 * 2 > this.$vuetify.breakpoint.width) {
-          return "300px";
-        } else {
-          return "404px";
-        }
-      } else {
-        return "404px";
-      }
-    },
-  },
-  methods: {
-    roundScore(score) {
-      if (score == 0) {
-        if (this.course["comment_num"] < this.statics.enoughDataThreshold) {
-          return 0; // 0 = no enough data
-        } else {
-          return 7; // 7 = extremely bad
-        }
-      } else {
-        return Math.floor(score) + 1
-      }
-    }
-  } 
 };
 </script>
 <style scoped>

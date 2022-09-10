@@ -1,7 +1,19 @@
 <template>
-  <v-app-bar app color="white" elevate-on-scroll elevation="2">
-    <v-toolbar-title class="px-8">!!LOGO!!</v-toolbar-title>
-    <div class="d-flex" style="height: calc(100% + 8px)">
+  <v-app-bar 
+    app 
+    :color="$vuetify.theme.dark ? '' : 'white'" 
+    elevate-on-scroll 
+    elevation="2"
+  >
+    <v-toolbar-title 
+      class="px-sm-8" 
+      @click="isCurrentPath('^\/$') ? $router.push('/') : ''"
+    >
+      !!LOGO!!
+    </v-toolbar-title>
+    <div class="d-flex" style="height: calc(100% + 8px)"
+      v-if="$vuetify.breakpoint.mdAndUp"
+    >
       <SliderButton
         tile
         plain
@@ -33,24 +45,34 @@
         关于我们
       </SliderButton>
     </div>
-    <div class="search-bar">
+    <div 
+      :class="adoptiveSearchBarClass"
+      :style="{
+        width: adoptiveSearchBarWidth
+      }"
+    >
       <v-text-field 
         hide-details 
         solo 
         flat 
-        background-color="#F1F3F4"
+        :background-color="$vuetify.theme.dark ? '#3c4043' : '#F1F3F4'"
         :prepend-inner-icon="icons.mdiMagnify"
         ref="searchBar"
         @input="searchParser"
         @blur="isCurrentPath('^\/$') ? $router.push('/') : ''"
         @keydown.enter="$refs.searchBar.blur(), isCurrentPath('^\/$') ? $router.push('/') : ''"
+        v-if="$vuetify.breakpoint.smAndUp"
       >
       </v-text-field>
     </div>
     <v-spacer></v-spacer>
+    <MobileSearchBar
+      @input="searchParser"
+      v-if="$vuetify.breakpoint.xsOnly" 
+    />
     <v-btn
       color="primary"
-      class="px-8"
+      class="px-sm-8"
       @click="dialog.login = true"
       v-if="!global.isLogin"
       elevation="0"
@@ -58,7 +80,7 @@
       登录
     </v-btn>
     <v-btn
-      class="px-8 ml-4 mr-8"
+      class="px-sm-8 ml-4 mr-sm-8"
       @click="dialog.register = true"
       v-if="!global.isLogin"
       elevation="0"
@@ -173,9 +195,11 @@ import Login from "@/components/users/forms/Login";
 import Register from "@/components/users/forms/Register";
 import useLogout from "@/composables/users/forms/useLogout";
 import useShortName from "@/composables/global/useShortName";
+import useRouteMatch from "@/composables/global/useRouteMatch"
 import useDebounce from "@/composables/global/useDebounce";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import SliderButton from "@/components/global/SliderButton";
+import MobileSearchBar from "@/components/global/MobileSearchBar";
 
 import {
   mdiAccount,
@@ -188,9 +212,17 @@ import {
 } from "@mdi/js";
 
 export default {
-  components: { Login, Register, AvatarContainer, SliderButton },
+  components: { 
+    Login, 
+    Register, 
+    AvatarContainer, 
+    SliderButton, 
+    MobileSearchBar,
+  },
   setup() {
     const { doLogout } = useLogout();
+    const { isCurrentPath } = useRouteMatch()
+
     const dialog = reactive({
       login: false,
       register: false,
@@ -215,7 +247,7 @@ export default {
       searchInput.keys = searchRawString.split(" ").filter((item) => item !== "");
     })
 
-    return { global, dialog, doLogout, useShortName, searchParser };
+    return { global, dialog, doLogout, useShortName, searchParser, isCurrentPath };
   },
   data() {
     return {
@@ -230,11 +262,29 @@ export default {
       },    
     };
   },
-  methods: {
-    isCurrentPath(path) {
-      return !new RegExp(path).test(this.$route.path);
-    },
-  },
+  computed: {
+    // Some customized fix, only for search bar so no need to abstract
+
+    adoptiveSearchBarWidth() {
+      if (this.$vuetify.breakpoint.width >= 1680) {
+        return "720px";
+      } else if (this.$vuetify.breakpoint.mdAndUp) {
+        return `calc(${Math.min(this.$vuetify.breakpoint.width - 750, 720)}px)`
+      } else {
+        return `calc(${ this.$vuetify.breakpoint.width - 450 }px)`
+      }
+    }, 
+
+    adoptiveSearchBarClass() {
+      if (this.$vuetify.breakpoint.width >= 1680) {
+        return "search-bar-large";
+      } else if (this.$vuetify.breakpoint.mdAndUp) {
+        return "search-bar-medium pl-lg-1";
+      } else {
+        return ""
+      }
+    }
+  }
 };
 </script>
 <style scoped>
@@ -244,10 +294,13 @@ export default {
   white-space: nowrap;
 }
 
-.search-bar {
+.search-bar-large {
   position: absolute;
   left: 50%;
-  transform: translate(-50%, 0);
-  width: 720px;
+  transform: translate(-50%, 0);  
+}
+
+.search-bar-medium {
+  
 }
 </style>
