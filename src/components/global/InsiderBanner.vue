@@ -1,11 +1,8 @@
 <template>
   <div
-    class="d-flex justify-center"
+    class="d-flex justify-center insider-banner"
     :style="{
-      height: '48px',
       'background-color': $vuetify.theme.dark ? '#2a4165' : '#e8f0fe',
-      position: 'absolute',
-      width: '100%'
     }"
   >
     <div class="d-flex justify-center flex-column">
@@ -15,3 +12,12 @@
     </div>
   </div>
 </template>
+<style scoped>
+.insider-banner {
+  height: 48px;
+
+  position: absolute;
+  width: 100%;
+  /* opacity: 0.9; */
+}
+</style>
