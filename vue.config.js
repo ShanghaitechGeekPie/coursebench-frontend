@@ -40,7 +40,6 @@ module.exports = {
         serverUrl: "http://localhost:3500/v1", 
         // serverUrl: "https://coursebench.geekpie.club/v1"
         // serverUrl: "https://cb.wa-am.com:2/api/v1", 
-        enoughDataThreshold: 3
       })
     },
     module: {

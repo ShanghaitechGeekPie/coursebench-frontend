@@ -3,7 +3,7 @@
     class="px-lg-0 px-4"
     outlined
     flat
-    :style="{ width: adoptiveSelectBarWidth }"
+    :style="{ width: width }"
   >
     <v-container>
       <v-row class="pt-lg-2 pt-4">
@@ -45,21 +45,10 @@ export default {
     return { statics, status };
   },
   props: {
-    'card-width': {
-      type: [Number, String],
-      default: ''
-    }
-  }, 
-  computed: {
-    adoptiveSelectBarWidth() {
-      if (this.$vuetify.breakpoint.xsOnly) {
-        return 'calc(100vw - 24px)'
-      } else if (this.$vuetify.breakpoint.smOnly) {
-        return `${this.cardWidth * 2 + 24}px`
-      } else {
-        return ""
-      }
-    }
-  },
+    width: {
+      type: String, 
+      default: '',
+    }   
+  }
 };
 </script>

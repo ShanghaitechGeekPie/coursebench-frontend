@@ -93,7 +93,7 @@
           <AvatarContainer
             small
             size="38"
-            :name="useShortName(global.userProfile)"
+            :name="useUserName(global.userProfile)"
             slice
             style="transform: translate(-1px, 0)"
             :src="global.userProfile.avatar"
@@ -106,7 +106,7 @@
             <AvatarContainer
               size="80"
               font-size="text-h4"
-              :name="useShortName(global.userProfile)"
+              :name="useUserName(global.userProfile)"
               slice
               :src="global.userProfile.avatar"
             />
@@ -194,7 +194,7 @@ import { reactive, provide, inject } from "vue";
 import Login from "@/components/users/forms/Login";
 import Register from "@/components/users/forms/Register";
 import useLogout from "@/composables/users/forms/useLogout";
-import useShortName from "@/composables/global/useShortName";
+import useUserName from "@/composables/global/useUserName";
 import useRouteMatch from "@/composables/global/useRouteMatch"
 import useDebounce from "@/composables/global/useDebounce";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
@@ -247,7 +247,7 @@ export default {
       searchInput.keys = searchRawString.split(" ").filter((item) => item !== "");
     })
 
-    return { global, dialog, doLogout, useShortName, searchParser, isCurrentPath };
+    return { global, dialog, doLogout, useUserName, searchParser, isCurrentPath };
   },
   data() {
     return {
@@ -269,9 +269,9 @@ export default {
       if (this.$vuetify.breakpoint.width >= 1680) {
         return "720px";
       } else if (this.$vuetify.breakpoint.mdAndUp) {
-        return `calc(${Math.min(this.$vuetify.breakpoint.width - 750, 720)}px)`
+        return `calc(${Math.min(this.$vuetify.breakpoint.width - (this.global.isLogin ? 550 : 750), 720)}px)`
       } else {
-        return `calc(${ this.$vuetify.breakpoint.width - 450 }px)`
+        return `calc(${ this.$vuetify.breakpoint.width - (this.global.isLogin ? 250 : 450) }px)`
       }
     }, 
 
