@@ -117,24 +117,30 @@ export default () => {
         "评价总数": (x) => x.comment_num,
         "学分": (x) => x.credit
     }
-    const sortFunc = (x, y) => sortCmp(
-        sortPolicy[courseFilterStatus.sortKey](x), sortPolicy[courseFilterStatus.sortKey](y)
-    )
+    const sortFunc = (x, y) => {
+        // by default, [0] is descending, [1] is ascending
+        return (courseFilterStatus.order === sortStatics.orderItem[courseFilterStatus.sortKey][0] ? 1 : -1) *
+            sortCmp(
+                sortPolicy[courseFilterStatus.sortKey](x), sortPolicy[courseFilterStatus.sortKey](y)
+            )
+    }
 
-    // ! Fix: the sortFunc will be called twice when the sort key is changed
+    // Fixed: use an inefficient way to make work temporarily
     useRecordWatch(courseFilterStatus, useDebounce((lastStatus, from, to) => {
         // the if order matters here, it seems that wrapped array is not equal to the unwrapped ones
-        if (lastStatus.order != courseFilterStatus.order && lastStatus.sortKey == courseFilterStatus.sortKey) {            
-            courseText.value.reverse()
+        if (lastStatus.order != courseFilterStatus.order) {            
+            courseText.value.sort(sortFunc) // I dont know how js sort works in the vm
+            // but dont feel strange if it dont work for the values that are the same
         } else if (lastStatus.sortKey != courseFilterStatus.sortKey) {
-            courseFilterStatus.order = sortStatics.orderItem[courseFilterStatus.sortKey][0] // ! because of here
-            courseText.value.sort(sortFunc)
+            courseFilterStatus.order = sortStatics.orderItem[courseFilterStatus.sortKey][0]
+            courseText.value.sort(sortFunc) // I sort it here because some sort keys have the same order item
+            // in that case the first if statement will not be triggered
         } else if (lastStatus.selected != courseFilterStatus.selected) {
             courseText.value = courseRawText.value.filter(
                 (course) => courseFilterStatus.selected.some((item) => item === course.institute)
             )
             status.page = 1
-        }         
+        }
     }))
 
     useWatching(searchInput, useDebounce((to, from) => {
