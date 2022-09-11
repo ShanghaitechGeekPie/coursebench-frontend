@@ -35,6 +35,7 @@ const gradingInfo = {
 
 const judgeItems = ["课程质量", "作业用时", "考核难度", "给分情况"]
 const gradeItems = ["暂不透露", "本科生", "硕士研究生", "博士研究生"]
+const visibleItems = ["匿名", "公开"]
 const yearItems = (() => {
     const startYear = 2014
     const nowYear = new Date().getFullYear()
@@ -49,5 +50,6 @@ export {
     gradingInfo, 
     judgeItems, 
     gradeItems, 
+    visibleItems, 
     yearItems 
 }

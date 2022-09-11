@@ -4,6 +4,7 @@ import useCaptcha from "@/composables/global/useCaptcha"
 import { mdiArrowLeft, mdiEye, mdiEyeOff, mdiWindowClose, mdiEmailAlertOutline } from "@mdi/js"
 import useMutation from "@/composables/global/useMutation"
 import { gradeItems } from "@/composables/global/useStaticData"
+import useDebounce from "@/composables/global/useDebounce"
 
 export default () => {
 
@@ -82,7 +83,7 @@ export default () => {
 
   // ? Fuck I randomly typed a password and it worked
   // ? so I have to use this password temporarily : aaaaaaaaaaa1
-  const doRegister = () => {
+  const doRegister = useDebounce(() => {
     if (formStatus.emailFormValid && formStatus.passwordFormValid && 
       userData.captcha !== "" && userData.year && userData.grade
     ) {
@@ -94,7 +95,7 @@ export default () => {
         captcha: userData.captcha
       })
     }
-  }
+  })
 
   onMounted(() => {
     getCaptcha()
