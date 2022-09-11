@@ -39,6 +39,7 @@
         :width="width"
         :x-large="xLarge"
         :x-small="xSmall"
+        :class="[ fontSize ]"
       >
         <slot></slot>
       </v-btn>
@@ -216,6 +217,10 @@ export default {
     "slider-width": {
       type: [Number, String],
       default: "100%"
+    }, 
+    "font-size": {
+      type: String,
+      default: ""
     }
   }
 }

@@ -306,18 +306,23 @@ export default () => {
 
 
 
-  const commentSortFunc = (x, y) => sortCmp(
-      sortPolicy[status.sortKey](x), sortPolicy[status.sortKey](y)
-  )
+  const commentSortFunc = (x, y) => {
+    // by default, [0] is descending, [1] is ascending
+    return (status.order === sortStatics.orderItem[status.sortKey][0] ? 1 : -1) *
+      sortCmp(
+        sortPolicy[status.sortKey](x), sortPolicy[status.sortKey](y)
+      )
+  }
 
-  // ! Fix: it seems that all the sort has the same bug as in course all, 
-  // !      the sortFunc will be called twice when the sort key is changed
+  // Fixed: use an inefficient way to make work temporarily
   useRecordWatch(status, useDebounce((lastStatus) => {
     if (lastStatus.order !== status.order) {
-      commentText.value.reverse()      
+      commentText.value.sort(commentSortFunc) // I dont know how js sort works in the vm
+      // but dont feel strange if it dont work for the values that are the same
     } else if (lastStatus.sortKey !== status.sortKey) {
-      status.order = sortStatics.orderItem[status.sortKey][0] // ! because of here
-      commentText.value.sort(commentSortFunc)
+      status.order = sortStatics.orderItem[status.sortKey][0] 
+      commentText.value.sort(commentSortFunc) // I sort it here because some sort keys have the same order item
+      // in that case the first if statement will not be triggered
     }
   }))
 
