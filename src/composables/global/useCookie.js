@@ -1,3 +1,29 @@
+function unicodeToBytes(string) {
+    const codeUnits = new Uint16Array(string.length);
+    for (let i = 0; i < codeUnits.length; i++) {
+      codeUnits[i] = string.charCodeAt(i);
+    }
+    const charCodes = new Uint8Array(codeUnits.buffer);
+    let result = '';
+    for (let i = 0; i < charCodes.byteLength; i++) {
+      result += String.fromCharCode(charCodes[i]);
+    }
+    return result;
+}
+
+function bytesToUnicode(binary) {
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < bytes.length; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    const charCodes = new Uint16Array(bytes.buffer);
+    let result = '';
+    for (let i = 0; i < charCodes.length; i++) {
+      result += String.fromCharCode(charCodes[i]);
+    }
+    return result;
+}
+
 
 function setCookie(key, value, expire = 60 * 60 * 24) {
     document.cookie = `${key}=${value}; max-age=${expire}`
@@ -33,11 +59,19 @@ function setPreset(preset) {
     for (let key in preset) {
         dst[key] = preset[key]
     }
+    // to convert unicode to base 64, we need to convert it to bytes
+    if (dst.realname) {
+        dst.realname = unicodeToBytes(dst.realname)
+    }    
     setCookie("preset", btoa(JSON.stringify(dst)), 60 * 60 * 24)
 }
 
 function getPreset() {
     const preset = getCookie("preset") ? JSON.parse(atob(getCookie("preset"))) : {}
+    // convert bytes back to unicode
+    if (preset.realname) {
+        preset.realname = bytesToUnicode(preset.realname)
+    }
     const result = {}
     for (let key in preset) {
         if (preset[key]) {

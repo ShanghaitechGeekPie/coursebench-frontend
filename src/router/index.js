@@ -23,7 +23,7 @@ export default new VueRouter({
       component: () => import('@/views/TeacherDetails.vue')
     },
     {
-      path: '/user',
+      path: '/user/:id',
       component: () => import('@/views/User.vue')
     },
     {

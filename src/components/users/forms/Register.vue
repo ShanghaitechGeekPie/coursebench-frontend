@@ -32,7 +32,7 @@
         >
           <div>
             <div class="font-weight-bold text-h5 pt-2">注册</div>
-            <v-form v-model="formStatus.emailFormValid" @submit="handleFormSubmit($event)">
+            <v-form v-model="formStatus.emailFormValid" @submit="$event.preventDefault(), clickNextStep()">
               <v-card-text class="pa-0">
                 <v-text-field
                   v-model="userData.email"
@@ -79,7 +79,7 @@
               {{ userData.email }}
             </div>
             <div class="font-weight-bold text-h5">输入密码</div>
-            <v-form v-model="formStatus.passwordFormValid" @submit="handleFormSubmit($event)">
+            <v-form v-model="formStatus.passwordFormValid" @submit="$event.preventDefault(), clickNextStep()">
               <v-card-text class="pa-0">
                 <v-text-field
                   v-model="userData.password"
@@ -200,7 +200,7 @@
                   class="pt-5"
                 >
                   <div>验证码获取失败</div>
-                  <div class="inline-link d-flex justify-center"
+                  <div class="inline-link d-flex justify-center inline-link"
                     @click="getCaptcha()"
                   >点击重试</div>
                 </div>
@@ -274,8 +274,7 @@ export default {
       gradeItems 
     };
   },
-  methods: {
-    
+  methods: {  
     clickLastStep() {
       if (this.formStatus.windowStep > 0) {
         this.formStatus.windowStep -= 1;
@@ -294,11 +293,6 @@ export default {
         useAfterRender(() => this.$refs.captchaOptInput.focus(), { retry: true, timeout: 300 })
       }
     },
-
-    handleFormSubmit(event) {
-      event.preventDefault();
-      this.clickNextStep();
-    }
   },
   mounted() {
     useAfterRender(() => this.$refs.emailTextField.focus(), { retry: true });

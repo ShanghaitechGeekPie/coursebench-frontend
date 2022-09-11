@@ -4,6 +4,7 @@ import { isNetworkError } from "@/composables/global/useHttpError"
 import useCaptcha from "@/composables/global/useCaptcha"
 import { mdiArrowLeft, mdiEye, mdiEyeOff, mdiWindowClose } from "@mdi/js"
 import useMutation from "@/composables/global/useMutation"
+import useDebounce from "@/composables/global/useDebounce"
 
 
 export default () => {
@@ -52,7 +53,8 @@ export default () => {
         email: response.data.data.email,
         nickname: response.data.data.nickname, 
         avatar: response.data.data.avatar, 
-        anonymous: response.data.data.is_anonymous, 
+        anonymous: response.data.data.is_anonymous == undefined 
+          ? true : response.data.data.is_anonymous, // false = public, true = anonymous 
         year: response.data.data.year,
         grade: response.data.data.grade,
         realname: response.data.data.realname,
@@ -100,7 +102,7 @@ export default () => {
   })
 
 
-  const doLogin = () => {
+  const doLogin = useDebounce(() => {
     if (formStatus.emailFormValid && formStatus.passwordFormValid && userData.captcha !== "") {
       loginMutation.mutate({
         email: userData.email,
@@ -108,7 +110,7 @@ export default () => {
         captcha: userData.captcha
       })
     }
-  }
+  })
 
 
   onMounted(() => {

@@ -8,6 +8,7 @@
     <v-toolbar-title 
       class="px-sm-8" 
       @click="isCurrentPath('^\/$') ? $router.push('/') : ''"
+      style="cursor: pointer"
     >
       !!LOGO!!
     </v-toolbar-title>
@@ -113,11 +114,7 @@
           </div>
           <div class="d-flex justify-center">
             <div class="overflow-ellipsis font-weight-bold pt-4">
-              {{
-                global.userProfile.nickname
-                  ? global.userProfile.nickname
-                  : `User_${global.userProfile.id}`
-              }}
+              {{ useUserName(global.userProfile) }}
             </div>
           </div>
           <div class="d-flex justify-center">
@@ -134,7 +131,7 @@
           </div>
         </v-list-item>
         <v-divider></v-divider>
-        <v-list-item link to="/user" class="px-8">
+        <v-list-item link :to="`/user/${ global.userProfile.id }`" class="px-8">
           <v-list-item-icon>
             <v-icon>{{ icons.mdiAccountOutline }}</v-icon>
           </v-list-item-icon>
@@ -169,8 +166,6 @@
           ? 'dialog-bottom-transition'
           : 'scale-transition'
       "
-      overlay-color="white"
-      overlay-opacity="0.9"
       ><Login
     /></v-dialog>
     <v-dialog
@@ -182,8 +177,6 @@
           ? 'dialog-bottom-transition'
           : 'scale-transition'
       "
-      overlay-color="white"
-      overlay-opacity="0.9"
       ><Register
     /></v-dialog>
   </v-app-bar>
