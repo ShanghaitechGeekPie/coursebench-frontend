@@ -4,13 +4,13 @@
       <DetailCard class="mt-sm-10 pb-sm-8 pt-sm-2"/>
     </div>
     <div class="d-flex justify-center">
-      <v-row class="d-flex justify-center mx-10" style="max-width: 1100px;">
-        <v-col cols="3" class="mt-3">
+      <v-row class="d-flex justify-center mx-10" style="max-width: 1050px;">
+        <v-col cols="4" class="mt-3 pr-6">
           <TeacherSelect class=""/>
         </v-col>
-        <v-col cols="9">
+        <v-col cols="8" class="">
           <v-row class="">
-            <v-col class="pl-sm-0 pr-0 pl-0 pr-0 mt-3" v-for="(comment, index) in commentText" :key="comment.id"
+            <v-col class="pr-0 pl-0 pr-0 mt-3" v-for="(comment, index) in commentText" :key="comment.id"
                    cols="12">
               <CommentCard
                   :comment="comment"

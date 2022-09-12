@@ -1,4 +1,4 @@
-import {onMounted, provide, ref, reactive, watch } from "vue"
+import {onMounted, provide, ref, reactive } from "vue"
 import { judgeItems } from "@/composables/global/useStaticData"
 import { defaultStatus, sortStatics, sortPolicy } from "@/composables/global/useCommentSort"
 import useDebounce from "@/composables/global/useDebounce"
@@ -269,7 +269,7 @@ export default () => {
         }
     }))
 
-    provide("commentStatus", status)
+    provide("courseCommentStatus", status)
 
     onMounted(() => {
         teachers.value = getTeachers()

@@ -1,5 +1,6 @@
 import { inject,} from "vue"
 
+import {sortStatics} from "@/composables/global/useCommentSort";
 
 export default () => {
 
@@ -7,7 +8,7 @@ export default () => {
 
 
   const statics = {
-    ...inject("sortStatics"),
+    ...sortStatics,
   }
   
   
