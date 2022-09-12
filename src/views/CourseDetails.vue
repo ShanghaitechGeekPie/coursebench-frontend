@@ -1,7 +1,7 @@
 <template>
   <div class="" style="overflow: hidden;">
     <div class="upper-wrp d-flex justify-center align-end">
-      <DetailCard class="mt-sm-10 pb-sm-8 pt-sm-2"/>
+      <DetailCard class="mt-sm-10 pb-sm-8 pt-sm-2" :details="courseDetail" />
     </div>
     <div class="d-flex justify-center">
       <v-row class="d-flex justify-center mx-10" style="max-width: 1150px;">
@@ -35,8 +35,8 @@ import TeacherSelect from "@/components/courses/FilterBox"
 export default {
   components: {DetailCard, CommentCard, TeacherSelect},
   setup() {
-    const {teachers, commentText, status} = useCourseDetails()
-    return {teachers, commentText, status}
+    const {teachers, commentText, status, courseDetail } = useCourseDetails()
+    return {teachers, commentText, status, courseDetail }
   },
   data() {
     return {
@@ -45,10 +45,10 @@ export default {
   },
   computed: {},
   mounted() {
-    // setInterval(() => {
-    //       console.log(this.commentText)
-    //     },1000
-    // )
+    setInterval(() => {
+          console.log(this.courseDetail)
+        },3000
+    )
   }
 }
 </script>
