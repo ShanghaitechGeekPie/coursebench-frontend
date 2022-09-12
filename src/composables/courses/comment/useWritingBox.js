@@ -8,6 +8,7 @@ import { isNetworkError } from "@/composables/global/useHttpError"
 export default () => {
 
   const showSnackbar = inject("showSnackbar")
+  const courseId = inject("courseId")
 
   const testUserProfile = {
     email: "1@shanghaitech.edu.cn",
@@ -81,6 +82,7 @@ export default () => {
         "scores": formStatus.slider, // 评分，每项的值只能为1,2,3,4,5中的一个
         "student_score_ranking": 2,       })
   })
+  console.log("COURSEID", courseId)
 
   return { statics, userProfile, judgeItems, teachers, gradingInfo, doSubmit, formStatus }
 }

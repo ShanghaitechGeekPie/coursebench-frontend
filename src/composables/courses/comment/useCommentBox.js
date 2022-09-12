@@ -1,5 +1,6 @@
-import { inject, reactive } from "vue"
+import { reactive } from "vue"
 import { mdiThumbUp } from "@mdi/js"
+import {judgeItems} from "@/composables/global/useStaticData";
 
 export default () => {
 
@@ -16,7 +17,7 @@ export default () => {
     show_realname: true,
   }
 
-  const scoreDims = inject("scoreDims")
+  const scoreDims = judgeItems
 
   const statics = reactive({
     icons: {
