@@ -104,7 +104,7 @@
                       </div>
                     </div>
                       <v-select
-                        v-model="userData.anonymous"
+                        v-model="userData.is_anonymous"
                         :items="visibleItems"
                       ></v-select>
                   </div>                                      
