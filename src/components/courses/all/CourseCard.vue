@@ -115,6 +115,9 @@
                   <div v-if="course.comment_num >= enoughDataThreshold">
                     共获评价{{course.comment_num}}条，综合评分：{{(averageScore / 20).toFixed(1)}}/5.0
                   </div>
+                  <div v-else-if="course.comment_num > 0">
+                    共获评价{{course.comment_num}}条，不足以给出综合评分
+                  </div>
                   <div v-else>
                     数据不足
                   </div>

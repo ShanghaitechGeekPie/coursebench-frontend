@@ -42,7 +42,7 @@
           <div
             v-for="(value, key, index) in commentStatistic.count"
             :key="index"
-            :class="index !== 0 ? 'mt-n4' : ''"
+            :class="index !== 0 ? 'mt-n1' : ''"
           >
             <div v-if="value">
               <v-checkbox dense v-model="status.selected" :value="key">

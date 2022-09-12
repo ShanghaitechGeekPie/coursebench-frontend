@@ -62,7 +62,7 @@ function setPreset(preset) {
     // to convert unicode to base 64, we need to convert it to bytes
     if (dst.realname) {
         dst.realname = unicodeToBytes(dst.realname)
-    }    
+    }
     setCookie("preset", btoa(JSON.stringify(dst)), 60 * 60 * 24)
 }
 
@@ -74,7 +74,7 @@ function getPreset() {
     }
     const result = {}
     for (let key in preset) {
-        if (preset[key]) {
+        if (preset[key] != undefined) {
             result[key] = preset[key]
         }
     }

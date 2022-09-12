@@ -23,7 +23,7 @@ export default () => {
 
   const status = reactive({
     showAll: true,
-    ...toRefs(inject("commentStatus"))
+    ...toRefs(inject("commentFilterStatus"))
   })
 
   return { commentStatistic, statics, status }

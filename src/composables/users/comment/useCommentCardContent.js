@@ -3,6 +3,7 @@ import {
   mdiClockOutline, 
   mdiSchoolOutline,  
   mdiSubtitlesOutline, 
+  mdiTriangleOutline
 } from "@mdi/js";
 import { gradingInfo } from "@/composables/global/useStaticData";
 
@@ -14,6 +15,7 @@ export default () => {
       mdiClockOutline,
       mdiSchoolOutline,  
       mdiSubtitlesOutline, 
+      mdiTriangleOutline
     },
     grade: [
       gradingInfo.quality, 
@@ -21,7 +23,6 @@ export default () => {
       gradingInfo.difficulty,
       gradingInfo.distribution
     ], 
-    color: gradingInfo.color
   }
 
   return { statics }

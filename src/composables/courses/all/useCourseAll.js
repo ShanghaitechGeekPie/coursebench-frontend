@@ -77,7 +77,7 @@ export default () => {
             if (data.value) {
                 courseRawText.value = data.value.data
                 // Here we need to deep copy the data or the sort will mess up the original data
-                courseText.value = courseRawText.value.filter((_) => true)
+                courseText.value = [...courseRawText.value]
                 getCourseStatistic()
                 courseText.value.sort(sortFunc)
                 courseFilterStatus.selected = (() => {

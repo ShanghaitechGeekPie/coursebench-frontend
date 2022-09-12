@@ -30,7 +30,7 @@
                   <CommentCard
                     :comment="comment"
                     v-if="
-                      status.selected.some(
+                      commentFilterStatus.selected.some(
                         (school) => school === comment.course.institute
                       )
                     "
@@ -63,8 +63,8 @@ export default {
     SelectBar,
   },
   setup() {
-    const { commentText, status } = useUser();
-    return { commentText, status };
+    const { commentText, commentFilterStatus } = useUser();
+    return { commentText, commentFilterStatus };
   },
   data() {
     return {
