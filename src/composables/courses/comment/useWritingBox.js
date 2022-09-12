@@ -1,8 +1,13 @@
 import {inject, reactive} from "vue"
 import { mdiChevronRight } from "@mdi/js"
-import { gradeItems } from "@/composables/global/useStaticData"
+import { judgeItems, gradeItems, gradingInfo} from "@/composables/global/useStaticData"
+import useMutation from "@/composables/global/useMutation";
+import useDebounce from "@/composables/global/useDebounce";
+import { isNetworkError } from "@/composables/global/useHttpError"
 
 export default () => {
+
+  const showSnackbar = inject("showSnackbar")
 
   const testUserProfile = {
     email: "1@shanghaitech.edu.cn",
@@ -17,7 +22,6 @@ export default () => {
     show_realname: true,
   } // Just for test
 
-  const scoreDims = inject("scoreDims")
   const teachers = inject("teachers")
 
   const getUserProfile = () => {
@@ -32,7 +36,51 @@ export default () => {
     icons: {
       mdiChevronRight
     },
+    grade: [
+      gradingInfo.quality,
+      gradingInfo.workload,
+      gradingInfo.difficulty,
+      gradingInfo.distribution
+    ],
   })
 
-  return {statics, userProfile, scoreDims, teachers}
+  const formStatus = reactive({
+    isPostSuccess: false,
+    isPostError: false,
+    slider: [5, 5, 5, 5],
+    title: "",
+    content: ""
+  })
+
+  const commentMutation = useMutation("/comment/post", {
+    onMutate: () => {
+      formStatus.loading = true
+    },
+    onSuccess: (response) => {
+      formStatus.loading = false
+      formStatus.isPostSuccess = true
+      showSnackbar("success", "发表成功")
+    },
+    onError: (error) => {
+      formStatus.loading = false
+      formStatus.isPostError = true
+      if (isNetworkError(error.response)) {
+        showSnackbar("error", error.response.data.code)
+      }
+    }
+  })
+
+
+  const doSubmit = useDebounce(() => {
+      commentMutation.mutate({
+        "group": 1,
+        "title": formStatus.title, // 1～200字节
+        "content": formStatus.content, // 可以是markdown文本(暂定) 1～20000 字节
+        "semester": 202102, //学期，暂定格式为 4位年份+ 01:秋学期,02：春学期，03：暑学期
+        "is_anonymous": false,
+        "scores": formStatus.slider, // 评分，每项的值只能为1,2,3,4,5中的一个
+        "student_score_ranking": 2,       })
+  })
+
+  return { statics, userProfile, judgeItems, teachers, gradingInfo, doSubmit, formStatus }
 }

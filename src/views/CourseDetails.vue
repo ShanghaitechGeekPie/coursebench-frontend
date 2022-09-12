@@ -4,7 +4,7 @@
       <DetailCard class="mt-sm-10 pb-sm-8 pt-sm-2"/>
     </div>
     <div class="d-flex justify-center">
-      <v-row class="d-flex justify-center mx-10" style="max-width: 1050px;">
+      <v-row class="d-flex justify-center mx-10" style="max-width: 1150px;">
         <v-col cols="4" class="mt-3 pr-6">
           <TeacherSelect class=""/>
         </v-col>
