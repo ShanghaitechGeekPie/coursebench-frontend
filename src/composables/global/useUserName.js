@@ -5,17 +5,17 @@
  *      nickname?: String,
  *      realname?: String,
  *      email: String,
- *      anonymous: Boolean
+ *      is_anonymous: Boolean
  *      id: String | Number
  * }} userProfile
  * 
  * @returns {String}
  */
 export default (userProfile) => {
-    const { nickname, realname, email, anonymous, id } = userProfile
+    const { nickname, realname, email, is_anonymous, id } = userProfile
     if (nickname) { // if we have a nickname, then use it
         return nickname
-    } else if (realname && !anonymous) { // if we have a realname and not anonymous, then use it
+    } else if (realname && !is_anonymous) { // if we have a realname and not anonymous, then use it
         return realname
     } else if (id) { // if we have user id, then use `User_${id}`
         return `User_${id}`

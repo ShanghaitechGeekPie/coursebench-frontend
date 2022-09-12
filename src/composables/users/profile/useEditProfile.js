@@ -31,7 +31,7 @@ export default () => {
     // These are just placeholders, please remember to convert them when sending to the server.
     nickname: useUserName(global.userProfile), 
     avatar: global.userProfile.avatar ? global.userProfile.avatar : "",
-    anonymous: global.userProfile.anonymous ? visibleItems[0] : visibleItems[1],
+    is_anonymous: global.userProfile.is_anonymous ? visibleItems[0] : visibleItems[1],
     year: global.userProfile.year ? global.userProfile.year : "暂不透露",
     grade: global.userProfile.grade ? gradeItems[global.userProfile.grade] : "暂不透露",
     realname: global.userProfile.realname ? global.userProfile.realname : "",
@@ -69,7 +69,7 @@ export default () => {
         email: global.userProfile.email,
         nickname: userData.nickname, 
         avatar: userData.avatar,
-        anonymous: userData.anonymous === visibleItems[0],
+        is_anonymous: userData.is_anonymous === visibleItems[0],
         year: userData.year === "暂不透露" ? 0 : userData.year, 
         grade: gradeItems.indexOf(userData.grade),
         realname: userData.realname,
@@ -121,7 +121,7 @@ export default () => {
       grade: gradeItems.indexOf(userData.grade),
       year: userData.year === "暂不透露" ? 0 : userData.year,
       realname: userData.realname,
-      is_anonymous: userData.anonymous === visibleItems[0],
+      is_anonymous: userData.is_anonymous === visibleItems[0],
     })
   })
 
@@ -166,7 +166,7 @@ export default () => {
     formStatus.newPasswordVisible = false
     userData.nickname = useUserName(global.userProfile)
     userData.avatar = global.userProfile.avatar ? global.userProfile.avatar : ""
-    userData.anonymous = global.userProfile.anonymous ? visibleItems[0] : visibleItems[1]
+    userData.is_anonymous = global.userProfile.is_anonymous ? visibleItems[0] : visibleItems[1]
     userData.year = global.userProfile.year ? global.userProfile.year : "暂不透露"
     userData.grade = global.userProfile.grade ? gradeItems[global.userProfile.grade] : "暂不透露"
     userData.realname = global.userProfile.realname ? global.userProfile.realname : ""
@@ -184,7 +184,7 @@ export default () => {
   useWatching(() => global.userProfile, () => {
     userData.nickname = useUserName(global.userProfile)
     userData.avatar = global.userProfile.avatar ? global.userProfile.avatar : ""
-    userData.anonymous = global.userProfile.anonymous ? visibleItems[0] : visibleItems[1]
+    userData.is_anonymous = global.userProfile.is_anonymous ? visibleItems[0] : visibleItems[1]
     userData.year = global.userProfile.year ? global.userProfile.year : "暂不透露"
     userData.grade = global.userProfile.grade ? gradeItems[global.userProfile.grade] : "暂不透露"
     userData.realname = global.userProfile.realname ? global.userProfile.realname : ""

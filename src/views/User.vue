@@ -19,7 +19,7 @@
       <div class="pa-3">
         <v-container class="py-sm-3 py-0">
           <v-row>
-            <v-col class="pl-sm-0 pr-lg-3 pr-0 pl-0 pr-0 pt-0 pb-lg-0 pb-3">
+            <v-col class="pl-sm-0 pr-lg-3 pr-0 pl-0 pr-0 pt-0 pb-3">
               <SelectBar />
             </v-col>
           </v-row>

@@ -63,6 +63,10 @@ function setPreset(preset) {
     if (dst.realname) {
         dst.realname = unicodeToBytes(dst.realname)
     }
+    if (dst.nickname) {
+        dst.nickname = unicodeToBytes(dst.nickname)
+    }
+
     setCookie("preset", btoa(JSON.stringify(dst)), 60 * 60 * 24)
 }
 
@@ -72,6 +76,10 @@ function getPreset() {
     if (preset.realname) {
         preset.realname = bytesToUnicode(preset.realname)
     }
+    if (preset.nickname) {
+        preset.nickname = bytesToUnicode(preset.nickname)
+    }
+
     const result = {}
     for (let key in preset) {
         if (preset[key] != undefined) {

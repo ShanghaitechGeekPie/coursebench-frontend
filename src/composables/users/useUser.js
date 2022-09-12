@@ -28,7 +28,7 @@ export default () => {
     nickname: "", 
     realname: "", 
     avatar: "", 
-    anonymous: true, 
+    is_anonymous: true, 
   })
 
   const commentText = ref([])
