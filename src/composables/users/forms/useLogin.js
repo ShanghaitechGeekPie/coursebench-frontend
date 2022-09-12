@@ -53,7 +53,7 @@ export default () => {
         email: response.data.data.email,
         nickname: response.data.data.nickname, 
         avatar: response.data.data.avatar, 
-        anonymous: response.data.data.is_anonymous == undefined 
+        is_anonymous: response.data.data.is_anonymous == undefined 
           ? true : response.data.data.is_anonymous, // false = public, true = anonymous 
         year: response.data.data.year,
         grade: response.data.data.grade,

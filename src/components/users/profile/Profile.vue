@@ -22,7 +22,7 @@
     </div>
     <div
       class="d-flex justify-center pt-3"
-      v-if="$route.params.id == global.userProfile.id || !userProfile.anonymous"
+      v-if="$route.params.id == global.userProfile.id || !userProfile.is_anonymous"
     >
       <div class="grey--text text--darken-2">
         <span v-if="userProfile.year && userProfile.year != '暂不透露'">{{ userProfile.year }}级</span>
@@ -30,7 +30,7 @@
         <span v-if="userProfile.realname">{{ userProfile.realname }}</span>
       </div>
     </div>
-    <div class="d-flex justify-center pt-3" v-if="$route.params.id == global.userProfile.id || !userProfile.anonymous">
+    <div class="d-flex justify-center pt-3" v-if="$route.params.id == global.userProfile.id || !userProfile.is_anonymous">
       <div class="grey--text text--darken-2 single-line-limit">
         <span>{{ userProfile.email }}</span>
       </div>

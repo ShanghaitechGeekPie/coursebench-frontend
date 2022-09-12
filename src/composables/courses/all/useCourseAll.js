@@ -3,9 +3,10 @@ import { instituteInfo } from "@/composables/global/useStaticData";
 import useDebounce from "@/composables/global/useDebounce"
 import useWatching from "@/composables/global/useWatching"
 import useRecordWatch from "@/composables/global/useRecordWatch"
-import { sortCmp, averageOf } from "@/composables/global/useArrayUtils"
 import useFetching from "@/composables/global/useFetching"
+import { sortCmp, averageOf } from "@/composables/global/useArrayUtils"
 import { isNetworkError } from "@/composables/global/useHttpError"
+import { enoughDataThreshold } from "@/composables/global/useParseScore"
 
 
 export default () => {
@@ -113,7 +114,7 @@ export default () => {
         },
     }
     const sortPolicy = {
-        "综合评分": (x) => averageOf(x.score),
+        "综合评分": (x) => x.comment_num < enoughDataThreshold ? 0 : averageOf(x.score),
         "评价总数": (x) => x.comment_num,
         "学分": (x) => x.credit
     }

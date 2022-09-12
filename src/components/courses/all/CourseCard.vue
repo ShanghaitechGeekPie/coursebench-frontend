@@ -126,7 +126,7 @@
               <div>
                 <div style="width: 100%" class="px-5">
                   <v-progress-linear
-                    v-model="averageScore"
+                    v-model="course.comment_num < enoughDataThreshold ? 0 : averageScore"
                     :color="scoreInfo[roundScore(averageScore / 20, course['comment_num'])].color"
                     class="mt-2"
                     style="pointer-events: none"
