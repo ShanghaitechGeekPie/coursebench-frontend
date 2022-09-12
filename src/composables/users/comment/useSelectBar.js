@@ -3,7 +3,7 @@ import { inject,} from "vue"
 
 export default () => {
 
-  const status = inject("commentStatus")
+  const status = inject("commentFilterStatus")
 
 
   const statics = {

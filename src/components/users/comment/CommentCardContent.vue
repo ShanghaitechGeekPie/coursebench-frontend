@@ -25,7 +25,7 @@
               <span class="text-caption">{{ comment.user_score_ranking.toFixed(1) }}</span>
             </div> -->
             <TextContainer
-              :text="comment.comment"
+              :text="comment.content"
               :title="comment.title"
               markdown
               dense
@@ -55,7 +55,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col class="pa-0 pl-sm-1 pb-2 pt-2" cols="12">
+          <v-col class="pa-0 pl-sm-1 pb-sm-4 pb-2 pt-2" cols="12">
             <v-container>
               <v-row class="d-flex justify-space-between">
                 <v-col
@@ -90,7 +90,7 @@
                           <v-chip
                             x-small
                             label
-                            :color="statics.color[comment.score[index - 1] - 1]"
+                            :color="gradingInfo.color[comment.score[index - 1] - 1]"
                             class="px-1"
                           >
                             <span class="text-caption white--text">{{
@@ -104,33 +104,28 @@
                     </v-row>
                   </v-container>
                 </v-col>
-                <v-col class="pa-0" cols="4">
-                  <v-container>
-                    <v-row class="d-flex justify-end">
-                      <v-col
-                        class="py-0 mr-sm-n6"
-                        cols="12"
-                        sm="4"
-                        md="5"
-                        lg="4"
-                      >
-                        <v-icon size="16">
-                          {{ statics.icons.mdiAccountOutline }}
-                        </v-icon>
-                        <span class="text-caption">
-                          {{ comment.user_nickname }}
-                        </span>
-                      </v-col>
-                      <v-col class="py-0" cols="12" sm="6" lg="5" xl="6">
-                        <v-icon size="16">
-                          {{ statics.icons.mdiClockOutline }}
-                        </v-icon>
-                        <span class="text-caption">
-                          {{ semester }}
-                        </span>
-                      </v-col>
-                    </v-row>
-                  </v-container>
+                <v-col 
+                  class="pa-0 pr-sm-4 pr-3" 
+                  cols="4"
+                >
+                  <div class="d-flex justify-end" style="flex-wrap: wrap">
+                    <div class="pr-sm-2">
+                      <v-icon size="15" style="transform: translate(0, -1px)">
+                        {{ statics.icons.mdiTriangleOutline }}
+                      </v-icon>
+                      <span class="text-caption">
+                        获赞 {{ comment.like - comment.dislike }}
+                      </span>
+                    </div>
+                    <div>
+                      <v-icon size="16">
+                        {{ statics.icons.mdiClockOutline }}
+                      </v-icon>
+                      <span class="text-caption">
+                        {{ semester }}
+                      </span>                    
+                    </div>
+                  </div>
                 </v-col>
               </v-row>
             </v-container>
@@ -143,12 +138,18 @@
 <script>
 import useCommentCardContent from "@/composables/users/comment/useCommentCardContent";
 import TextContainer from "@/components/users/comment/TextContainer";
-import { judgeItems } from "@/composables/global/useStaticData";
+import { judgeItems, gradingInfo } from "@/composables/global/useStaticData";
 
+// TODO: Fix the bug that the backend forget to send some data
+// TODO: Decide if the score by user is int or float
+
+// Some ancient shit are contained in this component that is not worth to fix
+//  if you want to fix this, the best way is to remove all the v-container stuff
+//  and use vanilla div, and rewrite the reactive paddings
 export default {
   setup() {
     const { statics } = useCommentCardContent();
-    return { statics, judgeItems };
+    return { statics, judgeItems, gradingInfo };
   },
   components: { TextContainer },
   props: { comment: Object },

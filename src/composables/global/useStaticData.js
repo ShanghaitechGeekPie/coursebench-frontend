@@ -1,6 +1,5 @@
 
-// TODO: Another wxj's shit, fix it since the full name is used as the key in the backend
-//  I cant understand that he chose to use the short name simply because it looks more professional
+
 const instituteInfo = {
     "信息科学与技术学院": { name: "SIST", color: "#b0c4de" },
     "物质科学与技术学院": { name: "SPST", color: "#00a650" },
