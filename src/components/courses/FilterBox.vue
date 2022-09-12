@@ -1,10 +1,28 @@
 <template>
-  <v-card flat outlined>
-    <div class="font-weight-bold mx-2 pt-5">
-      <div class="ml-2">授课老师:</div>
-    </div>
+  <v-card flat outlined width="500px">
+    <v-row class="ml-1 mt-3">
+      <v-col class="px-auto" cols="6">
+        <v-select dense
+                  v-model="status.sortKey"
+                  :items="statics.sortKeyItem"
+                  label="排序方式"
+                  style="width: 100px;"
+        ></v-select>
+      </v-col>
+      <v-col class="" cols="6">
+        <v-select dense
+                  v-model="status.order"
+                  :items="statics.orderItem[status.sortKey]"
+                  style="width: 100px;"
+        ></v-select>
+      </v-col>
+    </v-row>
+    <div class=" mb-4 mt-2">
+      <div class="font-weight-bold mx-2">
+        <div class="ml-2">授课老师:</div>
+      </div>
       <div class="ml-5">
-        <v-chip-group v-model="model" column multiple active-class="" >
+        <v-chip-group v-model="model" column multiple active-class="">
           <v-chip
               v-for="(teacher, index) in teachers"
               :key="index"
@@ -16,6 +34,7 @@
           </v-chip>
         </v-chip-group>
       </div>
+    </div>
   </v-card>
 </template>
 
@@ -26,8 +45,8 @@ import useSelectBar from "@/composables/courses/comment/useSelectBar"
 export default {
   name: "teacherSelect",
   setup() {
-    const { teachers } = useSelectBar()
-    return {teachers}
+    const {teachers, status, statics} = useSelectBar()
+    return {teachers, status, statics}
   },
   data() {
     return {
