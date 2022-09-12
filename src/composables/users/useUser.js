@@ -5,6 +5,7 @@ import useWatching from "@/composables/global/useWatching"
 import useRefCopy from "@/composables/global/useRefCopy"
 import useRecordWatch from "@/composables/global/useRecordWatch"
 import useFetching from "@/composables/global/useFetching"
+import useUserName from "@/composables/global/useUserName"
 import { sortCmp } from "@/composables/global/useArrayUtils"
 import { defaultStatus, sortStatics, sortPolicy } from "@/composables/global/useCommentSort"
 import { useRouter, useRoute } from "@/router/migrateRouter"
@@ -74,6 +75,7 @@ export default () => {
         } else {
           useRefCopy(data.value.data, userProfile)          
         }
+        userProfile.nickname = useUserName(userProfile)
         userProfile.grade = gradeItems[userProfile.grade]
         userProfile.year = userProfile.year == 0 ? "暂不透露" : userProfile.year
       }
@@ -158,6 +160,7 @@ export default () => {
   if (route.params.id == global.userProfile.id) {
     watch(() => global.userProfile, () => {
       useRefCopy(global.userProfile, userProfile)
+      userProfile.nickname = useUserName(userProfile)
       userProfile.grade = gradeItems[userProfile.grade]
       userProfile.year = userProfile.year == 0 ? "暂不透露" : userProfile.year
     })
