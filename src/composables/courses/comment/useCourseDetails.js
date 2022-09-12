@@ -241,6 +241,34 @@ export default () => {
         },
     ] // Just for test
 
+    const getCourseAll = () => {
+        const { status: fetchStatus, data, error } = useFetching(["course_all"], "/course/all")
+        useWatching(fetchStatus, () => {
+            if (fetchStatus.value === "success") {
+                status.loading = false
+            } else if (fetchStatus.value == "error") {
+                const response = error.value.response
+                showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
+            }
+        })
+        useWatching(data, () => {
+            if (data.value) {
+                courseRawText.value = data.value.data
+                // Here we need to deep copy the data or the sort will mess up the original data
+                courseText.value = [...courseRawText.value]
+                getCourseStatistic()
+                courseText.value.sort(sortFunc)
+                courseFilterStatus.selected = (() => {
+                    let ret = new Array()
+                    for (let key in courseStatistic.count) {
+                        if (courseStatistic.count[key]) {
+                            ret.push(key)
+                        }
+                    } return ret
+                })()
+            }
+        })
+    }
     const getCommentText = () => {
         const commentText = testCommentText
 
