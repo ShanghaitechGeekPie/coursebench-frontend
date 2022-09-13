@@ -27,7 +27,7 @@
                 >
                   <CourseCardLoading />
                 </div>
-              </div> -->
+              </div> -->              
               <v-data-iterator
                 :items="courseText"
                 :items-per-page="adoptiveCardNumber * 3"
@@ -38,7 +38,7 @@
                 <template #default="{ items }">
                   <div class="d-flex justify-center">
                     <div :style="{ width: adoptiveCardContainerWidth + 24 + 'px' }">
-                      <div class="d-flex flex-wrap justify-start">
+                      <div class="d-flex flex-wrap justify-start">                        
                         <div v-for="(course, index) in items" :key="course.id" class="d-flex">
                           <v-fade-transition>
                             <CourseCard :course="course" :width="adoptiveCardWidth + 'px'" />
@@ -82,7 +82,7 @@ import { instituteInfo } from "@/composables/global/useStaticData";
 export default {
   setup() {
     const { courseText, status, courseFilterStatus } = useCourseAll();
-    
+
     return { instituteInfo, courseText, status, courseFilterStatus };
   },
   components: {

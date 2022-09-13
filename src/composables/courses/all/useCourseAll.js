@@ -79,8 +79,7 @@ export default () => {
                 courseRawText.value = data.value.data
                 // Here we need to deep copy the data or the sort will mess up the original data
                 courseText.value = [...courseRawText.value]
-                getCourseStatistic()
-                courseText.value.sort(sortFunc)
+                getCourseStatistic()              
                 courseFilterStatus.selected = (() => {
                     let ret = new Array()
                     for (let key in courseStatistic.count) {
@@ -140,6 +139,7 @@ export default () => {
             courseText.value = courseRawText.value.filter(
                 (course) => courseFilterStatus.selected.some((item) => item === course.institute)
             )
+            courseText.value.sort(sortFunc) 
             status.page = 1
         }
     }))
