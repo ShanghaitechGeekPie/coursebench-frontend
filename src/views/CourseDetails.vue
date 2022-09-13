@@ -45,10 +45,6 @@ export default {
   },
   computed: {},
   mounted() {
-    setInterval(() => {
-          console.log(this.courseDetail)
-        },3000
-    )
   }
 }
 </script>
