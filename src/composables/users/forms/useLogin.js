@@ -54,7 +54,8 @@ export default () => {
         nickname: response.data.data.nickname, 
         avatar: response.data.data.avatar, 
         is_anonymous: response.data.data.is_anonymous == undefined 
-          ? true : response.data.data.is_anonymous, // false = public, true = anonymous 
+          ? false : response.data.data.is_anonymous, // false = public, true = anonymous 
+          // by default, no anonymous setting means public
         year: response.data.data.year,
         grade: response.data.data.grade,
         realname: response.data.data.realname,
