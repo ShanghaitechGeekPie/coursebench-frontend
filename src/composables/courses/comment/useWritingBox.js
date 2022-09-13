@@ -1,6 +1,6 @@
 import {inject, reactive} from "vue"
 import { mdiChevronRight } from "@mdi/js"
-import { judgeItems, gradeItems, gradingInfo} from "@/composables/global/useStaticData"
+import { judgeItems, gradeItems, gradingInfo, rawYearItems, termItems } from "@/composables/global/useStaticData"
 import useMutation from "@/composables/global/useMutation";
 import useDebounce from "@/composables/global/useDebounce";
 import { isNetworkError } from "@/composables/global/useHttpError"
@@ -43,14 +43,21 @@ export default () => {
       gradingInfo.difficulty,
       gradingInfo.distribution
     ],
+    yearItems: rawYearItems,
+    judgeItems: judgeItems,
+    termItems: termItems
   })
 
   const formStatus = reactive({
     isPostSuccess: false,
     isPostError: false,
-    slider: [5, 5, 5, 5],
+    groupId: 0,
     title: "",
-    content: ""
+    content: "",
+    semester: 0,
+    is_anonymous: false,
+    slider: [5, 5, 5, 5],
+    commentTarget: 0,
   })
 
   const commentMutation = useMutation("/comment/post", {
@@ -74,15 +81,15 @@ export default () => {
 
   const doSubmit = useDebounce(() => {
       commentMutation.mutate({
-        "group": 1,
+        "group": formStatus.commentTarget,
         "title": formStatus.title, // 1～200字节
         "content": formStatus.content, // 可以是markdown文本(暂定) 1～20000 字节
-        "semester": 202102, //学期，暂定格式为 4位年份+ 01:秋学期,02：春学期，03：暑学期
-        "is_anonymous": false,
+        "semester": formStatus.semester, //学期，暂定格式为 4位年份+ 01:秋学期,02：春学期，03：暑学期
+        "is_anonymous": formStatus.is_anonymous,
         "scores": formStatus.slider, // 评分，每项的值只能为1,2,3,4,5中的一个
         "student_score_ranking": 2,       })
   })
   console.log("COURSEID", courseId)
 
-  return { statics, userProfile, judgeItems, teachers, gradingInfo, doSubmit, formStatus }
+  return { statics, userProfile, teachers, gradingInfo, doSubmit, formStatus }
 }

@@ -19,7 +19,7 @@
         <v-textarea label="发一条友善的评论" auto-grow outlined rows="3" class="px-4" messages="支持markdown" v-model="formStatus.content">
         </v-textarea>
         <v-row class="d-flex justify-end mt-0 mb-3 px-9">
-          <v-col v-for="(dim, index) in judgeItems" :key="index" cols="6" class="pb-0" align="center">
+          <v-col v-for="(dim, index) in statics.judgeItems" :key="index" cols="6" class="pb-0" align="center">
             <v-slider
                 v-model="formStatus.slider[index]"
                 class="align-center"
@@ -57,11 +57,28 @@
           </v-col>
         </v-row>
         <v-row class="d-flex flex-row justify-end align-center">
-          <v-col cols="3">
-            <v-select v-model="target" :items="selections" label="评价对象"></v-select>
+          <v-col cols="2">
+            <v-select
+                v-model="courseYear"
+                :items="statics.yearItems"
+                label="修读时间"
+            ></v-select>
           </v-col>
+          <v-col cols="2">
+            <v-select
+                v-model="courseTerm"
+                :items="statics.termItems"
+                item-text="name"
+                item-value="id"
+                label="修读学期"
+            ></v-select>
+          </v-col>
+          <v-col cols="2">
+            <v-select v-model="formStatus.commentTarget" :items="teachers" item-text="name" item-value="id" label="评价对象"></v-select>
+          </v-col>
+
           <v-col cols="2" class="d-flex">
-            <v-switch class="mt-0" label="匿名" color="info" hide-details></v-switch>
+            <v-switch v-model="formStatus.is_anonymous" class="mt-0" label="匿名" color="info" hide-details></v-switch>
           </v-col>
           <v-col class="px-0 d-flex" cols="2">
             <v-btn color="primary" depressed @click="doSubmit">
@@ -83,34 +100,39 @@ import useWritingBox from "@/composables/courses/comment/useWritingBox"
 export default {
   name: "WritingBox",
   setup() {
-    const {statics, userProfile, judgeItems, teachers, gradingInfo, doSubmit, formStatus } = useWritingBox()
-    return {statics, userProfile, judgeItems, teachers, gradingInfo, doSubmit, formStatus }
+    const {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus } = useWritingBox()
+    return {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus }
   },
   data() {
     return {
       satisfactionEmojis: ["😭", "☹️", "🙁", "🙂", "😊"],
-      target: "",
+      courseYear: 0,
+      courseTerm: "",
     }
   },
-  computed: {
-    selections() {
-      let res = []
-      this.teachers.forEach(function (e) {
-        res.push(e.name)
-      })
-      return res
+  methods: {
+    getSemesterCode() {
+      if (this.courseYear === 0) {
+        return 0
+      }
+      if (this.courseTerm === "") {
+        return 0
+      }
+      return this.courseYear + this.courseTerm
     }
   },
-  methods: {},
-  // watch: {
-  //   formStatus: {
-  //     handler() {
-  //       console.log("HHH")
-  //     },
-  //     deep: true
-  //   }
-  // },
+  watch: {
+    courseYear() {
+      this.formStatus.semester = this.getSemesterCode()
+    },
+    courseTerm() {
+      this.formStatus.semester = this.getSemesterCode()
+    }
+  },
   mounted() {
+    // setInterval(()=>{
+    //   console.log(this.formStatus.is_anonymous)
+    // }, 1000)
   }
 }
 </script>

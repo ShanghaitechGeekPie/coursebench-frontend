@@ -70,15 +70,9 @@ export default {
   },
   watch: {
     model() {
-      console.log(this.model)
     }
   },
   mounted() {
-    setInterval(()=>{
-      console.log(this.details)
-
-    }, 1000)
-
   }
 }
 </script>
