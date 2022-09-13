@@ -32,25 +32,27 @@
               :dialog="$vuetify.breakpoint.name === 'xs'"
               #default="{ overflow }"
             >
-              <v-row>
-                <v-col
-                  class="pa-0 pl-3 pb-2 pt-sm-3 pt-2"
-                  :style="{ 'max-width': overflow ? '60vw' : '90%' }"
-                  cols="12"
-                >
-                  <v-icon size="16">
-                    {{ statics.icons.mdiSchoolOutline }}
-                  </v-icon>
-                  <span
-                    v-for="(teacher, index) in comment.group.teachers"
-                    class="pl-1 router-container text-caption font-weight-bold"
-                    :key="index"
-                    @click="$router.push({ path: `/teacher/${teacher.id}` })"
+              <slot name="content-note">
+                <v-row>
+                  <v-col
+                    class="pa-0 pl-3 pb-2 pt-sm-3 pt-2"
+                    :style="{ 'max-width': overflow ? '60vw' : '90%' }"
+                    cols="12"
                   >
-                    {{ teacher.name }}
-                  </span>
-                </v-col>
-              </v-row>
+                    <v-icon size="16">
+                      {{ statics.icons.mdiSchoolOutline }}
+                    </v-icon>
+                    <span
+                      v-for="(teacher, index) in comment.group.teachers"
+                      class="pl-1 router-container text-caption font-weight-bold"
+                      :key="index"
+                      @click="$router.push({ path: `/teacher/${teacher.id}` })"
+                    >
+                      {{ teacher.name }}
+                    </span>
+                  </v-col>
+                </v-row>
+              </slot>
             </TextContainer>
           </v-col>
         </v-row>
@@ -107,25 +109,27 @@
                 <v-col 
                   class="pa-0 pr-sm-4 pr-3" 
                   cols="4"
-                >
-                  <div class="d-flex justify-end" style="flex-wrap: wrap">
-                    <div class="pr-sm-2">
-                      <v-icon size="15" style="transform: translate(0, -1px)">
-                        {{ statics.icons.mdiTriangleOutline }}
-                      </v-icon>
-                      <span class="text-caption">
-                        获赞 {{ comment.like - comment.dislike }}
-                      </span>
+                >                  
+                  <slot name="footer-note">
+                    <div class="d-flex justify-end" style="flex-wrap: wrap">
+                      <div class="pr-sm-2">
+                        <v-icon size="15" style="transform: translate(0, -1px)">
+                          {{ statics.icons.mdiTriangleOutline }}
+                        </v-icon>
+                        <span class="text-caption">
+                          获赞 {{ comment.like - comment.dislike }}
+                        </span>
+                      </div>
+                      <div>
+                        <v-icon size="16">
+                          {{ statics.icons.mdiClockOutline }}
+                        </v-icon>
+                        <span class="text-caption">
+                          {{ semester }}
+                        </span>                    
+                      </div>
                     </div>
-                    <div>
-                      <v-icon size="16">
-                        {{ statics.icons.mdiClockOutline }}
-                      </v-icon>
-                      <span class="text-caption">
-                        {{ semester }}
-                      </span>                    
-                    </div>
-                  </div>
+                  </slot>
                 </v-col>
               </v-row>
             </v-container>
