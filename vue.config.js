@@ -1,6 +1,9 @@
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const productionGzipExtensions = /\.(js|css|json|md|html|ico)(\?.*)?$/i;
 const path = require('path')
+const process = require('process')
+
+
 
 module.exports = {
   productionSourceMap: false,
@@ -37,9 +40,9 @@ module.exports = {
     },
     externals: {
       'Config': JSON.stringify({
-        serverUrl: "http://localhost:3500/v1",
-        // serverUrl: "https://coursebench.geekpie.club/v1"
-        // serverUrl: "https://cb.wa-am.com:2/api/v1", 
+        serverUrl: process.env.SERVER, 
+        buildVersion: process.env.BUILD_VERSION,
+        buildMode: process.env.BUILD_MODE,
       })
     },
     module: {
