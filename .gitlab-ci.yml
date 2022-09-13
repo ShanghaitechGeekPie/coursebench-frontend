@@ -1,7 +1,7 @@
 stages:
   - build
 
-g22g:
+coursebench:
   stage: build
   image: gcr.io/kaniko-project/executor:debug
   variables:

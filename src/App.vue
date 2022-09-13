@@ -3,7 +3,7 @@
     <Header :snackbar.sync="snackbar" />
     <v-main>
       <InsiderBanner />
-      <router-view />
+      <router-view :key="$route.path" />
       <v-snackbar
         v-model="snackbar.show"
         :color="snackbar.color"
