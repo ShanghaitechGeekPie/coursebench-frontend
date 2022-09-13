@@ -7,8 +7,6 @@ import useRefCopy from "@/composables/global/useRefCopy";
 import {sortCmp} from "@/composables/global/useArrayUtils"
 import useRecordWatch from "@/composables/global/useRecordWatch"
 import {useRoute, useRouter} from "@/router/migrateRouter";
-import axios from "axios";
-import Config from 'Config'
 
 export default () => {
 
@@ -75,19 +73,25 @@ export default () => {
         }
     }))
 
-    const getCourseComment = (id) => {
-        status.loading = true
-        // const { status: fetchStatus, data, error } = useFetching(["course_comment"],  + id)
-        axios.get(Config.serverUrl + "/comment/course_group/" + id)
-            .then(response => {
-                console.log(response.data.data);
-                commentText.value = response.data.data
+    const getCourseComment = () => {
+        const id = route.params.id
+        const {status: fetchStatus, data, error} = useFetching(["course_comment", id], "/comment/course/" + id)
+        useWatching(fetchStatus, () => {
+            // console.log("Data Fetched!")
+            if (fetchStatus.value === "success") {
+            } else if (fetchStatus.value === "error") {
+                const response = error.value.response
+                // showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
+                setTimeout(() => router.push("/"), 3000)
+            }
+        })
+        useWatching(data, () => {
+            // console.log("Data Assigned!")
+            if (data.value) {
+                useRefCopy(data.value.data, commentText.value)
                 commentText.value.sort(commentSortFunc)
-            })
-            .catch(err => {
-                // Handle Error Here
-                console.error(err);
-            });
+            }
+        })
     }
 
     provide("courseCommentStatus", status)
@@ -112,7 +116,6 @@ export default () => {
                 courseId.value = {
                     id: courseDetail.groups[0].id
                 }
-                getCourseComment(courseDetail.groups[0].id)
             }
         })
     }
@@ -120,6 +123,7 @@ export default () => {
     onMounted(() => {
         teachers.value = getTeachers()
         getCourseDetail()
+        getCourseComment()
     })
 
 

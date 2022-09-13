@@ -261,6 +261,7 @@ export default {
     const closeDialog = inject("closeDialog");
     const openDialog = inject("openDialog");
     const { statics, userData, formStatus, doRegister, getCaptcha } = useRegister();
+
     return { 
       statics, 
       userData, 
