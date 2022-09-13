@@ -72,7 +72,7 @@ export default {
   computed: {
     slicedName() {
       // now we use the simpler policy to slice the name
-      return this.name.slice(0, 1);
+      return this.name.slice(0, 1).toUpperCase();
       // return escape(this.name.slice(0, 2)).indexOf("%u") >= 0
       //   ? this.name.slice(0, 1)
       //   : this.name.slice(0, 2);
