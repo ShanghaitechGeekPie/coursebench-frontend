@@ -1,25 +1,20 @@
 <template>
-  <div
-    v-if="status.loading"
-    :style="
-      $vuetify.breakpoint.xsOnly
-        ? {}
-        : { background: $vuetify.theme.isDark ? '' : '#f9f9f9', 'min-height': '100%' }
-    "
-  >
-    <v-sheet
-      v-if="!$vuetify.breakpoint.xsOnly"
-      :color="$vuetify.theme.isDark ? statics.backgroundDark : statics.backgroundLight"
-      :height="$vuetify.breakpoint.xsOnly ? 91 : 360"
-    ></v-sheet>
-    <v-overlay :value="status.loading">
-      <v-progress-circular indeterminate size="64"></v-progress-circular>
-    </v-overlay>
-  </div>
-  <div v-else-if="$vuetify.breakpoint.xsOnly">
+  <div v-if="$vuetify.breakpoint.xsOnly">
     <div class="main-card" style="min-width: 300px">
       <div class="d-flex justify-center">
-        <v-icon v-if="status.errorMessage == ''" size="160" color="success">
+        <div v-if="status.loading"
+          class="loading-container-mobile d-flex justify-center"
+        >
+          <div class="d-flex justify-center flex-column">
+            <v-progress-circular 
+              indeterminate 
+              size="128"
+              width="8"
+              color="primary"
+            ></v-progress-circular>
+          </div> 
+        </div> 
+        <v-icon v-else-if="status.errorMessage == ''" size="160" color="success">
           {{ statics.icons.mdiCheckboxMarkedCircleOutline }}
         </v-icon>
         <v-icon v-else size="160" color="error">
@@ -27,7 +22,13 @@
         </v-icon>
       </div>
       <div>
-        <div v-if="status.errorMessage == ''">
+        <div v-if="status.loading">
+          <div class="text-h4 pt-6 text-center">正在加载中...</div>
+          <div class="pt-6 word-wrap text-center">
+            您的账号即将完成激活，请稍等。
+          </div>
+        </div>
+        <div v-else-if="status.errorMessage == ''">
           <div class="text-h4 pt-6 text-center">电子邮箱验证成功!</div>
           <div class="pt-6 word-wrap text-center">
             您的账号已经注册成功，欢迎您使用本系统。
@@ -70,8 +71,20 @@
         >
           <div class="px-16 pt-16 d-flex">
             <div style="height: 100%">
+              <div v-if="status.loading"
+                class="loading-container d-flex justify-center"
+              >
+                <div class="d-flex justify-center flex-column">
+                  <v-progress-circular 
+                    indeterminate 
+                    size="100"
+                    width="8"
+                    color="primary"
+                  ></v-progress-circular>
+                </div> 
+              </div>              
               <v-icon
-                v-if="status.errorMessage == ''"
+                v-else-if="status.errorMessage == ''"
                 size="128"
                 color="success"
               >
@@ -85,7 +98,13 @@
               class="pl-6 d-flex justify-space-between flex-column"
               style="max-width: 344px; height: 100%"
             >
-              <div v-if="status.errorMessage == ''">
+              <div v-if="status.loading">
+                <div class="text-h4 pt-6">正在加载中...</div>
+                <div class="pt-6 word-wrap">
+                  您的账号即将完成激活，请稍等。
+                </div>
+              </div>            
+              <div v-else-if="status.errorMessage == ''">
                 <div class="text-h4 pt-6">电子邮箱验证成功!</div>
                 <div class="pt-6 word-wrap">
                   您的账号已经注册成功，欢迎您使用本系统。
@@ -140,5 +159,15 @@ export default {
   word-wrap: break-word;
   word-break: break-all;
   overflow: hidden;
+}
+
+.loading-container {
+  width: 128px;
+  height: 128px;
+}
+
+.loading-container-mobile {
+  width: 160px;
+  height: 160px;
 }
 </style>
