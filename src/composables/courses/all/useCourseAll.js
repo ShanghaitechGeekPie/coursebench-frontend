@@ -1,11 +1,11 @@
-import { provide, reactive, ref, onMounted, inject, watch, computed } from "vue"
+import { provide, reactive, ref, onMounted, inject } from "vue"
 import { instituteInfo } from "@/composables/global/useStaticData";
 import useDebounce from "@/composables/global/useDebounce"
 import useWatching from "@/composables/global/useWatching"
 import useRecordWatch from "@/composables/global/useRecordWatch"
 import useFetching from "@/composables/global/useFetching"
 import { sortCmp, averageOf } from "@/composables/global/useArrayUtils"
-import { isNetworkError } from "@/composables/global/useHttpError"
+import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
 import { enoughDataThreshold } from "@/composables/global/useParseScore"
 
 
@@ -70,8 +70,13 @@ export default () => {
             if (fetchStatus.value === "success") {
                 status.loading = false
             } else if (fetchStatus.value == "error") {
-                const response = error.value.response
-                showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
+                if (isNetworkError(error.value.response)) {
+                    showSnackbar("网络连接错误")
+                } else if (isValidErrorMessage(error.value.response.data.msg)) {
+                    showSnackbar("error", error.value.response.data.msg)
+                } else {
+                    showSnackbar("error", "服务器发生错误")
+                }
             }
         })
         useWatching(data, () => {
@@ -79,7 +84,7 @@ export default () => {
                 courseRawText.value = data.value.data
                 // Here we need to deep copy the data or the sort will mess up the original data
                 courseText.value = [...courseRawText.value]
-                getCourseStatistic()              
+                getCourseStatistic() 
                 courseFilterStatus.selected = (() => {
                     let ret = new Array()
                     for (let key in courseStatistic.count) {

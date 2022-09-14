@@ -9,7 +9,7 @@ import useUserName from "@/composables/global/useUserName"
 import { sortCmp } from "@/composables/global/useArrayUtils"
 import { defaultStatus, sortStatics, sortPolicy } from "@/composables/global/useCommentSort"
 import { useRouter, useRoute } from "@/router/migrateRouter"
-import { isNetworkError } from "@/composables/global/useHttpError"
+import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
 
 
 export default () => {
@@ -62,9 +62,14 @@ export default () => {
       if (fetchStatus.value == "success") {
         status.profileLoading = false
       } else if (fetchStatus.value == "error") {
-        const response = error.value.response
-        showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
-        setTimeout(() => router.push("/"), 3000)        
+        if (isNetworkError(error.value.response)) {
+          showSnackbar("网络连接错误", 3000)
+        } else if (isValidErrorMessage(error.value.response.data.msg)) {
+          showSnackbar("error", error.value.response.data.msg, 3000)
+        } else {
+          showSnackbar("error", "服务器发生错误", 3000)
+        }
+        setTimeout(() => router.push("/"), 3000)
       }
     })
     useWatching(data, () => {

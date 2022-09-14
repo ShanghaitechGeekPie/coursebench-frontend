@@ -11,9 +11,9 @@
             :width="$vuetify.breakpoint.mdAndDown ? '100vw' : '360px'"
             class="pt-6 pb-3 px-7"
           >
-            <DetailLoading v-if="status.loading" />
+            <DetailLoader v-if="status.loading" />
             <Detail v-else />
-            <StatisticCardLoading v-if="status.loading" />
+            <StatisticLoader v-if="status.loading" class="pt-4" />
             <StatisticCard v-else />
           </v-card>
         </div>
@@ -26,15 +26,15 @@
             <div class="px-0">
               <div 
                 :style="{ width: this.$vuetify.breakpoint.smAndDown ? '' : this.adoptiveCardNumber * 428 + 'px' }"
-              >
-                <div class="d-flex flex-wrap justify-center justify-lg-start" v-if="status.loading">
-                  <div v-for="index in adoptiveFakeCardNumber" :key="index">
-                    <CourseCardLoading />
-                  </div>
-                </div>
+              >             
                 <div class="d-flex justify-center">        
                   <div :style="{ width: adoptiveCardContainerWidth + 24 + 'px' }">        
-                    <div class="d-flex flex-wrap justify-start">
+                    <div class="d-flex flex-wrap justify-start" v-if="status.loading">
+                      <div v-for="index in adoptiveCardNumber * 2" :key="index" class="d-flex">
+                        <CourseLoader :width="adoptiveCardWidth + 'px'" height="303px" />
+                      </div>       
+                    </div>                      
+                    <div class="d-flex flex-wrap justify-start" v-else>
                       <div v-for="(course, index) in courseText" :key="course.id" class="d-flex">
                         <v-fade-transition>
                           <CourseCard
@@ -44,7 +44,7 @@
                           />
                         </v-fade-transition>
                       </div>                  
-                    </div>
+                    </div>                  
                   </div>
                 </div>
               </div>
@@ -57,24 +57,24 @@
 </template>
 <script>
 import Detail from "@/components/teachers/detail/Detail"
-import DetailLoading from "@/components/teachers/loading/DetailLoading"
 import BackgroundImage from "@/components/teachers/detail/BackgroundImage"
 import CourseCard from "@/components/teachers/course/CourseCard"
-import CourseCardLoading from "@/components/teachers/loading/CourseCardLoading"
 import StatisticCard from "@/components/teachers/course/StatisticCard"
-import StatisticCardLoading from "@/components/teachers/loading/StatisticCardLoading"
 import useTeacherDetail from "@/composables/teachers/useTeacherDetail"
+import CourseLoader from "@/components/teachers/loader/CourseLoader"
+import DetailLoader from "@/components/teachers/loader/DetailLoader"
+import StatisticLoader from "@/components/teachers/loader/StatisticLoader"
 
 export default {
   components: {
     Detail,
-    DetailLoading,
     Comment,
     BackgroundImage,
     StatisticCard,
-    StatisticCardLoading,
     CourseCard,
-    CourseCardLoading
+    CourseLoader, 
+    DetailLoader, 
+    StatisticLoader
   },
   setup() {
     const { courseText, status, courseFilterStatus } = useTeacherDetail()
@@ -99,16 +99,6 @@ export default {
           position: "fixed",
           top: "90px"
         }
-      }
-    }, 
-
-    adoptiveFakeCardNumber() {
-      if (this.$vuetify.breakpoint.width >= 600 && this.$vuetify.breakpoint.width < 1260) {
-        return 2
-      } else if (Math.floor((this.$vuetify.breakpoint.width - 428) / 428) > 1) {
-        return Math.min(Math.floor((this.$vuetify.breakpoint.width - 428) / 428), 3)
-      } else {
-        return 1
       }
     }, 
 
