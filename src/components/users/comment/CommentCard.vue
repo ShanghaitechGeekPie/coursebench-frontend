@@ -1,7 +1,12 @@
 <template>
   <v-lazy>
     <v-card class="mb-3" flat max-width="800" outlined>
-      <CommentCardBar :comment="comment" :showType="showType" />
+      <CommentCardBar :comment="comment">
+        <template v-slot:headerAvatar="value">
+          <slot name="headerAvatar" :localComment="value">
+          </slot>
+        </template>
+      </CommentCardBar>
       <CommentCardContent :comment="comment" />
     </v-card>
   </v-lazy>
@@ -13,10 +18,6 @@ import CommentCardBar from "@/components/users/comment/CommentCardBar";
 export default {
   props: {
     comment: Object,
-    showType: {
-      type: String,
-      default: "user"
-    }
   },
   components: {
     CommentCardContent,
