@@ -8,7 +8,6 @@ import {isNetworkError} from "@/composables/global/useHttpError"
 export default () => {
 
     const showSnackbar = inject("showSnackbar")
-    const courseId = inject("courseId")
 
     const testUserProfile = {
         email: "1@shanghaitech.edu.cn",
@@ -48,7 +47,13 @@ export default () => {
         termItems: termItems
     })
 
+    const errorMsg = reactive({
+        target: "",
+        msg: "",
+    })
+
     const formStatus = reactive({
+        loading: false,
         isPostSuccess: false,
         isPostError: false,
         title: "",
@@ -58,6 +63,17 @@ export default () => {
         slider: [5, 5, 5, 5],
         commentTarget: 0,
     })
+
+    const clearErrorMsg = () => {
+        errorMsg.target = ""
+        errorMsg.msg = ""
+        formStatus.isPostError = false
+    }
+
+    const pushErrorMsg = (target, msg) => {
+        errorMsg.target = target
+        errorMsg.msg = msg
+    }
 
     const commentMutation = useMutation("/comment/post", {
         onMutate: () => {
@@ -74,13 +90,30 @@ export default () => {
             if (isNetworkError(error.response)) {
                 showSnackbar("error", error.response.data.code)
             }
+            if (error.response.data.code === "CommentAlreadyExists") {
+                showSnackbar("error", error.response.data.msg)
+            }
         }
     })
 
 
     const doSubmit = useDebounce(() => {
-      if (formStatus.semester === 0 || formStatus.title === "" || formStatus.content === "" || formStatus.commentTarget === 0 || isNaN(parseInt(formStatus.semester))) {
+        clearErrorMsg()
+      if (formStatus.semester === "" || isNaN(parseInt(formStatus.semester))) {
+          pushErrorMsg("semester","")
         return
+      }
+      if (formStatus.title === "") {
+          pushErrorMsg("title", "标题不能为空")
+          return
+      }
+      if (formStatus.content === "") {
+          pushErrorMsg("content", "评论内容不能为空")
+          return
+      }
+      if (formStatus.commentTarget === 0) {
+          pushErrorMsg("commentTarget", "评论对象不能为空")
+          return
       }
         commentMutation.mutate({
             "group": formStatus.commentTarget,
@@ -92,7 +125,6 @@ export default () => {
             "student_score_ranking": 2,
         })
     })
-    console.log("COURSEID", courseId)
 
-    return {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus}
+    return {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus, errorMsg }
 }
