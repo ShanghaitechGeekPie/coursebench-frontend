@@ -13,4 +13,9 @@ const isNetworkError = (response) => {
       && response.status != 200)
 }
 
-export { isInvalidRequest, isBackendError, isNetworkError }
+const isValidErrorMessage = (message) => {
+  // Sometimes the backend crashed and all we got is a nginx error page.
+  return message && message.indexOf("<html>") != 0 // I am not sure if this is a good way.
+}
+
+export { isInvalidRequest, isBackendError, isNetworkError, isValidErrorMessage }

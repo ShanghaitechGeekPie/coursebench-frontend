@@ -1,6 +1,6 @@
 import { reactive, inject, onMounted } from "vue"
 import { setPreset, getPreset } from "@/composables/global/useCookie"
-import { isNetworkError } from "@/composables/global/useHttpError"
+import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
 import useCaptcha from "@/composables/global/useCaptcha"
 import { mdiArrowLeft, mdiEye, mdiEyeOff, mdiWindowClose } from "@mdi/js"
 import useMutation from "@/composables/global/useMutation"
@@ -71,13 +71,17 @@ export default () => {
         showSnackbar("error", "网络连接失败")
       } else {
         userData.captcha = ""
-        getCaptcha()        
-        if (error.response.data.code === "UserPasswordIncorrect") {
-          formStatus.windowStep = 1
-        } else if (error.response.data.code === "UserNotExists" || error.response.data.code === "InvalidArgument") {
-          formStatus.windowStep = 0
+        getCaptcha()
+        if (isValidErrorMessage(error.response.data.msg)) {
+          showSnackbar("error", error.response.data.msg)
+          if (error.response.data.code === "UserPasswordIncorrect") {
+            formStatus.windowStep = 1
+          } else if (error.response.data.code === "UserNotExists" || error.response.data.code === "InvalidArgument") {
+            formStatus.windowStep = 0
+          }
+        } else {
+          showSnackbar("error", "服务器发生错误")
         }
-        showSnackbar("error", error.response.data.msg)
       }
     }
   })
@@ -94,10 +98,12 @@ export default () => {
     onError: (error) => {
       formStatus.captchaLoading = false
       formStatus.captchaBase64 = ""
-      if (isNetworkError(error)) {
-        showSnackbar("error", "网络连接失败")
+      if (isNetworkError(error.response)) {
+        showSnackbar("网络连接错误")
+      } else if (isValidErrorMessage(error.response.data.msg)) {
+        showSnackbar("error", error.response.data.msg)
       } else {
-        showSnackbar(error.response.data.msg)
+        showSnackbar("error", "服务器发生错误")
       }
     }
   })

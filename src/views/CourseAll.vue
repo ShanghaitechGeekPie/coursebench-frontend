@@ -2,10 +2,23 @@
   <div style="min-height: 100%">
     <div style="flex-wrap: wrap" class="d-flex justify-center flex-row-reverse pt-16">
       <div class="pa-lg-3 pb-3">
-        <div :class="[$vuetify.breakpoint.mdAndDown ? '' : 'statistic-card-container']">
+        <div :class="[$vuetify.breakpoint.mdAndDown ? '' : 'statistic-card-container']">          
+          <div v-if="status.loading"
+            :style="{ width: $vuetify.breakpoint.mdAndDown ? adoptiveCardContainerWidth + 'px': '360px' }"
+          >     
+            <v-card class="pt-6 pb-8 px-6" outlined flat>
+              <v-sheet color="#e2e2e2" class="mx-lg-1 mx-2 mb-3" height="30px" width="80px"></v-sheet>
+              <StatisticLoader 
+                :length="9" 
+                offset="16px" 
+                :width="$vuetify.breakpoint.lgAndUp ? 'calc(100% - 8px)' : 'calc(100% - 16px)'" 
+              />
+            </v-card>
+          </div>
           <StatisticCard 
             :style="$vuetify.breakpoint.mdAndDown ? {} : { position: 'fixed', top: '140px'}" 
             :width="adoptiveCardContainerWidth + 'px'"
+            v-else
           />
         </div>
       </div>
@@ -14,26 +27,28 @@
       >
         <div>
           <div class="mx-3 d-md-block d-block d-sm-flex justify-center">
-            <SelectBar :width="adoptiveCardContainerWidth + 'px'"/>
+            <SelectLoader :width="adoptiveCardContainerWidth + 'px'" type="select" v-if="status.loading" />
+            <SelectBar :width="adoptiveCardContainerWidth + 'px'" v-else />
           </div>
           <div class="pt-6 px-0">
             <div 
               :style="{ width: this.$vuetify.breakpoint.smAndDown ? '' : this.adoptiveCardNumber * 428 + 'px' }"
             >
-              <!-- <div class="d-flex flex-wrap justify-center justify-lg-start" v-if="status.loading">
-                <div
-                  v-for="index in adoptiveCardNumber"
-                  :key="index"
-                >
-                  <CourseCardLoading />
+              <div class="d-flex justify-center" v-if="status.loading">
+                <div :style="{ width: adoptiveCardContainerWidth + 24 + 'px' }">
+                  <div class="d-flex flex-wrap justify-start">                        
+                    <div v-for="index in adoptiveCardNumber * 2" :key="index" class="d-flex">
+                      <CourseLoader :width="adoptiveCardWidth + 'px'" height="303px" header="image" />
+                    </div>
+                  </div>
                 </div>
-              </div> -->              
+              </div>
               <v-data-iterator
                 :items="courseText"
                 :items-per-page="adoptiveCardNumber * 3"
                 :page="status.page"
                 hide-default-footer
-                v-if="courseText.length > 0"                
+                v-if="courseText.length > 0 && !status.loading"
               >
                 <template #default="{ items }">
                   <div class="d-flex justify-center">
@@ -56,7 +71,7 @@
                       <ElevatedPagination 
                         v-model="status.page"
                         :length="adoptiveCoursePage"
-                        :total-visible="7"
+                        :total-visible="$vuetify.breakpoint.xsOnly ? 5 : 7"
                         elevation="0"
                         outlined
                       />
@@ -78,6 +93,9 @@ import useCourseAll from "@/composables/courses/all/useCourseAll";
 import CourseCard from "@/components/courses/all/CourseCard";
 import ElevatedPagination from "@/components/courses/all/ElevatedPagination";
 import { instituteInfo } from "@/composables/global/useStaticData";
+import CourseLoader from "@/components/teachers/loader/CourseLoader"
+import SelectLoader from "@/components/teachers/loader/SelectLoader"
+import StatisticLoader from "@/components/teachers/loader/StatisticLoader"
 
 export default {
   setup() {
@@ -89,19 +107,12 @@ export default {
     SelectBar,
     StatisticCard,
     CourseCard,
-    ElevatedPagination
+    ElevatedPagination, 
+    CourseLoader, 
+    SelectLoader, 
+    StatisticLoader
   },
   computed: {
-    adoptiveFakeCardNumber() {
-      if (this.$vuetify.breakpoint.width >= 600 && this.$vuetify.breakpoint.width < 1260) {
-        return 2
-      } else if (Math.floor((this.$vuetify.breakpoint.width - 428) / 428) > 1) {
-        return Math.min(Math.floor((this.$vuetify.breakpoint.width - 428) / 428), 3)
-      } else {
-        return 1
-      }
-    }, 
-
     adoptiveCoursePage() {
       return Math.ceil(this.courseText.length / (this.adoptiveCardNumber * 3))
     }, 

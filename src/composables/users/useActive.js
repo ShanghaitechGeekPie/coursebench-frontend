@@ -4,7 +4,7 @@ import {
 } from "@mdi/js"
 import { useRoute } from "@/router/migrateRouter"
 import { reactive, onMounted } from "vue"
-import { isNetworkError } from "@/composables/global/useHttpError"
+import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
 import useMutation from "@/composables/global/useMutation"
 
 export default () => {
@@ -36,8 +36,10 @@ export default () => {
     onError: (error) => {
       if (isNetworkError(error.response)) {
         status.errorMessage = "网络连接失败，请稍后重试。"
-      } else {        
+      } else if (isValidErrorMessage(error.response.data.msg)) {
         status.errorMessage = error.response.data.msg + "，请稍后重试。"
+      } else {
+        status.errorMessage = "服务器发生错误，请稍后重试。"
       }
     }, 
     onSettled: () => {

@@ -1,5 +1,5 @@
 import { reactive, inject, onMounted } from "vue"
-import { isNetworkError } from "@/composables/global/useHttpError"
+import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
 import useCaptcha from "@/composables/global/useCaptcha"
 import { mdiArrowLeft, mdiEye, mdiEyeOff, mdiWindowClose, mdiEmailAlertOutline } from "@mdi/js"
 import useMutation from "@/composables/global/useMutation"
@@ -51,13 +51,15 @@ export default () => {
       formStatus.loading = false
       if (isNetworkError(error.response)) {
         showSnackbar("error", "网络连接失败")
-      } else {
+      } else if (isValidErrorMessage(error.response.data.msg)) {
+        showSnackbar("error", error.response.data.msg)        
         userData.captcha = ""
         getCaptcha()
         if (error.response.data.code === "UserAlreadyExists" || error.response.data.code === "UserEmailDuplicated") {
           formStatus.windowStep = 0;
         }
-        showSnackbar("error", error.response.data.msg)
+      } else {
+        showSnackbar("error", "服务器发生错误")
       }
     }
   });
@@ -73,10 +75,12 @@ export default () => {
     onError: (error) => {
       formStatus.captchaLoading = false
       formStatus.captchaBase64 = ""
-      if (isNetworkError(error)) {
-        showSnackbar("error", "网络连接失败")
+      if (isNetworkError(error.response)) {
+        showSnackbar("网络连接错误")
+      } else if (isValidErrorMessage(error.response.data.msg)) {
+        showSnackbar("error", error.response.data.msg)
       } else {
-        showSnackbar(error.response.data.msg)
+        showSnackbar("error", "服务器发生错误")
       }
     }
   })

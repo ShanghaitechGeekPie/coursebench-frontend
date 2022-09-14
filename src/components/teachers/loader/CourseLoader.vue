@@ -1,8 +1,8 @@
 <template>
   <v-lazy class="px-3">
-    <div :style="{ width: adoptiveCardWidth }">
-      <v-card class="mb-3" flat height="303" outlined>
-        <v-container>
+    <div :style="{ width: width }">
+      <v-card class="mb-3" flat :height="height" outlined>
+        <v-container v-if="header === 'avatar'">
           <v-row class="d-flex justify-space-between">
             <v-col class="d-flex justify-space-between">
               <div style="transform: translate(8px, 0)">
@@ -12,12 +12,19 @@
                 <v-sheet class="my-1" color="#e2e2e2" width="72.67px" height="14px"></v-sheet>
                 <v-sheet class="my-1" color="#e2e2e2" width="72.67px" height="14px"></v-sheet>
               </div>
-            </v-col>
+            </v-col>            
           </v-row>
         </v-container>
+        <v-container v-else-if="header === 'image'">
+          <v-row class="d-flex justify-space-between">        
+            <v-col class="d-flex justify-space-between pa-0">
+              <v-sheet color="#e2e2e2" width="100%" height="69px"></v-sheet>
+            </v-col>
+          </v-row>
+        </v-container>            
         <v-container>
           <v-row>
-            <v-col cols="12" class="pt-0">
+            <v-col cols="12" :class="[ header === 'image' ? 'pt-8 pb-2' : 'pt-0' ]">
               <div class="router-container d-flex">
                 <v-sheet class="my-1 ml-2" color="#e2e2e2" width="160px" height="16px"></v-sheet>
               </div>
@@ -25,7 +32,7 @@
           </v-row>
           <v-row>
             <v-col>
-              <div v-for="index in 4" :key="index">
+              <div v-for="index in header === 'image' ? 3 : 4" :key="index">
                 <div :class="['d-flex', 'justify-space-between', 'px-2', index == 1 ? 'pb-3' : 'py-3']">
                   <v-sheet class="my-1" color="#e2e2e2" width="100%" height="16px"></v-sheet>
                 </div>
@@ -44,17 +51,18 @@ export default {
   components: {
     AvatarContainer
   }, 
-  computed: {
-    adoptiveCardWidth() {
-      if (this.$vuetify.breakpoint.mdAndDown) {
-        if (this.$vuetify.breakpoint.xsOnly) {
-          return "calc(100vw - 24px)"
-        } else {
-          return 404 * 2 > this.$vuetify.breakpoint.width ? "300px" : "404px"
-        }
-      } else {
-        return "404px"
-      }
+  props: {
+    width: {
+      type: String,
+      default: ""
+    }, 
+    height: {
+      type: String,
+      default: ""
+    }, 
+    header: {
+      type: String, 
+      default: "avatar"
     }
   }
 }

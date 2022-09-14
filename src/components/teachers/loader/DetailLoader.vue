@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div :style="{
+    width: width, 
+    height: height
+  }">
     <div
       class="d-flex justify-center"
       :style="{ transform: $vuetify.breakpoint.mdAndDown ? 'translate(0, -76px)' : '' }"
@@ -32,5 +35,15 @@ import AvatarContainer from "@/components/users/profile/AvatarContainer";
 
 export default {
   components: { AvatarContainer },
+  props: {
+    width: {
+      type: String,
+      default: "",    
+    }, 
+    height: {
+      type: String,
+      default: "",    
+    }
+  }
 };
 </script>

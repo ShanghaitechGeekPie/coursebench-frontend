@@ -26,7 +26,7 @@
           <v-row>
             <v-col cols="12" class="pt-0">
               <div
-                @click="$router.push({ path: `course/${course.id}` })"
+                @click="$router.push(`/course/${course.id}`)"
                 class="router-container d-flex"
               >
                 <div>

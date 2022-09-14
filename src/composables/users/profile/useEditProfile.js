@@ -5,7 +5,7 @@ import { gradeItems, visibleItems } from "@/composables/global/useStaticData"
 import useCaptcha from "@/composables/global/useCaptcha"
 import useMutation from "@/composables/global/useMutation"
 import { setPreset, getPreset } from "@/composables/global/useCookie"
-import { isNetworkError } from "@/composables/global/useHttpError"
+import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
 import useDebounce from "@/composables/global/useDebounce"
 import useWatching from "@/composables/global/useWatching"
 
@@ -80,10 +80,12 @@ export default () => {
     }, 
     onError: (error) => {
       formStatus.loading = false
-      if (isNetworkError(error)) {
-        showSnackbar("error", "网络错误")
-      } else {
+      if (isNetworkError(error.response)) {
+        showSnackbar("网络连接错误")
+      } else if (isValidErrorMessage(error.response.data.msg)) {
         showSnackbar("error", error.response.data.msg)
+      } else {
+        showSnackbar("error", "服务器发生错误")
       }
     }
   })
@@ -101,13 +103,15 @@ export default () => {
       formStatus.loading = false
       if (isNetworkError(error.response)) {
         showSnackbar("error", "网络连接失败")
-      } else {
+      } else if (isValidErrorMessage(error.response.data.msg)) {
         passwordData.captcha = ""
         getCaptcha() 
         if (error.response.data.code === "UserPasswordIncorrect") {
           formStatus.windowStep = 1          
         }
         showSnackbar("error", error.response.data.msg)
+      } else {
+        showSnackbar("error", "服务器发生错误")
       }
     }
   })
@@ -146,10 +150,12 @@ export default () => {
     onError: (error) => {
       formStatus.captchaLoading = false
       formStatus.captchaBase64 = ""
-      if (isNetworkError(error)) {
-        showSnackbar("error", "网络连接失败")
+      if (isNetworkError(error.response)) {
+        showSnackbar("网络连接错误")
+      } else if (isValidErrorMessage(error.response.data.msg)) {
+        showSnackbar("error", error.response.data.msg)
       } else {
-        showSnackbar(error.response.data.msg)
+        showSnackbar("error", "服务器发生错误")
       }
     }
   })  
