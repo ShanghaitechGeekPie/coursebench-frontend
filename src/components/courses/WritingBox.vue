@@ -113,10 +113,10 @@ export default {
   methods: {
     getSemesterCode() {
       if (this.courseYear === 0) {
-        return 0
+        return ""
       }
       if (this.courseTerm === "") {
-        return 0
+        return ""
       }
       return this.courseYear + this.courseTerm
     }

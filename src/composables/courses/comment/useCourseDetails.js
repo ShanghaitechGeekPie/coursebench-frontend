@@ -10,16 +10,6 @@ import {useRoute, useRouter} from "@/router/migrateRouter";
 
 export default () => {
 
-    const testTeachers = [
-        {"name": "孙伟", "id": 293},
-        {"name": "姚成建", "id": 23},
-        {"name": "Ranjan Ritwik", "id": 923},
-    ]
-    const getTeachers = () => {
-        const teachers = testTeachers
-
-        return teachers
-    }
     const teachers = ref([])
     const router = useRouter()
     const route = useRoute()
@@ -114,14 +104,28 @@ export default () => {
             if (data.value) {
                 useRefCopy(data.value.data, courseDetail)
                 courseId.value = {
-                    id: courseDetail.groups[0].id
+                    id: id
+                }
+                if (courseDetail.groups) {
+                    courseDetail.groups.forEach((value, index, array)=>{
+                        let names = ""
+                        value.teachers.forEach((teacher, teacherIndex, teacherArray) => {
+                            names += teacher.name
+                            if (teacherIndex !== teacherArray.length - 1) {
+                                names += ", "
+                            }
+                        })
+                        teachers.value.push({
+                            id: value.id,
+                            name: names
+                        })
+                    })
                 }
             }
         })
     }
 
     onMounted(() => {
-        teachers.value = getTeachers()
         getCourseDetail()
         getCourseComment()
     })
