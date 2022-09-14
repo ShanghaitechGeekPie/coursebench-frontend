@@ -5,7 +5,7 @@
     </div>
     <div class="d-flex justify-center">
       <v-row class="d-flex justify-center mx-10" style="max-width: 1150px;">
-        <v-col cols="4" class="mt-3 pr-6">
+        <v-col cols="3" class="mt-3">
           <TeacherSelect class=""/>
         </v-col>
         <v-col cols="8" class="">

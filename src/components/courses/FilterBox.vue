@@ -1,19 +1,17 @@
 <template>
-  <v-card flat outlined width="500px">
-    <v-row class="ml-1 mt-3">
-      <v-col class="px-auto" cols="6">
+  <v-card flat outlined >
+    <v-row class="mx-1 mt-3">
+      <v-col class="" cols="6">
         <v-select dense
                   v-model="status.sortKey"
                   :items="statics.sortKeyItem"
                   label="排序方式"
-                  style="width: 100px;"
         ></v-select>
       </v-col>
       <v-col class="" cols="6">
         <v-select dense
                   v-model="status.order"
                   :items="statics.orderItem[status.sortKey]"
-                  style="width: 100px;"
         ></v-select>
       </v-col>
     </v-row>

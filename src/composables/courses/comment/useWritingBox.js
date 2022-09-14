@@ -1,5 +1,5 @@
 import {inject, reactive} from "vue"
-import {mdiChevronRight} from "@mdi/js"
+import {mdiChevronRight, mdiPencil } from "@mdi/js"
 import {judgeItems, gradeItems, gradingInfo, rawYearItems, termItems} from "@/composables/global/useStaticData"
 import useMutation from "@/composables/global/useMutation";
 import useDebounce from "@/composables/global/useDebounce";
@@ -34,7 +34,8 @@ export default () => {
 
     const statics = reactive({
         icons: {
-            mdiChevronRight
+            mdiChevronRight,
+            mdiPencil
         },
         grade: [
             gradingInfo.quality,
