@@ -4,7 +4,7 @@ import {sortStatics} from "@/composables/global/useCommentSort";
 
 export default () => {
 
-    const teachers = inject('teachers')
+    const teachers = inject('groups')
     const status = inject("courseCommentStatus")
     const statics = {
         ...sortStatics,

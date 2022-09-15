@@ -35,8 +35,8 @@ import TeacherSelect from "@/components/courses/FilterBox"
 export default {
   components: {DetailCard, TeacherSelect, CourseCommentCard},
   setup() {
-    const {teachers, commentText, status, courseDetail } = useCourseDetails()
-    return {teachers, commentText, status, courseDetail }
+    const { commentText, status, courseDetail } = useCourseDetails()
+    return { commentText, status, courseDetail }
   },
   data() {
     return {
