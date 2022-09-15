@@ -11,10 +11,12 @@ import {useRoute, useRouter} from "@/router/migrateRouter";
 export default () => {
 
     const teachers = ref([])
+    const groups = ref([])
     const router = useRouter()
     const route = useRoute()
 
     provide('teachers', teachers);
+    provide('groups', groups);
 
     const status = reactive({
         ...defaultStatus,
@@ -107,6 +109,7 @@ export default () => {
                     id: id
                 }
                 if (courseDetail.groups) {
+                    let teacherContainer = []
                     courseDetail.groups.forEach((value, index, array)=>{
                         let names = ""
                         value.teachers.forEach((teacher, teacherIndex, teacherArray) => {
@@ -114,12 +117,14 @@ export default () => {
                             if (teacherIndex !== teacherArray.length - 1) {
                                 names += ", "
                             }
+                            teacherContainer.push(teacher)
                         })
-                        teachers.value.push({
+                        groups.value.push({
                             id: value.id,
                             name: names
                         })
                     })
+                    teachers.value = [...new Set(teacherContainer)]
                 }
             }
         })
