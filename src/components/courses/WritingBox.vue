@@ -3,7 +3,7 @@
     <v-dialog width="750">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="blue lighten-1" v-bind="attrs" v-on="on" fab
-               style="position: fixed; top: 80vh; left: 85vw; z-index: 1; "
+               style="position: fixed; top: 80vh; left: 87vw; z-index: 1; "
         >
           <v-icon>
             {{statics.icons.mdiPencil}}
