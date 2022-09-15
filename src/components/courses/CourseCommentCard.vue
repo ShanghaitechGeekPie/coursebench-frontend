@@ -12,6 +12,7 @@
                 :src="avatar.localComment.user.avatar"
                 small
                 tile
+                slice
                 size="38"
             />
             <div class="pl-2">
