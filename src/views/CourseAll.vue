@@ -28,7 +28,14 @@
         <div>
           <div class="mx-3 d-md-block d-block d-sm-flex justify-center">
             <SelectLoader :width="adoptiveCardContainerWidth + 'px'" type="select" v-if="status.loading" />
-            <SelectBar :width="adoptiveCardContainerWidth + 'px'" v-else />
+            <SelectBar 
+              :width="adoptiveCardContainerWidth + 'px'"
+              :key-items="sortStatics.sortKeyItem"
+              :order-items="sortStatics.orderItem[courseFilterStatus.sortKey]"
+              :sort-key.sync="courseFilterStatus.sortKey"
+              :sort-order.sync="courseFilterStatus.order"
+              v-else 
+            />
           </div>
           <div class="pt-6 px-0">
             <div 
@@ -99,9 +106,9 @@ import StatisticLoader from "@/components/teachers/loader/StatisticLoader"
 
 export default {
   setup() {
-    const { courseText, status, courseFilterStatus } = useCourseAll();
+    const { courseText, status, courseFilterStatus, sortStatics } = useCourseAll();
 
-    return { instituteInfo, courseText, status, courseFilterStatus };
+    return { instituteInfo, courseText, status, courseFilterStatus, sortStatics };
   },
   components: {
     SelectBar,

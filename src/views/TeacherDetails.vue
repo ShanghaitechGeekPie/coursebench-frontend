@@ -1,6 +1,7 @@
 <template>
   <div style="min-height: 100%">
-    <BackgroundImage />
+    <ImageLoader v-if="status.loading" />
+    <BackgroundImage v-else />
     <div style="flex-wrap: wrap" class="d-flex justify-center">
       <div class="pa-lg-3">
         <div :style="{ width: $vuetify.breakpoint.mdAndDown ? '100vw' : '360px' }">
@@ -64,6 +65,7 @@ import useTeacherDetail from "@/composables/teachers/useTeacherDetail"
 import CourseLoader from "@/components/teachers/loader/CourseLoader"
 import DetailLoader from "@/components/teachers/loader/DetailLoader"
 import StatisticLoader from "@/components/teachers/loader/StatisticLoader"
+import ImageLoader from "@/components/teachers/loader/ImageLoader"
 
 export default {
   components: {
@@ -74,7 +76,8 @@ export default {
     CourseCard,
     CourseLoader, 
     DetailLoader, 
-    StatisticLoader
+    StatisticLoader, 
+    ImageLoader
   },
   setup() {
     const { courseText, status, courseFilterStatus } = useTeacherDetail()

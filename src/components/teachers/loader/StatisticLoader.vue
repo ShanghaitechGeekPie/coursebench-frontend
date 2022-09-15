@@ -13,28 +13,8 @@
   </div>
 </template>
 <script>
-import useStatisticCard from "@/composables/teachers/course/useStatisticCard";
 
 export default {
-  setup() {
-    const { courseStatistic, statics, status } = useStatisticCard();
-    return { courseStatistic, statics, status };
-  },
-  computed: {
-    isEmpty() {
-      for (let key in this.courseStatistic.count) {
-        if (this.courseStatistic.count[key]) {
-          return false;
-        }
-      }
-      return true;
-    },
-  },
-  created() {
-    if (this.$vuetify.breakpoint.mdAndDown) {
-      this.status.showAll = false;
-    }
-  },
   props: {
     width: {
       type: String,
