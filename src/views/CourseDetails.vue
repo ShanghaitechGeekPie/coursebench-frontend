@@ -5,17 +5,18 @@
     </div>
     <div class="d-flex justify-center">
       <v-row class="d-flex justify-center mx-10" style="max-width: 1150px;">
-        <v-col cols="4" class="mt-3 pr-6">
+        <v-col cols="3" class="mt-3">
           <TeacherSelect class=""/>
         </v-col>
-        <v-col cols="8" class="">
+        <v-col cols="8" class="mt-6">
           <v-row class="">
-            <v-col class="pr-0 pl-0 pr-0 mt-3" v-for="(comment, index) in commentText" :key="comment.id"
+            <v-col class="pr-0 pl-0 pr-0 py-0" v-for="(comment, index) in commentText" :key="comment.id"
                    cols="12">
-              <CommentCard
+              <CourseCommentCard
                   :comment="comment"
                   :showType="'course'"
-              />
+              >
+              </CourseCommentCard>
             </v-col>
           </v-row>
         </v-col>
@@ -28,12 +29,11 @@
 <script>
 import DetailCard from "@/components/courses/DetailCard"
 import useCourseDetails from "@/composables/courses/comment/useCourseDetails"
-
-import CommentCard from "@/components/users/comment/CommentCard";
+import CourseCommentCard from "@/components/courses/CourseCommentCard";
 import TeacherSelect from "@/components/courses/FilterBox"
 
 export default {
-  components: {DetailCard, CommentCard, TeacherSelect},
+  components: {DetailCard, TeacherSelect, CourseCommentCard},
   setup() {
     const {teachers, commentText, status, courseDetail } = useCourseDetails()
     return {teachers, commentText, status, courseDetail }

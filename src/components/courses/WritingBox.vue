@@ -1,8 +1,14 @@
 <template>
   <v-container>
-    <v-dialog width="800">
+    <v-dialog width="750">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="blue lighten-1" v-bind="attrs" v-on="on" outlined> 写评论</v-btn>
+        <v-btn color="blue lighten-1" v-bind="attrs" v-on="on" fab
+               style="position: fixed; top: 80vh; left: 87vw; z-index: 1; "
+        >
+          <v-icon>
+            {{statics.icons.mdiPencil}}
+          </v-icon>
+        </v-btn>
       </template>
 
       <v-card class="pa-3" elevation="0" style="overflow: hidden">
@@ -13,10 +19,12 @@
             </v-avatar>
           </v-col>
           <v-col cols="11">
-            <v-text-field label="标题" class="font-weight-bold" v-model="formStatus.title"></v-text-field>
+            <v-text-field label="标题" class="font-weight-bold" v-model="formStatus.title"
+                          :error-messages="errorMsg.target === 'title' ? errorMsg.msg : ''"></v-text-field>
           </v-col>
         </v-row>
-        <v-textarea label="发一条友善的评论" auto-grow outlined rows="3" class="px-4" messages="支持markdown" v-model="formStatus.content">
+        <v-textarea label="发一条友善的评论" auto-grow outlined rows="3" class="px-4" messages="支持markdown"
+                    v-model="formStatus.content" :error-messages="errorMsg.target === 'content' ? errorMsg.msg : ''">
         </v-textarea>
         <v-row class="d-flex justify-end mt-0 mb-3 px-9">
           <v-col v-for="(dim, index) in statics.judgeItems" :key="index" cols="6" class="pb-0" align="center">
@@ -56,12 +64,13 @@
             </v-slider>
           </v-col>
         </v-row>
-        <v-row class="d-flex flex-row justify-end align-center">
+        <v-row class="d-flex flex-row justify-end align-center mx-3">
           <v-col cols="2">
             <v-select
                 v-model="courseYear"
                 :items="statics.yearItems"
                 label="修读时间"
+                :error="errorMsg.target === 'semester'"
             ></v-select>
           </v-col>
           <v-col cols="2">
@@ -71,17 +80,21 @@
                 item-text="name"
                 item-value="id"
                 label="修读学期"
+                :error="errorMsg.target === 'semester'"
             ></v-select>
           </v-col>
           <v-col cols="2">
-            <v-select v-model="formStatus.commentTarget" :items="teachers" item-text="name" item-value="id" label="评价对象"></v-select>
+            <v-select v-model="formStatus.commentTarget" :items="teachers" item-text="name" item-value="id"
+                      label="评价对象"
+                      :error-messages="errorMsg.target === 'comentTarget' ? errorMsg.msg : ''"></v-select>
           </v-col>
 
           <v-col cols="2" class="d-flex">
             <v-switch v-model="formStatus.is_anonymous" class="mt-0" label="匿名" color="info" hide-details></v-switch>
           </v-col>
           <v-col class="px-0 d-flex" cols="2">
-            <v-btn color="primary" depressed @click="doSubmit">
+            <v-btn :color="formStatus.isPostError ? 'error' : 'primary'" depressed @click="doSubmit"
+                   :loading="formStatus.loading">
               发表评论
               <v-icon>
                 {{ statics.icons.mdiChevronRight }}
@@ -100,8 +113,8 @@ import useWritingBox from "@/composables/courses/comment/useWritingBox"
 export default {
   name: "WritingBox",
   setup() {
-    const {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus } = useWritingBox()
-    return {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus }
+    const {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus, errorMsg} = useWritingBox()
+    return {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus, errorMsg}
   },
   data() {
     return {
@@ -113,10 +126,10 @@ export default {
   methods: {
     getSemesterCode() {
       if (this.courseYear === 0) {
-        return 0
+        return ""
       }
       if (this.courseTerm === "") {
-        return 0
+        return ""
       }
       return this.courseYear + this.courseTerm
     }
@@ -131,7 +144,7 @@ export default {
   },
   mounted() {
     // setInterval(()=>{
-    //   console.log(this.formStatus.is_anonymous)
+    //   console.log(this.errorMsg.target)
     // }, 1000)
   }
 }

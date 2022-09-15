@@ -2,7 +2,7 @@
   <v-card flat>
     <v-card-text class="px-sm-4 px-2 pt-sm-4 pt-3 pb-sm-3 pb-0">
       <div class="d-flex justify-space-between">
-        <slot name="header-avatar">
+        <slot name="headerAvatar" :localComment="comment">
           <div 
             class="d-flex justify-space-between router-container" 
             @click="$router.push({ path: `course/${comment.course.id}` })"
