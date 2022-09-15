@@ -1,4 +1,4 @@
-import {onMounted, provide, ref, reactive} from "vue"
+import {onMounted, provide, ref, reactive, inject} from "vue"
 import {defaultStatus, sortStatics, sortPolicy} from "@/composables/global/useCommentSort"
 import useFetching from "@/composables/global/useFetching";
 import useDebounce from "@/composables/global/useDebounce"
@@ -7,6 +7,7 @@ import useRefCopy from "@/composables/global/useRefCopy";
 import {sortCmp} from "@/composables/global/useArrayUtils"
 import useRecordWatch from "@/composables/global/useRecordWatch"
 import {useRoute, useRouter} from "@/router/migrateRouter";
+import {isNetworkError} from "@/composables/global/useHttpError";
 
 export default () => {
 
@@ -14,6 +15,7 @@ export default () => {
     const groups = ref([])
     const router = useRouter()
     const route = useRoute()
+    const showSnackbar = inject("showSnackbar")
 
     provide('teachers', teachers);
     provide('groups', groups);
@@ -52,6 +54,10 @@ export default () => {
                 sortPolicy[status.sortKey](x), sortPolicy[status.sortKey](y)
             )
     }
+    const arrayUnique = (value, index, self) => {
+        const getId = (x)=>{return x.id}
+        return self.map(getId).indexOf(getId(value)) === index;
+    }
 
     // Fixed: use an inefficient way to make work temporarily
     useRecordWatch(status, useDebounce((lastStatus) => {
@@ -73,7 +79,7 @@ export default () => {
             if (fetchStatus.value === "success") {
             } else if (fetchStatus.value === "error") {
                 const response = error.value.response
-                // showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
+                showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
                 setTimeout(() => router.push("/"), 3000)
             }
         })
@@ -97,7 +103,7 @@ export default () => {
             if (fetchStatus.value === "success") {
             } else if (fetchStatus.value === "error") {
                 const response = error.value.response
-                // showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
+                showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
                 setTimeout(() => router.push("/"), 3000)
             }
         })
@@ -124,7 +130,8 @@ export default () => {
                             name: names
                         })
                     })
-                    teachers.value = [...new Set(teacherContainer)]
+                    // teachers.value = [...new Set(teacherContainer)]
+                    teachers.value = teacherContainer.filter(arrayUnique)
                 }
             }
         })
