@@ -32,7 +32,7 @@
               :dialog="$vuetify.breakpoint.name === 'xs'"
               #default="{ overflow }"
             >
-              <slot name="content-note">
+              <slot name="contentNote" :localComment="comment">
                 <v-row>
                   <v-col
                     class="pa-0 pl-3 pb-2 pt-sm-3 pt-2"
@@ -110,7 +110,7 @@
                   class="pa-0 pr-sm-4 pr-3" 
                   cols="4"
                 >                  
-                  <slot name="footer-note">
+                  <slot name="footerNote" :localComment="comment">
                     <div class="d-flex justify-end" style="flex-wrap: wrap">
                       <div class="pr-sm-2">
                         <v-icon size="15" style="transform: translate(0, -1px)">
@@ -144,7 +144,6 @@ import useCommentCardContent from "@/composables/users/comment/useCommentCardCon
 import TextContainer from "@/components/users/comment/TextContainer";
 import { judgeItems, gradingInfo } from "@/composables/global/useStaticData";
 
-// TODO: Fix the bug that the backend forget to send some data
 // TODO: Decide if the score by user is int or float
 
 // Some ancient shit are contained in this component that is not worth to fix
@@ -156,7 +155,12 @@ export default {
     return { statics, judgeItems, gradingInfo };
   },
   components: { TextContainer },
-  props: { comment: Object },
+  props: { 
+    comment: {
+      type: Object,
+      required: true,
+    }
+  },
   computed: {
     semester() {
       let sem = new String(this.comment.semester);

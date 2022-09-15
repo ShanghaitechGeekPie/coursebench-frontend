@@ -46,7 +46,7 @@
             </div>
           </div>
         </div> -->
-        <slot name="header-note">
+        <slot name="headerNote" :localComment="comment">
           <div class="d-flex justify-end">
             <div class="d-flex flex-column">
               <div class="mt-n1">
