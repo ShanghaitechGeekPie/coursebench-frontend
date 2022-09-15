@@ -178,11 +178,10 @@ export default () => {
 
 
 
-    provide("sortStatics", sortStatics)
     provide("courseStatistic", courseStatistic)
     provide("courseFilterStatus", courseFilterStatus)
 
 
 
-    return { courseText, status, courseFilterStatus }
+    return { courseText, status, courseFilterStatus, sortStatics }
 }

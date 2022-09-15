@@ -20,32 +20,14 @@
             />
             <div class="pl-2">
               <div class="text-caption mt-n1">{{ comment.course.code }}</div>
-              <div class="text-body-1 font-weight-bold overflow-ellipsis">
+              <div class="text-body-1 font-weight-bold overflow-ellipsis"
+                :style="{ 'max-width': $vuetify.breakpoint.xsOnly ? '180px' : '' }"
+              >
                 {{ comment.course.name }}
               </div>
             </div>          
           </div>
         </slot>
-        <!-- <div
-          class="d-flex justify-space-between router-container"
-          @click="$router.push({ path: `/user/${comment.user_id}` })"
-        >
-          <AvatarContainer
-            :name="comment.user_nickname"
-            :src="comment.avatar"
-            small
-            tile
-            size="38"
-          />
-          <div class="pl-2">
-            <div class="text-caption mt-n1">
-              {{ gradeItems[comment.grade] }}
-            </div>
-            <div class="text-body-1 font-weight-bold overflow-ellipsis">
-              {{ comment.user_nickname }}
-            </div>
-          </div>
-        </div> -->
         <slot name="headerNote" :localComment="comment">
           <div class="d-flex justify-end">
             <div class="d-flex flex-column">
