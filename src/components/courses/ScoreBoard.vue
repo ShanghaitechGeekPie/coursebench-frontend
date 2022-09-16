@@ -1,26 +1,25 @@
 <template>
   <div>
-    <div class="d-flex flex-column align-center">
-      <div>
-        <v-progress-circular
-          :value="value"
-          :size="40"
-          :width="6"
-          :style="{ 'color': fontColor, 'font-size': '13px' }"
-        >{{ value }}</v-progress-circular>
-      </div>
-      <div :style="{ 'color': fontColor, 'font-size': '14px' }" class="mt-1 font-weight-black">{{ text }}</div>
-    </div>
+    <ScoreLine :starNum="5" :percentage="60" style="max-height: 13px"></ScoreLine>
+    <ScoreLine :starNum="4" :percentage="3 " style="max-height: 13px"></ScoreLine>
+    <ScoreLine :starNum="3" :percentage="2 " style="max-height: 13px"></ScoreLine>
+    <ScoreLine :starNum="2" :percentage="5 " style="max-height: 13px"></ScoreLine>
+    <ScoreLine :starNum="1" :percentage="30" style="max-height: 13px"></ScoreLine>
   </div>
 </template>
 
 <script>
+
+import ScoreLine from "@/components/courses/ScoreLine";
 export default {
-  name: "ScoreBoard",
+  components: {ScoreLine},
   props: {
     fontColor: String,
     text: String,
     value: String
+  },
+  setup() {
+
   }
 }
 </script>

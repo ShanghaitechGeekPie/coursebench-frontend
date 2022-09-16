@@ -1,9 +1,7 @@
-import { inject } from "vue"
 import { mdiStar, mdiStarOutline } from "@mdi/js";
 
 export default () => {
 
-    const teachers = inject('teachers')
     const statics = {
         icons: {
             mdiStarOutline,
@@ -11,5 +9,5 @@ export default () => {
         }
     }
 
-    return { teachers, statics }
+    return { statics }
 }
