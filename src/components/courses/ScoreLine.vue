@@ -1,5 +1,5 @@
 <template>
-  <v-row class="" no-gutters>
+  <v-row class="pr-2" no-gutters>
     <v-col
         cols="3"
         class="d-flex align-center justify-end pr-1"
@@ -18,7 +18,7 @@
           background-color="grey lighten-2"
       ></v-rating>
     </v-col>
-    <v-col cols="7" class="d-flex align-center">
+    <v-col cols="8" class="d-flex align-center">
       <v-progress-linear
           color="grey"
           :value="percentage"
