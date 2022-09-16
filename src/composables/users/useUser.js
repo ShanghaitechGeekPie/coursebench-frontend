@@ -7,7 +7,7 @@ import useRecordWatch from "@/composables/global/useRecordWatch"
 import useFetching from "@/composables/global/useFetching"
 import useUserName from "@/composables/global/useUserName"
 import { sortCmp } from "@/composables/global/useArrayUtils"
-import { defaultStatus, sortPolicy } from "@/composables/global/useCommentSort"
+import { defaultStatus, sortPolicy, sortStatics} from "@/composables/global/useCommentSort"
 import { useRouter, useRoute } from "@/router/migrateRouter"
 import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
 
@@ -59,9 +59,9 @@ export default () => {
     const id = route.params.id
     const { status: fetchStatus, data, error } = useFetching(["user_profile", id], "/user/profile/" + id)
     useWatching(fetchStatus, () => {
-      if (fetchStatus.value == "success") {
+      if (fetchStatus.value === "success") {
         status.profileLoading = false
-      } else if (fetchStatus.value == "error") {
+      } else if (fetchStatus.value === "error") {
         if (isNetworkError(error.value.response)) {
           showSnackbar("error", "网络连接错误", 3000)
         } else if (isValidErrorMessage(error.value.response.data.msg)) {
@@ -74,7 +74,7 @@ export default () => {
     })
     useWatching(data, () => {
       if (data.value) {
-        if (id == global.userProfile.id) {
+        if (id === global.userProfile.id) {
           // if we see our own profile, we should not be anonymous          
           useRefCopy(global.userProfile, userProfile)
         } else {
@@ -82,7 +82,7 @@ export default () => {
         }
         userProfile.nickname = useUserName(userProfile)
         userProfile.grade = gradeItems[userProfile.grade]
-        userProfile.year = userProfile.year == 0 ? "暂不透露" : userProfile.year
+        userProfile.year = userProfile.year === 0 ? "暂不透露" : userProfile.year
       }
     })
   }
@@ -91,9 +91,9 @@ export default () => {
     const id = route.params.id
     const { status: fetchStatus, data, error } = useFetching(["comment_text", id], "/comment/user/" + id)
     useWatching(fetchStatus, () => {
-      if (fetchStatus.value == "success") {
+      if (fetchStatus.value === "success") {
         status.commentLoading = false
-      } else if (fetchStatus.value == "error") {
+      } else if (fetchStatus.value === "error") {
         if (isNetworkError(error.value.response)) {
           showSnackbar("error", "网络连接错误", 3000)
         } else if (isValidErrorMessage(error.value.response.data.msg)) {
@@ -124,7 +124,7 @@ export default () => {
   const getCommentStatistic = () => {
     commentStatistic.total = commentText.value.length
     const schools = Object.getOwnPropertyNames(commentStatistic.count).filter((key) => {
-      return key != "__ob__" && key != "其他学院"
+      return key !== "__ob__" && key !== "其他学院"
     })
     for (let comment of commentText.value) {
       if (schools.indexOf(comment.course.institute) >= 0) {
@@ -166,12 +166,12 @@ export default () => {
 
 
 
-  if (route.params.id == global.userProfile.id) {
+  if (route.params.id === global.userProfile.id) {
     watch(() => global.userProfile, () => {
       useRefCopy(global.userProfile, userProfile)
       userProfile.nickname = useUserName(userProfile)
       userProfile.grade = gradeItems[userProfile.grade]
-      userProfile.year = userProfile.year == 0 ? "暂不透露" : userProfile.year
+      userProfile.year = userProfile.year === 0 ? "暂不透露" : userProfile.year
     })
   }
 
@@ -183,6 +183,6 @@ export default () => {
   })
 
 
-  return { commentText, commentFilterStatus, status }
+  return { commentText, commentFilterStatus, status, userProfile }
   
 }

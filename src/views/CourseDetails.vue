@@ -1,7 +1,7 @@
 <template>
   <div class="" style="overflow: hidden;">
     <div class="upper-wrp d-flex justify-center align-end">
-      <DetailCard class="mt-sm-10 pb-sm-8 pt-sm-2" :details="courseDetail" />
+      <DetailCard class="mt-sm-10 pb-sm-8 pt-sm-2" :details="courseDetail" :comments="commentText"/>
     </div>
     <div class="d-flex justify-center">
       <v-row class="d-flex justify-center mx-10" style="max-width: 1150px;">

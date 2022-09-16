@@ -1,6 +1,6 @@
 import {inject, reactive} from "vue"
 import {mdiChevronRight, mdiPencil } from "@mdi/js"
-import {judgeItems, gradeItems, gradingInfo, rawYearItems, termItems} from "@/composables/global/useStaticData"
+import {judgeItems, gradingInfo, rawYearItems, termItems} from "@/composables/global/useStaticData"
 import useMutation from "@/composables/global/useMutation";
 import useDebounce from "@/composables/global/useDebounce";
 import {isNetworkError} from "@/composables/global/useHttpError"
@@ -9,28 +9,7 @@ export default () => {
 
     const showSnackbar = inject("showSnackbar")
 
-    const testUserProfile = {
-        email: "1@shanghaitech.edu.cn",
-        year: 2022,
-        grade: 1,
-        nickname: "小明",
-        realname: "吴迪",
-        avatar: "https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1",
-        show_email: true,
-        show_year: true,
-        show_grade: true,
-        show_realname: true,
-    } // Just for test
-
     const teachers = inject("teachers")
-
-    const getUserProfile = () => {
-        const userProfile = testUserProfile
-        userProfile.grade = gradeItems[userProfile.grade]
-        return userProfile
-    }
-
-    const userProfile = reactive(getUserProfile())
 
     const statics = reactive({
         icons: {
@@ -127,5 +106,5 @@ export default () => {
         })
     })
 
-    return {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus, errorMsg }
+    return {statics, teachers, gradingInfo, doSubmit, formStatus, errorMsg }
 }
