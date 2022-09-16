@@ -153,9 +153,6 @@ export default {
     }
   },
   mounted() {
-    setInterval(()=>{
-      console.log(this.userProfile)
-    }, 1000)
   }
 }
 </script>
