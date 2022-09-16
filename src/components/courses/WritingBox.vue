@@ -113,8 +113,8 @@
 <script>
 import useWritingBox from "@/composables/courses/comment/useWritingBox"
 // import useProfile from "@/composables/users/profile/useProfile";
-import useUser from "@/composables/users/useUser";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
+import { inject } from 'vue';
 
 export default {
   name: "WritingBox",
@@ -123,7 +123,7 @@ export default {
   },
   setup() {
     const {statics, teachers, gradingInfo, doSubmit, formStatus, errorMsg} = useWritingBox()
-    const { userProfile } = useUser()
+    const { userProfile } = inject('global')
     return {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus, errorMsg }
   },
   data() {

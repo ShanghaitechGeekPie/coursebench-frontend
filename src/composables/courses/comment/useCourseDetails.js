@@ -27,21 +27,14 @@ export default () => {
     })
 
     let courseDetail = reactive({
-            name: "计算机编程",
-            code: "CS100",
-            id: 123,
-            institute: "SIST",
-            credit: 4,
+            name: "",
+            code: "",
+            id: 1,
+            institute: "",
+            credit: 1,
             score: [0, 0, 0, 0], //若 comments_num 为0,则该项无意义
             comments_num: 0, // 可见的评论数
-            "groups": [
-                {
-                    "id": 1,
-                    "code": "CS100.01",
-                    "comments_num": 10,
-                    "score": [4.1, 4.2, 4.3, 4.2], //同上
-                    "teachers": [{"name": "高盛华", "id": 23}]
-                }]
+            groups: []
         }
     )
     let courseId = reactive({})
