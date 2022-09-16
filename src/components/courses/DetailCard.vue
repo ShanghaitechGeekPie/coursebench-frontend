@@ -76,7 +76,7 @@
               /5
               </span>
             </div>
-            <ScoreBoard class="mb-4"></ScoreBoard>
+            <ScoreBoard class="mb-4" :starPercent="toDistribute(starStatistic)" ></ScoreBoard>
             <v-row no-gutters>
               <v-col class="d-flex" v-for="index in [0, 1, 2, 3]" :key="index" cols="6">
                 <div
@@ -92,7 +92,8 @@
                       :color="scoreInfo[roundedScore[index]].color"
                       class="px-1 mt-n2"
                   >
-                        <span class="text-caption white--text">{{
+                        <span class="text-caption white--text">
+                          {{
                             scoreInfo[roundedScore[index]].label
                           }}</span>
                   </v-chip>
@@ -113,17 +114,26 @@ import ReviewDetail from "@/components/courses/ReviewDetail"
 import useDetailCard from "@/composables/courses/comment/useDetailCard";
 import {judgeItems, scoreInfo} from "@/composables/global/useStaticData";
 import {roundScore} from "@/composables/global/useParseScore";
-import {averageOf} from "@/composables/global/useArrayUtils";
+import {averageOf, toDistribute} from "@/composables/global/useArrayUtils";
 
 export default {
   name: "DetailCard",
   components: {ScoreBoard, DetailChips, ReviewDetail},
   props: {
     details: Object,
+    comments: Array
   },
   setup() {
     const { teachers, statics } = useDetailCard()
-    return { teachers, statics, judgeItems, scoreInfo }
+    return { teachers, statics, judgeItems, scoreInfo, toDistribute }
+  },
+  data() {
+    return {
+      isShow: true,
+      averageScore: 0,
+      roundedScore: [0, 0, 0, 0],
+      starStatistic: [0, 0, 0, 0, 0]
+    }
   },
   computed: {
     screen() {
@@ -134,33 +144,39 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      isShow: true,
-      averageScore: 0,
-      roundedScore: []
-    }
-  },
-  watch: {
-    details() {
+  methods: {
+    getStatistic() {
+      this.roundedScore = []
       for (let score of this.details.score) {
         let rounded = roundScore(score, this.details["comment_num"]);
         this.roundedScore.push(rounded);
       }
       if(this.details.comment_num !== 0) {
+
         this.averageScore = averageOf(this.details.score) * 20;
+
+        this.starStatistic = [0, 0, 0, 0, 0]
+        for (let comment of this.comments) {
+          this.starStatistic[Math.round(averageOf(comment.score)) - 1] += 1
+        }
       }
     }
   },
+  watch: {
+    details: {
+      handler() {
+        this.getStatistic()
+      },
+      immediate: true
+    },
+    comments: {
+      handler() {
+        this.getStatistic()
+      },
+      immediate: true
+    }
+  },
   mounted() {
-    for (let score of this.details.score) {
-      let rounded = roundScore(score, this.details["comment_num"]);
-      this.roundedScore.push(rounded);
-    }
-    if(this.details.comment_num !== 0) {
-      this.averageScore = averageOf(this.details.score) * 20;
-    }
-    console.log(this.details.score)
   }
 }
 </script>
