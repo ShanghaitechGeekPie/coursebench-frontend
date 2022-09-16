@@ -7,7 +7,7 @@ import useRecordWatch from "@/composables/global/useRecordWatch"
 import useFetching from "@/composables/global/useFetching"
 import useUserName from "@/composables/global/useUserName"
 import { sortCmp } from "@/composables/global/useArrayUtils"
-import { defaultStatus, sortPolicy } from "@/composables/global/useCommentSort"
+import { defaultStatus, sortPolicy, sortStatics} from "@/composables/global/useCommentSort"
 import { useRouter, useRoute } from "@/router/migrateRouter"
 import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
 
