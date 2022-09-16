@@ -12,6 +12,9 @@
  * @returns {String}
  */
 export default (userProfile) => {
+    if (userProfile === null) {
+        return '匿名用户'
+    }
     const { nickname, realname, email, is_anonymous, id } = userProfile
     if (nickname) { // if we have a nickname, then use it
         return nickname

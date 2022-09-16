@@ -15,10 +15,18 @@ function sumOf(arr) {
 function averageOf(arr) {
   return sumOf(arr) / arr.length
 }
+function toDistribute(arr) {
+  let sum = sumOf(arr)
+  if (sum === 0) return arr
+  return arr.map((x) =>{
+    return x / sum
+  })
+}
 
 
 export {
   sortCmp, 
   sumOf, 
-  averageOf
+  averageOf,
+  toDistribute
 }
