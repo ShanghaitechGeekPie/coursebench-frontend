@@ -71,7 +71,7 @@ export default () => {
                 status.loading = false
             } else if (fetchStatus.value == "error") {
                 if (isNetworkError(error.value.response)) {
-                    showSnackbar("网络连接错误")
+                    showSnackbar("error", "网络连接错误")
                 } else if (isValidErrorMessage(error.value.response.data.msg)) {
                     showSnackbar("error", error.value.response.data.msg)
                 } else {

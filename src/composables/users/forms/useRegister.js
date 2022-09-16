@@ -76,7 +76,7 @@ export default () => {
       formStatus.captchaLoading = false
       formStatus.captchaBase64 = ""
       if (isNetworkError(error.response)) {
-        showSnackbar("网络连接错误")
+        showSnackbar("error", "网络连接错误")
       } else if (isValidErrorMessage(error.response.data.msg)) {
         showSnackbar("error", error.response.data.msg)
       } else {
