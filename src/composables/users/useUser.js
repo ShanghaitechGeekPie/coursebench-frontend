@@ -183,6 +183,6 @@ export default () => {
   })
 
 
-  return { commentText, commentFilterStatus, status }
+  return { commentText, commentFilterStatus, status, userProfile }
   
 }
