@@ -14,9 +14,12 @@
       <v-card class="pa-3" elevation="0" style="overflow: hidden">
         <v-row class="pl-3 py-3" align="center" style="width: 100%">
           <v-col cols="1">
-            <v-avatar color="gray" size="45">
-              <v-img :src="userProfile.avatar" alt="Avatar" aspect-ratio="1"></v-img>
-            </v-avatar>
+            <avatar-container
+                :name="userProfile.nickname"
+                slice
+                :src="userProfile.avatar"
+                :size="50"
+            />
           </v-col>
           <v-col cols="11">
             <v-text-field label="标题" class="font-weight-bold" v-model="formStatus.title"
@@ -109,12 +112,19 @@
 
 <script>
 import useWritingBox from "@/composables/courses/comment/useWritingBox"
+// import useProfile from "@/composables/users/profile/useProfile";
+import useUser from "@/composables/users/useUser";
+import AvatarContainer from "@/components/users/profile/AvatarContainer";
 
 export default {
   name: "WritingBox",
+  components : {
+    AvatarContainer
+  },
   setup() {
-    const {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus, errorMsg} = useWritingBox()
-    return {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus, errorMsg}
+    const {statics, teachers, gradingInfo, doSubmit, formStatus, errorMsg} = useWritingBox()
+    const { userProfile } = useUser()
+    return {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus, errorMsg }
   },
   data() {
     return {
@@ -143,9 +153,9 @@ export default {
     }
   },
   mounted() {
-    // setInterval(()=>{
-    //   console.log(this.errorMsg.target)
-    // }, 1000)
+    setInterval(()=>{
+      console.log(this.userProfile)
+    }, 1000)
   }
 }
 </script>
