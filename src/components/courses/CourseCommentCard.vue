@@ -8,8 +8,8 @@
               @click="$router.push({ path: `/user/${comment.user_id}` })"
           >
             <AvatarContainer
-                :name="avatar.localComment.user.nickname"
-                :src="avatar.localComment.user.avatar"
+                :name="avatar.localComment.user ? avatar.localComment.user.nickname : '' "
+                :src="avatar.localComment.user ? avatar.localComment.user.avatar : '' "
                 small
                 tile
                 slice
@@ -17,7 +17,7 @@
             />
             <div class="pl-2">
               <div class="text-caption mt-n1">
-                {{ gradeItems[avatar.localComment.user.grade] }}
+                {{  avatar.localComment.user ? gradeItems[avatar.localComment.user.grade] : '用户信息由于隐私设置不可见' }}
               </div>
               <div class="text-body-1 font-weight-bold overflow-ellipsis">
                 {{ useUserName(avatar.localComment.user) }}
