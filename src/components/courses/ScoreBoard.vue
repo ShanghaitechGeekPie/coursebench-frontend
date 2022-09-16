@@ -1,10 +1,8 @@
 <template>
   <div>
-    <ScoreLine :starNum="5" :percentage="60" style="max-height: 13px"></ScoreLine>
-    <ScoreLine :starNum="4" :percentage="3 " style="max-height: 13px"></ScoreLine>
-    <ScoreLine :starNum="3" :percentage="2 " style="max-height: 13px"></ScoreLine>
-    <ScoreLine :starNum="2" :percentage="5 " style="max-height: 13px"></ScoreLine>
-    <ScoreLine :starNum="1" :percentage="30" style="max-height: 13px"></ScoreLine>
+    <div v-for="index in [1, 2, 3, 4, 5]" >
+      <ScoreLine :starNum="6 - index" :percentage="Math.round(starPercent[index - 1] * 100)" style="max-height: 13px"></ScoreLine>
+    </div>
   </div>
 </template>
 
@@ -14,9 +12,7 @@ import ScoreLine from "@/components/courses/ScoreLine";
 export default {
   components: {ScoreLine},
   props: {
-    fontColor: String,
-    text: String,
-    value: String
+    starPercent: Array
   },
   setup() {
 
