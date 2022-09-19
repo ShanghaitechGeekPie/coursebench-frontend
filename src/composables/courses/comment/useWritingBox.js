@@ -9,7 +9,7 @@ export default () => {
 
     const showSnackbar = inject("showSnackbar")
 
-    const teachers = inject("teachers")
+    const teachers = inject("groups")
 
     const statics = reactive({
         icons: {
