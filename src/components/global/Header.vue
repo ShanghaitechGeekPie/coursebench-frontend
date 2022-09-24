@@ -179,6 +179,17 @@
       "
       ><Register
     /></v-dialog>
+    <v-dialog
+      v-model="dialog.resetPassword"
+      :fullscreen="$vuetify.breakpoint.name === 'xs'"
+      max-width="440"
+      :transition="
+        $vuetify.breakpoint.name === 'xs'
+          ? 'dialog-bottom-transition'
+          : 'scale-transition'
+      "
+      ><ResetPassword
+    /></v-dialog>
   </v-app-bar>
 </template>
 
@@ -186,6 +197,7 @@
 import { reactive, provide, inject } from "vue";
 import Login from "@/components/users/forms/Login";
 import Register from "@/components/users/forms/Register";
+import ResetPassword from "@/components/users/forms/ResetPassword";
 import useLogout from "@/composables/users/forms/useLogout";
 import useUserName from "@/composables/global/useUserName";
 import useRouteMatch from "@/composables/global/useRouteMatch"
@@ -211,6 +223,7 @@ export default {
     AvatarContainer, 
     SliderButton, 
     MobileSearchBar,
+    ResetPassword
   },
   setup() {
     const { doLogout } = useLogout();
@@ -219,6 +232,7 @@ export default {
     const dialog = reactive({
       login: false,
       register: false,
+      resetPassword: false,
     });
 
     provide("closeDialog", (type) => (dialog[type] = false));

@@ -1,10 +1,10 @@
 import { reactive, inject, onMounted } from "vue"
 import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
 import useCaptcha from "@/composables/global/useCaptcha"
-import { mdiArrowLeft, mdiEye, mdiEyeOff, mdiWindowClose, mdiEmailAlertOutline } from "@mdi/js"
+import { mdiArrowLeft, mdiWindowClose, mdiEmailAlertOutline } from "@mdi/js"
 import useMutation from "@/composables/global/useMutation"
-import { gradeItems } from "@/composables/global/useStaticData"
 import useDebounce from "@/composables/global/useDebounce"
+
 
 export default () => {
 
@@ -14,32 +14,28 @@ export default () => {
   const statics = {
     icons: {
       mdiArrowLeft,
-      mdiEye,
-      mdiEyeOff,
-      mdiWindowClose,
+      mdiWindowClose, 
       mdiEmailAlertOutline
-    },
+    }
   }
 
   const userData = reactive({
     email: "",
-    username: "",
-    password: "",
-    year: undefined,
-    grade: undefined,
+    captcha: ""
   })
+
+
 
   const formStatus = reactive({
     emailFormValid: false,
-    passwordFormValid: false,
-    passwordVisible: false,
     loading: false,
     captchaLoading: false,
     captchaBase64: "",
-    windowStep: 0
+    windowStep: 0,
   })
 
-  const registerMutation = useMutation("/user/register", {
+
+  const loginMutation = useMutation("/user/reset_password", {
     onMutate: () => {
       formStatus.loading = true
     },
@@ -51,23 +47,26 @@ export default () => {
       formStatus.loading = false
       if (isNetworkError(error.response)) {
         showSnackbar("error", "网络连接失败")
-      } else if (isValidErrorMessage(error.response.data.msg)) {
-        showSnackbar("error", error.response.data.msg)        
+      } else {
         userData.captcha = ""
         getCaptcha()
-        if (error.response.data.code === "UserAlreadyExists" || error.response.data.code === "UserEmailDuplicated") {
-          formStatus.windowStep = 0;
+        if (isValidErrorMessage(error.response.data.msg)) {
+          showSnackbar("error", error.response.data.msg)
+          if (error.response.data.code === "UserNotExists" || error.response.data.code === "InvalidArgument") {
+            formStatus.windowStep = 0
+          }
+        } else {
+          showSnackbar("error", "服务器发生错误")
         }
-      } else {
-        showSnackbar("error", "服务器发生错误")
       }
     }
-  });
+  })
+
 
   const getCaptcha = useCaptcha("/user/get_captcha", {
     onMutate: () => {
       formStatus.captchaLoading = true
-    },
+    }, 
     onSuccess: (response) => {
       formStatus.captchaLoading = false
       formStatus.captchaBase64 = response.data.data.img
@@ -85,23 +84,21 @@ export default () => {
     }
   })
 
-  const doRegister = useDebounce(() => {
-    if (formStatus.emailFormValid && formStatus.passwordFormValid && 
-      userData.captcha !== "" && userData.year && userData.grade
-    ) {
-      registerMutation.mutate({
+
+  const doResetPassword = useDebounce(() => {
+    if (formStatus.emailFormValid && userData.captcha !== "") {
+      loginMutation.mutate({
         email: userData.email,
-        password: userData.password,
-        year: userData.year === "暂不透露" ? 0 : userData.year,
-        grade: gradeItems.indexOf(userData.grade),
         captcha: userData.captcha
       })
     }
   })
 
+
   onMounted(() => {
     getCaptcha()
   })
 
-  return { statics, userData, formStatus, doRegister, getCaptcha }
+
+  return { statics, userData, formStatus, doResetPassword, getCaptcha }
 }
