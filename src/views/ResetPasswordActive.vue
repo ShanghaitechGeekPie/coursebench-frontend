@@ -222,6 +222,7 @@
 <script>
 import useResetPasswordActive from "@/composables/users/useResetPasswordActive";
 import useForms from "@/composables/users/forms/useForms";
+import useAfterRender from "@/composables/global/useAfterRender";
 
 export default {
   setup() {
@@ -230,6 +231,11 @@ export default {
 
     return { statics, status, userData, doResetPasswordActive, formRules };
   },
+  mounted() {
+    useAfterRender(() => {
+      this.$refs.passwordTextField.focus();
+    });
+  }
 };
 </script>
 

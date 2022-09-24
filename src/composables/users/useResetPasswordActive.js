@@ -73,9 +73,9 @@ import {
 
   
     onMounted(() => {
-      if ((!route.query.id) || (!route.query.code)) {
+      if ((!route.query.id) || (!route.query.code)) {        
         status.loading = false
-        status.showDialog = false
+        status.inputFinished = true
         status.errorMessage = "激活链接无效，请检查链接是否正确。"
       }
     })
