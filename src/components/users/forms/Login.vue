@@ -98,7 +98,7 @@
               </v-card-text>
             </v-form>
             <div class="text-body-2 py-1">
-              <span class="inline-link" @click="">忘记了密码？</span>
+              <span class="inline-link" @click="closeDialog('login'), openDialog('resetPassword')">忘记了密码？</span>
             </div>
           </div>
           <div

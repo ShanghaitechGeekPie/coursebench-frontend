@@ -48,11 +48,10 @@ export default () => {
   })
 
   const doVerify = () => {
-    const query = route.query
-    if (query.id && query.code) {
+    if (route.query.id && route.query.code) {
       verifyMutation.mutate({
-        id: new Number(query.id),
-        code: query.code
+        id: new Number(route.query.id),
+        code: route.query.code
       })
     } else {
       status.loading = false
