@@ -1,12 +1,10 @@
 <template>
   <v-scroll-y-transition>
     <v-card
-        class="info-wrp rounded-b-0"
-        :class="screen"
+        class=""
         color="#11638B"
         elevation="0"
         outlined
-        v-show="isShow"
         width="800px"
     >
       <v-row class="pb-0">
@@ -55,18 +53,26 @@
               Ratings & Reviews
             </div>
             <div style="font-family: Arial,serif">
-              <span>
-              <span
-                  class="text-h3 white--text font-weight-bold"
-                  style="font-family: Arial,serif!important;"
-              >
-                {{ (averageScore / 20).toFixed(0) }}
+              <span v-if="details.comment_num >= enoughDataThreshold">
+                <span
+                    class="text-h3 white--text font-weight-bold"
+                    style="font-family: Arial,serif!important;"
+                >
+                  {{ (averageScore / 20).toFixed(0) }}
+                </span>
+                <span
+                    class="white--text font-weight-bold text-h5"
+                    style="transform: translate(-10px, 0px); display: inline-block;"
+                >
+                  .{{ parseInt(averageScore / 2) % 10 }}
+                </span>
               </span>
-              <span
-                  class="white--text font-weight-bold text-h5"
-                  style="transform: translate(-10px, 0px); display: inline-block;"
-              >
-                .{{ parseInt(averageScore / 2) % 10 }}
+              <span v-else>
+                <span
+                    class="text-h3 white--text font-weight-bold"
+                    style="font-family: Arial,serif!important;"
+                >
+                  -
                 </span>
               </span>
               <span
@@ -75,8 +81,15 @@
               >
               /5
               </span>
+
+<!--              <span-->
+<!--                  class="grey&#45;&#45;text lighten- font-weight-bold subtitle-1"-->
+<!--                  style="display: inline-block;"-->
+<!--              >-->
+<!--                数据不足-->
+<!--              </span>-->
             </div>
-            <ScoreBoard class="mb-4" :starPercent="toDistribute(starStatistic)" ></ScoreBoard>
+            <ScoreBoard class="mb-4 pr-3" :starPercent="toDistribute(starStatistic)"></ScoreBoard>
             <v-row no-gutters>
               <v-col class="d-flex" v-for="index in [0, 1, 2, 3]" :key="index" cols="6">
                 <div
@@ -113,8 +126,9 @@ import DetailChips from "@/components/courses/DetailChips"
 import ReviewDetail from "@/components/courses/ReviewDetail"
 import useDetailCard from "@/composables/courses/comment/useDetailCard";
 import {judgeItems, scoreInfo} from "@/composables/global/useStaticData";
-import {roundScore} from "@/composables/global/useParseScore";
+import {roundScore, enoughDataThreshold} from "@/composables/global/useParseScore";
 import {averageOf, toDistribute} from "@/composables/global/useArrayUtils";
+
 
 export default {
   name: "DetailCard",
@@ -124,25 +138,17 @@ export default {
     comments: Array
   },
   setup() {
-    const { teachers, statics } = useDetailCard()
-    return { teachers, statics, judgeItems, scoreInfo, toDistribute }
+    const {teachers, statics} = useDetailCard()
+    return {teachers, statics, judgeItems, scoreInfo, toDistribute, enoughDataThreshold}
   },
   data() {
     return {
-      isShow: true,
       averageScore: 0,
       roundedScore: [0, 0, 0, 0],
       starStatistic: [0, 0, 0, 0, 0]
     }
   },
   computed: {
-    screen() {
-      if (this.$vuetify.breakpoint.width >= 650) {
-        return "rounded-t-xl"
-      } else {
-        return ""
-      }
-    }
   },
   methods: {
     getStatistic() {
@@ -151,7 +157,7 @@ export default {
         let rounded = roundScore(score, this.details["comment_num"]);
         this.roundedScore.push(rounded);
       }
-      if(this.details.comment_num !== 0) {
+      if (this.details.comment_num !== 0) {
 
         this.averageScore = averageOf(this.details.score) * 20;
 
@@ -182,9 +188,6 @@ export default {
 </script>
 
 <style scoped>
-.info-wrp {
-  /*background: linear-gradient(70deg, blue, lightcyan);*/
-}
 
 .single-line-limit {
   white-space: nowrap;
