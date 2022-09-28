@@ -5,7 +5,7 @@
         <template v-slot:headerAvatar="avatar">
           <div
               class="d-flex justify-space-between router-container"
-              @click="$router.push({ path: `/user/${comment.user_id}` })"
+              @click="$router.push({ path: `/user/${comment.user.id}` })"
           >
             <AvatarContainer
                 :name="avatar.localComment.user ? avatar.localComment.user.nickname : '' "
@@ -48,6 +48,9 @@ export default {
   },
   setup() {
     return { gradeItems, useUserName }
+  },
+  mounted() {
+    console.log(this.comment)
   }
 };
 </script>
