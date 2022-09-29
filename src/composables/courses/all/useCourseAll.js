@@ -45,6 +45,14 @@ export default () => {
     })
 
 
+    const getAllCourseSelected = () => {
+        let ret = new Array()
+        for (let key in courseStatistic.count) {
+            if (courseStatistic.count[key]) {
+                ret.push(key)
+            }
+        } return ret
+    }
 
     const getCourseStatistic = () => {
         courseStatistic.total = courseText.value.length
@@ -84,16 +92,21 @@ export default () => {
             if (data.value) {
                 courseRawText.value = data.value.data
                 // Here we need to deep copy the data or the sort will mess up the original data
-                courseText.value = [...courseRawText.value]
+                courseText.value = courseRawText.value.filter((course) => {
+                    if (searchInput.keys.length === 0) {
+                        return true;
+                    } else if (searchInput.isRegexp) {
+                        return matchSearchKeys((key) => {
+                            return new RegExp(key).test(course.name) || new RegExp(key).test(course.code);
+                        })
+                    } else {
+                        return matchSearchKeys((key) => {
+                            return course.name.includes(key) || new String(course.code).includes(key);
+                        })
+                    }
+                })
                 getCourseStatistic() 
-                courseFilterStatus.selected = (() => {
-                    let ret = new Array()
-                    for (let key in courseStatistic.count) {
-                        if (courseStatistic.count[key]) {
-                            ret.push(key)
-                        }
-                    } return ret
-                })()
+                courseFilterStatus.selected = getAllCourseSelected()
             }
         })
     }
@@ -142,17 +155,29 @@ export default () => {
             courseText.value.sort(sortFunc) // I sort it here because some sort keys have the same order item
             // in that case the first if statement will not be triggered
         } else if (lastStatus.selected != courseFilterStatus.selected) {
-            courseText.value = courseRawText.value.filter(
-                (course) => courseFilterStatus.selected.some((item) => item === course.institute)
+            courseText.value = courseRawText.value.filter((course) => 
+                (() => {
+                    if (searchInput.keys.length === 0) {
+                        return true;
+                    } else if (searchInput.isRegexp) {
+                        return matchSearchKeys((key) => {
+                            return new RegExp(key).test(course.name) || new RegExp(key).test(course.code);
+                        })
+                    } else {
+                        return matchSearchKeys((key) => {
+                            return course.name.includes(key) || new String(course.code).includes(key);
+                        })
+                    }
+                })() && (() => courseFilterStatus.selected.some((item) => item === course.institute))()
             )
-            courseText.value.sort(sortFunc) 
+            courseText.value.sort(sortFunc)             
             status.page = 1
         }
     }))
 
     useWatching(searchInput, useDebounce((to, from) => {
         courseText.value = courseRawText.value.filter((course) => {
-            if (searchInput.keys === 0) {
+            if (searchInput.keys.length === 0) {
                 return true;
             } else if (searchInput.isRegexp) {
                 return matchSearchKeys((key) => {
@@ -165,6 +190,7 @@ export default () => {
             }
         })
         getCourseStatistic()
+        courseFilterStatus.selected = getAllCourseSelected()
         courseText.value.sort(sortFunc)
         if (courseFilterStatus.order != sortStatics.orderItem[courseFilterStatus.sortKey][0]) {
             courseText.value.reverse()

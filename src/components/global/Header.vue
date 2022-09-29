@@ -3,7 +3,7 @@
     app 
     :color="$vuetify.theme.dark ? '' : 'white'" 
     elevate-on-scroll 
-    elevation="2"
+    elevation="3"
   >
     <v-toolbar-title 
       class="px-sm-8" 
