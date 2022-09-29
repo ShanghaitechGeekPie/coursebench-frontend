@@ -42,10 +42,9 @@
           <div
             v-for="(value, key, index) in commentStatistic.count"
             :key="index"
-            :class="index !== 0 ? 'mt-n1' : ''"
           >
             <div v-if="value">
-              <v-checkbox dense v-model="status.selected" :value="key">
+              <v-checkbox dense v-model="status.selected" :value="key" hide-details>
                 <template #label>
                   <div class="d-flex justify-space-between" style="width: 100%">
                     <div>{{ key }}</div>

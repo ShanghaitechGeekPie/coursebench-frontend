@@ -50,12 +50,15 @@
                   </div>
                 </div>
               </div>
+              <div v-else-if="courseText.length === 0" class="pt-10">
+                <Nothing class="px-4 pt-16" />
+              </div>
               <v-data-iterator
                 :items="courseText"
                 :items-per-page="adoptiveCardNumber * 3"
                 :page="status.page"
                 hide-default-footer
-                v-if="courseText.length > 0 && !status.loading"
+                v-else
               >
                 <template #default="{ items }">
                   <div class="d-flex justify-center">
@@ -103,6 +106,7 @@ import { instituteInfo } from "@/composables/global/useStaticData";
 import CourseLoader from "@/components/teachers/loader/CourseLoader"
 import SelectLoader from "@/components/teachers/loader/SelectLoader"
 import StatisticLoader from "@/components/teachers/loader/StatisticLoader"
+import Nothing from "@/components/global/Nothing.vue"
 
 export default {
   setup() {
@@ -117,7 +121,8 @@ export default {
     ElevatedPagination, 
     CourseLoader, 
     SelectLoader, 
-    StatisticLoader
+    StatisticLoader, 
+    Nothing
   },
   computed: {
     adoptiveCoursePage() {

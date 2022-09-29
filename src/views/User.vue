@@ -10,7 +10,7 @@
             flat
             outlined
             :width="$vuetify.breakpoint.mdAndDown ? '100vw' : '360px'"
-            class="pt-6 pb-3 px-7"
+            class="py-6 px-7"
           >
             <DetailLoader v-if="status.profileLoading || status.commentLoading" />
             <Profile v-else />
@@ -43,6 +43,9 @@
                 <div v-for="index in 2" :key="index">
                   <CommentLoader height="290px" />
                 </div> 
+              </div>
+              <div v-else-if="commentText.length === 0">
+                <Nothing class="pt-16" />
               </div>
               <div v-else>
                 <div v-for="(comment, index) in commentText" :key="comment.id">       
@@ -79,6 +82,7 @@ import SelectLoader from "@/components/teachers/loader/SelectLoader"
 import StatisticLoader from "@/components/teachers/loader/StatisticLoader"
 import ImageLoader from "@/components/teachers/loader/ImageLoader";
 import CommentLoader from "@/components/teachers/loader/CommentLoader";
+import Nothing from "@/components/global/Nothing"
 
 export default {
   components: {
@@ -92,7 +96,8 @@ export default {
     SelectLoader, 
     StatisticLoader, 
     ImageLoader,
-    CommentLoader
+    CommentLoader, 
+    Nothing
   },
   setup() {
     const { commentText, commentFilterStatus, status } = useUser();
