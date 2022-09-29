@@ -156,11 +156,11 @@ export default () => {
                 return true;
             } else if (searchInput.isRegexp) {
                 return matchSearchKeys((key) => {
-                    return new RegExp(key).test(course.name);
+                    return new RegExp(key).test(course.name) || new RegExp(key).test(course.code);
                 })
             } else {
                 return matchSearchKeys((key) => {
-                    return course.name.includes(key);
+                    return course.name.includes(key) || new String(course.code).includes(key);
                 })
             }
         })

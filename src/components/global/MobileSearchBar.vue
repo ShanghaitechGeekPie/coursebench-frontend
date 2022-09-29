@@ -13,7 +13,7 @@
         :prepend-inner-icon="icons.mdiMagnify"
         autofocus
         @blur="status.showSearchBar = false"
-        @input="$emit('input', $event), isCurrentPath('^\/$') ? $router.push('/') : ''"
+        @input="$emit('input', $event), isCurrentPath('^\/$') ? $router.push('/') : ''"        
       >  
       </v-text-field>
     </div>    
