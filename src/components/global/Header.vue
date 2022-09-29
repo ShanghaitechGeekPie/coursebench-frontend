@@ -206,6 +206,8 @@ import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import SliderButton from "@/components/global/SliderButton";
 import MobileSearchBar from "@/components/global/MobileSearchBar";
 
+// TODO: Add mobile support to header buttons
+
 import {
   mdiAccount,
   mdiLoginVariant,
