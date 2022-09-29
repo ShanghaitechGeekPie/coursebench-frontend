@@ -33,7 +33,7 @@ export default () => {
             institute: "",
             credit: 1,
             score: [0, 0, 0, 0], //若 comments_num 为0,则该项无意义
-            comments_num: 0, // 可见的评论数
+            comment_num: 0, // 可见的评论数
             groups: []
         }
     )

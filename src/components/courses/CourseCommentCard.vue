@@ -5,7 +5,7 @@
         <template v-slot:headerAvatar="avatar">
           <div
               class="d-flex justify-space-between router-container"
-              @click="$router.push({ path: `/user/${comment.user_id}` })"
+              @click="$router.push({ path: `/user/${comment.user.id}` })"
           >
             <AvatarContainer
                 :name="avatar.localComment.user ? avatar.localComment.user.nickname : '' "
@@ -16,11 +16,11 @@
                 size="38"
             />
             <div class="pl-2">
-              <div class="text-caption mt-n1">
-                {{  avatar.localComment.user ? gradeItems[avatar.localComment.user.grade] : '用户信息由于隐私设置不可见' }}
-              </div>
               <div class="text-body-1 font-weight-bold overflow-ellipsis">
                 {{ useUserName(avatar.localComment.user) }}
+              </div>
+              <div class="text-caption mt-n1">
+                {{  avatar.localComment.user ? gradeItems[avatar.localComment.user.grade] : '本评论由匿名用户发送，请仔细分辨其真实性' }}
               </div>
             </div>
           </div>
@@ -48,6 +48,9 @@ export default {
   },
   setup() {
     return { gradeItems, useUserName }
+  },
+  mounted() {
+    console.log(this.comment)
   }
 };
 </script>
