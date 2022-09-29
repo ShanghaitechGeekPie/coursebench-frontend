@@ -61,7 +61,7 @@
         ref="searchBar"
         @input="searchParser"
         @blur="isCurrentPath('^\/$') ? $router.push('/') : ''"
-        @keydown.enter="$refs.searchBar.blur(), isCurrentPath('^\/$') ? $router.push('/') : ''"
+        @keydown.enter="$refs.searchBar.blur(), isCurrentPath('^\/$') ? $router.push('/') : ''"        
         v-if="$vuetify.breakpoint.smAndUp"
       >
       </v-text-field>
