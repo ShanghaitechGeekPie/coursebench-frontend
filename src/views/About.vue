@@ -5,44 +5,58 @@
       class="about-container"
     >
       <div class="d-flex justify-center pt-8">
-        <div class="text-h1">!!Slogan!!</div>
+        <div class="text-sm-h1 text-h2">!!Slogan!!</div>
       </div>
       <div class="d-flex justify-center pt-8 mb-16">
         <div class="text-h4">!!Description!!</div>
       </div>
       <div class="d-flex justify-center">
-        <div class="mx-8" style="width: 160px">
+        <v-sheet
+          class="mx-sm-8 mx-2"
+          :width="$vuetify.breakpoint.xsOnly ? '40%' : '160'"
+        >
           <div class="text-h6 d-flex justify-center">
             <div>!!Feature Value!!</div>
           </div>
           <div class="text-body-2 d-flex justify-center">
             <div>!!Feature Item!!</div>
           </div>
-        </div>
-        <div class="mx-8" style="width: 160px">
+        </v-sheet>
+        <v-sheet
+          class="mx-sm-8 mx-2"
+          :width="$vuetify.breakpoint.xsOnly ? '40%' : '160'"
+        >
           <div class="text-h6 d-flex justify-center">
             <div>!!Feature Value!!</div>
           </div>
           <div class="text-body-2 d-flex justify-center">
             <div>!!Feature Item!!</div>
           </div>
-        </div>
-        <div class="mx-8" style="width: 160px">
+        </v-sheet>
+        <v-sheet
+          class="mx-sm-8"
+          :width="$vuetify.breakpoint.xsOnly ? '40%' : '160'"
+          v-if="$vuetify.breakpoint.smAndUp"
+        >
           <div class="text-h6 d-flex justify-center">
             <div>!!Feature Value!!</div>
           </div>
           <div class="text-body-2 d-flex justify-center">
             <div>!!Feature Item!!</div>
           </div>
-        </div>
-        <div class="mx-8" style="width: 160px">
+        </v-sheet>
+        <v-sheet
+          class="mx-sm-8"
+          :width="$vuetify.breakpoint.xsOnly ? '40%' : '160'"
+          v-if="$vuetify.breakpoint.smAndUp"
+        >
           <div class="text-h6 d-flex justify-center">
             <div>!!Feature Value!!</div>
           </div>
           <div class="text-body-2 d-flex justify-center">
             <div>!!Feature Item!!</div>
           </div>
-        </div>
+        </v-sheet>
       </div>
       <div class="d-flex justify-center mt-10">
         <v-sheet width="318px" class="pa-6 d-flex justify-center" outlined>
@@ -166,11 +180,13 @@ export default {
         return "javascript:void(0)";
       } else if (link.startsWith("qq:")) {
         if (this.$vuetify.breakpoint.xsOnly) {
-          return `mqqwpa://im/chat?chat_type=wpa&uin=${link.substring(3)}&version=1&src_type=web`;
+          return `mqqwpa://im/chat?chat_type=wpa&uin=${link.substring(
+            3
+          )}&version=1&src_type=web`;
         } else {
           return `tencent://message/?uin=${link.substring(3)}&Site=qq&Menu=yes`;
         }
-      } else if (link.startsWith('github:')) {
+      } else if (link.startsWith("github:")) {
         return `https://github.com/${link.substring(7)}`;
       } else {
         return link;
@@ -178,15 +194,17 @@ export default {
     },
     parseAvatarLink(link) {
       if (link === "") {
-        return ""
+        return "";
       } else if (link.startsWith("qq:")) {
         return `https://q1.qlogo.cn/g?b=qq&nk=${link.substring(3)}&s=160`;
       } else if (link.startsWith("github:")) {
-        return `https://avatars.githubusercontent.com/u/${link.substring(7)}?s=64&v=4`;
+        return `https://avatars.githubusercontent.com/u/${link.substring(
+          7
+        )}?s=64&v=4`;
       } else {
         return link;
       }
-    }
+    },
   },
 };
 </script>
