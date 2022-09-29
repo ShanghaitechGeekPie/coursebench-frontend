@@ -5,8 +5,9 @@
       :style="{ transform: $vuetify.breakpoint.mdAndDown ? 'translate(0, -76px)' : '' }"
     >
       <AvatarContainer
-        :name="isChinese"
-        src=""
+        :name="teacherDetail.name"
+        slice
+        :src="teacherDetail.photo"
         :size="$vuetify.breakpoint.name === 'xs' ? 110 : 120"
         :outlined="$vuetify.breakpoint.mdAndDown"
       />
@@ -45,13 +46,6 @@ export default {
   setup() {
     const { teacherDetail } = useDetail();
     return { teacherDetail };
-  },
-  computed: {
-    isChinese() {
-      return escape(this.teacherDetail.name.slice(0, 2)).indexOf("%u") >= 0
-        ? this.teacherDetail.name.slice(0, 1)
-        : this.teacherDetail.name.slice(0, 2);
-    },
   },
 };
 </script>
