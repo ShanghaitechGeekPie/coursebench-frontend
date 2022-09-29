@@ -18,8 +18,14 @@
           <StatisticCard 
             :style="$vuetify.breakpoint.mdAndDown ? {} : { position: 'fixed', top: '140px'}" 
             :width="adoptiveCardContainerWidth + 'px'"
-            v-else
-          />
+            v-else="!status.loading"
+          >
+            <template #commercial>
+              <div class="mb-3">
+                <div class="text-h5">!!Slogan!!</div>
+              </div>
+            </template>
+          </StatisticCard>
         </div>
       </div>
       <div class="pa-3 px-0" 

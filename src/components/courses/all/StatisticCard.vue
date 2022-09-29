@@ -2,6 +2,9 @@
   <div :style="{ width: $vuetify.breakpoint.mdAndDown ? width: '360px' }">
     <v-card class="pt-6 pb-3 px-6" outlined flat>
       <div>
+        <div>
+          <slot name="commercial"></slot>
+        </div>
         <div class="text-h6 d-flex">
           <v-icon class="pr-2">
             {{ statics.icons.mdiCity }}
