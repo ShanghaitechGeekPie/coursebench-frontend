@@ -1,6 +1,9 @@
 <template>
   <div :class="[$vuetify.breakpoint.mdOnly ? 'd-flex' : '', 'justify-center']">
-    <div class="pt-4" :style="{ width: $vuetify.breakpoint.mdOnly ? '812px' : '' }">
+    <div
+      class="pt-4"
+      :style="{ width: $vuetify.breakpoint.mdOnly ? '812px' : '' }"
+    >
       <!-- <div class="d-flex justify-space-between pt-2">
         <div>
           <v-icon size="18">{{ statics.icons.mdiThumbUpOutline }}</v-icon>
@@ -35,17 +38,21 @@
           <v-icon @click="status.showAll = false" v-if="status.showAll">
             {{ statics.icons.mdiChevronUp }}
           </v-icon>
-        </div>        
-      </div>      
+        </div>
+      </div>
       <v-expand-transition>
         <div class="pl-2" v-if="status.showAll && !isEmpty">
           <div
             v-for="(value, key, index) in courseStatistic.count"
             :key="index"
-            :class="index !== 0 ? 'mt-n4' : ''"
           >
-            <div v-if="value" class="pt-2">
-              <v-checkbox dense v-model="status.selected" :value="key">
+            <div v-if="value">
+              <v-checkbox
+                dense
+                v-model="status.selected"
+                :value="key"
+                hide-details
+              >
                 <template #label>
                   <div class="d-flex justify-space-between" style="width: 100%">
                     <div>{{ key }}</div>
@@ -61,12 +68,12 @@
   </div>
 </template>
 <script>
-import useStatisticCard from "@/composables/teachers/course/useStatisticCard"
+import useStatisticCard from "@/composables/teachers/course/useStatisticCard";
 
 export default {
   setup() {
-    const { courseStatistic, statics, status } = useStatisticCard()
-    return { courseStatistic, statics, status }
+    const { courseStatistic, statics, status } = useStatisticCard();
+    return { courseStatistic, statics, status };
   },
   computed: {
     isEmpty() {
@@ -75,13 +82,13 @@ export default {
           return false;
         }
       }
-      return true
-    }
-  }, 
+      return true;
+    },
+  },
   created() {
     if (this.$vuetify.breakpoint.mdAndDown) {
-      this.status.showAll = false
+      this.status.showAll = false;
     }
-  }
-}
+  },
+};
 </script>

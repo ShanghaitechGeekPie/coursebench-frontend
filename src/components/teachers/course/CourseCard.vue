@@ -9,7 +9,11 @@
                 <AvatarContainer
                   :name="instituteInfo[course.institute].name"
                   :color="instituteInfo[course.institute].color"
-                  font-size="text-body-1"
+                  :font-size="
+                    instituteInfo[course.institute].name.length > 4
+                      ? 'text-body-2'
+                      : 'text-body-1'
+                  "
                   size="45"
                 />
               </div>
@@ -93,8 +97,12 @@
 <script>
 import useCourseCard from "@/composables/teachers/course/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
-import { judgeItems, instituteInfo, scoreInfo } from "@/composables/global/useStaticData";
-import { roundScore } from "@/composables/global/useParseScore"
+import {
+  judgeItems,
+  instituteInfo,
+  scoreInfo,
+} from "@/composables/global/useStaticData";
+import { roundScore } from "@/composables/global/useParseScore";
 
 export default {
   setup() {
@@ -108,13 +116,13 @@ export default {
   },
   props: {
     course: {
-      type: Object, 
-      required: true
+      type: Object,
+      required: true,
     },
     width: {
-      type: String, 
-      default: ""
-    }
+      type: String,
+      default: "",
+    },
   },
   components: {
     AvatarContainer,
@@ -124,7 +132,7 @@ export default {
       let rounded = this.roundScore(score, this.course["comment_num"]);
       this.roundedScore.push(rounded);
     }
-  }, 
+  },
 };
 </script>
 <style scoped>

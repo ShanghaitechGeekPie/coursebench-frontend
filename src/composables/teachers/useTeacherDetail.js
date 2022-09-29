@@ -60,6 +60,7 @@ export default () => {
         courseStatistic.count[course.institute]++
       } else {
         courseStatistic.count["其他学院"]++
+        course.institute = "其他学院"
       }
     }
   }
