@@ -7,6 +7,8 @@ export default () => {
 
     const showSnackbar = inject("showSnackbar")
 
+    const global = inject("global")
+
     const formStatus = reactive({
         likeStatus: 0,
         operationStatus: -1,
@@ -16,9 +18,8 @@ export default () => {
         if (isNetworkError(error.response)) {
             showSnackbar("error", error.response.data.code)
         }
-        else {
-            console.log(error.response.data)
-            showSnackbar("error", "Unknown Error")
+        else if(!global.userProfile.id) {
+            showSnackbar("error", "您还没有登录")
         }
         formStatus.operationStatus = -1
     }
