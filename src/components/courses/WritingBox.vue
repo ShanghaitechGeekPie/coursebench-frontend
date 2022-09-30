@@ -11,9 +11,9 @@
         </v-btn>
       </template>
 
-      <v-card class="pa-3" elevation="0" style="overflow: hidden">
-        <v-row class="pl-3 py-3" align="center" style="width: 100%">
-          <v-col cols="1">
+      <v-card class="pa-sm-3 pa-2 pb-sm-3 pb-4" elevation="0" style="overflow: hidden">
+        <v-row class="pl-3 py-3" align="center" style="width: 100%" >
+          <v-col sm="1" cols="2">
             <avatar-container
                 :name="userProfile.nickname"
                 slice
@@ -21,7 +21,7 @@
                 :size="50"
             />
           </v-col>
-          <v-col cols="11">
+          <v-col sm="11" cols="10">
             <v-text-field label="标题" class="font-weight-bold" v-model="formStatus.title"
                           :error-messages="errorMsg.target === 'title' ? errorMsg.msg : ''"></v-text-field>
           </v-col>
@@ -29,8 +29,8 @@
         <v-textarea label="发一条友善的评论" auto-grow outlined rows="3" class="px-4" messages="支持markdown"
                     v-model="formStatus.content" :error-messages="errorMsg.target === 'content' ? errorMsg.msg : ''">
         </v-textarea>
-        <v-row class="d-flex justify-end mt-0 mb-3 px-9">
-          <v-col v-for="(dim, index) in statics.judgeItems" :key="index" cols="6" class="pb-0" align="center">
+        <v-row class="d-flex justify-end mt-0 mb-3 px-sm-9 px-2">
+          <v-col v-for="(dim, index) in statics.judgeItems" :key="index" sm="6" cols="12" class="pb-0" align="center">
             <v-slider
                 v-model="formStatus.slider[index]"
                 class="align-center"
@@ -67,8 +67,8 @@
             </v-slider>
           </v-col>
         </v-row>
-        <v-row class="d-flex flex-row justify-end align-center mx-3">
-          <v-col cols="2">
+        <v-row class="d-flex flex-row justify-end align-center mx-3" dense>
+          <v-col sm="2" cols="4">
             <v-select
                 v-model="courseYear"
                 :items="statics.yearItems"
@@ -76,7 +76,7 @@
                 :error="errorMsg.target === 'semester'"
             ></v-select>
           </v-col>
-          <v-col cols="2">
+          <v-col sm="2" cols="4">
             <v-select
                 v-model="courseTerm"
                 :items="statics.termItems"
@@ -86,16 +86,16 @@
                 :error="errorMsg.target === 'semester'"
             ></v-select>
           </v-col>
-          <v-col cols="2">
+          <v-col sm="2" cols="4">
             <v-select v-model="formStatus.commentTarget" :items="teachers" item-text="name" item-value="id"
                       label="评价对象"
                       :error-messages="errorMsg.target === 'comentTarget' ? errorMsg.msg : ''"></v-select>
           </v-col>
 
-          <v-col cols="2" class="d-flex">
+          <v-col sm="2" cols="6" class="d-flex">
             <v-switch v-model="formStatus.is_anonymous" class="mt-0" label="匿名" color="info" hide-details></v-switch>
           </v-col>
-          <v-col class="px-0 d-flex" cols="2">
+          <v-col sm="2" cols="6" class="px-0 d-flex" >
             <v-btn :color="formStatus.isPostError ? 'error' : 'primary'" depressed @click="doSubmit"
                    :loading="formStatus.loading">
               发表评论
