@@ -63,6 +63,9 @@ export default () => {
             formStatus.loading = false
             formStatus.isPostSuccess = true
             showSnackbar("success", "发表成功")
+            setTimeout(()=>{
+                window.location.reload()
+            }, 1000)
         },
         onError: (error) => {
             formStatus.loading = false
@@ -70,8 +73,12 @@ export default () => {
             if (isNetworkError(error.response)) {
                 showSnackbar("error", error.response.data.code)
             }
-            if (error.response.data.code === "CommentAlreadyExists") {
+            else if (error.response.data.code === "CommentAlreadyExists") {
                 showSnackbar("error", error.response.data.msg)
+            }
+            else {
+                console.log("Unknown type")
+                showSnackbar("error", error.response.data)
             }
         }
     })
