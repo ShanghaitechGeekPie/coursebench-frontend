@@ -18,7 +18,7 @@
               <v-col sm="9" cols="12">
                 <v-row>
                   <v-col cols="12" class="px-0 pt-0 pb-1">
-                    <writing-box></writing-box>
+                    <writing-box :disable-writing="disableWriting"></writing-box>
                   </v-col>
                   <v-col
                       class="pr-0 pl-0 pr-0 py-0"
@@ -49,14 +49,15 @@ import WritingBox from "@/components/courses/WritingBox";
 export default {
   components: { WritingBox, DetailCard, TeacherSelect, CourseCommentCard },
   setup() {
-    const { commentText, status, courseDetail, selectedTeachers, groups } = useCourseDetails();
-    return { commentText, status, courseDetail, selectedTeachers, groups };
+    const { commentText, status, courseDetail, selectedTeachers, groups, global } = useCourseDetails();
+    return { commentText, status, courseDetail, selectedTeachers, groups, global};
   },
   data() {
     return {
       currentTab: 0,
       scrollTop: document.documentElement.scrollTop,
       selectedComment: [],
+      disableWriting: false,
     };
   },
   mounted() {
@@ -85,6 +86,13 @@ export default {
     commentText: {
       handler() {
         this.updateSelectedComment()
+        this.commentText.map((item)=>{
+          if(item.user) {
+            if(item.user.id === this.global.userProfile.id) {
+              this.disableWriting = true
+            }
+          }
+        })
       },
       immediate: true,
       deep: true
