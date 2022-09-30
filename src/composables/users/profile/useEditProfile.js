@@ -75,6 +75,7 @@ export default () => {
         realname: userData.realname,
       })
       global.userProfile = getPreset()
+      formStatus.editProfile = false
       doResetStatus()
       showSnackbar("success", "修改个人信息成功")
     }, 

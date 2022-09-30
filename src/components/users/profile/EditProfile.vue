@@ -89,7 +89,7 @@
                   <div class="d-flex">
                     <div class="d-flex justify-center flex-column mr-sm-14 mr-10">
                       <div class="text-body-1 font-weight-bold">
-                        年级
+                        学段
                       </div>
                     </div>
                       <v-select
