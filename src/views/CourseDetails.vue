@@ -1,32 +1,32 @@
 <template>
   <v-container class="d-flex justify-center mt-16">
-    <v-row class="d-flex justify-center mx-10" style="max-width: 1150px">      
-      <v-col cols="11" class="">
+    <v-row class="d-flex justify-center" >
+      <v-col sm="11" cols="12" class="pa-sm-3 pa-0">
         <v-row class="d-flex justify-center">
-          <v-col cols="9" class="px-0">
+          <v-col cols="11" class="px-0">
             <DetailCard
-              class="pb-sm-8 pt-sm-2"
+              class="pb-8 pt-2"
               :details="courseDetail"
               :comments="commentText"
             />
           </v-col>
-          <v-col cols="12">
+          <v-col cols="11">
             <v-row>
-              <v-col cols="3" class="pt-0"  >
+              <v-col sm="3" cols="12" class="pt-0 pl-0 pr-sm-3 pr-0"  >
                 <TeacherSelect class="" :style="adoptiveCardPosition"/>
               </v-col>
-              <v-col cols="9">
+              <v-col sm="9" cols="12">
                 <v-row>
                   <v-col cols="12" class="px-0 pt-0 pb-1">
                     <writing-box></writing-box>
                   </v-col>
                   <v-col
                       class="pr-0 pl-0 pr-0 py-0"
-                      v-for="(comment, index) in commentText"
+                      v-for="(comment, index) in selectedComment"
                       :key="comment.id"
                       cols="12"
                   >
-                    <CourseCommentCard :comment="comment" :showType="'course'">
+                    <CourseCommentCard :comment="comment">
                     </CourseCommentCard>
                   </v-col>
                 </v-row>
@@ -49,13 +49,14 @@ import WritingBox from "@/components/courses/WritingBox";
 export default {
   components: { WritingBox, DetailCard, TeacherSelect, CourseCommentCard },
   setup() {
-    const { commentText, status, courseDetail } = useCourseDetails();
-    return { commentText, status, courseDetail };
+    const { commentText, status, courseDetail, selectedTeachers, groups } = useCourseDetails();
+    return { commentText, status, courseDetail, selectedTeachers, groups };
   },
   data() {
     return {
       currentTab: 0,
       scrollTop: document.documentElement.scrollTop,
+      selectedComment: [],
     };
   },
   mounted() {
@@ -63,9 +64,35 @@ export default {
       this.scrollTop = document.documentElement.scrollTop;
     });
   },
+  methods: {
+    updateSelectedComment() {
+      let mappedGroup = this.selectedTeachers.map((item)=>{
+        return this.groups[item].id
+      })
+      this.selectedComment = this.commentText.filter((item)=>{
+        return mappedGroup.includes(item.group.id)
+      })
+    }
+  },
+  watch: {
+    selectedTeachers: {
+      handler() {
+        this.updateSelectedComment()
+      },
+      immediate: true,
+      deep: true
+    },
+    commentText: {
+      handler() {
+        this.updateSelectedComment()
+      },
+      immediate: true,
+      deep: true
+    },
+  }
+  ,
   computed: {
     adoptiveCardPosition() {
-      console.log(this.scrollTop)
       if (this.$vuetify.breakpoint.mdAndDown) {
         return {};
       } else if (this.scrollTop <= 323) {
