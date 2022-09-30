@@ -3,16 +3,16 @@
     <v-row class="d-flex justify-center mx-10" style="max-width: 1150px">      
       <v-col cols="11" class="">
         <v-row class="d-flex justify-center">
-          <v-col cols="9" class="px-0">
+          <v-col cols="11" class="px-0">
             <DetailCard
-              class="pb-sm-8 pt-sm-2"
+              class="pb-8 pt-2"
               :details="courseDetail"
               :comments="commentText"
             />
           </v-col>
-          <v-col cols="12">
+          <v-col cols="11">
             <v-row>
-              <v-col cols="3" class="pt-0"  >
+              <v-col cols="3" class="pt-0 pl-0"  >
                 <TeacherSelect class="" :style="adoptiveCardPosition"/>
               </v-col>
               <v-col cols="9">

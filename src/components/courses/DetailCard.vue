@@ -4,6 +4,7 @@
         class="ma-0"
         elevation="0"
         outlined
+        color=""
     >
       <v-row class="pb-0">
         <v-col class="px-0 pl-sm-12 pl-8 " cols="6" v-if="details.name">
