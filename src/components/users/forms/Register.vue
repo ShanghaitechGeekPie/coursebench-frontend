@@ -37,6 +37,7 @@
                 <v-text-field
                   v-model="userData.email"
                   :rules="[formRules.required, formRules.email]"
+                  placeholder="请输入上科大邮箱"
                   ref="emailTextField"
                 ></v-text-field>
               </v-card-text>
@@ -86,6 +87,7 @@
                   :type="formStatus.passwordVisible ? 'text' : 'password'"
                   :rules="[formRules.required, formRules.password]"
                   ref="passwordTextField"
+                  placeholder="请输入密码"
                   :append-icon="
                     formStatus.passwordVisible
                       ? statics.icons.mdiEyeOff
@@ -142,7 +144,7 @@
                   hide-details
                   v-model="userData.grade"
                   :items="gradeItems"
-                  label="年级"
+                  label="学段"
                 ></v-select>
               </div>
             </v-card-text>
