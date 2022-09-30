@@ -1,7 +1,7 @@
 <template>
   <div style="min-height: 100%">  
     <ImageLoader v-if="status.profileLoading || status.commentLoading" />
-    <BackgroundImage v-else />
+    <BackgroundImage color="grey" v-else />
     <div style="flex-wrap: wrap" class="d-flex justify-center">
       <div class="pa-lg-3 pb-3">
         <div :style="{ width: $vuetify.breakpoint.mdAndDown ? '100vw' : '360px' }">
@@ -71,7 +71,7 @@
 
 <script>
 import Profile from "@/components/users/profile/Profile";
-import BackgroundImage from "@/components/users/profile/BackgroundImage";
+import BackgroundImage from "@/components/teachers/detail/BackgroundImage";
 import CommentCard from "@/components/users/comment/CommentCard";
 import SelectBar from "@/components/courses/all/SelectBar";
 import StatisticCard from "@/components/users/comment/StatisticCard";
@@ -83,6 +83,7 @@ import StatisticLoader from "@/components/teachers/loader/StatisticLoader"
 import ImageLoader from "@/components/teachers/loader/ImageLoader";
 import CommentLoader from "@/components/teachers/loader/CommentLoader";
 import Nothing from "@/components/global/Nothing"
+
 
 export default {
   components: {

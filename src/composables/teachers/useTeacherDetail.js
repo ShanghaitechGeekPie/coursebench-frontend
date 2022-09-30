@@ -111,6 +111,6 @@ export default () => {
   provide("courseFilterStatus", courseFilterStatus)
   provide("teacherDetail", teacherDetail)
 
-  return { courseText, status, courseFilterStatus }
+  return { courseText, status, courseFilterStatus, teacherDetail }
 
 }

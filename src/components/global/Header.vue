@@ -10,7 +10,7 @@
       @click="isCurrentPath('^\/$') ? $router.push('/') : ''"
       style="cursor: pointer"
     >
-      !!LOGO!!
+      <v-img src="@/assets/logo.svg" width="139.61px"></v-img>
     </v-toolbar-title>
     <div class="d-flex" style="height: calc(100% + 8px)"
       v-if="$vuetify.breakpoint.mdAndUp"
@@ -264,9 +264,9 @@ export default {
       if (this.$vuetify.breakpoint.width >= 1680) {
         return "720px";
       } else if (this.$vuetify.breakpoint.mdAndUp) {
-        return `calc(${Math.min(this.$vuetify.breakpoint.width - (this.global.isLogin ? 550 : 750), 720)}px)`
+        return `calc(${Math.min(this.$vuetify.breakpoint.width - (this.global.isLogin ? 550 : 750), 720) - 55}px)`
       } else {
-        return `calc(${ this.$vuetify.breakpoint.width - (this.global.isLogin ? 250 : 450) }px)`
+        return `calc(${ this.$vuetify.breakpoint.width - (this.global.isLogin ? 250 : 450) - 55 }px)`
       }
     }, 
 

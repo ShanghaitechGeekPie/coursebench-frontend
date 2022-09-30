@@ -10,7 +10,10 @@
     <v-card-title
       class="pt-6 pt-sm-11 px-6 px-sm-11 pb-0 d-flex justify-space-between"
     >
-      <div>!!LOGO!!</div>
+      <div>
+        <img class='small-icon' src="@/assets/logo.svg" alt=''/>
+        <!-- <v-img src="@/assets/logo.svg" width="50%"></v-img> -->
+      </div>
       <div>
         <v-btn
           icon
@@ -312,5 +315,10 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.small-icon {
+  width: 150px;
+  height: 100%;
 }
 </style>

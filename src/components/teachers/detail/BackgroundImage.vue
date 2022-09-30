@@ -1,18 +1,30 @@
 <template>
   <div>
+    <v-img
+      v-if="src !== ''"
+      alt="Background Image"
+      :src="src"
+      :height="$vuetify.breakpoint.xsOnly ? 91 : $vuetify.breakpoint.mdAndDown ? 121 : 211"
+    ></v-img>    
     <v-sheet
-      :color="$vuetify.theme.isDark ? statics.backgroundDark : statics.backgroundLight"
+      v-else
+      :color="color"
       :height="$vuetify.breakpoint.xsOnly ? 91 : $vuetify.breakpoint.mdAndDown ? 121 : 211"
     ></v-sheet>
   </div>
 </template>
 <script>
-import useBackgroundImage from "@/composables/teachers/detail/useBackgroundImage.js";
 
 export default {
-  setup() {
-    const { statics } = useBackgroundImage();
-    return { statics };
-  },
+  props: {
+    src: {
+      type: String,
+      default: "", 
+    },
+    color: {
+      type: String,
+      default: "", 
+    },
+  }
 };
 </script>
