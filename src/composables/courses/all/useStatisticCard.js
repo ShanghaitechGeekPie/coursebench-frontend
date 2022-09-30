@@ -1,5 +1,5 @@
 import { inject, reactive, toRefs } from "vue"
-import { mdiCity } from "@mdi/js";
+import { mdiCity, mdiChevronUp, mdiChevronDown } from "@mdi/js";
 
 
 export default () => {
@@ -9,10 +9,13 @@ export default () => {
     const statics = {
         icons: {
             mdiCity, 
+            mdiChevronUp, 
+            mdiChevronDown,
         }
     }
 
     const status = reactive({
+        showAll: true,
         ...toRefs(inject("courseFilterStatus"))
     })
 
