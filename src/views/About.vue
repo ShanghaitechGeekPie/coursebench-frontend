@@ -41,7 +41,7 @@
           v-if="$vuetify.breakpoint.smAndUp"
         >
           <div class="text-h6 d-flex justify-center">
-            <div>思维打分</div>
+            <div>多维评价</div>
           </div>
           <div class="text-body-2 d-flex justify-center">
             <div>Comprehensive Grading</div>
@@ -87,7 +87,7 @@
               class="ml-3"
               @click="openInplace('https://www.geekpie.club')"
               >{{ statics.icons.mdiWeb }}</v-icon
-            >            
+            >
           </div>
         </v-sheet>
       </div>
@@ -96,10 +96,14 @@
           width="100%"
           height="200px"
           class="text-h3 d-flex justify-center"
-          color="grey"
         >
           <div class="d-flex justify-center flex-column">
-            <div>!!Poster!!</div>
+            <div class="d-flex">
+              <div class="d-flex justify-center flex-column">
+                <div>Powered by</div>
+              </div>
+              <v-img src="@/assets/geekpie.svg"></v-img>
+            </div>
           </div>
         </v-sheet>
       </div>
@@ -162,19 +166,18 @@
             </div>
           </div>
           <v-divider></v-divider>
-          <div class="py-8" id="service_term">
-            <div class="text-h5">服务条款</div>
-            <div class="mt-4">!!TBD!!</div>
-          </div>
-          <v-divider></v-divider>
-          <div class="py-8" id="privacy_policy">
-            <div class="text-h5">隐私政策</div>
-            <div class="mt-4">!!TBD!!</div>
-          </div>
-          <v-divider></v-divider>
           <div class="py-8">
             <div class="text-h5">错误反馈</div>
-            <div class="mt-4">!!TBD!!</div>
+            <div class="mt-4">
+              如果您在使用中遇到了问题，欢迎联系<a
+                href="mailto:zhaoqch1@shanghaitech.edu.cn"
+                >zhaoqch1@shanghaitech.edu.cn</a
+              >
+              或在<a
+                href="https://github.com/ShanghaitechGeekPie/coursebench_official"
+                >Github Official Repository</a
+              >中提出Issue。
+            </div>
           </div>
           <v-divider></v-divider>
           <div class="py-8">
@@ -206,8 +209,12 @@
                 </div>
               </div>
               <div class="pt-8 d-flex justify-center">
-                <div class="d-flex justify-center" style="flex-wrap: wrap; width: 340px">
-                  <div v-for="(sponsor, index) in sponsors.individuals"
+                <div
+                  class="d-flex justify-center"
+                  style="flex-wrap: wrap; width: 340px"
+                >
+                  <div
+                    v-for="(sponsor, index) in sponsors.individuals"
                     :key="index"
                     class="pr-4 pb-sm-4 pb-4 d-flex"
                   >
@@ -226,7 +233,7 @@
                       ]"
                       >{{ sponsor.name }}</a
                     >
-                  </div>                  
+                  </div>
                 </div>
               </div>
             </div>
@@ -235,9 +242,29 @@
           <div class="py-8">
             <div class="text-h5">支持我们</div>
             <div class="mt-4">
-              如果您觉得我们的网站对您有帮助，欢迎您通过以下方式支持我们：
-              !!TBD!!
+              如果您觉得我们的网站对您有帮助，您可以通过点击以下链接找到CourseBench的专属赞助方案并支持我们：
+              <a href="https://afdian.net/a/colldisSavior"
+                >爱发电（https://afdian.net/a/colldisSavior）</a
+              >
             </div>
+          </div>
+          <v-divider></v-divider>
+          <div class="pt-8" id="service_term">
+            <div class="text-h5">用户协议</div>
+            <div
+              class="mt-4"
+              v-html="useMarkdown(serviceTerms)"
+              style="white-space: pre-line"
+            ></div>
+          </div>
+          <v-divider></v-divider>
+          <div class="pt-8" id="privacy_policy">
+            <div class="text-h5">隐私政策</div>
+            <div
+              class="mt-4"
+              v-html="useMarkdown(privacyPolicy)"
+              style="white-space: pre-line"
+            ></div>
           </div>
         </div>
       </div>
@@ -254,6 +281,11 @@ import {
   parseHomeLink,
 } from "@/composables/global/useSponsors";
 import { openInplace } from "@/composables/global/useExternalUrl";
+import {
+  service_terms as serviceTerms,
+  privacy_policy as privacyPolicy,
+} from "@/assets/terms.json";
+import useMarkdown from "@/composables/global/useMarkdown";
 
 export default {
   setup() {
@@ -262,7 +294,7 @@ export default {
         mdiQqchat,
         mdiEmail,
         mdiGithub,
-        mdiWeb
+        mdiWeb,
       },
     };
 
@@ -273,6 +305,9 @@ export default {
       parseHomeLink,
       parseAvatarLink,
       openInplace,
+      serviceTerms,
+      privacyPolicy,
+      useMarkdown,
     };
   },
   components: {
