@@ -2,22 +2,27 @@
   <div>
     <v-dialog width="750">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="" v-bind="attrs" v-on="on" block outlined text class="pa-0" :disabled="disableWriting"
+        <v-btn v-if="global.userProfile.id" v-bind="attrs" v-on="on" block outlined text class="pa-0" :disabled="disableWriting"
         >
           <v-icon v-show="disableWriting === false">
             {{statics.icons.mdiPencil}}
           </v-icon>
           {{ disableWriting ? "您已给该课程发表过评论" : "写评论"}}
         </v-btn>
+        <v-btn v-else v-bind="attrs" v-on="on" block outlined text class="pa-0" :disabled="true"
+        >
+           您还没有登录
+        </v-btn>
+
       </template>
 
       <v-card class="pa-sm-3 pa-2 pb-sm-3 pb-4" elevation="0" style="overflow: hidden">
         <v-row class="pl-3 py-3" align="center" style="width: 100%" >
           <v-col sm="1" cols="2">
             <avatar-container
-                :name="userProfile.nickname"
+                :name="global.userProfile.nickname"
                 slice
-                :src="userProfile.avatar"
+                :src="global.userProfile.avatar"
                 :size="50"
             />
           </v-col>
@@ -126,8 +131,8 @@ export default {
   },
   setup() {
     const {statics, teachers, gradingInfo, doSubmit, formStatus, errorMsg} = useWritingBox()
-    const { userProfile } = inject('global')
-    return {statics, userProfile, teachers, gradingInfo, doSubmit, formStatus, errorMsg }
+    const global = inject('global')
+    return {statics, global, teachers, gradingInfo, doSubmit, formStatus, errorMsg }
   },
   data() {
     return {
@@ -153,7 +158,15 @@ export default {
     },
     courseTerm() {
       this.formStatus.semester = this.getSemesterCode()
+    },
+    global: {
+      handler() {
+        window.location.reload()
+      },
+      deep: true,
+      immediate: false
     }
+
   },
   mounted() {
   }
