@@ -22,11 +22,11 @@
                   </v-col>
                   <v-col
                       class="pr-0 pl-0 pr-0 py-0"
-                      v-for="(comment, index) in commentText"
+                      v-for="(comment, index) in selectedComment"
                       :key="comment.id"
                       cols="12"
                   >
-                    <CourseCommentCard :comment="comment" :showType="'course'">
+                    <CourseCommentCard :comment="comment">
                     </CourseCommentCard>
                   </v-col>
                 </v-row>
@@ -49,13 +49,14 @@ import WritingBox from "@/components/courses/WritingBox";
 export default {
   components: { WritingBox, DetailCard, TeacherSelect, CourseCommentCard },
   setup() {
-    const { commentText, status, courseDetail } = useCourseDetails();
-    return { commentText, status, courseDetail };
+    const { commentText, status, courseDetail, selectedTeachers, groups } = useCourseDetails();
+    return { commentText, status, courseDetail, selectedTeachers, groups };
   },
   data() {
     return {
       currentTab: 0,
       scrollTop: document.documentElement.scrollTop,
+      selectedComment: [],
     };
   },
   mounted() {
@@ -63,6 +64,33 @@ export default {
       this.scrollTop = document.documentElement.scrollTop;
     });
   },
+  methods: {
+    updateSelectedComment() {
+      let mappedGroup = this.selectedTeachers.map((item)=>{
+        return this.groups[item].id
+      })
+      this.selectedComment = this.commentText.filter((item)=>{
+        return mappedGroup.includes(item.group.id)
+      })
+    }
+  },
+  watch: {
+    selectedTeachers: {
+      handler() {
+        this.updateSelectedComment()
+      },
+      immediate: true,
+      deep: true
+    },
+    commentText: {
+      handler() {
+        this.updateSelectedComment()
+      },
+      immediate: true,
+      deep: true
+    },
+  }
+  ,
   computed: {
     adoptiveCardPosition() {
       if (this.$vuetify.breakpoint.mdAndDown) {
