@@ -1,23 +1,25 @@
 <template>
   <v-card flat outlined >
     <v-row class="mx-1 mt-3">
-      <v-col class="" cols="6">
+      <v-col class="pr-1" cols="6">
         <v-select dense
                   v-model="status.sortKey"
                   :items="statics.sortKeyItem"
+                  style="font-size: 14px"
                   label="排序方式"
         ></v-select>
       </v-col>
-      <v-col class="" cols="6">
+      <v-col class="pl-1" cols="6">
         <v-select dense
                   v-model="status.order"
+                  style="font-size: 14px"
                   :items="statics.orderItem[status.sortKey]"
         ></v-select>
       </v-col>
     </v-row>
     <div class=" mb-4 mt-2">
-      <div class="font-weight-bold mx-2">
-        <div class="ml-2">授课老师:</div>
+      <div class="font-weight-regular subtitle-2 mx-2 grey--text text--darken-1">
+        <div class="ml-2">按老师筛选:</div>
       </div>
       <div class="ml-5">
         <v-chip-group v-model="model" column multiple active-class="">
