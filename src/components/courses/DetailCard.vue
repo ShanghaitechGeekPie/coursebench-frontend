@@ -4,9 +4,10 @@
         class="ma-0"
         elevation="0"
         outlined
+        color=""
     >
       <v-row class="pb-0">
-        <v-col class="px-0 pl-sm-12 pl-8 " cols="6" v-if="details.name">
+        <v-col class="px-0 pl-sm-12 pl-8 " sm="6" cols="12" v-if="details.name">
           <div class="text-h6 pt-6 single-line-limit pr-3" style="font-weight: bold">{{
               details.name
             }}
@@ -42,7 +43,7 @@
             </div>
           </div>
         </v-col>
-        <v-col v-else cols="6">
+        <v-col v-else sm="6" cols="12">
           <v-skeleton-loader
               type="article"
               :boilerplate="true"

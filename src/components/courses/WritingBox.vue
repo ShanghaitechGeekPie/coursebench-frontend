@@ -2,8 +2,7 @@
   <div>
     <v-dialog width="750">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="" v-bind="attrs" v-on="on" plain block outlined text
-               class="pa-0"
+        <v-btn color="" v-bind="attrs" v-on="on" block outlined text class="pa-0"
         >
           <v-icon>
             {{statics.icons.mdiPencil}}

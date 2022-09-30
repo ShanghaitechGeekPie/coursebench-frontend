@@ -110,7 +110,7 @@
                   class="pa-0 pr-sm-4 pr-3" 
                   cols="4"
                 >                  
-                  <slot name="footerNote" :localComment="comment">
+                  <slot name="footerNote" :comment="comment" :statics="statics" :semester="semester">
                     <div class="d-flex justify-end" style="flex-wrap: wrap">
                       <div class="pr-sm-2">
                         <v-icon size="15" style="transform: translate(0, -1px)">
@@ -163,10 +163,10 @@ export default {
   },
   computed: {
     semester() {
-      let sem = new String(this.comment.semester);
+      let sem = String(this.comment.semester);
       let year = sem.substring(0, 4);
       let season = sem.substring(4);
-      return `${year}年${season == "02" ? "秋" : "春"}`;
+      return `${year}年${season === "02" ? "秋" : "春"}`;
     },
   },
 };
