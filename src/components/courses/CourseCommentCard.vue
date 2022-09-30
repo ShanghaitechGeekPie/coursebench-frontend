@@ -50,7 +50,6 @@ export default {
     return { gradeItems, useUserName }
   },
   mounted() {
-    console.log(this.comment)
   }
 };
 </script>
