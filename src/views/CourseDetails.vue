@@ -65,7 +65,6 @@ export default {
   },
   computed: {
     adoptiveCardPosition() {
-      console.log(this.scrollTop)
       if (this.$vuetify.breakpoint.mdAndDown) {
         return {};
       } else if (this.scrollTop <= 323) {
