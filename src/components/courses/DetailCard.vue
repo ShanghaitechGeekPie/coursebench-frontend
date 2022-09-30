@@ -6,7 +6,7 @@
         outlined
     >
       <v-row class="pb-0">
-        <v-col class="px-0 pl-sm-12 pl-8 " sm="6" cols="12">
+        <v-col class="px-0 pl-sm-12 pl-8 " cols="6" v-if="details.name">
           <div class="text-h6 pt-6 single-line-limit pr-3" style="font-weight: bold">{{
               details.name
             }}
@@ -41,6 +41,12 @@
                     </span>
             </div>
           </div>
+        </v-col>
+        <v-col v-else cols="6">
+          <v-skeleton-loader
+              type="article"
+              :boilerplate="true"
+          ></v-skeleton-loader>
         </v-col>
         <v-divider vertical inset class="my-6 d-none d-sm-block"></v-divider>
         <v-col class="mt-lg-6 px-0 pb-0" sm="6" cols="12">
