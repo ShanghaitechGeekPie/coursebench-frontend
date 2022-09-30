@@ -174,49 +174,26 @@
   </div>
 </template>
 <script>
-import useAbout from "@/composables/users/useAbout";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
+import contributors from "@/assets/contributors.json";
+import sponsors from "@/assets/sponsors.json";
+import { mdiQqchat, mdiEmail, mdiGithub } from "@mdi/js";
+import { parseAvatarLink, parseHomeLink } from "@/composables/global/useSponsors";
 
 export default {
   setup() {
-    const { statics, sponsors, contributors } = useAbout();
+    const statics = {
+      icons: {
+        mdiQqchat,
+        mdiEmail,
+        mdiGithub,
+      },
+    };
 
-    return { statics, sponsors, contributors };
+    return { statics, sponsors, contributors, parseHomeLink, parseAvatarLink };
   },
   components: {
     AvatarContainer,
-  },
-  methods: {
-    parseHomeLink(link) {
-      if (link === "") {
-        return "javascript:void(0)";
-      } else if (link.startsWith("qq:")) {
-        if (this.$vuetify.breakpoint.xsOnly) {
-          return `mqqwpa://im/chat?chat_type=wpa&uin=${link.substring(
-            3
-          )}&version=1&src_type=web`;
-        } else {
-          return `tencent://message/?uin=${link.substring(3)}&Site=qq&Menu=yes`;
-        }
-      } else if (link.startsWith("github:")) {
-        return `https://github.com/${link.substring(7)}`;
-      } else {
-        return link;
-      }
-    },
-    parseAvatarLink(link) {
-      if (link === "") {
-        return "";
-      } else if (link.startsWith("qq:")) {
-        return `https://q1.qlogo.cn/g?b=qq&nk=${link.substring(3)}&s=160`;
-      } else if (link.startsWith("github:")) {
-        return `https://avatars.githubusercontent.com/u/${link.substring(
-          7
-        )}?s=64&v=4`;
-      } else {
-        return link;
-      }
-    },
   },
 };
 </script>
