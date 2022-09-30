@@ -48,10 +48,11 @@ export default () => {
     const getAllCourseSelected = () => {
         let ret = new Array()
         for (let key in courseStatistic.count) {
-            if (courseStatistic.count[key]) {
+            if (courseStatistic.count[key] && key != "__ob__") {
                 ret.push(key)
             }
-        } return ret
+        } 
+        return ret
     }
 
     const getCourseStatistic = () => {

@@ -5,10 +5,12 @@
       class="about-container"
     >
       <div class="d-flex justify-center pt-8">
-        <div class="text-sm-h1 text-h2">!!Slogan!!</div>
+        <div class="text-sm-h1 text-h2 font-weight-bold">
+          To be the best bench.
+        </div>
       </div>
       <div class="d-flex justify-center pt-8 mb-16">
-        <div class="text-h4">!!Description!!</div>
+        <div class="text-h4">一个真实可靠、不断完善的多维课程评价信息库</div>
       </div>
       <div class="d-flex justify-center">
         <div
@@ -16,10 +18,10 @@
           :style="{ width: $vuetify.breakpoint.xsOnly ? '40%' : '160px' }"
         >
           <div class="text-h6 d-flex justify-center">
-            <div>!!Feature Value!!</div>
+            <div>真实评价</div>
           </div>
           <div class="text-body-2 d-flex justify-center">
-            <div>!!Feature Item!!</div>
+            <div>Real Comments</div>
           </div>
         </div>
         <div
@@ -27,10 +29,10 @@
           :style="{ width: $vuetify.breakpoint.xsOnly ? '40%' : '160px' }"
         >
           <div class="text-h6 d-flex justify-center">
-            <div>!!Feature Value!!</div>
+            <div>畅所欲言</div>
           </div>
           <div class="text-body-2 d-flex justify-center">
-            <div>!!Feature Item!!</div>
+            <div>Free Discussion</div>
           </div>
         </div>
         <div
@@ -39,10 +41,10 @@
           v-if="$vuetify.breakpoint.smAndUp"
         >
           <div class="text-h6 d-flex justify-center">
-            <div>!!Feature Value!!</div>
+            <div>思维打分</div>
           </div>
           <div class="text-body-2 d-flex justify-center">
-            <div>!!Feature Item!!</div>
+            <div>Comprehensive Grading</div>
           </div>
         </div>
         <div
@@ -51,10 +53,10 @@
           v-if="$vuetify.breakpoint.smAndUp"
         >
           <div class="text-h6 d-flex justify-center">
-            <div>!!Feature Value!!</div>
+            <div>简明易用</div>
           </div>
           <div class="text-body-2 d-flex justify-center">
-            <div>!!Feature Item!!</div>
+            <div>User Friendly</div>
           </div>
         </div>
       </div>
@@ -62,9 +64,30 @@
         <v-sheet width="318px" class="pa-6 d-flex justify-center" outlined>
           <div>联系我们？</div>
           <div>
-            <v-icon class="ml-3">{{ statics.icons.mdiQqchat }}</v-icon>
-            <v-icon class="ml-3">{{ statics.icons.mdiEmail }}</v-icon>
-            <v-icon class="ml-3">{{ statics.icons.mdiGithub }}</v-icon>
+            <v-icon
+              class="ml-3"
+              @click="openInplace('https://jq.qq.com/?_wv=1027&k=nJPBtvhe')"
+              >{{ statics.icons.mdiQqchat }}</v-icon
+            >
+            <v-icon
+              class="ml-3"
+              @click="openInplace('mailto:geekpie@geekpie.club')"
+              >{{ statics.icons.mdiEmail }}</v-icon
+            >
+            <v-icon
+              class="ml-3"
+              @click="
+                openInplace(
+                  'https://github.com/ShanghaitechGeekPie/coursebench_official'
+                )
+              "
+              >{{ statics.icons.mdiGithub }}</v-icon
+            >
+            <v-icon
+              class="ml-3"
+              @click="openInplace('https://www.geekpie.club')"
+              >{{ statics.icons.mdiWeb }}</v-icon
+            >            
           </div>
         </v-sheet>
       </div>
@@ -112,6 +135,30 @@
                   >{{ contributor.name }}</a
                 >
               </div>
+              <div class="d-none">
+                <!--With great respect to our greatest developer-->
+                <div class="pr-4 pb-sm-4 pb-4 d-flex">
+                  <AvatarContainer
+                    :src="
+                      parseAvatarLink(
+                        'https://avatars.githubusercontent.com/u/52339623?s=64&v=4'
+                      )
+                    "
+                    :name="'spedoske'"
+                    size="32"
+                  />
+                  <a
+                    :href="parseHomeLink('https://github.com/Spedoske')"
+                    :class="[
+                      $vuetify.theme.dark
+                        ? 'inline-text-white'
+                        : 'inline-text-black',
+                      'inline-link-hover ml-2 mt-1',
+                    ]"
+                    >{{ "Spedoske" }}</a
+                  >
+                </div>
+              </div>
             </div>
           </div>
           <v-divider></v-divider>
@@ -134,7 +181,7 @@
             <div class="text-h5">友情赞助</div>
             <div class="mt-4">
               <div
-                v-for="(sponsor, index) in sponsors"
+                v-for="(sponsor, index) in sponsors.cooperations"
                 :key="index"
                 :class="['d-flex', 'justify-center', index === 0 ? '' : 'mt-8']"
               >
@@ -158,13 +205,37 @@
                   </div>
                 </div>
               </div>
+              <div class="pt-8 d-flex justify-center">
+                <div class="d-flex justify-center" style="flex-wrap: wrap; width: 340px">
+                  <div v-for="(sponsor, index) in sponsors.individuals"
+                    :key="index"
+                    class="pr-4 pb-sm-4 pb-4 d-flex"
+                  >
+                    <AvatarContainer
+                      :src="parseAvatarLink(sponsor.avatar)"
+                      :name="sponsor.name"
+                      size="32"
+                    />
+                    <a
+                      :href="parseHomeLink(sponsor.home)"
+                      :class="[
+                        $vuetify.theme.dark
+                          ? 'inline-text-white'
+                          : 'inline-text-black',
+                        'inline-link-hover ml-2 mt-1',
+                      ]"
+                      >{{ sponsor.name }}</a
+                    >
+                  </div>                  
+                </div>
+              </div>
             </div>
           </div>
           <v-divider></v-divider>
           <div class="py-8">
-            <div class="text-h5">赞助我们</div>
+            <div class="text-h5">支持我们</div>
             <div class="mt-4">
-              如果您觉得我们的网站对您有帮助，欢迎您通过以下方式赞助我们：
+              如果您觉得我们的网站对您有帮助，欢迎您通过以下方式支持我们：
               !!TBD!!
             </div>
           </div>
@@ -177,8 +248,12 @@
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import contributors from "@/assets/contributors.json";
 import sponsors from "@/assets/sponsors.json";
-import { mdiQqchat, mdiEmail, mdiGithub } from "@mdi/js";
-import { parseAvatarLink, parseHomeLink } from "@/composables/global/useSponsors";
+import { mdiQqchat, mdiEmail, mdiGithub, mdiWeb } from "@mdi/js";
+import {
+  parseAvatarLink,
+  parseHomeLink,
+} from "@/composables/global/useSponsors";
+import { openInplace } from "@/composables/global/useExternalUrl";
 
 export default {
   setup() {
@@ -187,10 +262,18 @@ export default {
         mdiQqchat,
         mdiEmail,
         mdiGithub,
+        mdiWeb
       },
     };
 
-    return { statics, sponsors, contributors, parseHomeLink, parseAvatarLink };
+    return {
+      statics,
+      sponsors,
+      contributors,
+      parseHomeLink,
+      parseAvatarLink,
+      openInplace,
+    };
   },
   components: {
     AvatarContainer,
