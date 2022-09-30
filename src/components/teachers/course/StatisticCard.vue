@@ -24,7 +24,7 @@
           {{ courseStatistic.total }}
         </div>
       </div>
-      <div class="d-flex justify-space-between py-2">
+      <div class="d-flex justify-space-between pt-2">
         <div>
           <div>
             <v-icon size="18">{{ statics.icons.mdiClipboardText }}</v-icon>
@@ -41,7 +41,7 @@
         </div>
       </div>
       <v-expand-transition>
-        <div class="pl-2" v-if="status.showAll && !isEmpty">
+        <div class="pl-2" v-if="status.showAll">
           <div
             v-for="(value, key, index) in courseStatistic.count"
             :key="index"
@@ -74,16 +74,6 @@ export default {
   setup() {
     const { courseStatistic, statics, status } = useStatisticCard();
     return { courseStatistic, statics, status };
-  },
-  computed: {
-    isEmpty() {
-      for (let key in this.courseStatistic.count) {
-        if (this.courseStatistic.count[key]) {
-          return false;
-        }
-      }
-      return true;
-    },
   },
   created() {
     if (this.$vuetify.breakpoint.mdAndDown) {

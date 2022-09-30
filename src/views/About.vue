@@ -140,7 +140,7 @@
                     </div>
                   </div>
                   <div class="d-flex justify-center mt-2">
-                    <a :href="sponsor.home" class="inline-link">{{
+                    <a :href="sponsor.home" class="inline-link-hover">{{
                       sponsor.name
                     }}</a>
                   </div>

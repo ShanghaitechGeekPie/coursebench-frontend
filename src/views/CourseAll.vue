@@ -20,12 +20,18 @@
             :width="adoptiveCardContainerWidth + 'px'"
             v-else="!status.loading"
           >
-            <template #commercial>
+            <template #header>
               <div class="mb-3">
                 <div class="text-h5">!!Slogan!!</div>
-              </div>
+              </div>           
             </template>
-          </StatisticCard>
+            <template #footer="{ showAll }">
+              <div></div>
+              <div :class="['mt-n2 pb-2 d-flex justify-end', showAll ? '' : 'pt-4' ]">
+                <div class="grey--text text-caption">共有{{courseText.length}}节课，当前第{{status.page}}页</div>
+              </div>   
+            </template>
+          </StatisticCard>          
         </div>
       </div>
       <div class="pa-3 px-0" 
@@ -61,7 +67,7 @@
               </div>
               <v-data-iterator
                 :items="courseText"
-                :items-per-page="adoptiveCardNumber * 3"
+                :items-per-page="$vuetify.breakpoint.xsOnly ? adoptiveCardNumber * 6 : adoptiveCardNumber * 3"
                 :page="status.page"
                 hide-default-footer
                 v-else
