@@ -29,7 +29,9 @@
         <v-card-title
           class="pt-6 pt-sm-11 px-6 px-sm-11 pb-0 d-flex justify-space-between"
         >
-          <div>!!LOGO!!</div>
+          <div>
+            <v-img src="@/assets/logo.svg" width="93.09px"></v-img>
+          </div>
           <div>
             <v-btn
               icon

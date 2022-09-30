@@ -1,7 +1,14 @@
 <template>
   <div style="min-height: 100%">
     <ImageLoader v-if="status.loading" />
-    <BackgroundImage v-else />
+    <BackgroundImage
+      :color="
+        $vuetify.theme.isDark
+          ? 'grey darken-3'
+          : instituteInfo[teacherDetail.institute].color
+      "
+      v-else
+    />
     <div style="flex-wrap: wrap" class="d-flex justify-center">
       <div class="pa-lg-3">
         <div
@@ -109,6 +116,7 @@ import DetailLoader from "@/components/teachers/loader/DetailLoader";
 import StatisticLoader from "@/components/teachers/loader/StatisticLoader";
 import ImageLoader from "@/components/teachers/loader/ImageLoader";
 import Nothing from "@/components/global/Nothing";
+import { instituteInfo } from "@/composables/global/useStaticData";
 
 export default {
   components: {
@@ -124,8 +132,8 @@ export default {
     Nothing,
   },
   setup() {
-    const { courseText, status, courseFilterStatus } = useTeacherDetail();
-    return { courseText, status, courseFilterStatus };
+    const { courseText, status, courseFilterStatus, teacherDetail } = useTeacherDetail();
+    return { courseText, status, courseFilterStatus, instituteInfo, teacherDetail };
   },
   data() {
     return {
