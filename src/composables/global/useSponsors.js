@@ -63,4 +63,5 @@ export function parseHomeLink(link) {
             }
         }
     }
+    return link;
 }

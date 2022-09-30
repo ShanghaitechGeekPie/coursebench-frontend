@@ -28,13 +28,21 @@
         </div>
         <v-expand-transition>
           <div v-if="status.showAll">
+            <div class="d-flex pt-1">
+              <div>
+                <v-checkbox v-model="status.selectAll" dense label="全选" hide-details></v-checkbox>
+              </div>
+              <div class="pl-8">
+                <v-checkbox v-model="status.selectNotAll" dense label="全不选" hide-details></v-checkbox>
+              </div>
+            </div>
             <div
               v-for="(value, key, index) in courseStatistic.count"
               :key="index"
               :class="index !== 0 ? 'mt-n4' : ''"
             >
               <div class="pt-2">
-                <v-checkbox dense v-model="status.selected" :value="key">
+                <v-checkbox dense v-model="courseFilterStatus.selected" :value="key">
                   <template #label>
                     <div class="d-flex justify-space-between" style="width: 100%">
                       <div>{{ key }}</div>
@@ -59,10 +67,11 @@ import useStatisticCard from "@/composables/courses/all/useStatisticCard";
 
 export default {
   setup() {
-    const { statics, courseStatistic, status } = useStatisticCard();
+    const { statics, courseStatistic, status, courseFilterStatus } = useStatisticCard();
     return {
       statics,
       courseStatistic,
+      courseFilterStatus, 
       status,
     };
   },

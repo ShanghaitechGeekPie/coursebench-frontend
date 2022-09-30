@@ -5,7 +5,7 @@
         <slot name="headerAvatar" :localComment="comment">
           <div 
             class="d-flex justify-space-between router-container" 
-            @click="$router.push({ path: `course/${comment.course.id}` })"
+            @click="$router.push({ path: `/course/${comment.course.id}` })"
           >
             <AvatarContainer
               :name="
