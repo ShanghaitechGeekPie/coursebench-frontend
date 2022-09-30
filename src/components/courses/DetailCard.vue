@@ -1,20 +1,18 @@
 <template>
   <v-scroll-y-transition>
     <v-card
-        class=""
-        color="#11638B"
+        class="ma-0"
         elevation="0"
         outlined
-        width="800px"
     >
       <v-row class="pb-0">
         <v-col class="px-0 pl-sm-12 pl-8 " sm="6" cols="12">
-          <div class="white--text text-h5 font-weight-bold pt-6 single-line-limit pr-3">{{
+          <div class="text-h6 pt-6 single-line-limit pr-3" style="font-weight: bold">{{
               details.name
             }}
           </div>
-          <div class="white--text">
-            <span class="subtitle-2 font-weight-bold">
+          <div class="">
+            <span class="grey--text text--darken-2 subtitle-2 font-weight-regular">
               {{ details.code }}
               | {{ details.credit }}学分
               | {{ details.comment_num }}评论
@@ -22,18 +20,18 @@
           </div>
           <!--          <div class="white&#45;&#45;text subtitle-1 font-weight-bold ml-sm-12 ml-7 pt-3"> 开课单位: {{ details.institute }} </div>-->
           <div class="pt-3">
-            <div class="white--text subtitle-1 font-weight-bold ">
+            <div class="grey--text text--darken-3 subtitle-1 font-weight-regular ">
               开课单位:
             </div>
-            <div class="white--text text-caption font-weight-bold pl-1">
+            <div class="text-caption font-weight-regular pl-1">
               {{ details.institute }}
             </div>
           </div>
           <div>
-            <div class="white--text subtitle-1 font-weight-bold ">
+            <div class="subtitle-1 font-weight-regular ">
               授课老师:
             </div>
-            <div class="white--text text-caption font-weight-bold pl-1 ">
+            <div class="text-caption font-weight-regular pl-1 ">
                     <span
                         v-for="(teacher, index) in teachers"
                         :key="index"
@@ -48,20 +46,20 @@
         <v-col class="mt-lg-6 px-0 pb-0" sm="6" cols="12">
           <div class="ml-6">
             <div
-                class="subtitle-1 white--text font-weight-bold"
+                class="subtitle-1 font-weight-bold"
             >
               Ratings & Reviews
             </div>
             <div style="font-family: Arial,serif">
               <span v-if="details.comment_num >= enoughDataThreshold">
                 <span
-                    class="text-h3 white--text font-weight-bold"
+                    class="text-h3 font-weight-bold"
                     style="font-family: Arial,serif!important;"
                 >
                   {{ (averageScore / 20).toFixed(0) }}
                 </span>
                 <span
-                    class="white--text font-weight-bold text-h5"
+                    class="font-weight-bold text-h5"
                     style="transform: translate(-10px, 0px); display: inline-block;"
                 >
                   .{{ parseInt(averageScore / 2) % 10 }}
@@ -69,14 +67,14 @@
               </span>
               <span v-else>
                 <span
-                    class="text-h3 white--text font-weight-bold"
+                    class="text-h3 font-weight-bold"
                     style="font-family: Arial,serif!important;"
                 >
                   -
                 </span>
               </span>
               <span
-                  class="white--text font-weight-bold text-h5"
+                  class="font-weight-bold text-h5"
                   style="transform: translate(-3px, 0px); display: inline-block;"
               >
               /5
@@ -93,7 +91,7 @@
             <v-row no-gutters>
               <v-col class="d-flex" v-for="index in [0, 1, 2, 3]" :key="index" cols="6">
                 <div
-                    class="text-body-2 pr-2 font-weight-bold white--text"
+                    class="text-body-2 pr-2 font-weight-bold"
                     style="min-width: 57px"
                 >
                   {{ judgeItems[index] }}

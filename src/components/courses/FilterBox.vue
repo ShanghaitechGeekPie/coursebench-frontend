@@ -33,18 +33,15 @@
         </v-chip-group>
       </div>
     </div>
-    <writing-box></writing-box>
   </v-card>
 </template>
 
 <script>
 
 import useSelectBar from "@/composables/courses/comment/useSelectBar"
-import WritingBox from "@/components/courses/WritingBox";
 
 export default {
   name: "teacherSelect",
-  components: {WritingBox},
   setup() {
     const {teachers, status, statics} = useSelectBar()
     return {teachers, status, statics}

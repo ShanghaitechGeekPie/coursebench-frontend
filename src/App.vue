@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Header :snackbar.sync="snackbar" />
-    <v-main>
+    <v-main style="overflow: hidden;">
       <InsiderBanner />
       <router-view :key="$route.path" />
       <v-snackbar
