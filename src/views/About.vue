@@ -1,7 +1,7 @@
 <template>
   <div class="pt-16 d-flex justify-center">
-    <v-sheet
-      :width="$vuetify.breakpoint.width >= 1280 ? '1280px' : '100%'"
+    <div
+      :style="{ width: $vuetify.breakpoint.width >= 1280 ? '1280px' : '100%' }"
       class="about-container"
     >
       <div class="d-flex justify-center pt-8">
@@ -11,9 +11,9 @@
         <div class="text-h4">!!Description!!</div>
       </div>
       <div class="d-flex justify-center">
-        <v-sheet
+        <div
           class="mx-sm-8 mx-2"
-          :width="$vuetify.breakpoint.xsOnly ? '40%' : '160'"
+          :style="{ width: $vuetify.breakpoint.xsOnly ? '40%' : '160px' }"
         >
           <div class="text-h6 d-flex justify-center">
             <div>!!Feature Value!!</div>
@@ -21,10 +21,10 @@
           <div class="text-body-2 d-flex justify-center">
             <div>!!Feature Item!!</div>
           </div>
-        </v-sheet>
-        <v-sheet
+        </div>
+        <div
           class="mx-sm-8 mx-2"
-          :width="$vuetify.breakpoint.xsOnly ? '40%' : '160'"
+          :style="{ width: $vuetify.breakpoint.xsOnly ? '40%' : '160px' }"
         >
           <div class="text-h6 d-flex justify-center">
             <div>!!Feature Value!!</div>
@@ -32,8 +32,8 @@
           <div class="text-body-2 d-flex justify-center">
             <div>!!Feature Item!!</div>
           </div>
-        </v-sheet>
-        <v-sheet
+        </div>
+        <div
           class="mx-sm-8"
           :width="$vuetify.breakpoint.xsOnly ? '40%' : '160'"
           v-if="$vuetify.breakpoint.smAndUp"
@@ -44,8 +44,8 @@
           <div class="text-body-2 d-flex justify-center">
             <div>!!Feature Item!!</div>
           </div>
-        </v-sheet>
-        <v-sheet
+        </div>
+        <div
           class="mx-sm-8"
           :width="$vuetify.breakpoint.xsOnly ? '40%' : '160'"
           v-if="$vuetify.breakpoint.smAndUp"
@@ -56,7 +56,7 @@
           <div class="text-body-2 d-flex justify-center">
             <div>!!Feature Item!!</div>
           </div>
-        </v-sheet>
+        </div>
       </div>
       <div class="d-flex justify-center mt-10">
         <v-sheet width="318px" class="pa-6 d-flex justify-center" outlined>
@@ -103,7 +103,12 @@
                 />
                 <a
                   :href="parseHomeLink(contributor.home)"
-                  class="inline-link-hover ml-2 mt-1"
+                  :class="[
+                    $vuetify.theme.dark
+                      ? 'inline-text-white'
+                      : 'inline-text-black',
+                    'inline-link-hover ml-2 mt-1',
+                  ]"
                   >{{ contributor.name }}</a
                 >
               </div>
@@ -140,9 +145,16 @@
                     </div>
                   </div>
                   <div class="d-flex justify-center mt-2">
-                    <a :href="sponsor.home" class="inline-link-hover">{{
-                      sponsor.name
-                    }}</a>
+                    <a
+                      :href="sponsor.home"
+                      :class="[
+                        $vuetify.theme.dark
+                          ? 'inline-text-white'
+                          : 'inline-text-black',
+                        'inline-link-hover',
+                      ]"
+                      >{{ sponsor.name }}</a
+                    >
                   </div>
                 </div>
               </div>
@@ -158,7 +170,7 @@
           </div>
         </div>
       </div>
-    </v-sheet>
+    </div>
   </div>
 </template>
 <script>
@@ -231,8 +243,15 @@ export default {
 }
 
 .inline-link-hover {
-  color: #000000de;
   cursor: pointer;
   text-decoration-line: none;
+}
+
+.inline-text-black {
+  color: #000000de;
+}
+
+.inline-text-white {
+  color: #ffffff;
 }
 </style>

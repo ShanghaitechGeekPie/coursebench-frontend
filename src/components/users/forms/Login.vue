@@ -145,7 +145,7 @@
               <v-radio-group v-model="userData.resetPasswordMethod">
                 <v-radio value="email" class="black--text">
                   <template v-slot:label>
-                    <div class="black--text">通过电子邮件发送安全代码</div>
+                    <div :class="[$vuetify.theme.dark ? 'white--text' : 'black--text']">通过电子邮件发送安全代码</div>
                   </template>
                 </v-radio>
               </v-radio-group>
