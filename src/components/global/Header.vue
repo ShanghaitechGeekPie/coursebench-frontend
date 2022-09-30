@@ -151,7 +151,7 @@
         </v-list-item>
         <v-divider></v-divider>
         <v-list-item class="d-flex justify-center">
-          <v-btn text x-small class="text-caption" to="/about/#service_term">服务条款</v-btn>          
+          <v-btn text x-small class="text-caption" to="/about/#service_term">用户协议</v-btn>          
           <div class="px-1">•</div>          
           <v-btn text x-small class="text-caption" to="/about/#privacy_policy">隐私政策</v-btn>
         </v-list-item>
