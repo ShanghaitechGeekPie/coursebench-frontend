@@ -13,12 +13,14 @@ export default () => {
 
     const teachers = ref([])
     const groups = ref([])
+    const selectedTeachers = ref([])
     const router = useRouter()
     const route = useRoute()
     const showSnackbar = inject("showSnackbar")
 
     provide('teachers', teachers);
     provide('groups', groups);
+    provide('selectedTeachers', selectedTeachers);
 
     const status = reactive({
         ...defaultStatus,
@@ -122,6 +124,7 @@ export default () => {
                             id: value.id,
                             name: names
                         })
+                        selectedTeachers.value.push(index)
                     })
                     // teachers.value = [...new Set(teacherContainer)]
                     teachers.value = teacherContainer.filter(arrayUnique)
@@ -136,5 +139,5 @@ export default () => {
     })
 
 
-    return {teachers, commentText, status, courseDetail}
+    return {teachers, commentText, status, courseDetail, selectedTeachers, groups}
 }
