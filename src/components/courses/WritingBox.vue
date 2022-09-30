@@ -1,13 +1,14 @@
 <template>
-  <v-container>
+  <div>
     <v-dialog width="750">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="blue lighten-1" v-bind="attrs" v-on="on" fab
-               style="position: fixed; top: 80vh; left: 87vw; z-index: 1; "
+        <v-btn color="" v-bind="attrs" v-on="on" plain block outlined text
+               class="pa-0"
         >
           <v-icon>
             {{statics.icons.mdiPencil}}
           </v-icon>
+          写评论
         </v-btn>
       </template>
 
@@ -107,7 +108,7 @@
         </v-row>
       </v-card>
     </v-dialog>
-  </v-container>
+  </div>
 </template>
 
 <script>

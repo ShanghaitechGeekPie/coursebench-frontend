@@ -14,13 +14,13 @@
           readonly
           size="16"
           :value="starNum"
-          color="grey lighten-2"
+          color="yellow darken-3"
           background-color="grey lighten-2"
       ></v-rating>
     </v-col>
     <v-col cols="8" class="d-flex align-center">
       <v-progress-linear
-          color="grey"
+          :color="color"
           :value="percentage"
           height="4"
       >
@@ -37,6 +37,7 @@ export default {
   props: {
     starNum: Number,
     percentage: Number,
+    color: String
   },
   setup() {
     const { statics } = useScoreLine()
