@@ -29,10 +29,13 @@
             </div>
           </div>
           <div>
-            <div class="subtitle-1 font-weight-regular ">
+            <div class="subtitle-1 font-weight-regular "
+            >
               授课老师:
             </div>
-            <div class="text-caption font-weight-regular pl-1 ">
+            <div class="text-caption font-weight-regular pl-1 "
+                 style="cursor: pointer"
+            >
                     <span
                         v-for="(teacher, index) in teachers"
                         :key="index"
