@@ -5,6 +5,7 @@
         <template v-slot:headerAvatar="avatar">
           <div
               class="d-flex justify-space-between router-container"
+              style="cursor: pointer"
               @click="$router.push({ path: `/user/${comment.user.id}` })"
           >
             <AvatarContainer
