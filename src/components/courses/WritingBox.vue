@@ -2,12 +2,12 @@
   <div>
     <v-dialog width="750">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="" v-bind="attrs" v-on="on" block outlined text class="pa-0"
+        <v-btn color="" v-bind="attrs" v-on="on" block outlined text class="pa-0" :disabled="disableWriting"
         >
-          <v-icon>
+          <v-icon v-show="disableWriting === false">
             {{statics.icons.mdiPencil}}
           </v-icon>
-          写评论
+          {{ disableWriting ? "您已给该课程发表过评论" : "写评论"}}
         </v-btn>
       </template>
 
@@ -118,6 +118,9 @@ import { inject } from 'vue';
 
 export default {
   name: "WritingBox",
+  props: {
+    disableWriting: Boolean
+  },
   components : {
     AvatarContainer
   },
