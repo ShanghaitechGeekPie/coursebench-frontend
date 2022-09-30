@@ -13,7 +13,12 @@
             }}
           </div>
           <div class="">
-            <span class="grey--text text--darken-2 subtitle-2 font-weight-regular">
+            <span class="subtitle-2 font-weight-regular"
+            :class="
+        $vuetify.theme.isDark
+          ? 'grey--text'
+          : 'grey--text text--darken-3'
+">
               {{ details.code }}
               | {{ details.credit }}学分
               | {{ details.comment_num }}评论
@@ -21,26 +26,44 @@
           </div>
           <!--          <div class="white&#45;&#45;text subtitle-1 font-weight-bold ml-sm-12 ml-7 pt-3"> 开课单位: {{ details.institute }} </div>-->
           <div class="pt-3">
-            <div class="grey--text text--darken-3 subtitle-1 font-weight-regular ">
+            <div class="subtitle-1 font-weight-regular "
+                 :class="
+        $vuetify.theme.isDark
+          ? 'grey--text text--lighten-1'
+          : 'grey--text text--darken-3'
+">
               开课单位:
             </div>
-            <div class="text-caption font-weight-regular pl-1">
+            <div class="text-caption font-weight-regular"
+                 :class="
+        $vuetify.theme.isDark
+          ? 'grey--text text--lighten-1'
+          : 'grey--text text--darken-3'
+">
               {{ details.institute }}
             </div>
           </div>
           <div>
             <div class="subtitle-1 font-weight-regular "
-            >
+                 :class="
+        $vuetify.theme.isDark
+          ? 'grey--text text--lighten-2'
+          : 'grey--text text--darken-3'
+">
               授课老师:
             </div>
-            <div class="text-caption font-weight-regular pl-1 "
+            <div class="text-caption font-weight-regular"
                  style="cursor: pointer"
             >
                     <span
                         v-for="(teacher, index) in teachers"
                         :key="index"
                         @click="$router.push({ path: `/teacher/${teacher.id}` })"
-                    >
+                        :class="
+        $vuetify.theme.isDark
+          ? 'grey--text text--lighten-1'
+          : 'grey--text text--darken-3'
+">
                       {{ teacher.name }}
                     </span>
             </div>
