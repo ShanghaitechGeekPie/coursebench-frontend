@@ -2,7 +2,7 @@
   <div>
     <v-dialog width="750">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn v-if="global.userProfile.id" v-bind="attrs" v-on="on" block outlined text class="pa-0" :disabled="disableWriting"
+        <v-btn v-if="global.isLogin" v-bind="attrs" v-on="on" block outlined text class="pa-0" :disabled="disableWriting"
         >
           <v-icon v-show="disableWriting === false">
             {{statics.icons.mdiPencil}}
