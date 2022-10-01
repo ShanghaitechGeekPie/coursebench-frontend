@@ -20,7 +20,7 @@ export default () => {
       }
     },
     nickname: (value) => {
-      const pattern = /^[\u4e00-\u9fa5_a-zA-Z0-9]{3,16}$/
+      const pattern = /^[\u4e00-\u9fff_a-zA-Z0-9]{3,16}$/
       return pattern.test(value) || '用户名只能包含中文、字母、数字、下划线，且长度在3-16位'
     },
     password: (value) => {

@@ -5,7 +5,7 @@
     </div>
     <div class="d-flex justify-center pt-3">
       <div class="text-h6 font-weight-bold grey--text text--darken-2">
-        这里什么都没有...
+        {{ text }}
       </div>
     </div>
   </div>
@@ -23,5 +23,11 @@ export default {
 
     return { statics }
   },
+  props: {
+    text: {
+      type: String,
+      default: "这里什么都没有...",
+    },
+  }
 };
 </script>
