@@ -32,7 +32,7 @@
 
           <div class="d-flex justify-end" style="flex-wrap: wrap">
             <div class="d-flex">
-              <v-btn class="like-button mr-1" small :color="formStatus.likeStatus === 1 ? 'primary' : 'primary'" elevation="0" :text="formStatus.likeStatus!==1" :outlined="formStatus.likeStatus!==1" @click="onClickLike">
+              <v-btn class="like-button mr-1" small :color="formStatus.likeStatus === 1 ? 'primary' : 'primary'" elevation="0" :text="formStatus.likeStatus!==1" :outlined="formStatus.likeStatus!==1" @click="onClickLike" :disabled="!global.isLogin">
                 <div class="px-0">
                   <v-icon size="30" style="">
                     {{ footerNote.statics.icons.mdiTriangleSmallUp }}
@@ -40,7 +40,7 @@
                   <span class="text-caption" style="transform: translate(-7px, 0); display: inline-block;"> 赞同 {{ footerNote.comment.like - footerNote.comment.dislike + (formStatus.likeStatus === 1 ? 1 : 0) -  (formStatus.likeStatus === 2 ? 1 : 0) - (comment.like_status === 1 ? 1 : 0) +  (comment.like_status === 2 ? 1 : 0)}} </span>
                 </div>
               </v-btn>
-              <v-btn class="like-button mr-3" small :color="formStatus.likeStatus === 2 ? 'primary' : 'primary'" elevation="0" :text="formStatus.likeStatus!==2" :outlined="formStatus.likeStatus!==2" @click="onClickDislike" :min-width="30">
+              <v-btn class="like-button mr-3" small :color="formStatus.likeStatus === 2 ? 'primary' : 'primary'" elevation="0" :text="formStatus.likeStatus!==2" :outlined="formStatus.likeStatus!==2" @click="onClickDislike" :min-width="30" :disabled="!global.isLogin">
                 <v-icon size="30" style="">
                   {{ footerNote.statics.icons.mdiTriangleSmallDown }}
                 </v-icon>
@@ -65,6 +65,7 @@ import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import useCourseCommentCard from "@/composables/courses/comment/useCourseCommentCard";
 import useUserName from "@/composables/global/useUserName";
 import {gradeItems} from "@/composables/global/useStaticData";
+import {inject} from "vue";
 
 export default {
   props: {
@@ -77,7 +78,8 @@ export default {
   },
   setup() {
     const { doLike, doDislike, doUndo, formStatus } = useCourseCommentCard()
-    return { doLike, doDislike, doUndo, formStatus, useUserName, gradeItems}
+    const global = inject('global')
+    return { doLike, doDislike, doUndo, formStatus, useUserName, gradeItems, global }
   },
   mounted() {
     this.formStatus.likeStatus = this.comment.like_status
