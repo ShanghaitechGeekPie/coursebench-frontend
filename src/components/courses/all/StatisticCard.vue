@@ -30,10 +30,10 @@
           <div v-if="status.showAll">
             <div class="d-flex pt-1">
               <div>
-                <v-checkbox v-model="status.selectAll" dense label="全选" hide-details></v-checkbox>
+                <v-checkbox @change="handleSelectAll($event)" :value="status.selectAll" dense label="全选" hide-details></v-checkbox>
               </div>
               <div class="pl-8">
-                <v-checkbox v-model="status.selectNotAll" dense label="全不选" hide-details></v-checkbox>
+                <v-checkbox @change="handleSelectAll(!$event)" :value="status.selectNotAll" dense label="全不选" hide-details></v-checkbox>
               </div>
             </div>
             <div
@@ -81,5 +81,14 @@ export default {
       default: "",
     },
   },
+  methods: {
+    handleSelectAll(event) {
+      if (event) {
+        this.courseFilterStatus.selected = Object.keys(this.courseStatistic.count).filter(key => key !== "__ob__");
+      } else {
+        this.courseFilterStatus.selected = [];
+      }
+    }, 
+  }
 };
 </script>

@@ -51,7 +51,7 @@ export default () => {
             if (courseStatistic.count[key] && key != "__ob__") {
                 ret.push(key)
             }
-        } 
+        }
         return ret
     }
 
@@ -106,7 +106,7 @@ export default () => {
                         })
                     }
                 })
-                getCourseStatistic() 
+                getCourseStatistic()
                 courseFilterStatus.selected = getAllCourseSelected()
             }
         })
@@ -148,7 +148,7 @@ export default () => {
     // Fixed: use an inefficient way to make work temporarily
     useRecordWatch(courseFilterStatus, useDebounce((lastStatus, from, to) => {
         // the if order matters here, it seems that wrapped array is not equal to the unwrapped ones
-        if (lastStatus.order != courseFilterStatus.order) {            
+        if (lastStatus.order != courseFilterStatus.order) {
             courseText.value.sort(sortFunc) // I dont know how js sort works in the vm
             // but dont feel strange if it dont work for the values that are the same
         } else if (lastStatus.sortKey != courseFilterStatus.sortKey) {
@@ -156,7 +156,7 @@ export default () => {
             courseText.value.sort(sortFunc) // I sort it here because some sort keys have the same order item
             // in that case the first if statement will not be triggered
         } else if (lastStatus.selected != courseFilterStatus.selected) {
-            courseText.value = courseRawText.value.filter((course) => 
+            courseText.value = courseRawText.value.filter((course) =>
                 (() => {
                     if (searchInput.keys.length === 0) {
                         return true;
@@ -171,7 +171,7 @@ export default () => {
                     }
                 })() && (() => courseFilterStatus.selected.some((item) => item === course.institute))()
             )
-            courseText.value.sort(sortFunc)             
+            courseText.value.sort(sortFunc)
             status.page = 1
         }
     }))

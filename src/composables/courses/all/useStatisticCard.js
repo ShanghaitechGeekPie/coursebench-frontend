@@ -1,7 +1,6 @@
 import { inject, reactive } from "vue"
 import { mdiCity, mdiChevronUp, mdiChevronDown } from "@mdi/js";
 import useRecordWatch from "@/composables/global/useRecordWatch";
-import { compare } from "@/composables/global/useArrayUtils";
 import useDebounce from "@/composables/global/useDebounce";
 
 export default () => {
@@ -29,8 +28,8 @@ export default () => {
             if (courseFilterStatus.selected.length === 0) {
                 status.selectAll = false
                 status.selectNotAll = true
-            } else if (compare(courseFilterStatus.selected.filter(key => key != "__ob__"), 
-              Object.keys(courseStatistic.count).filter(key => key != "__ob__"))) {
+            } else if (courseFilterStatus.selected.filter(key => key != "__ob__").length 
+                === Object.keys(courseStatistic.count).filter(key => key != "__ob__").length) {
                 status.selectAll = true
                 status.selectNotAll = false
             } else {
@@ -39,23 +38,6 @@ export default () => {
             }
         }
     }))
-
-    useRecordWatch(status, useDebounce((lastStatus) => {
-        if (status.selectAll != lastStatus.selectAll) {
-            if (status.selectAll) {
-                courseFilterStatus.selected = Object.keys(courseStatistic.count).filter(key => key != "__ob__")
-            } else {
-                courseFilterStatus.selected = []
-            }
-        } else if (status.selectNotAll != lastStatus.selectNotAll) {
-            if (status.selectNotAll) {
-                courseFilterStatus.selected = []
-            } else {
-                courseFilterStatus.selected = Object.keys(courseStatistic.count).filter(key => key != "__ob__")
-            }
-        }
-    }))
-
 
     return { statics, courseStatistic, courseFilterStatus, status }
 
