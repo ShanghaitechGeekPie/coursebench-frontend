@@ -41,7 +41,7 @@
           v-if="$vuetify.breakpoint.smAndUp"
         >
           <div class="text-h6 d-flex justify-center">
-            <div>多维评价</div>
+            <div>多维评分</div>
           </div>
           <div class="text-body-2 d-flex justify-center">
             <div>Comprehensive Grading</div>
