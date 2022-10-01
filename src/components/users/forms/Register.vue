@@ -10,7 +10,11 @@
       class="pt-6 pt-sm-11 px-6 px-sm-11 pb-0 d-flex justify-space-between"
     >
       <div>
-        <img class='small-icon' src="@/assets/logo.svg" alt=''/>
+        <img 
+          class='small-icon' 
+          :src="$vuetify.theme.dark ? logoDark : logoLight" 
+          alt=''
+        />
         <!-- <v-img src="@/assets/logo.svg" width="50%"></v-img> -->
       </div>
       <div>
@@ -267,6 +271,8 @@ import useRegister from "@/composables/users/forms/useRegister";
 import useForms from "@/composables/users/forms/useForms";
 import useAfterRender from "@/composables/global/useAfterRender";
 import { gradeItems, yearItems } from "@/composables/global/useStaticData"
+import logoDark from "@/assets/logo-white.svg";
+import logoLight from "@/assets/logo.svg";
 
 export default {
   setup() {
@@ -285,7 +291,9 @@ export default {
       doRegister, 
       getCaptcha, 
       yearItems, 
-      gradeItems 
+      gradeItems, 
+      logoLight, 
+      logoDark
     };
   },
   methods: {  

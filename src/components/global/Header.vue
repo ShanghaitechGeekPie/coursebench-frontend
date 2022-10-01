@@ -10,7 +10,10 @@
       @click="isCurrentPath('^\/$') ? $router.push('/') : ''"
       style="cursor: pointer"
     >
-      <v-img src="@/assets/logo.svg" width="139.61px"></v-img>
+      <v-img
+        :src="$vuetify.theme.dark ? logoDark : logoLight"
+        width="139.61px"
+      ></v-img>
     </v-toolbar-title>
     <div
       class="d-flex"
@@ -221,6 +224,8 @@ import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import SliderButton from "@/components/global/SliderButton";
 import MobileSearchBar from "@/components/global/MobileSearchBar";
 import useInsitePush from "@/composables/global/useInsitePush";
+import logoDark from "@/assets/logo-white.svg";
+import logoLight from "@/assets/logo.svg";
 
 import {
   mdiAccount,
@@ -278,6 +283,8 @@ export default {
       searchParser,
       isCurrentPath,
       useInsitePush,
+      logoDark,
+      logoLight,
     };
   },
   data() {
