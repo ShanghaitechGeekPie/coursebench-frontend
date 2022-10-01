@@ -17,8 +17,8 @@ const scoreInfo = [
     {label: "多半差评", color: "#FF892F"},
     {label: "褒贬不一", color: "#FFC107"},
     {label: "多半好评", color: "#A4BE23"},
-    {label: "好评如潮", color: "#709800"},
-    {label: "特别好评", color: "#1B5E20"},
+    {label: "特别好评", color: "#709800"},
+    {label: "好评如潮", color: "#1B5E20"},
     {label: "特别差评", color: "#B71C1C"}, // otherwise, we use this
 ]
 
