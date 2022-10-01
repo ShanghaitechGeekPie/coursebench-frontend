@@ -30,7 +30,10 @@
           class="pt-6 pt-sm-11 px-6 px-sm-11 pb-0 d-flex justify-space-between"
         >
           <div>
-            <v-img src="@/assets/logo.svg" width="93.09px"></v-img>
+            <v-img 
+              :src="$vuetify.theme.dark ? logoDark : logoLight" 
+              width="93.09px">
+          </v-img>
           </div>
           <div>
             <v-btn
@@ -318,6 +321,8 @@ import useForms from "@/composables/users/forms/useForms"
 import { gradeItems, yearItems, visibleItems } from "@/composables/global/useStaticData"
 import useAfterRender from "@/composables/global/useAfterRender";
 import { inject } from "vue"
+import logoDark from "@/assets/logo-white.svg";
+import logoLight from "@/assets/logo.svg";
 
 export default {
   setup() {
@@ -338,7 +343,9 @@ export default {
       formRules, 
       gradeItems,
       yearItems,
-      visibleItems
+      visibleItems, 
+      logoDark,
+      logoLight
     };
   },
   methods: {

@@ -12,7 +12,11 @@
       class="pt-6 pt-sm-11 px-6 px-sm-11 pb-0 d-flex justify-space-between"
     >
       <div>
-        <img class='small-icon' src="@/assets/logo.svg" alt=''/>
+        <img 
+          class='small-icon' 
+          :src="$vuetify.theme.dark ? logoDark : logoLight" 
+          alt=''
+        />
       </div>
       <div>
         <v-btn
@@ -273,6 +277,8 @@ import { inject } from "vue";
 import useLogin from "@/composables/users/forms/useLogin";
 import useForms from "@/composables/users/forms/useForms";
 import useAfterRender from "@/composables/global/useAfterRender";
+import logoDark from "@/assets/logo-white.svg";
+import logoLight from "@/assets/logo.svg";
 
 export default {
   setup() {
@@ -290,6 +296,8 @@ export default {
       doLogin,
       getCaptcha,
       doResetPassword,
+      logoDark,
+      logoLight,
     };
   },
   methods: {
