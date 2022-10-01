@@ -123,6 +123,9 @@ export default () => {
 
   const getCommentStatistic = () => {
     commentStatistic.total = commentText.value.length
+    for (let [key, _] of Object.entries(commentStatistic.count)) {
+      commentStatistic.count[key] = 0
+    }
     const schools = Object.getOwnPropertyNames(commentStatistic.count).filter((key) => {
       return key !== "__ob__" && key !== "其他学院"
     })
@@ -131,6 +134,7 @@ export default () => {
         commentStatistic.count[comment.course.institute]++
       } else {
         commentStatistic.count["其他学院"]++
+        comment.course.institute = "其他学院"
       }
     }
   }

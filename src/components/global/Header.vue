@@ -141,7 +141,7 @@
           <v-list-item-icon>
             <v-icon>{{ icons.mdiMessageAlertOutline }}</v-icon>
           </v-list-item-icon>
-          <v-list-item-title class="text-body-1">反馈</v-list-item-title>
+          <v-list-item-title class="text-body-1" @click="$router.push('/about/#bug_report')">反馈</v-list-item-title>
         </v-list-item>
         <v-list-item link @click="doLogout()" class="px-8">
           <v-list-item-icon>
@@ -151,7 +151,7 @@
         </v-list-item>
         <v-divider></v-divider>
         <v-list-item class="d-flex justify-center">
-          <v-btn text x-small class="text-caption" to="/about/#service_term">用户协议</v-btn>          
+          <v-btn text x-small class="text-caption" to="/about/#service_terms">用户协议</v-btn>          
           <div class="px-1">•</div>          
           <v-btn text x-small class="text-caption" to="/about/#privacy_policy">隐私政策</v-btn>
         </v-list-item>
