@@ -9,7 +9,8 @@ export default () => {
     email: (value) => {
       const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       if (pattern.test(value)) {
-        if (value.indexOf("shanghaitech.edu.cn") !== -1) {
+        // Fixed: Invalid Shanghaitech email address match
+        if (value.endsWith('@shanghaitech.edu.cn')) {
           return true
         } else {
           return "请输入上海科技大学邮箱"
