@@ -22,7 +22,7 @@
           >
             <template #header>
               <div class="mb-3">
-                <div class="text-h5 font-weight-bold">选课互助，自此开始！</div>
+                <div class="text-h5 font-weight-bold">选课互助，自此开始。</div>
               </div>           
             </template>
             <template #footer="{ showAll }">

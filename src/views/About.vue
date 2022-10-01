@@ -169,14 +169,14 @@
           <div class="py-8">
             <div class="text-h5">错误反馈</div>
             <div class="mt-4">
-              如果您在使用中遇到了问题，欢迎联系<a
+              如果您在使用中遇到了问题，欢迎联系 <a
                 href="mailto:zhaoqch1@shanghaitech.edu.cn"
                 >zhaoqch1@shanghaitech.edu.cn</a
               >
-              或在<a
+              或在 <a
                 href="https://github.com/ShanghaitechGeekPie/coursebench_official"
-                >Github Official Repository</a
-              >中提出Issue。
+                >GitHub Official Repository</a
+              > 中提出Issue。
             </div>
           </div>
           <v-divider></v-divider>

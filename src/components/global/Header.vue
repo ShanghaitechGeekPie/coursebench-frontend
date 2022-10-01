@@ -25,7 +25,7 @@
       >
         全部课程
       </SliderButton>
-      <SliderButton
+      <!-- <SliderButton
         plain
         tile
         height="100%"
@@ -34,7 +34,7 @@
         class="px-1"
       >
         课程详情
-      </SliderButton>
+      </SliderButton> -->
       <SliderButton
         plain
         tile
@@ -194,7 +194,6 @@ import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import SliderButton from "@/components/global/SliderButton";
 import MobileSearchBar from "@/components/global/MobileSearchBar";
 
-// TODO: Add mobile support to header buttons
 
 import {
   mdiAccount,
@@ -264,9 +263,9 @@ export default {
       if (this.$vuetify.breakpoint.width >= 1680) {
         return "720px";
       } else if (this.$vuetify.breakpoint.mdAndUp) {
-        return `calc(${Math.min(this.$vuetify.breakpoint.width - (this.global.isLogin ? 550 : 750), 720) - 55}px)`
+        return `calc(${Math.min(this.$vuetify.breakpoint.width - (this.global.isLogin ? 550 : 750), 720) + 35}px)`
       } else {
-        return `calc(${ this.$vuetify.breakpoint.width - (this.global.isLogin ? 250 : 450) - 55 }px)`
+        return `calc(${ this.$vuetify.breakpoint.width - (this.global.isLogin ? 250 : 450) + 35 }px)`
       }
     }, 
 
