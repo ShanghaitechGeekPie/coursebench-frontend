@@ -89,7 +89,7 @@
                     class="text-h3 font-weight-bold"
                     style="font-family: Arial,serif!important;"
                 >
-                  {{ (averageScore / 20).toFixed(0) }}
+                  {{ Math.floor(averageScore / 20) }}
                 </span>
                 <span
                     class="font-weight-bold text-h5"
