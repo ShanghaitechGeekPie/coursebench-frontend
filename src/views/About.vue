@@ -85,7 +85,7 @@
             >
             <v-icon
               class="ml-3"
-              @click="openInplace('https://www.geekpie.club')"
+              @click="openInplace('https://geekpie.club')"
               >{{ statics.icons.mdiWeb }}</v-icon
             >
           </div>
