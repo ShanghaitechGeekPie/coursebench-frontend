@@ -1,6 +1,6 @@
 <template>
   <v-container class="d-flex justify-center mt-16">
-    <v-row class="d-flex justify-center" >
+    <v-row class="d-flex justify-center" style="max-width: 1300px">
       <v-col sm="11" cols="12" class="pa-sm-3 pa-0">
         <v-row class="d-flex justify-center">
           <v-col cols="11" class="px-0">
