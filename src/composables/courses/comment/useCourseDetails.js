@@ -82,6 +82,9 @@ export default () => {
         useWatching(data, () => {
             // console.log("Data Assigned!")
             if (data.value) {
+                if(data.value.data == null) {
+                    return
+                }
                 useRefCopy(data.value.data, commentText.value)
                 commentText.value.sort(commentSortFunc)
             }
@@ -106,6 +109,9 @@ export default () => {
         useWatching(data, () => {
             // console.log("Data Assigned!")
             if (data.value) {
+                if(data.value.data == null) {
+                    return
+                }
                 useRefCopy(data.value.data, courseDetail)
                 courseId.value = {
                     id: id
