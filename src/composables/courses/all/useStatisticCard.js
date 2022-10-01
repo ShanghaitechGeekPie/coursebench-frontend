@@ -33,7 +33,10 @@ export default () => {
               Object.keys(courseStatistic.count).filter(key => key != "__ob__"))) {
                 status.selectAll = true
                 status.selectNotAll = false
-            }            
+            } else {
+                status.selectAll = false
+                status.selectNotAll = false
+            }
         }
     }))
 
