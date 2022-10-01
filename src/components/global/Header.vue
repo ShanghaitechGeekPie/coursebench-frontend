@@ -63,6 +63,7 @@
         @blur="isCurrentPath('^\/$') ? $router.push('/') : ''"
         @keydown.enter="$refs.searchBar.blur(), isCurrentPath('^\/$') ? $router.push('/') : ''"        
         v-if="$vuetify.breakpoint.smAndUp"
+        placeholder="以空格间隔关键字或以regexp:开头输入正则表达式"
       >
       </v-text-field>
     </div>

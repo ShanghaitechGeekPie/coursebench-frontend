@@ -75,6 +75,7 @@
                     </div>
                     <v-text-field
                       v-model="userData.realname"
+                      :rules="[ formRules.realname ]"
                     ></v-text-field>                    
                   </div>
                   <div class="d-flex">

@@ -56,15 +56,12 @@ function getCookies(keys) {
 
 function setPreset(preset) {
     let dst = getPreset()
-    for (let key in preset) {
-        dst[key] = preset[key]
-    }
-    // to convert unicode to base 64, we need to convert it to bytes
-    if (dst.realname) {
-        dst.realname = unicodeToBytes(dst.realname)
-    }
-    if (dst.nickname) {
-        dst.nickname = unicodeToBytes(dst.nickname)
+    for (let key in preset) {    
+        if (typeof preset[key] === "string") {
+            dst[key] = unicodeToBytes(preset[key])
+        } else {
+            dst[key] = preset[key]
+        }
     }
 
     setCookie("preset", btoa(JSON.stringify(dst)), 60 * 60 * 24)
@@ -72,18 +69,18 @@ function setPreset(preset) {
 
 function getPreset() {
     const preset = getCookie("preset") ? JSON.parse(atob(getCookie("preset"))) : {}
-    // convert bytes back to unicode
-    if (preset.realname) {
-        preset.realname = bytesToUnicode(preset.realname)
-    }
-    if (preset.nickname) {
-        preset.nickname = bytesToUnicode(preset.nickname)
-    }
-
     const result = {}
     for (let key in preset) {
         if (preset[key] != undefined) {
-            result[key] = preset[key]
+            if (typeof preset[key] === "string") {
+                try {
+                    result[key] = bytesToUnicode(preset[key])
+                } catch (_) {
+                    result[key] = preset[key]
+                }
+            } else {
+                result[key] = preset[key]
+            }
         }
     }
     return result
