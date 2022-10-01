@@ -86,6 +86,15 @@
               {{ userData.email }}
             </div>
             <div class="font-weight-bold text-h5">输入密码</div>
+            <div>
+              <!-- Fake DOM, used to help broswer to save password. -->
+              <v-input 
+                width="0" 
+                :value="userData.email" 
+                readonly 
+                hide-details
+              ></v-input>
+            </div>            
             <v-form v-model="formStatus.passwordFormValid" @submit="$event.preventDefault(), clickNextStep()">
               <v-card-text class="pa-0">
                 <v-text-field

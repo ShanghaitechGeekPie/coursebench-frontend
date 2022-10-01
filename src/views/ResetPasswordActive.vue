@@ -38,6 +38,14 @@
             <div class="text-h5 pt-6 d-sm-block d-flex justify-center">
               <div>重置密码</div>
             </div>
+            <!-- <div>
+              <v-input 
+                width="0" 
+                :value="userData.email" 
+                readonly 
+                hide-details
+              ></v-input>
+            </div>             -->
             <v-form v-model="status.passwordFormValid" @submit="$event.preventDefault(), doResetPasswordActive()">
               <v-text-field
                 v-model="userData.password"
