@@ -31,6 +31,7 @@ export default () => {
 
   const formStatus = reactive({
     emailFormValid: false,
+    usernameFormValid: false,
     passwordFormValid: false,
     passwordVisible: false,
     loading: false,
@@ -87,9 +88,11 @@ export default () => {
 
   const doRegister = useDebounce(() => {
     if (formStatus.emailFormValid && formStatus.passwordFormValid && 
-      userData.captcha !== "" && userData.year && userData.grade
+      formStatus.usernameFormValid && userData.captcha !== "" && userData.year && userData.grade
     ) {
+      console.log(userData)
       registerMutation.mutate({
+        nickname: userData.username,
         email: userData.email,
         password: userData.password,
         year: userData.year === "暂不透露" ? 0 : userData.year,

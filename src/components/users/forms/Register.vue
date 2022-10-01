@@ -1,6 +1,5 @@
 <template>
   <v-card
-    height="338px"
     :loading="formStatus.loading"
     style="overflow-y: hidden"
     :class="
@@ -31,7 +30,7 @@
       <v-window-item :value="0" style="height: 100%">
         <v-card-text
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; max-height: 338px"
+          style="height: 100%; min-height: 262px;"
         >
           <div>
             <div class="font-weight-bold text-h5 pt-2">注册</div>
@@ -71,7 +70,7 @@
       <v-window-item :value="1" style="height: 100%">
         <v-card-text           
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; max-height: 338px"
+          style="height: 100%; min-height: 262px;"
         >
           <div>
             <div class="text-body-2 py-2 overflow-ellipsis">
@@ -118,58 +117,66 @@
         </v-card-text>
       </v-window-item>
       <v-window-item :value="2" style="height: 100%">
-        <v-card-text           
-          class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; max-height: 338px"
-        >
-          <div>
-            <div class="text-body-2 py-2 overflow-ellipsis">
-              <v-btn icon x-small @click="clickLastStep()">
-                <v-icon>
-                  {{ statics.icons.mdiArrowLeft }}
-                </v-icon>
-              </v-btn>
-              {{ userData.email }}
-            </div>
-            <div class="text-body-1 mt-n2"
-            >我们还需要一些信息才能设置你的帐户</div>
-            <v-card-text class="pa-0">
-              <div>
-                <v-select
-                  hide-details
-                  v-model="userData.year"
-                  :items="yearItems"
-                  label="入学时间"
-                ></v-select>
-              </div>
-              <div class="pt-2">
-                <v-select
-                  hide-details
-                  v-model="userData.grade"
-                  :items="gradeItems"
-                  label="学段"
-                ></v-select>
-              </div>
-            </v-card-text>
-          </div>
-          <div
-            class="px-0 pt-0 pb-6 pb-sm-11 pt-8 pt-sm-0 d-flex justify-end"
+        <v-form v-model="formStatus.usernameFormValid" @submit="$event.preventDefault(), clickNextStep()">
+          <v-card-text           
+            class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
+            style="height: 100%; min-height: 262px;"
           >
-            <v-btn
-              @click="clickNextStep()"
-              elevation="0"
-              class="px-8"
-              color="primary"
+            <div>
+              <div class="text-body-2 py-2 overflow-ellipsis">
+                <v-btn icon x-small @click="clickLastStep()">
+                  <v-icon>
+                    {{ statics.icons.mdiArrowLeft }}
+                  </v-icon>
+                </v-btn>
+                {{ userData.email }}
+              </div>
+              <div class="text-body-1 mt-n2"
+              >我们还需要一些信息才能设置你的帐户</div>
+              <v-card-text class="pa-0">
+                <div>
+                  <v-text-field
+                    v-model="userData.username"
+                    :rules="[formRules.required, formRules.nickname]"
+                    placeholder="用户名"
+                    ref="usernameTextField"
+                  ></v-text-field>
+                </div>
+                <div>
+                  <v-select
+                    v-model="userData.year"
+                    :items="yearItems"
+                    label="入学时间"
+                  ></v-select>
+                </div>
+                <div class="pt-2">
+                  <v-select
+                    v-model="userData.grade"
+                    :items="gradeItems"
+                    label="学段"
+                  ></v-select>
+                </div>
+              </v-card-text>
+            </div>
+            <div
+              class="px-0 pb-6 pb-sm-11 pt-8 pt-sm-2 d-flex justify-end"
             >
-              下一步
-            </v-btn>
-          </div>
-        </v-card-text>
+              <v-btn
+                @click="clickNextStep()"
+                elevation="0"
+                class="px-8"
+                color="primary"
+              >
+                下一步
+              </v-btn>
+            </div>
+          </v-card-text>
+        </v-form>
       </v-window-item>
       <v-window-item :value="3" style="height: 100%">
         <v-card-text  
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; max-height: 338px"
+          style="height: 100%; min-height: 262px;"
         > 
           <div>
             <div class="text-body-2 py-2 overflow-ellipsis">
@@ -229,7 +236,7 @@
       <v-window-item :value="4" style="height: 100%">
         <v-card-text           
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; max-height: 338px"
+          style="height: 100%; min-height: 262px;"
         >
           <div class="text-h5 py-2 overflow-ellipsis">
             还差最后一步
@@ -291,9 +298,10 @@ export default {
       if (this.formStatus.windowStep === 0 && this.formStatus.emailFormValid) {
         this.formStatus.windowStep += 1;
         // autofocus will break the transition animation, so we do it manually
-        useAfterRender(() => this.$refs.passwordTextField.focus(), { retry: true, timeout: 300 });        
+        useAfterRender(() => this.$refs.passwordTextField.focus(), { retry: true, timeout: 300 });
       } else if (this.formStatus.windowStep === 1 && this.formStatus.passwordFormValid) {
-        this.formStatus.windowStep += 1;        
+        this.formStatus.windowStep += 1;
+        useAfterRender(() => this.$refs.usernameTextField.focus(), { retry: true, timeout: 300 });
       } else if (this.formStatus.windowStep === 2 && this.userData.year && this.userData.grade) {        
         this.formStatus.windowStep += 1;
         useAfterRender(() => this.$refs.captchaOptInput.focus(), { retry: true, timeout: 300 })

@@ -1,6 +1,5 @@
 <template>
   <v-card
-    height="338px"
     :loading="formStatus.loading"
     style="overflow-y: hidden"
     :class="
@@ -30,7 +29,7 @@
       <v-window-item :value="0" style="height: 100%">
         <v-card-text
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; max-height: 338px"
+          style="height: 100%; min-height: 262px;"
         >
           <div>
             <div class="font-weight-bold text-h5 pt-2">登录</div>
@@ -71,7 +70,7 @@
       <v-window-item :value="1" style="height: 100%">
         <v-card-text
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; max-height: 338px"
+          style="height: 100%; min-height: 262px;"
         >
           <div>
             <div class="text-body-2 py-2 overflow-ellipsis">
@@ -131,7 +130,7 @@
       <v-window-item :value="2" style="height: 100%">
         <v-card-text
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; max-height: 338px"
+          style="height: 100%; min-height: 262px;"
         >
           <div>
             <div class="text-body-2 py-2 overflow-ellipsis">
@@ -178,7 +177,7 @@
       <v-window-item :value="3" style="height: 100%">
         <v-card-text
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; max-height: 338px"
+          style="height: 100%; min-height: 262px;"
         >
           <div>
             <div class="text-body-2 py-2 overflow-ellipsis">
@@ -239,7 +238,7 @@
       <v-window-item :value="4" style="height: 100%">
         <v-card-text
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; max-height: 338px"
+          style="height: 100%; min-height: 262px;"
         >
           <div class="text-h5 py-2 overflow-ellipsis">还差最后一步</div>
           <div class="d-flex justify-center py-sm-0 py-4">
