@@ -169,8 +169,7 @@ export default () => {
   provide("userProfile", userProfile)
 
 
-
-  if (route.params.id === global.userProfile.id) {
+  if (route.params.id == global.userProfile.id) {
     watch(() => global.userProfile, () => {
       useRefCopy(global.userProfile, userProfile)
       userProfile.nickname = useUserName(userProfile)

@@ -121,13 +121,15 @@ export default () => {
 
 
   const doEditProfile = useDebounce(() => {
-    editProfileMutation.mutate({
-      nickname: userData.nickname,
-      grade: gradeItems.indexOf(userData.grade),
-      year: userData.year === "暂不透露" ? 0 : userData.year,
-      realname: userData.realname,
-      is_anonymous: userData.is_anonymous === visibleItems[0],
-    })
+    if (formStatus.nicknameFormValid) {
+      editProfileMutation.mutate({
+        nickname: userData.nickname,
+        grade: gradeItems.indexOf(userData.grade),
+        year: userData.year === "暂不透露" ? 0 : userData.year,
+        realname: userData.realname,
+        is_anonymous: userData.is_anonymous === visibleItems[0],
+      })
+    }
   })
 
   const doChangePassword = useDebounce(() => {

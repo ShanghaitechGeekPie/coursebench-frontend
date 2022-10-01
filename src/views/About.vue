@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-16 d-flex justify-center">
+  <div class="pt-sm-16 pt-6 d-flex justify-center">
     <div
       :style="{ width: $vuetify.breakpoint.width >= 1280 ? '1280px' : '100%' }"
       class="about-container"

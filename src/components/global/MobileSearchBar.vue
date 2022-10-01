@@ -13,7 +13,8 @@
         :prepend-inner-icon="icons.mdiMagnify"
         autofocus
         @blur="status.showSearchBar = false"
-        @input="$emit('input', $event), isCurrentPath('^\/$') ? $router.push('/') : ''"        
+        @input="$emit('input', $event), isCurrentPath('^\/$') ? $router.push('/') : ''"
+        placeholder="以空格间隔关键字或以regexp:开头输入正则表达式"
       >  
       </v-text-field>
     </div>    
