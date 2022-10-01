@@ -166,7 +166,7 @@
             </div>
           </div>
           <v-divider></v-divider>
-          <div class="py-8" name="bug_report">
+          <div class="py-8" id="bug_report">
             <div class="text-h5">错误反馈</div>
             <div class="mt-4">
               如果您在使用中遇到了问题，欢迎联系 <a
@@ -249,7 +249,7 @@
             </div>
           </div>
           <v-divider></v-divider>
-          <div class="pt-8" name="service_terms">
+          <div class="pt-8" id="service_terms">
             <div class="text-h5">用户协议</div>
             <div
               class="mt-4"
@@ -258,7 +258,7 @@
             ></div>
           </div>
           <v-divider></v-divider>
-          <div class="pt-8" name="privacy_policy">
+          <div class="pt-8" id="privacy_policy">
             <div class="text-h5">隐私政策</div>
             <div
               class="mt-4"

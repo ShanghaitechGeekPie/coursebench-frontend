@@ -37,8 +37,8 @@ const rawYearItems = (() => {
     const startYear = 2014
     const nowYear = new Date().getFullYear()
     return new Array(nowYear - startYear + 1).fill(0).map((_, index) => startYear + index)
-})()
-const yearItems = rawYearItems.concat(['暂不透露'])
+})().reverse()
+const yearItems = rawYearItems.concat(['暂不透露']).reverse()
 
 const termItems = [{
     id: "01",
