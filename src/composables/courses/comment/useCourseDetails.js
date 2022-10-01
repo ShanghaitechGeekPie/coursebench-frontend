@@ -17,6 +17,7 @@ export default () => {
     const router = useRouter()
     const route = useRoute()
     const showSnackbar = inject("showSnackbar")
+    const global = inject("global")
 
     provide('teachers', teachers);
     provide('groups', groups);
@@ -139,5 +140,5 @@ export default () => {
     })
 
 
-    return {teachers, commentText, status, courseDetail, selectedTeachers, groups}
+    return {teachers, commentText, status, courseDetail, selectedTeachers, groups, global}
 }
