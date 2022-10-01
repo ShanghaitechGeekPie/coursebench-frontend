@@ -228,6 +228,7 @@
           <div class="pb-6 pb-sm-11 pt-4 pt-sm-0">
             <v-otp-input
               length="6"
+              type="number"
               v-model="userData.captcha"
               @finish="formStatus.isResetPassword ? doResetPassword() : doLogin()"
               ref="captchaOptInput"

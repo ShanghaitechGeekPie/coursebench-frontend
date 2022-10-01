@@ -298,6 +298,7 @@
               <div class="pb-6 pb-sm-11 pt-4 pt-sm-6 d-flex justify-center">
                 <v-otp-input
                   length="6"
+                  type="number"
                   v-model="passwordData.captcha"
                   @finish="doChangePassword"
                   ref="captchaOptInput"

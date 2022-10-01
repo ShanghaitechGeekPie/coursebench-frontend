@@ -67,7 +67,7 @@
               </div>
               <v-data-iterator
                 :items="courseText"
-                :items-per-page="$vuetify.breakpoint.xsOnly ? adoptiveCardNumber * 6 : adoptiveCardNumber * 3"
+                :items-per-page="adoptiveCardNumber * 3"
                 :page="status.page"
                 hide-default-footer
                 v-else

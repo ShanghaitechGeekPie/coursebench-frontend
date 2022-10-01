@@ -1,18 +1,20 @@
 <template>
-  <v-app-bar 
-    app 
-    :color="$vuetify.theme.dark ? '' : 'white'" 
-    elevate-on-scroll 
+  <v-app-bar
+    app
+    :color="$vuetify.theme.dark ? '' : 'white'"
+    elevate-on-scroll
     elevation="3"
   >
-    <v-toolbar-title 
-      class="px-sm-8" 
+    <v-toolbar-title
+      class="px-sm-8"
       @click="isCurrentPath('^\/$') ? $router.push('/') : ''"
       style="cursor: pointer"
     >
       <v-img src="@/assets/logo.svg" width="139.61px"></v-img>
     </v-toolbar-title>
-    <div class="d-flex" style="height: calc(100% + 8px)"
+    <div
+      class="d-flex"
+      style="height: calc(100% + 8px)"
       v-if="$vuetify.breakpoint.mdAndUp"
     >
       <SliderButton
@@ -46,32 +48,31 @@
         关于我们
       </SliderButton>
     </div>
-    <div 
+    <div
       :class="adoptiveSearchBarClass"
       :style="{
-        width: adoptiveSearchBarWidth
+        width: adoptiveSearchBarWidth,
       }"
     >
-      <v-text-field 
-        hide-details 
-        solo 
-        flat 
+      <v-text-field
+        hide-details
+        solo
+        flat
         :background-color="$vuetify.theme.dark ? '#3c4043' : '#F1F3F4'"
         :prepend-inner-icon="icons.mdiMagnify"
         ref="searchBar"
         @input="searchParser"
         @blur="isCurrentPath('^\/$') ? $router.push('/') : ''"
-        @keydown.enter="$refs.searchBar.blur(), isCurrentPath('^\/$') ? $router.push('/') : ''"        
+        @keydown.enter="
+          $refs.searchBar.blur(), isCurrentPath('^\/$') ? $router.push('/') : ''
+        "
         v-if="$vuetify.breakpoint.smAndUp"
         placeholder="以空格间隔关键字或以regexp:开头输入正则表达式"
       >
       </v-text-field>
     </div>
     <v-spacer></v-spacer>
-    <MobileSearchBar
-      @input="searchParser"
-      v-if="$vuetify.breakpoint.xsOnly" 
-    />
+    <MobileSearchBar @input="searchParser" v-if="$vuetify.breakpoint.xsOnly" />
     <v-btn
       color="primary"
       class="px-sm-8"
@@ -132,7 +133,7 @@
           </div>
         </v-list-item>
         <v-divider></v-divider>
-        <v-list-item link :to="`/user/${ global.userProfile.id }`" class="px-8">
+        <v-list-item link :to="`/user/${global.userProfile.id}`" class="px-8">
           <v-list-item-icon>
             <v-icon>{{ icons.mdiAccountOutline }}</v-icon>
           </v-list-item-icon>
@@ -142,7 +143,14 @@
           <v-list-item-icon>
             <v-icon>{{ icons.mdiMessageAlertOutline }}</v-icon>
           </v-list-item-icon>
-          <v-list-item-title class="text-body-1" @click="$router.push('/about/#bug_report')">反馈</v-list-item-title>
+          <v-list-item-title
+            class="text-body-1"
+            @click="
+              isCurrentPath('^\/about') ? $router.push('/about') : '',
+                useInsitePush('#bug_report')
+            "
+            >反馈</v-list-item-title
+          >
         </v-list-item>
         <v-list-item link @click="doLogout()" class="px-8">
           <v-list-item-icon>
@@ -152,9 +160,27 @@
         </v-list-item>
         <v-divider></v-divider>
         <v-list-item class="d-flex justify-center">
-          <v-btn text x-small class="text-caption" to="/about/#service_terms">用户协议</v-btn>          
-          <div class="px-1">•</div>          
-          <v-btn text x-small class="text-caption" to="/about/#privacy_policy">隐私政策</v-btn>
+          <v-btn
+            text
+            x-small
+            class="text-caption"
+            @click="
+              isCurrentPath('^\/about') ? $router.push('/about') : '',
+                useInsitePush('#service_terms')
+            "
+            >用户协议</v-btn
+          >
+          <div class="px-1">•</div>
+          <v-btn
+            text
+            x-small
+            class="text-caption"
+            @click="
+              isCurrentPath('^\/about') ? $router.push('/about') : '',
+                useInsitePush('#privacy_policy')
+            "
+            >隐私政策</v-btn
+          >
         </v-list-item>
       </v-list>
     </v-menu>
@@ -189,12 +215,12 @@ import Login from "@/components/users/forms/Login";
 import Register from "@/components/users/forms/Register";
 import useLogout from "@/composables/users/forms/useLogout";
 import useUserName from "@/composables/global/useUserName";
-import useRouteMatch from "@/composables/global/useRouteMatch"
+import useRouteMatch from "@/composables/global/useRouteMatch";
 import useDebounce from "@/composables/global/useDebounce";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import SliderButton from "@/components/global/SliderButton";
 import MobileSearchBar from "@/components/global/MobileSearchBar";
-
+import useInsitePush from "@/composables/global/useInsitePush";
 
 import {
   mdiAccount,
@@ -203,20 +229,20 @@ import {
   mdiAccountPlusOutline,
   mdiAccountOutline,
   mdiMessageAlertOutline,
-  mdiMagnify
+  mdiMagnify,
 } from "@mdi/js";
 
 export default {
-  components: { 
-    Login, 
-    Register, 
-    AvatarContainer, 
-    SliderButton, 
+  components: {
+    Login,
+    Register,
+    AvatarContainer,
+    SliderButton,
     MobileSearchBar,
   },
   setup() {
     const { doLogout } = useLogout();
-    const { isCurrentPath } = useRouteMatch()
+    const { isCurrentPath } = useRouteMatch();
 
     const dialog = reactive({
       login: false,
@@ -225,7 +251,7 @@ export default {
 
     provide("closeDialog", (type) => (dialog[type] = false));
     provide("openDialog", (type) => (dialog[type] = true));
-    
+
     const global = inject("global"); // global status
     const searchInput = inject("searchInput");
 
@@ -238,11 +264,21 @@ export default {
           searchInput.isRegexp = false;
           return searchString.trim();
         }
-      })()
-      searchInput.keys = searchRawString.split(" ").filter((item) => item !== "");
-    })
+      })();
+      searchInput.keys = searchRawString
+        .split(" ")
+        .filter((item) => item !== "");
+    });
 
-    return { global, dialog, doLogout, useUserName, searchParser, isCurrentPath };
+    return {
+      global,
+      dialog,
+      doLogout,
+      useUserName,
+      searchParser,
+      isCurrentPath,
+      useInsitePush,
+    };
   },
   data() {
     return {
@@ -253,8 +289,8 @@ export default {
         mdiAccountPlusOutline,
         mdiAccountOutline,
         mdiMessageAlertOutline,
-        mdiMagnify
-      },    
+        mdiMagnify,
+      },
     };
   },
   computed: {
@@ -264,11 +300,20 @@ export default {
       if (this.$vuetify.breakpoint.width >= 1680) {
         return "720px";
       } else if (this.$vuetify.breakpoint.mdAndUp) {
-        return `calc(${Math.min(this.$vuetify.breakpoint.width - (this.global.isLogin ? 550 : 750), 720) + 35}px)`
+        return `calc(${
+          Math.min(
+            this.$vuetify.breakpoint.width - (this.global.isLogin ? 550 : 750),
+            720
+          ) + 35
+        }px)`;
       } else {
-        return `calc(${ this.$vuetify.breakpoint.width - (this.global.isLogin ? 250 : 450) + 35 }px)`
+        return `calc(${
+          this.$vuetify.breakpoint.width -
+          (this.global.isLogin ? 250 : 450) +
+          35
+        }px)`;
       }
-    }, 
+    },
 
     adoptiveSearchBarClass() {
       if (this.$vuetify.breakpoint.width >= 1680) {
@@ -276,10 +321,10 @@ export default {
       } else if (this.$vuetify.breakpoint.mdAndUp) {
         return "search-bar-medium pl-lg-1";
       } else {
-        return ""
+        return "";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -292,10 +337,9 @@ export default {
 .search-bar-large {
   position: absolute;
   left: 50%;
-  transform: translate(-50%, 0);  
+  transform: translate(-50%, 0);
 }
 
 .search-bar-medium {
-  
 }
 </style>
