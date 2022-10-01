@@ -47,7 +47,7 @@
               <div v-else-if="commentText.length === 0">
                 <Nothing class="pt-16" />
               </div>
-              <div v-else>
+              <div v-else>                
                 <div v-for="(comment, index) in commentText" :key="comment.id">       
                   <v-fade-transition>
                     <CommentCard
