@@ -66,7 +66,7 @@
                   </div>
                   <div style="width: 64%" class="px-0 px-sm-1 px-md-0">
                     <v-progress-linear
-                      v-model="course.score[index - 1] * 20"
+                      v-model="course.comment_num < enoughDataThreshold ? 0 : course.score[index - 1] * 20"
                       :color="scoreInfo[roundedScore[index - 1]].color"
                       class="mt-2"
                       style="pointer-events: none"
@@ -102,12 +102,12 @@ import {
   instituteInfo,
   scoreInfo,
 } from "@/composables/global/useStaticData";
-import { roundScore } from "@/composables/global/useParseScore";
+import { roundScore, enoughDataThreshold } from "@/composables/global/useParseScore";
 
 export default {
   setup() {
     const { statics } = useCourseCard();
-    return { statics, judgeItems, roundScore, instituteInfo, scoreInfo };
+    return { statics, judgeItems, roundScore, instituteInfo, scoreInfo, enoughDataThreshold };
   },
   data() {
     return {
