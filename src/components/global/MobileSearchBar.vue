@@ -15,6 +15,7 @@
         @blur="status.showSearchBar = false"
         @input="$emit('input', $event), isCurrentPath('^\/$') ? $router.push('/') : ''"
         placeholder="以空格间隔关键字或以regexp:开头输入正则表达式"
+        :value="value"
       >  
       </v-text-field>
     </div>    
@@ -40,6 +41,16 @@ export default {
       icons: {
         mdiMagnify
       }
+    }
+  }, 
+  model: {
+    prop: 'value',
+    event: 'input'
+  }, 
+  props: {
+    value: {
+      type: String,
+      default: ''
     }
   }
 }
