@@ -63,7 +63,7 @@
                 </div>
               </div>
               <div v-else-if="courseText.length === 0" class="pt-10">
-                <Nothing class="px-4 pt-16" />
+                <Nothing class="px-4 py-16" />
               </div>
               <v-data-iterator
                 :items="courseText"

@@ -1,11 +1,10 @@
-import {onMounted, provide, ref, reactive, inject} from "vue"
+import {onMounted, provide, ref, reactive, inject, watch} from "vue"
 import {defaultStatus, sortStatics, sortPolicy} from "@/composables/global/useCommentSort"
 import useFetching from "@/composables/global/useFetching";
 import useDebounce from "@/composables/global/useDebounce"
 import useWatching from "@/composables/global/useWatching";
 import useRefCopy from "@/composables/global/useRefCopy";
 import {sortCmp} from "@/composables/global/useArrayUtils"
-import useRecordWatch from "@/composables/global/useRecordWatch"
 import {useRoute, useRouter} from "@/router/migrateRouter";
 import {isNetworkError} from "@/composables/global/useHttpError";
 
@@ -55,17 +54,31 @@ export default () => {
         return self.map(getId).indexOf(getId(value)) === index;
     }
 
-    // Fixed: use an inefficient way to make work temporarily
-    useRecordWatch(status, useDebounce((lastStatus) => {
-        if (lastStatus.order !== status.order) {
-            commentText.value.sort(commentSortFunc) // I dont know how js sort works in the vm
-            // but dont feel strange if it dont work for the values that are the same
-        } else if (lastStatus.sortKey !== status.sortKey) {
-            status.order = sortStatics.orderItem[status.sortKey][0]
-            commentText.value.sort(commentSortFunc) // I sort it here because some sort keys have the same order item
-            // in that case the first if statement will not be triggered
+    watch(() => status.order, useDebounce((to, from) => {
+        if (to !== from) {
+            commentText.value.sort(commentSortFunc)
         }
     }))
+
+    watch(() => status.sortKey, useDebounce((to, from) => {
+        if (to !== from) {
+            status.order = sortStatics.orderItem[status.sortKey][0]
+            commentText.value.sort(commentSortFunc)
+        }
+    }))
+
+    // Abandoned @since 2022-10-03: this is buggy and is based on a bug
+    // Fixed @since 2022-09-05: use an inefficient way to make work temporarily
+    // useRecordWatch(status, useDebounce((lastStatus) => {
+    //     if (lastStatus.order !== status.order) {
+    //         commentText.value.sort(commentSortFunc) // I dont know how js sort works in the vm
+    //         // but dont feel strange if it dont work for the values that are the same
+    //     } else if (lastStatus.sortKey !== status.sortKey) {
+    //         status.order = sortStatics.orderItem[status.sortKey][0]
+    //         commentText.value.sort(commentSortFunc) // I sort it here because some sort keys have the same order item
+    //         // in that case the first if statement will not be triggered
+    //     }
+    // }))
 
     const getCourseComment = () => {
         const id = route.params.id

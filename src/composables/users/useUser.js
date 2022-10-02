@@ -200,6 +200,6 @@ export default () => {
   })
 
 
-  return { commentText, commentFilterStatus, status, userProfile, isSelf }
+  return { commentText, commentFilterStatus, status, userProfile }
   
 }

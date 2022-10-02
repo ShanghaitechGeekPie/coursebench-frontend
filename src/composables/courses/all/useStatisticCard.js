@@ -1,7 +1,7 @@
-import { inject, reactive } from "vue"
+import { inject, reactive, watch } from "vue"
 import { mdiCity, mdiChevronUp, mdiChevronDown } from "@mdi/js";
-import useRecordWatch from "@/composables/global/useRecordWatch";
 import useDebounce from "@/composables/global/useDebounce";
+import { notEqual } from "@/composables/global/useArrayUtils"
 
 export default () => {
 
@@ -23,8 +23,8 @@ export default () => {
 
     const courseFilterStatus = inject("courseFilterStatus")
 
-    useRecordWatch(courseFilterStatus, useDebounce((lastStatus) => {
-        if (courseFilterStatus.selected != lastStatus.selected) {
+    watch(() => courseFilterStatus.selected, useDebounce((to, from) => {
+        if (notEqual(to, from)) {
             if (courseFilterStatus.selected.length === 0) {
                 status.selectAll = false
                 status.selectNotAll = true
@@ -36,8 +36,25 @@ export default () => {
                 status.selectAll = false
                 status.selectNotAll = false
             }
-        }
+        } 
     }))
+
+    // Abandoned @since 2021-05-31: this is buggy and is based on a bug
+    // useRecordWatch(courseFilterStatus, useDebounce((lastStatus) => {
+    //     if (courseFilterStatus.selected != lastStatus.selected) {
+    //         if (courseFilterStatus.selected.length === 0) {
+    //             status.selectAll = false
+    //             status.selectNotAll = true
+    //         } else if (courseFilterStatus.selected.filter(key => key != "__ob__").length 
+    //             === Object.keys(courseStatistic.count).filter(key => key != "__ob__").length) {
+    //             status.selectAll = true
+    //             status.selectNotAll = false
+    //         } else {
+    //             status.selectAll = false
+    //             status.selectNotAll = false
+    //         }
+    //     }
+    // }))
 
     return { statics, courseStatistic, courseFilterStatus, status }
 

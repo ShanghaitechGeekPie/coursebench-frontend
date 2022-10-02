@@ -1,10 +1,9 @@
-import { provide, reactive, ref, onMounted, inject } from "vue"
+import { provide, reactive, ref, onMounted, inject, toRefs, watch } from "vue"
 import { instituteInfo } from "@/composables/global/useStaticData";
 import useDebounce from "@/composables/global/useDebounce"
 import useWatching from "@/composables/global/useWatching"
-import useRecordWatch from "@/composables/global/useRecordWatch"
 import useFetching from "@/composables/global/useFetching"
-import { sortCmp, averageOf } from "@/composables/global/useArrayUtils"
+import { sortCmp, averageOf, notEqual } from "@/composables/global/useArrayUtils"
 import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
 import { enoughDataThreshold } from "@/composables/global/useParseScore"
 
@@ -13,6 +12,8 @@ export default () => {
 
     const showSnackbar = inject("showSnackbar")
     const searchInput = inject("searchInput")
+    const savedCourseAllStatus = inject("savedCourseAllStatus")
+    const savedCourseAllFilterStatus = inject("savedCourseAllFilterStatus")
 
 
 
@@ -35,13 +36,11 @@ export default () => {
 
     const status = reactive({
         loading: true,
-        page: 1,
+        ...toRefs(savedCourseAllStatus),
     })
 
     const courseFilterStatus = reactive({
-        selected: [],
-        sortKey: "综合评分",
-        order: "从高到低",
+        ...toRefs(savedCourseAllFilterStatus),
     })
 
 
@@ -92,8 +91,8 @@ export default () => {
         useWatching(data, () => {
             if (data.value) {
                 courseRawText.value = data.value.data
-                // Here we need to deep copy the data or the sort will mess up the original data
-                courseText.value = courseRawText.value.filter((course) => {
+                // Here we need to deep copy the data or the sort will mess up the original data                
+                const temp = courseRawText.value.filter((course) => {
                     if (searchInput.keys.length === 0) {
                         return true;
                     } else if (searchInput.isRegexp) {
@@ -106,6 +105,9 @@ export default () => {
                         })
                     }
                 })
+                temp.sort(sortFunc) // An attempt to fix to flick issue, this way is using a temp
+                // TODO: Finish this fix
+                courseText.value = temp
                 getCourseStatistic()
                 courseFilterStatus.selected = getAllCourseSelected()
             }
@@ -145,17 +147,21 @@ export default () => {
             )
     }
 
-    // Fixed: use an inefficient way to make work temporarily
-    useRecordWatch(courseFilterStatus, useDebounce((lastStatus, from, to) => {
-        // the if order matters here, it seems that wrapped array is not equal to the unwrapped ones
-        if (lastStatus.order != courseFilterStatus.order) {
-            courseText.value.sort(sortFunc) // I dont know how js sort works in the vm
-            // but dont feel strange if it dont work for the values that are the same
-        } else if (lastStatus.sortKey != courseFilterStatus.sortKey) {
+    watch(() => courseFilterStatus.order, useDebounce((to, from) => {
+        if (to != from) {
+            courseText.value.sort(sortFunc)
+        }
+    }))
+
+    watch(() => courseFilterStatus.sortKey, useDebounce((to, from) => {
+        if (to != from) {
             courseFilterStatus.order = sortStatics.orderItem[courseFilterStatus.sortKey][0]
-            courseText.value.sort(sortFunc) // I sort it here because some sort keys have the same order item
-            // in that case the first if statement will not be triggered
-        } else if (lastStatus.selected != courseFilterStatus.selected) {
+            courseText.value.sort(sortFunc)
+        }
+    }))
+
+    watch(() => courseFilterStatus.selected, useDebounce((to, from) => {
+        if (notEqual(to, from)) {
             courseText.value = courseRawText.value.filter((course) =>
                 (() => {
                     if (searchInput.keys.length === 0) {
@@ -175,6 +181,39 @@ export default () => {
             status.page = 1
         }
     }))
+
+    // Abandoned @since 2022-10-03: this is buggy and is based on a bug    
+    // Fixed @since 2022-09-05: use an inefficient way to make work temporarily
+    // useRecordWatch(courseFilterStatus, useDebounce((lastStatus, from, to) => {
+    //     // the if order matters here, it seems that wrapped array is not equal to the unwrapped ones
+    //     if (lastStatus.order != courseFilterStatus.order) {
+    //         courseText.value.sort(sortFunc) // I dont know how js sort works in the vm
+    //         // but dont feel strange if it dont work for the values that are the same
+    //     } else if (lastStatus.sortKey != courseFilterStatus.sortKey) {
+    //         courseFilterStatus.order = sortStatics.orderItem[courseFilterStatus.sortKey][0]
+    //         courseText.value.sort(sortFunc) // I sort it here because some sort keys have the same order item
+    //         // in that case the first if statement will not be triggered
+    //     } else if (lastStatus.selected != courseFilterStatus.selected) {
+    //         courseText.value = courseRawText.value.filter((course) =>
+    //             (() => {
+    //                 if (searchInput.keys.length === 0) {
+    //                     return true;
+    //                 } else if (searchInput.isRegexp) {
+    //                     return matchSearchKeys((key) => {
+    //                         return new RegExp(key).test(course.name) || new RegExp(key).test(course.code);
+    //                     })
+    //                 } else {
+    //                     return matchSearchKeys((key) => {
+    //                         return course.name.includes(key) || new String(course.code).includes(key);
+    //                     })
+    //                 }
+    //             })() && (() => courseFilterStatus.selected.some((item) => item === course.institute))()
+    //         )
+    //         courseText.value.sort(sortFunc)
+    //         status.page = 1
+    //         console.log(JSON.stringify(lastStatus.selected), JSON.stringify(courseFilterStatus.selected))
+    //     }
+    // }))
 
     useWatching(searchInput, useDebounce((to, from) => {
         courseText.value = courseRawText.value.filter((course) => {
