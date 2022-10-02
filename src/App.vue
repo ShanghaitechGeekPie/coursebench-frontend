@@ -47,8 +47,21 @@ export default {
       keys: [""]
     })
 
+    const savedCourseAllStatus = reactive({
+      page: 0
+    })
+
+    const savedCourseAllFilterStatus = reactive({
+      selected: [],
+      sortKey: "综合评分",
+      order: "从高到低",      
+    })
+
     provide("global", global);
     provide("searchInput", searchInput)
+    provide("savedCourseAllStatus", savedCourseAllStatus)
+    provide("savedCourseAllFilterStatus", savedCourseAllFilterStatus)
+
     return { snackbar };
   },
   data() {

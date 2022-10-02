@@ -74,7 +74,7 @@
                         ).length === 0
                       "
                     >
-                      <Nothing class="pt-16" />
+                      <Nothing class="py-16" />
                     </div>
                     <div class="d-flex flex-wrap justify-start" v-else>
                       <div

@@ -56,11 +56,22 @@ export function averageOf(arr) {
  * @param {Array<any>} b - The array to compare against
  * @returns boolean - true or false
  */
-export function compare(a, b) {
+export function equal(a, b) {
   if (a.length !== b.length) {
     return false
   }
   return !a.map((value, index, array) => {
     return value === b[index]
   }).some(x => x === false)
+}
+
+
+/**
+ * If the two values are not equal, return true, otherwise return false.
+ * @param a - The first value to compare.
+ * @param b - The value to compare against a.
+ * @returns The function notEqual is being returned.
+ */
+export function notEqual(a, b) {
+  return !equal(a, b)
 }
