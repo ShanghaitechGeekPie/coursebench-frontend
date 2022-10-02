@@ -5,17 +5,17 @@
       class="about-container"
     >
       <div class="d-flex justify-center pt-8">
-        <div class="text-sm-h1 text-h2 font-weight-bold">
+        <div class="text-sm-h1 text-h2 font-weight-bold mx-sm-0 mx-4">
           To be the best bench.
         </div>
       </div>
-      <div class="d-flex justify-center pt-8 mb-16">
+      <div class="d-flex justify-center pt-8 mb-16 mx-sm-0 mx-4">
         <div class="text-h4">一个真实可靠、不断完善的多维课程评价信息库</div>
       </div>
-      <div class="d-flex justify-center">
+      <div class="d-flex justify-center" style="flex-wrap: wrap">
         <div
-          class="mx-sm-8 mx-2"
-          :style="{ width: $vuetify.breakpoint.xsOnly ? '40%' : '160px' }"
+          class="mx-sm-6"
+          style="width: 168px"
         >
           <div class="text-h6 d-flex justify-center">
             <div>真实评价</div>
@@ -25,8 +25,8 @@
           </div>
         </div>
         <div
-          class="mx-sm-8 mx-2"
-          :style="{ width: $vuetify.breakpoint.xsOnly ? '40%' : '160px' }"
+          class="mx-sm-6"
+          style="width: 168px"
         >
           <div class="text-h6 d-flex justify-center">
             <div>畅所欲言</div>
@@ -36,9 +36,8 @@
           </div>
         </div>
         <div
-          class="mx-sm-8"
-          :width="$vuetify.breakpoint.xsOnly ? '40%' : '160'"
-          v-if="$vuetify.breakpoint.smAndUp"
+          class="mx-sm-6"
+          style="width: 168px"
         >
           <div class="text-h6 d-flex justify-center">
             <div>多维评分</div>
@@ -48,9 +47,8 @@
           </div>
         </div>
         <div
-          class="mx-sm-8"
-          :width="$vuetify.breakpoint.xsOnly ? '40%' : '160'"
-          v-if="$vuetify.breakpoint.smAndUp"
+          class="mx-sm-6"
+          style="width: 168px"
         >
           <div class="text-h6 d-flex justify-center">
             <div>简明易用</div>
@@ -95,14 +93,14 @@
         <v-sheet
           width="100%"
           height="200px"
-          class="text-h3 d-flex justify-center"
+          class="d-flex justify-center"
         >
           <div class="d-flex justify-center flex-column">
-            <div class="d-flex">
+            <div class="d-flex mx-2">
               <div class="d-flex justify-center flex-column">
-                <div>Powered by</div>
+                <div class="text-sm-h3 text-h4">Powered by</div>
               </div>
-              <v-img src="@/assets/geekpie.svg"></v-img>
+              <v-img src="@/assets/geekpie.svg" :width="$vuetify.breakpoint.xsOnly ? '160px' : ''"></v-img>
             </div>
           </div>
         </v-sheet>
