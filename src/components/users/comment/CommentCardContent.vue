@@ -114,10 +114,10 @@
                     <div class="d-flex justify-end" style="flex-wrap: wrap">
                       <div class="pr-sm-2">
                         <v-icon size="15" style="transform: translate(0, -1px)">
-                          {{ statics.icons.mdiTriangleOutline }}
+                          {{ statics.icons.mdiTriangle }}
                         </v-icon>
                         <span class="text-caption">
-                          获赞 {{ comment.like - comment.dislike }}
+                          赞同 {{ comment.like - comment.dislike }}
                         </span>
                       </div>
                       <div>

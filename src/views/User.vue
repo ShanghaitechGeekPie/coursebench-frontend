@@ -50,14 +50,7 @@
               <div v-else>                
                 <div v-for="(comment, index) in commentText" :key="comment.id">       
                   <v-fade-transition>
-                    <CommentCard
-                      :comment="comment"
-                      v-if="
-                        commentFilterStatus.selected.some(
-                          (school) => school === comment.course.institute
-                        )
-                      "
-                    />
+                    <CommentCard :comment="comment" />
                   </v-fade-transition>
                 </div>  
               </div>          
