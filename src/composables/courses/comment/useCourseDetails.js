@@ -54,17 +54,15 @@ export default () => {
         return self.map(getId).indexOf(getId(value)) === index;
     }
 
+    // A notice for future developers: The if statement justifying if to and from are equal is not necessary
+    //  if you dont change the watch target in the watch function, otherwise you must use it to avoid infinite loop
     watch(() => status.order, useDebounce((to, from) => {
-        if (to !== from) {
-            commentText.value.sort(commentSortFunc)
-        }
+        commentText.value.sort(commentSortFunc)
     }))
 
     watch(() => status.sortKey, useDebounce((to, from) => {
-        if (to !== from) {
-            status.order = sortStatics.orderItem[status.sortKey][0]
-            commentText.value.sort(commentSortFunc)
-        }
+        status.order = sortStatics.orderItem[status.sortKey][0]
+        commentText.value.sort(commentSortFunc)
     }))
 
     // Abandoned @since 2022-10-03: this is buggy and is based on a bug

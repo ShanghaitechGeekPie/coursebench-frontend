@@ -24,19 +24,17 @@ export default () => {
     const courseFilterStatus = inject("courseFilterStatus")
 
     watch(() => courseFilterStatus.selected, useDebounce((to, from) => {
-        if (notEqual(to, from)) {
-            if (courseFilterStatus.selected.length === 0) {
-                status.selectAll = false
-                status.selectNotAll = true
-            } else if (courseFilterStatus.selected.filter(key => key != "__ob__").length 
-                === Object.keys(courseStatistic.count).filter(key => key != "__ob__").length) {
-                status.selectAll = true
-                status.selectNotAll = false
-            } else {
-                status.selectAll = false
-                status.selectNotAll = false
-            }
-        } 
+        if (courseFilterStatus.selected.length === 0) {
+            status.selectAll = false
+            status.selectNotAll = true
+        } else if (courseFilterStatus.selected.filter(key => key != "__ob__").length 
+            === Object.keys(courseStatistic.count).filter(key => key != "__ob__").length) {
+            status.selectAll = true
+            status.selectNotAll = false
+        } else {
+            status.selectAll = false
+            status.selectNotAll = false
+        }
     }))
 
     // Abandoned @since 2021-05-31: this is buggy and is based on a bug

@@ -147,17 +147,15 @@ export default () => {
             )
     }
 
+    // A notice for future developers: The if statement justifying if to and from are equal is not necessary
+    //  if you dont change the watch target in the watch function, otherwise you must use it to avoid infinite loop
     watch(() => courseFilterStatus.order, useDebounce((to, from) => {
-        if (to != from) {
-            courseText.value.sort(sortFunc)
-        }
+        courseText.value.sort(sortFunc)
     }))
 
     watch(() => courseFilterStatus.sortKey, useDebounce((to, from) => {
-        if (to != from) {
-            courseFilterStatus.order = sortStatics.orderItem[courseFilterStatus.sortKey][0]
-            courseText.value.sort(sortFunc)
-        }
+        courseFilterStatus.order = sortStatics.orderItem[courseFilterStatus.sortKey][0]
+        courseText.value.sort(sortFunc)
     }))
 
     watch(() => courseFilterStatus.selected, useDebounce((to, from) => {
