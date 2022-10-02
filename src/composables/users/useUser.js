@@ -53,7 +53,11 @@ export default () => {
     profileLoading: true,
     commentLoading: true,
   })
-  const commentFilterStatus = reactive(defaultStatus)
+  const commentFilterStatus = reactive({
+    selected: [],
+    sortKey: '发布时间',
+    order: '从后往前',    
+  })
 
 
 
