@@ -64,18 +64,18 @@
         :background-color="$vuetify.theme.dark ? '#3c4043' : '#F1F3F4'"
         :prepend-inner-icon="icons.mdiMagnify"
         ref="searchBar"
-        @input="searchParser"
         @blur="isCurrentPath('^\/$') ? $router.push('/') : ''"
         @keydown.enter="
           $refs.searchBar.blur(), isCurrentPath('^\/$') ? $router.push('/') : ''
         "
         v-if="$vuetify.breakpoint.smAndUp"
         placeholder="以空格间隔关键字或以regexp:开头输入正则表达式"
+        v-model="status.searchString"
       >
       </v-text-field>
     </div>
     <v-spacer></v-spacer>
-    <MobileSearchBar @input="searchParser" v-if="$vuetify.breakpoint.xsOnly" />
+    <MobileSearchBar v-model="status.searchString" v-if="$vuetify.breakpoint.xsOnly" />
     <v-btn
       color="primary"
       class="px-sm-8"
@@ -213,7 +213,7 @@
 </template>
 
 <script>
-import { reactive, provide, inject } from "vue";
+import { reactive, provide, inject, watch } from "vue";
 import Login from "@/components/users/forms/Login";
 import Register from "@/components/users/forms/Register";
 import useLogout from "@/composables/users/forms/useLogout";
@@ -260,19 +260,25 @@ export default {
     const global = inject("global"); // global status
     const searchInput = inject("searchInput");
 
-    const searchParser = useDebounce((searchString) => {
-      const searchRawString = (() => {
-        if (searchString.startsWith("regexp:")) {
-          searchInput.isRegexp = true;
-          return searchString.slice(7).trim();
-        } else {
-          searchInput.isRegexp = false;
-          return searchString.trim();
-        }
-      })();
-      searchInput.keys = searchRawString
-        .split(" ")
-        .filter((item) => item !== "");
+    const status = reactive({
+      searchString: "",
+    })
+
+    watch(() => status.searchString, () => {
+      useDebounce((searchString) => {
+        const searchRawString = (() => {
+          if (searchString.startsWith("regexp:")) {
+            searchInput.isRegexp = true;
+            return searchString.slice(7).trim();
+          } else {
+            searchInput.isRegexp = false;
+            return searchString.trim();
+          }
+        })();
+        searchInput.keys = searchRawString
+          .split(" ")
+          .filter((item) => item !== "");
+      })(status.searchString);
     });
 
     return {
@@ -280,11 +286,11 @@ export default {
       dialog,
       doLogout,
       useUserName,
-      searchParser,
       isCurrentPath,
       useInsitePush,
       logoDark,
       logoLight,
+      status
     };
   },
   data() {
