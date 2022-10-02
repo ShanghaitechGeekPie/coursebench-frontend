@@ -1,7 +1,6 @@
 import { inject, reactive, watch } from "vue"
 import { mdiCity, mdiChevronUp, mdiChevronDown } from "@mdi/js";
 import useDebounce from "@/composables/global/useDebounce";
-import { notEqual } from "@/composables/global/useArrayUtils"
 
 export default () => {
 

@@ -48,7 +48,7 @@ export default {
     })
 
     const savedCourseAllStatus = reactive({
-      page: 0
+      page: 1
     })
 
     const savedCourseAllFilterStatus = reactive({
