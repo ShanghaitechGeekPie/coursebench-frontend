@@ -19,6 +19,7 @@ export default () => {
   const showSnackbar = inject("showSnackbar")
   const global = inject('global')
 
+  const isSelf = (route.params.id == global.userProfile.id)
 
 
   const userProfile = reactive({
@@ -31,6 +32,7 @@ export default () => {
     is_anonymous: true, 
   })
 
+  const commentRawText = ref([])
   const commentText = ref([])
 
   const commentStatistic = reactive({
@@ -106,7 +108,8 @@ export default () => {
     })
     useWatching(data, () => {
       if (data.value) {
-        commentText.value = data.value.data ? [...data.value.data] : []
+        commentRawText.value = data.value.data ? data.value.data : []
+        commentText.value = [...commentRawText.value].filter((comment) => !(comment.is_anonymous && !isSelf))
         getCommentStatistic()
         commentFilterStatus.selected = (() => {
           let ret = []
@@ -122,19 +125,24 @@ export default () => {
   }
 
   const getCommentStatistic = () => {
-    commentStatistic.total = commentText.value.length
+    commentStatistic.total = commentRawText.value.filter(
+      (comment) => !(comment.is_anonymous && !isSelf)).length
+    commentStatistic.score = 0
     for (let [key, _] of Object.entries(commentStatistic.count)) {
       commentStatistic.count[key] = 0
     }
     const schools = Object.getOwnPropertyNames(commentStatistic.count).filter((key) => {
       return key !== "__ob__" && key !== "其他学院"
     })
-    for (let comment of commentText.value) {
-      if (schools.indexOf(comment.course.institute) >= 0) {
-        commentStatistic.count[comment.course.institute]++
-      } else {
-        commentStatistic.count["其他学院"]++
-        comment.course.institute = "其他学院"
+    for (let comment of commentRawText.value) {
+      if (!(comment.is_anonymous && !isSelf)) {
+        if (schools.indexOf(comment.course.institute) >= 0) {
+          commentStatistic.count[comment.course.institute]++
+        } else {
+          commentStatistic.count["其他学院"]++
+          comment.course.institute = "其他学院"
+        }
+        commentStatistic.score += comment.like
       }
     }
   }
@@ -159,6 +167,11 @@ export default () => {
       commentFilterStatus.order = sortStatics.orderItem[commentFilterStatus.sortKey][0] 
       commentText.value.sort(commentSortFunc) // I sort it here because some sort keys have the same order item
       // in that case the first if statement will not be triggered
+    } else if (lastStatus.selected != commentFilterStatus.selected) {
+      commentText.value = commentRawText.value.filter((comment) => {
+        return (!(comment.is_anonymous && !isSelf)) && commentFilterStatus.selected.some((school) => comment.course.institute == school)
+      })
+      commentText.value.sort(commentSortFunc)
     }
   }))
 
@@ -167,9 +180,10 @@ export default () => {
   provide("commentStatistic", commentStatistic)
   provide("commentFilterStatus", commentFilterStatus)
   provide("userProfile", userProfile)
+  provide("isSelf", isSelf)
 
 
-  if (route.params.id == global.userProfile.id) {
+  if (isSelf) {
     watch(() => global.userProfile, () => {
       useRefCopy(global.userProfile, userProfile)
       userProfile.nickname = useUserName(userProfile)
@@ -186,6 +200,6 @@ export default () => {
   })
 
 
-  return { commentText, commentFilterStatus, status, userProfile }
+  return { commentText, commentFilterStatus, status, userProfile, isSelf }
   
 }

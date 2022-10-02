@@ -1,7 +1,7 @@
 import { inject, reactive, toRefs } from "vue"
 import { 
   mdiCommentCheckOutline, 
-  mdiThumbUpOutline, 
+  mdiTriangle, 
   mdiChevronDown, 
   mdiChevronUp, 
   mdiClipboardText, 
@@ -16,7 +16,7 @@ export default () => {
       mdiCommentCheckOutline,
       mdiChevronDown,
       mdiChevronUp,
-      mdiThumbUpOutline, 
+      mdiTriangle, 
       mdiClipboardText, 
     },
   }

@@ -1,15 +1,17 @@
 <template>
   <div :class="[$vuetify.breakpoint.mdOnly ? 'd-flex' : '', 'justify-center']">
     <div class="pt-4" :style="{ width: $vuetify.breakpoint.mdOnly ? '812px' : '' }">
-      <!-- <div class="d-flex justify-space-between pt-2">
-      <div>
-        <v-icon size="18">{{ statics.icons.mdiThumbUpOutline }}</v-icon>
-        <span class="text-sm-subtitle-1 pl-1">获赞总数</span>
+      <div class="d-flex justify-space-between pt-2">
+        <div>
+          <div>
+            <v-icon size="18">{{ statics.icons.mdiTriangle }}</v-icon>
+            <span class="text-sm-subtitle-1 pl-1">赞同总数</span>
+          </div>
+        </div>
+        <div class="font-weight-bold" style="width: 16px">
+          {{ commentStatistic.score }}
+        </div>
       </div>
-      <div class="font-weight-bold">
-        {{ commentStatistic.score }}
-      </div>
-    </div> -->
       <div class="d-flex justify-space-between pt-2">
         <div>
           <div>
