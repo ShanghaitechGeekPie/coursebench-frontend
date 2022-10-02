@@ -6,7 +6,7 @@ import useRefCopy from "@/composables/global/useRefCopy"
 import useRecordWatch from "@/composables/global/useRecordWatch"
 import useFetching from "@/composables/global/useFetching"
 import useUserName from "@/composables/global/useUserName"
-import { sortCmp } from "@/composables/global/useArrayUtils"
+import { sortCmp, notEqual } from "@/composables/global/useArrayUtils"
 import { defaultStatus, sortPolicy, sortStatics} from "@/composables/global/useCommentSort"
 import { useRouter, useRoute } from "@/router/migrateRouter"
 import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
@@ -158,22 +158,45 @@ export default () => {
       )
   }
 
-  // Fixed: use an inefficient way to make work temporarily
-  useRecordWatch(commentFilterStatus, useDebounce((lastStatus) => {
-    if (lastStatus.order !== commentFilterStatus.order) {
-      commentText.value.sort(commentSortFunc) // I dont know how js sort works in the vm
-      // but dont feel strange if it dont work for the values that are the same
-    } else if (lastStatus.sortKey !== commentFilterStatus.sortKey) {
-      commentFilterStatus.order = sortStatics.orderItem[commentFilterStatus.sortKey][0] 
-      commentText.value.sort(commentSortFunc) // I sort it here because some sort keys have the same order item
-      // in that case the first if statement will not be triggered
-    } else if (lastStatus.selected != commentFilterStatus.selected) {
-      commentText.value = commentRawText.value.filter((comment) => {
+  // A notice for future developers: The if statement justifying if to and from are equal is not necessary
+  //  if you dont change the watch target in the watch function, otherwise you must use it to avoid infinite loop  
+  watch(() => commentFilterStatus.order, useDebounce(() => {
+    commentText.value.sort(commentSortFunc)
+  }))
+
+  watch(() => commentFilterStatus.sortKey, useDebounce(() => {
+    commentFilterStatus.order = sortStatics.orderItem[commentFilterStatus.sortKey][0] 
+    commentText.value.sort(commentSortFunc)
+  }))
+
+  watch(() => commentFilterStatus.selected, useDebounce((to, from) => {
+    if (notEqual(to, from)) {
+      const temp = commentRawText.value.filter((comment) => {
         return (!(comment.is_anonymous && !isSelf)) && commentFilterStatus.selected.some((school) => comment.course.institute == school)
       })
-      commentText.value.sort(commentSortFunc)
+      temp.sort(commentSortFunc)
+      commentText.value = temp
     }
-  }))
+  }))        
+
+
+  // Abandoned @since 2022-10-03: this is buggy and is based on a bug    
+  // Fixed: use an inefficient way to make work temporarily
+  // useRecordWatch(commentFilterStatus, useDebounce((lastStatus) => {
+  //   if (lastStatus.order !== commentFilterStatus.order) {
+  //     commentText.value.sort(commentSortFunc) // I dont know how js sort works in the vm
+  //     // but dont feel strange if it dont work for the values that are the same
+  //   } else if (lastStatus.sortKey !== commentFilterStatus.sortKey) {
+  //     commentFilterStatus.order = sortStatics.orderItem[commentFilterStatus.sortKey][0] 
+  //     commentText.value.sort(commentSortFunc) // I sort it here because some sort keys have the same order item
+  //     // in that case the first if statement will not be triggered
+  //   } else if (lastStatus.selected != commentFilterStatus.selected) {
+  //     commentText.value = commentRawText.value.filter((comment) => {
+  //       return (!(comment.is_anonymous && !isSelf)) && commentFilterStatus.selected.some((school) => comment.course.institute == school)
+  //     })
+  //     commentText.value.sort(commentSortFunc)
+  //   }
+  // }))
 
 
 

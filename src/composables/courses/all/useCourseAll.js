@@ -54,15 +54,15 @@ export default () => {
         return ret
     }
 
-    const getCourseStatistic = () => {
-        courseStatistic.total = courseText.value.length
+    const getCourseStatistic = (_courseText = courseText) => {
+        courseStatistic.total = _courseText.value.length
         const schools = Object.getOwnPropertyNames(courseStatistic.count).filter((key) => {
             return key != "__ob__" && key != "其他学院"
         })
         for (let key in courseStatistic.count) {
             courseStatistic.count[key] = 0
         }
-        for (let course of courseText.value) {
+        for (let course of _courseText.value) {
             if (schools.indexOf(course.institute) >= 0) {
                 courseStatistic.count[course.institute]++
             } else {
@@ -105,8 +105,7 @@ export default () => {
                         })
                     }
                 })
-                temp.sort(sortFunc) // An attempt to fix to flick issue, this way is using a temp
-                // TODO: Finish this fix
+                temp.sort(sortFunc)
                 courseText.value = temp
                 getCourseStatistic()
                 courseFilterStatus.selected = getAllCourseSelected()
@@ -159,8 +158,8 @@ export default () => {
     }))
 
     watch(() => courseFilterStatus.selected, useDebounce((to, from) => {
-        if (notEqual(to, from)) {
-            courseText.value = courseRawText.value.filter((course) =>
+        if (notEqual(to, from)) { // This is necessary because of we need it to judge if it is from the saved status
+            const temp = courseRawText.value.filter((course) =>
                 (() => {
                     if (searchInput.keys.length === 0) {
                         return true;
@@ -175,7 +174,8 @@ export default () => {
                     }
                 })() && (() => courseFilterStatus.selected.some((item) => item === course.institute))()
             )
-            courseText.value.sort(sortFunc)
+            temp.sort(sortFunc)
+            courseText.value = temp
             status.page = 1
         }
     }))
