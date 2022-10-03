@@ -37,7 +37,8 @@ export default () => {
     loading: false,
     captchaLoading: false,
     captchaBase64: "",
-    windowStep: 0
+    windowStep: 0, 
+    agreeTerms: false,
   })
 
   const registerMutation = useMutation("/user/register", {

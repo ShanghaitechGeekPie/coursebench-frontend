@@ -3,13 +3,13 @@ import { instituteInfo, gradeItems } from "@/composables/global/useStaticData"
 import useDebounce from "@/composables/global/useDebounce"
 import useWatching from "@/composables/global/useWatching"
 import useRefCopy from "@/composables/global/useRefCopy"
-import useRecordWatch from "@/composables/global/useRecordWatch"
 import useFetching from "@/composables/global/useFetching"
 import useUserName from "@/composables/global/useUserName"
 import { sortCmp, notEqual } from "@/composables/global/useArrayUtils"
-import { defaultStatus, sortPolicy, sortStatics} from "@/composables/global/useCommentSort"
+import { sortPolicy, sortStatics} from "@/composables/global/useCommentSort"
 import { useRouter, useRoute } from "@/router/migrateRouter"
 import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
+import { setPreset, getPreset } from "@/composables/global/useCookie"
 
 
 export default () => {
@@ -19,7 +19,7 @@ export default () => {
   const showSnackbar = inject("showSnackbar")
   const global = inject('global')
 
-  const isSelf = (route.params.id == global.userProfile.id)
+  const isSelf = ref(route.params.id == global.userProfile.id)
 
 
   const userProfile = reactive({
@@ -80,11 +80,11 @@ export default () => {
     })
     useWatching(data, () => {
       if (data.value) {
-        if (isSelf) {
-          // if we see our own profile, we should not be anonymous          
-          useRefCopy(global.userProfile, userProfile)
-        } else {
-          useRefCopy(data.value.data, userProfile)          
+        useRefCopy(data.value.data, userProfile)
+        if (isSelf.value) {
+          // if we see our own profile, we should not be anonymous    
+          setPreset(data.value.data)
+          global.userProfile = getPreset()
         }
         userProfile.nickname = useUserName(userProfile)
         userProfile.grade = gradeItems[userProfile.grade]
@@ -113,7 +113,7 @@ export default () => {
     useWatching(data, () => {
       if (data.value) {
         commentRawText.value = data.value.data ? data.value.data : []
-        commentText.value = [...commentRawText.value].filter((comment) => !(comment.is_anonymous && !isSelf))
+        commentText.value = [...commentRawText.value].filter((comment) => !(comment.is_anonymous && !isSelf.value))
         getCommentStatistic()
         commentFilterStatus.selected = (() => {
           let ret = []
@@ -130,7 +130,7 @@ export default () => {
 
   const getCommentStatistic = () => {
     commentStatistic.total = commentRawText.value.filter(
-      (comment) => !(comment.is_anonymous && !isSelf)).length
+      (comment) => !(comment.is_anonymous && !isSelf.value)).length
     commentStatistic.score = 0
     for (let [key, _] of Object.entries(commentStatistic.count)) {
       commentStatistic.count[key] = 0
@@ -139,7 +139,7 @@ export default () => {
       return key !== "__ob__" && key !== "其他学院"
     })
     for (let comment of commentRawText.value) {
-      if (!(comment.is_anonymous && !isSelf)) {
+      if (!(comment.is_anonymous && !isSelf.value)) {
         if (schools.indexOf(comment.course.institute) >= 0) {
           commentStatistic.count[comment.course.institute]++
         } else {
@@ -176,7 +176,8 @@ export default () => {
   watch(() => commentFilterStatus.selected, useDebounce((to, from) => {
     if (notEqual(to, from)) {
       const temp = commentRawText.value.filter((comment) => {
-        return (!(comment.is_anonymous && !isSelf)) && commentFilterStatus.selected.some((school) => comment.course.institute == school)
+        return (!(comment.is_anonymous && !isSelf.value)) && 
+          commentFilterStatus.selected.some((school) => comment.course.institute == school)
       })
       temp.sort(commentSortFunc)
       commentText.value = temp
@@ -196,7 +197,7 @@ export default () => {
   //     // in that case the first if statement will not be triggered
   //   } else if (lastStatus.selected != commentFilterStatus.selected) {
   //     commentText.value = commentRawText.value.filter((comment) => {
-  //       return (!(comment.is_anonymous && !isSelf)) && commentFilterStatus.selected.some((school) => comment.course.institute == school)
+  //       return (!(comment.is_anonymous && !isSelf.value)) && commentFilterStatus.selected.some((school) => comment.course.institute == school)
   //     })
   //     commentText.value.sort(commentSortFunc)
   //   }
@@ -212,10 +213,19 @@ export default () => {
 
   if (isSelf) {
     watch(() => global.userProfile, () => {
+      if (!global.isLogin) {
+        isSelf.value = false
+      }
       useRefCopy(global.userProfile, userProfile)
       userProfile.nickname = useUserName(userProfile)
       userProfile.grade = gradeItems[userProfile.grade]
       userProfile.year = userProfile.year === 0 ? "暂不透露" : userProfile.year
+      const temp = commentRawText.value.filter((comment) => {
+        return (!(comment.is_anonymous && !isSelf.value)) && 
+          commentFilterStatus.selected.some((school) => comment.course.institute == school)
+      })
+      temp.sort(commentSortFunc)
+      commentText.value = temp      
     })
   }
 

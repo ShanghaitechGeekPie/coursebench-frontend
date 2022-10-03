@@ -114,6 +114,23 @@
                 ></v-text-field>
               </v-card-text>
             </v-form>
+            <div class="mt-n2">
+              <v-checkbox dense hide-details style="transform: scale(0.88) translate(-30px, 0)"
+                v-model="formStatus.agreeTerms"
+              >
+                <template v-slot:label>
+                  <div :class="['text-body-1', $vuetify.theme.dark ? 'white--text' : 'black--text']">
+                    我已阅读并同意
+                    <span class="inline-link" style="text-decoration: noney"
+                      @click="isCurrentPath('^\/about(#.+)*') ? $router.push('/about') : '', 
+                        closeDialog('register'), useInsitePush('#service_terms')"
+                    >
+                      用户协议及隐私政策
+                    </span>
+                  </div>
+                </template>
+              </v-checkbox>
+            </div>            
           </div>
           <div
             class="px-0 pt-0 pb-6 pb-sm-11 pt-8 pt-sm-0 d-flex justify-end"
@@ -282,13 +299,19 @@ import useAfterRender from "@/composables/global/useAfterRender";
 import { gradeItems, yearItems } from "@/composables/global/useStaticData"
 import logoDark from "@/assets/logo-white.svg";
 import logoLight from "@/assets/logo.svg";
+import useInsitePush from "@/composables/global/useInsitePush";
+import useRouteMatch from "@/composables/global/useRouteMatch";
 
 export default {
   setup() {
     const { formRules } = useForms();
+    const { statics, userData, formStatus, doRegister, getCaptcha } = useRegister();
+    const { isCurrentPath } = useRouteMatch();
+
     const closeDialog = inject("closeDialog");
     const openDialog = inject("openDialog");
-    const { statics, userData, formStatus, doRegister, getCaptcha } = useRegister();
+    
+    
 
     return { 
       statics, 
@@ -302,7 +325,9 @@ export default {
       yearItems, 
       gradeItems, 
       logoLight, 
-      logoDark
+      logoDark, 
+      useInsitePush,
+      isCurrentPath
     };
   },
   methods: {  
@@ -317,7 +342,7 @@ export default {
         this.formStatus.windowStep += 1;
         // autofocus will break the transition animation, so we do it manually
         useAfterRender(() => this.$refs.passwordTextField.focus(), { retry: true, timeout: 300 });
-      } else if (this.formStatus.windowStep === 1 && this.formStatus.passwordFormValid) {
+      } else if (this.formStatus.windowStep === 1 && this.formStatus.passwordFormValid && this.formStatus.agreeTerms) {
         this.formStatus.windowStep += 1;
         useAfterRender(() => this.$refs.usernameTextField.focus(), { retry: true, timeout: 300 });
       } else if (this.formStatus.windowStep === 2 && this.userData.year && this.userData.grade) {        
