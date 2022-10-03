@@ -8,7 +8,7 @@
             <span class="text-sm-subtitle-1 pl-1">赞同总数</span>
           </div>
         </div>
-        <div class="font-weight-bold" style="width: 16px">
+        <div class="font-weight-bold" style="min-width: 16px">
           {{ commentStatistic.score }}
         </div>
       </div>
@@ -19,7 +19,7 @@
             <span class="text-sm-subtitle-1 pl-1">评价总数</span>
           </div>
         </div>
-        <div class="font-weight-bold" style="width: 16px">
+        <div class="font-weight-bold" style="min-width: 16px">
           {{ commentStatistic.total }}
         </div>
       </div>
