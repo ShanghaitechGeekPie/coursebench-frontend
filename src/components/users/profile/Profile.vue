@@ -4,13 +4,30 @@
       class="d-flex justify-center"
       :style="{ transform: $vuetify.breakpoint.mdAndDown ? 'translate(0, -76px)' : '' }"
     >
-      <AvatarContainer
-        :name="userProfile.nickname"
-        slice
-        :src="userProfile.avatar"
-        :size="$vuetify.breakpoint.name === 'xs' ? 110 : 120"
-        :outlined="$vuetify.breakpoint.mdAndDown"
-      />
+      <div>
+        <AvatarContainer
+          :name="userProfile.nickname"
+          slice
+          :src="userProfile.avatar"
+          :size="$vuetify.breakpoint.name === 'xs' ? 110 : 120"
+          :outlined="$vuetify.breakpoint.mdAndDown"
+        >
+        <v-overlay absolute>
+          <div v-if="isSelf">
+            <v-file-input
+              dense
+              :rules="statics.avatarRules"
+              accept="image/jpg, image/jpeg, image/png"
+              :prepend-icon="statics.icons.mdiCamera"
+              @change="doChangeAvatar"
+              hide-input
+              hide-details
+              style="transform: translate(7px, 0px) scale(1.5); opacity: 0.6;"
+            ></v-file-input>
+          </div>
+        </v-overlay>  
+        </AvatarContainer>      
+      </div>
     </div>
     <div
       class="d-flex justify-center pt-5"
@@ -51,11 +68,11 @@ import { inject } from 'vue';
 export default {
   components: { EditProfile, AvatarContainer },
   setup() {
-    const { userProfile } = useProfile();
+    const { userProfile, statics, doChangeAvatar } = useProfile();
 
     const isSelf = inject('isSelf');
 
-    return { userProfile, isSelf };
+    return { userProfile, statics, doChangeAvatar, isSelf };
   },
 };
 </script>

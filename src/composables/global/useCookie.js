@@ -57,30 +57,22 @@ function getCookies(keys) {
 function setPreset(preset) {
     let dst = getPreset()
     for (let key in preset) {    
-        if (typeof preset[key] === "string") {
-            dst[key] = unicodeToBytes(preset[key])
-        } else {
-            dst[key] = preset[key]
-        }
+        dst[key] = preset[key]
     }
-
-    setCookie("preset", btoa(JSON.stringify(dst)), 60 * 60 * 24)
+    setCookie("preset", btoa(unicodeToBytes(JSON.stringify(dst))), 60 * 60 * 24)
 }
 
 function getPreset() {
-    const preset = getCookie("preset") ? JSON.parse(atob(getCookie("preset"))) : {}
+    let preset = atob(getCookie("preset"))
+    try {
+        preset = JSON.parse(bytesToUnicode(preset))
+    } catch (err) {
+        preset = {}
+    }    
     const result = {}
     for (let key in preset) {
         if (preset[key] != undefined) {
-            if (typeof preset[key] === "string") {
-                try {
-                    result[key] = bytesToUnicode(preset[key])
-                } catch (_) {
-                    result[key] = preset[key]
-                }
-            } else {
-                result[key] = preset[key]
-            }
+            result[key] = preset[key]
         }
     }
     return result
