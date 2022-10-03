@@ -91,8 +91,8 @@ export default () => {
         useWatching(data, () => {
             if (data.value) {
                 courseRawText.value = data.value.data
-                // Here we need to deep copy the data or the sort will mess up the original data                
-                const temp = courseRawText.value.filter((course) => {
+                // Here we need to deep copy the data or the sort will mess up the original data
+                courseText.value = courseRawText.value.filter((course) => {
                     if (searchInput.keys.length === 0) {
                         return true;
                     } else if (searchInput.isRegexp) {
@@ -105,8 +105,6 @@ export default () => {
                         })
                     }
                 })
-                temp.sort(sortFunc)
-                courseText.value = temp
                 getCourseStatistic()
                 courseFilterStatus.selected = getAllCourseSelected()
             }
@@ -150,11 +148,12 @@ export default () => {
     //  if you dont change the watch target in the watch function, otherwise you must use it to avoid infinite loop
     watch(() => courseFilterStatus.order, useDebounce((to, from) => {
         courseText.value.sort(sortFunc)
+        status.page = 1
     }))
 
     watch(() => courseFilterStatus.sortKey, useDebounce((to, from) => {
         courseFilterStatus.order = sortStatics.orderItem[courseFilterStatus.sortKey][0]
-        courseText.value.sort(sortFunc)
+        // courseText.value.sort(sortFunc)
     }))
 
     watch(() => courseFilterStatus.selected, useDebounce((to, from) => {
@@ -175,8 +174,7 @@ export default () => {
                 })() && (() => courseFilterStatus.selected.some((item) => item === course.institute))()
             )
             temp.sort(sortFunc)
-            courseText.value = temp
-            status.page = 1
+            status.page = 1            
         }
     }))
 
@@ -229,10 +227,9 @@ export default () => {
         })
         getCourseStatistic()
         courseFilterStatus.selected = getAllCourseSelected()
-        courseText.value.sort(sortFunc)
-        if (courseFilterStatus.order != sortStatics.orderItem[courseFilterStatus.sortKey][0]) {
-            courseText.value.reverse()
-        }
+        const temp = [...courseText.value]
+        temp.sort(sortFunc)
+        courseText.value = temp
     }))
 
 
