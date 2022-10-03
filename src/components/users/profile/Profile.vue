@@ -12,8 +12,8 @@
           :size="$vuetify.breakpoint.name === 'xs' ? 110 : 120"
           :outlined="$vuetify.breakpoint.mdAndDown"
         >
-        <v-overlay absolute>
-          <div v-if="isSelf">
+        <v-overlay absolute v-if="isSelf && false">
+          <div>
             <v-file-input
               dense
               :rules="statics.avatarRules"

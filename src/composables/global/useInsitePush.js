@@ -13,7 +13,7 @@ export default function useInsitePush(target) {
     setTimeout(() => {
         if (target && document.querySelector(target)) {
             window.scrollTo({
-                top: getElementTop(document.querySelector(target)) + 64,
+                top: getElementTop(document.querySelector(target)) - 64,
                 behavior: "smooth"
             });
         }
