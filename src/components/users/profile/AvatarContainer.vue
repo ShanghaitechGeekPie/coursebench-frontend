@@ -17,8 +17,9 @@
         v-if="src === ''"
         >{{ slice ? slicedName : name }}</span
       >
-      <v-img :src="src" alt="Avatar" :aspect-ratio="aspectRatio" v-else></v-img>
+      <v-img :src="src" alt="Avatar" :aspect-ratio="aspectRatio" v-else></v-img>      
     </v-avatar>
+    <slot></slot>
   </v-card>
 </template>
 <script>

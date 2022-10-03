@@ -80,7 +80,7 @@ export default () => {
     })
     useWatching(data, () => {
       if (data.value) {
-        if (id === global.userProfile.id) {
+        if (isSelf) {
           // if we see our own profile, we should not be anonymous          
           useRefCopy(global.userProfile, userProfile)
         } else {
