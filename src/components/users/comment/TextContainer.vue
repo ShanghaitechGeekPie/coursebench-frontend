@@ -61,11 +61,19 @@
           >
             <v-card tile flat>
               <v-card-title class="pa-0" :style="{ background: $vuetify.theme.isDark ? '#1e1e1e' : '#ffffff' }">
-                <v-toolbar elevation="">
-                  <v-icon @click="status.showDialog = false" style="transform: translate(0, 2px)">
-                    {{ statics.icons.mdiClose }}
-                  </v-icon>
-                  <v-toolbar-title class="pl-4"> 阅读全文 </v-toolbar-title>
+                <v-toolbar elevation="0">
+                  <v-toolbar-title class="d-flex">
+                    <v-img src="@/assets/mini-logo.svg" width="42px"></v-img>
+                    <div class="d-flex justify-end flex-column">
+                      <div class="mb-1">阅读全文</div>
+                    </div>
+                  </v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <div class="mb-1">
+                    <v-icon @click="status.showDialog = false" style="transform: translate(0, 2px)">
+                      {{ statics.icons.mdiClose }}
+                    </v-icon>                    
+                  </div>
                 </v-toolbar>
               </v-card-title>
               <v-card-text
