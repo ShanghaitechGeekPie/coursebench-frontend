@@ -25,7 +25,7 @@ function bytesToUnicode(binary) {
 }
 
 
-function setCookie(key, value, expire = 60 * 60 * 24) {
+function setCookie(key, value, expire = 60 * 60 * 24 * 7) {
     document.cookie = `${key}=${value}; max-age=${expire}`
 }
 
