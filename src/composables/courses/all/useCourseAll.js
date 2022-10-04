@@ -35,7 +35,7 @@ export default () => {
         if (courseSearchedText.length === 0) {
             return baseStatistic
         }
-        const res = { ...baseStatistic }
+        const res = { ...baseStatistic, count: { ...baseStatistic.count } }
         res.total = courseSearchedText.length
         const schools = Object.keys(res.count).filter((key) => key != "__ob__")
         for (let key in res.count) {

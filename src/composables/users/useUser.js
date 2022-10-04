@@ -5,7 +5,7 @@ import useWatching from "@/composables/global/useWatching"
 import useRefCopy from "@/composables/global/useRefCopy"
 import useFetching from "@/composables/global/useFetching"
 import useUserName from "@/composables/global/useUserName"
-import { sortCmp, notEqual } from "@/composables/global/useArrayUtils"
+import { sortCmp } from "@/composables/global/useArrayUtils"
 import { sortPolicy, sortStatics } from "@/composables/global/useCommentSort"
 import { useRouter, useRoute } from "@/router/migrateRouter"
 import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
@@ -50,7 +50,7 @@ export default () => {
     if (commentRawText.value.length === 0) {
       return baseStatistic
     }
-    const res = { ...baseStatistic }
+    const res = { ...baseStatistic, count: {...baseStatistic.count} }
     res.total = commentRawText.value.length
     const schools = Object.keys(baseStatistic.count).filter((key) => key !== "__ob__")
     for (let comment of commentRawText.value) {
