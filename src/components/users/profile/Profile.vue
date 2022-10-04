@@ -12,7 +12,7 @@
           :size="$vuetify.breakpoint.name === 'xs' ? 110 : 120"
           :outlined="$vuetify.breakpoint.mdAndDown"
         >
-        <v-overlay absolute v-if="isSelf && false">
+        <v-overlay absolute v-if="isSelf" class="d-none">
           <div>
             <v-file-input
               dense
