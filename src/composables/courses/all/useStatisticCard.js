@@ -27,7 +27,7 @@ export default () => {
             status.selectAll = false
             status.selectNotAll = true
         } else if (courseFilterStatus.selected.filter(key => key != "__ob__").length 
-            === Object.keys(courseStatistic.count).filter(key => key != "__ob__").length) {
+            === Object.keys(courseStatistic.value.count).filter(key => key != "__ob__").length) {
             status.selectAll = true
             status.selectNotAll = false
         } else {
@@ -35,23 +35,6 @@ export default () => {
             status.selectNotAll = false
         }
     }))
-
-    // Abandoned @since 2021-05-31: this is buggy and is based on a bug
-    // useRecordWatch(courseFilterStatus, useDebounce((lastStatus) => {
-    //     if (courseFilterStatus.selected != lastStatus.selected) {
-    //         if (courseFilterStatus.selected.length === 0) {
-    //             status.selectAll = false
-    //             status.selectNotAll = true
-    //         } else if (courseFilterStatus.selected.filter(key => key != "__ob__").length 
-    //             === Object.keys(courseStatistic.count).filter(key => key != "__ob__").length) {
-    //             status.selectAll = true
-    //             status.selectNotAll = false
-    //         } else {
-    //             status.selectAll = false
-    //             status.selectNotAll = false
-    //         }
-    //     }
-    // }))
 
     return { statics, courseStatistic, courseFilterStatus, status }
 

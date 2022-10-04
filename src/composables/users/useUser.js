@@ -1,4 +1,4 @@
-import { onMounted, provide, reactive, ref, inject, watch } from "vue"
+import { onMounted, provide, reactive, ref, inject, watch, computed } from "vue"
 import { instituteInfo, gradeItems } from "@/composables/global/useStaticData"
 import useDebounce from "@/composables/global/useDebounce"
 import useWatching from "@/composables/global/useWatching"
@@ -6,11 +6,22 @@ import useRefCopy from "@/composables/global/useRefCopy"
 import useFetching from "@/composables/global/useFetching"
 import useUserName from "@/composables/global/useUserName"
 import { sortCmp, notEqual } from "@/composables/global/useArrayUtils"
-import { sortPolicy, sortStatics} from "@/composables/global/useCommentSort"
+import { sortPolicy, sortStatics } from "@/composables/global/useCommentSort"
 import { useRouter, useRoute } from "@/router/migrateRouter"
 import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
 import { setPreset, getPreset } from "@/composables/global/useCookie"
 
+const baseStatistic = {
+  total: 0,
+  score: 0,
+  count: (() => {
+    let ret = {}
+    Object.keys(instituteInfo).filter(key => key !== '').forEach(key => {
+      ret[key] = 0
+    })
+    return ret
+  })(),
+}
 
 export default () => {
 
@@ -23,32 +34,38 @@ export default () => {
 
 
   const userProfile = reactive({
-    email: "", 
-    year: 0, 
-    grade: "", 
-    nickname: "", 
-    realname: "", 
-    avatar: "", 
-    is_anonymous: true, 
+    email: "",
+    year: 0,
+    grade: "",
+    nickname: "",
+    realname: "",
+    avatar: "",
+    is_anonymous: true,
   })
 
   const commentRawText = ref([])
-  const commentText = ref([])
+  const commentText = computed(() => commentRawText.value.filter(matchFilterComment))
 
-  const commentStatistic = reactive({
-    total: 0,
-    score: 0,
-    count: (() => {
-      let ret = {}
-      Object.keys(instituteInfo).filter(key => key !== '').forEach(key => {
-        ret[key] = 0
-      })
-      return ret
-    })(), 
+  const commentStatistic = computed(() => {
+    if (commentRawText.value.length === 0) {
+      return baseStatistic
+    }
+    const res = { ...baseStatistic }
+    res.total = commentRawText.value.length
+    const schools = Object.keys(baseStatistic.count).filter((key) => key !== "__ob__")
+    for (let comment of commentRawText.value) {
+      if (schools.indexOf(comment.course.institute) >= 0) {
+        res.count[comment.course.institute]++
+      } else {
+        res.count["其他学院"]++
+      }
+      res.score += comment.like
+    }
+    return res
   })
 
 
-  
+
   const status = reactive({
     profileLoading: true,
     commentLoading: true,
@@ -56,7 +73,7 @@ export default () => {
   const commentFilterStatus = reactive({
     selected: [],
     sortKey: '发布时间',
-    order: '从后往前',    
+    order: '从后往前',
   })
 
 
@@ -107,51 +124,33 @@ export default () => {
         } else {
           showSnackbar("error", "服务器发生错误", 3000)
         }
-        setTimeout(() => router.push("/"), 3000)         
+        setTimeout(() => router.push("/"), 3000)
       }
     })
     useWatching(data, () => {
       if (data.value) {
-        commentRawText.value = data.value.data ? data.value.data : []
-        commentText.value = [...commentRawText.value].filter((comment) => !(comment.is_anonymous && !isSelf.value))
-        getCommentStatistic()
-        commentFilterStatus.selected = (() => {
-          let ret = []
-          for (let key in commentStatistic.count) {
-            if (commentStatistic.count[key]) {
-              ret.push(key)
-            }
-          } return ret
-        })()
-        commentText.value.sort(commentSortFunc)
-      }
-    })
-  }
-
-  const getCommentStatistic = () => {
-    commentStatistic.total = commentRawText.value.filter(
-      (comment) => !(comment.is_anonymous && !isSelf.value)).length
-    commentStatistic.score = 0
-    for (let [key, _] of Object.entries(commentStatistic.count)) {
-      commentStatistic.count[key] = 0
-    }
-    const schools = Object.getOwnPropertyNames(commentStatistic.count).filter((key) => {
-      return key !== "__ob__" && key !== "其他学院"
-    })
-    for (let comment of commentRawText.value) {
-      if (!(comment.is_anonymous && !isSelf.value)) {
-        if (schools.indexOf(comment.course.institute) >= 0) {
-          commentStatistic.count[comment.course.institute]++
+        const schools = Object.keys(baseStatistic.count).filter((key) => key !== "__ob__")
+        commentFilterStatus.selected = schools
+        if (data.value.data) {          
+          commentRawText.value = data.value.data.filter((comment) => !(comment.is_anonymous && !isSelf.value))
+            .map((comment) => {
+              if (schools.indexOf(comment.course.institute) >= 0) {
+                return comment
+              } else {
+                return { ...comment, course: { ...comment.course, institute: "其他学院" } }
+              }
+            })
         } else {
-          commentStatistic.count["其他学院"]++
-          comment.course.institute = "其他学院"
+          commentRawText.value = []
         }
-        commentStatistic.score += comment.like
+        commentRawText.value.sort(commentSortFunc)
       }
-    }
+    })
   }
 
-
+  const matchFilterComment = (comment) => {
+    return commentFilterStatus.selected.some((school) => comment.course.institute == school)
+  }
 
 
   const commentSortFunc = (x, y) => {
@@ -165,44 +164,16 @@ export default () => {
   // A notice for future developers: The if statement justifying if to and from are equal is not necessary
   //  if you dont change the watch target in the watch function, otherwise you must use it to avoid infinite loop  
   watch(() => commentFilterStatus.order, useDebounce(() => {
-    commentText.value.sort(commentSortFunc)
+    commentRawText.value.sort(commentSortFunc)
   }))
 
   watch(() => commentFilterStatus.sortKey, useDebounce(() => {
-    commentFilterStatus.order = sortStatics.orderItem[commentFilterStatus.sortKey][0] 
-    commentText.value.sort(commentSortFunc)
+    if (commentFilterStatus.order == sortStatics.orderItem[commentFilterStatus.sortKey][0]) {
+      commentRawText.value.sort(commentSortFunc)
+    } else {
+      commentFilterStatus.order = sortStatics.orderItem[commentFilterStatus.sortKey][0]
+    } 
   }))
-
-  watch(() => commentFilterStatus.selected, useDebounce((to, from) => {
-    if (notEqual(to, from)) {
-      const temp = commentRawText.value.filter((comment) => {
-        return (!(comment.is_anonymous && !isSelf.value)) && 
-          commentFilterStatus.selected.some((school) => comment.course.institute == school)
-      })
-      temp.sort(commentSortFunc)
-      commentText.value = temp
-    }
-  }))        
-
-
-  // Abandoned @since 2022-10-03: this is buggy and is based on a bug    
-  // Fixed: use an inefficient way to make work temporarily
-  // useRecordWatch(commentFilterStatus, useDebounce((lastStatus) => {
-  //   if (lastStatus.order !== commentFilterStatus.order) {
-  //     commentText.value.sort(commentSortFunc) // I dont know how js sort works in the vm
-  //     // but dont feel strange if it dont work for the values that are the same
-  //   } else if (lastStatus.sortKey !== commentFilterStatus.sortKey) {
-  //     commentFilterStatus.order = sortStatics.orderItem[commentFilterStatus.sortKey][0] 
-  //     commentText.value.sort(commentSortFunc) // I sort it here because some sort keys have the same order item
-  //     // in that case the first if statement will not be triggered
-  //   } else if (lastStatus.selected != commentFilterStatus.selected) {
-  //     commentText.value = commentRawText.value.filter((comment) => {
-  //       return (!(comment.is_anonymous && !isSelf.value)) && commentFilterStatus.selected.some((school) => comment.course.institute == school)
-  //     })
-  //     commentText.value.sort(commentSortFunc)
-  //   }
-  // }))
-
 
 
   provide("commentStatistic", commentStatistic)
@@ -220,12 +191,6 @@ export default () => {
       userProfile.nickname = useUserName(userProfile)
       userProfile.grade = gradeItems[userProfile.grade]
       userProfile.year = userProfile.year === 0 ? "暂不透露" : userProfile.year
-      const temp = commentRawText.value.filter((comment) => {
-        return (!(comment.is_anonymous && !isSelf.value)) && 
-          commentFilterStatus.selected.some((school) => comment.course.institute == school)
-      })
-      temp.sort(commentSortFunc)
-      commentText.value = temp      
     })
   }
 
@@ -233,10 +198,10 @@ export default () => {
 
   onMounted(() => {
     getUserProfile()
-    getCommentText()    
+    getCommentText()
   })
 
 
   return { commentText, commentFilterStatus, status, userProfile }
-  
+
 }
