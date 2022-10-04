@@ -1,10 +1,10 @@
 <template>
-  <div class="pt-sm-16 pt-6 d-flex justify-center">
+  <div class="pt-sm-13 pt-6 d-flex justify-center">
     <div
       :style="{ width: $vuetify.breakpoint.width >= 1280 ? '1280px' : '100%' }"
       class="about-container"
     >
-      <div class="d-flex justify-center pt-8">
+      <div class="d-flex justify-center">
         <div class="text-sm-h1 text-h2 font-weight-bold mx-sm-0 mx-4">
           To be the best bench.
         </div>

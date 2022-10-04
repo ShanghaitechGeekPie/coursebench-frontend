@@ -17,7 +17,7 @@ const sortStatics = {
 const sortPolicy = {
     "发布时间": (x) => new Date(x.post_time),
     "修改时间": (x) => new Date(x.update_time), 
-    "赞同数": (x) => x.like,
+    "赞同数": (x) => x.like - x.dislike,
 }
 
 export { defaultStatus, sortStatics, sortPolicy}

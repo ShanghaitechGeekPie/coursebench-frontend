@@ -1,6 +1,6 @@
 <template>
   <div style="min-height: 100%">
-    <div style="flex-wrap: wrap" class="d-flex justify-center flex-row-reverse pt-sm-16 pt-6">
+    <div style="flex-wrap: wrap" class="d-flex justify-center flex-row-reverse pt-sm-13 pt-6">
       <div class="pa-lg-3 pb-3">
         <div :class="[$vuetify.breakpoint.mdAndDown ? '' : 'statistic-card-container']">          
           <div v-if="status.loading"
@@ -16,7 +16,7 @@
             </v-card>
           </div>
           <StatisticCard 
-            :style="$vuetify.breakpoint.mdAndDown ? {} : { position: 'fixed', top: '140px'}" 
+            :style="$vuetify.breakpoint.mdAndDown ? {} : { position: 'fixed', top: '128px'}" 
             :width="adoptiveCardContainerWidth + 'px'"
             v-else="!status.loading"
           >

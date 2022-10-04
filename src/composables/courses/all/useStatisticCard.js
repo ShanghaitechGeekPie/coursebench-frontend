@@ -1,4 +1,4 @@
-import { inject, reactive, watch } from "vue"
+import { inject, onMounted, reactive, watch } from "vue"
 import { mdiCity, mdiChevronUp, mdiChevronDown } from "@mdi/js";
 import useDebounce from "@/composables/global/useDebounce";
 
@@ -35,6 +35,17 @@ export default () => {
             status.selectNotAll = false
         }
     }))
+
+    onMounted(() => {
+        if (courseFilterStatus.selected.length === 0) {
+            status.selectAll = false
+            status.selectNotAll = true
+        } else if (courseFilterStatus.selected.filter(key => key != "__ob__").length 
+            === Object.keys(courseStatistic.value.count).filter(key => key != "__ob__").length) {
+            status.selectAll = true
+            status.selectNotAll = false
+        }
+    })
 
     return { statics, courseStatistic, courseFilterStatus, status }
 
