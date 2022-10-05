@@ -52,7 +52,7 @@ export default () => {
     onSuccess: (response) => {
       formStatus.loading = false
       setPreset({
-        id: response.data.data.user_id,
+        id: response.data.data.id,
         email: response.data.data.email,
         nickname: response.data.data.nickname,
         avatar: response.data.data.avatar,
