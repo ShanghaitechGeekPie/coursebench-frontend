@@ -40,7 +40,7 @@ export default () => {
     onMutate: () => {}, 
     onSuccess: (response) => {
       setPreset({
-        avatar: `https://cdn.geekpie.club/course-bench/avatar/${response.data.data.avatar}`
+        avatar: response.data.data.avatar
       })
       global.userProfile = getPreset()
       showSnackbar("success", "头像修改成功")
