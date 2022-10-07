@@ -76,8 +76,8 @@ import StatisticLoader from "@/components/teachers/loader/StatisticLoader"
 import ImageLoader from "@/components/teachers/loader/ImageLoader";
 import CommentLoader from "@/components/teachers/loader/CommentLoader";
 import Nothing from "@/components/global/Nothing"
-import backgroundDark from "@/assets/user-background-dark.webp";
-import backgroundLight from "@/assets/user-background-light.webp";
+import backgroundDark from "@/assets/user-background-dark.svg";
+import backgroundLight from "@/assets/user-background-light.svg";
 
 
 export default {
