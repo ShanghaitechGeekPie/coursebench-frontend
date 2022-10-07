@@ -1,7 +1,7 @@
 <template>
   <div style="min-height: 100%">  
     <ImageLoader v-if="status.profileLoading || status.commentLoading" />
-    <BackgroundImage color="grey" v-else />
+    <BackgroundImage :src="$vuetify.theme.dark ? backgroundDark : backgroundLight" v-else />
     <div style="flex-wrap: wrap" class="d-flex justify-center">
       <div class="pa-lg-3 pb-3">
         <div :style="{ width: $vuetify.breakpoint.mdAndDown ? '100vw' : '360px' }">
@@ -76,6 +76,8 @@ import StatisticLoader from "@/components/teachers/loader/StatisticLoader"
 import ImageLoader from "@/components/teachers/loader/ImageLoader";
 import CommentLoader from "@/components/teachers/loader/CommentLoader";
 import Nothing from "@/components/global/Nothing"
+import backgroundDark from "@/assets/user-background-dark.webp";
+import backgroundLight from "@/assets/user-background-light.webp";
 
 
 export default {
@@ -95,7 +97,7 @@ export default {
   },
   setup() {
     const { commentText, commentFilterStatus, status } = useUser();
-    return { commentText, commentFilterStatus, status, sortStatics };
+    return { commentText, commentFilterStatus, status, sortStatics, backgroundDark, backgroundLight };
   },
   data() {
     return {
