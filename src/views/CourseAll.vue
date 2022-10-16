@@ -1,5 +1,10 @@
 <template>
   <div style="min-height: 100%">
+    <div v-if="$vuetify.breakpoint.mdAndUp" @click="handleCCP20">
+      <v-sheet width="100%" height="48px" color="#FF7550"></v-sheet>
+      <v-img :src="CCP20" height=""></v-img> 
+      <v-sheet width="100%" height="48px" color="#FF7550"></v-sheet>
+    </div>   
     <div style="flex-wrap: wrap" class="d-flex justify-center flex-row-reverse pt-sm-13 pt-6">
       <div class="pa-lg-3 pb-3">
         <div :class="[$vuetify.breakpoint.mdAndDown ? '' : 'statistic-card-container']">          
@@ -16,7 +21,6 @@
             </v-card>
           </div>
           <StatisticCard 
-            :style="$vuetify.breakpoint.mdAndDown ? {} : { position: 'fixed', top: '128px'}" 
             :width="adoptiveCardContainerWidth + 'px'"
             v-else="!status.loading"
           >
@@ -119,12 +123,13 @@ import CourseLoader from "@/components/teachers/loader/CourseLoader"
 import SelectLoader from "@/components/teachers/loader/SelectLoader"
 import StatisticLoader from "@/components/teachers/loader/StatisticLoader"
 import Nothing from "@/components/global/Nothing.vue"
+import CCP20 from "@/assets/ccp20.jpg"
 
 export default {
   setup() {
     const { courseText, status, courseFilterStatus, sortStatics } = useCourseAll();
 
-    return { instituteInfo, courseText, status, courseFilterStatus, sortStatics };
+    return { instituteInfo, courseText, status, courseFilterStatus, sortStatics, CCP20 };
   },
   components: {
     SelectBar,
@@ -175,6 +180,11 @@ export default {
       }    
     }
   },
+  methods: {
+    handleCCP20() {
+      window.open("http://www.people.com.cn/");
+    }
+  }
 };
 </script>
 <style scoped>
