@@ -2,8 +2,7 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const productionGzipExtensions = /\.(js|css|json|md|html|ico)(\?.*)?$/i;
 const path = require('path')
 const process = require('process')
-
-
+const fs = require('fs')
 
 module.exports = {
   productionSourceMap: false,
@@ -43,6 +42,10 @@ module.exports = {
         serverUrl: process.env.SERVER, 
         buildVersion: process.env.BUILD_VERSION,
         buildMode: process.env.BUILD_MODE,
+      }), 
+      "Policy": JSON.stringify({
+        "privacyPolicy": fs.readFileSync(path.join(__dirname, './src/assets/privacy_policy.md'), 'utf8'),
+        "termsOfService": fs.readFileSync(path.join(__dirname, './src/assets/terms_of_service.md'), 'utf8')
       })
     },
     module: {

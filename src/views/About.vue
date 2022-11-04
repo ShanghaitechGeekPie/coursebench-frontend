@@ -251,7 +251,7 @@
             <div class="text-h5">用户协议</div>
             <div
               class="mt-4"
-              v-html="useMarkdown(serviceTerms)"
+              v-html="useMarkdown(termsOfService)"
               style="white-space: pre-line"
             ></div>
           </div>
@@ -279,11 +279,8 @@ import {
   parseHomeLink,
 } from "@/composables/global/useSponsors";
 import { openInplace } from "@/composables/global/useExternalUrl";
-import {
-  service_terms as serviceTerms,
-  privacy_policy as privacyPolicy,
-} from "@/assets/terms.json";
 import useMarkdown from "@/composables/global/useMarkdown";
+import { termsOfService, privacyPolicy } from "Policy"
 
 export default {
   setup() {
@@ -303,7 +300,7 @@ export default {
       parseHomeLink,
       parseAvatarLink,
       openInplace,
-      serviceTerms,
+      termsOfService,
       privacyPolicy,
       useMarkdown,
     };
