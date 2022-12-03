@@ -2,10 +2,6 @@
 
 The frontend of the CourseBench.
 
-### Todo
-
-- [ ] 9.13 内部测试 [@clarivy](https://github.com/Clarivy) [@yanglinshu](https://github.com/yanglinshu)
-- [ ] 10.1 V1 正式上线 [@clarivy](https://github.com/Clarivy) [@yanglinshu](https://github.com/yanglinshu)
 
 ### How to use
 
