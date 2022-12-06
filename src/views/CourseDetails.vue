@@ -4,16 +4,13 @@
       <v-col sm="11" cols="12" class="pa-sm-3 pa-0">
         <v-row class="d-flex justify-center">
           <v-col cols="11" class="px-0 mb-3">
-            <DetailCard
-              class="pb-8 pt-2"
-              :details="courseDetail"
-              :comments="commentText"
-            />
+            <DetailCard :details="courseDetail" :comments="commentText" />
           </v-col>
           <v-col cols="11">
             <v-row>
               <v-col lg="3" cols="12" class="pt-0 pl-0 pr-lg-4 pr-0">
-                <FilterBox :style="adoptiveCardPosition"
+                <FilterBox
+                  :style="adoptiveCardPosition"
                   v-if="!status.commentLoading && !status.detailLoading"
                 />
                 <FilterBoxLoader v-else />
@@ -80,7 +77,7 @@ import FilterBox from "@/components/courses/FilterBox";
 import WritingBox from "@/components/courses/WritingBox";
 import Nothing from "@/components/global/Nothing";
 import CommentLoader from "@/components/teachers/loader/CommentLoader";
-import FilterBoxLoader from "@/components/teachers/loader/FilterBoxLoader"
+import FilterBoxLoader from "@/components/teachers/loader/FilterBoxLoader";
 
 export default {
   components: {
@@ -90,7 +87,7 @@ export default {
     FilterBox,
     CourseCommentCard,
     CommentLoader,
-    FilterBoxLoader
+    FilterBoxLoader,
   },
   setup() {
     const {
