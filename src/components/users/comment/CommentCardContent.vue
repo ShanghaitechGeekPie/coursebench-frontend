@@ -142,7 +142,7 @@
 <script>
 import useCommentCardContent from "@/composables/users/comment/useCommentCardContent";
 import TextContainer from "@/components/users/comment/TextContainer";
-import { judgeItems, gradingInfo } from "@/composables/global/useStaticData";
+import { judgeItems, gradingInfo, termItems } from "@/composables/global/useStaticData";
 
 // TODO: Decide if the score by user is int or float
 
@@ -166,7 +166,7 @@ export default {
       let sem = String(this.comment.semester);
       let year = sem.substring(0, 4);
       let season = sem.substring(4);
-      return `${year}年${season === "02" ? "秋" : "春"}`;
+      return `${year}年${termItems[new Number(season) - 1].name}`;
     },
   },
 };
