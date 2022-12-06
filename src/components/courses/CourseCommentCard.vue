@@ -90,7 +90,7 @@
                 </v-icon>
               </v-btn>
             </div>
-            <div class="mr-sm-3">
+            <div class="mr-sm-1">
               <v-icon size="15" style="">
                 {{ footerNote.statics.icons.mdiClockOutline }}
               </v-icon>
