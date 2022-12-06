@@ -28,7 +28,6 @@
                 </span>
               </div>
             </div>
-            <!--          <div class="white&#45;&#45;text subtitle-1 font-weight-bold ml-sm-12 ml-7 pt-3"> 开课单位: {{ details.institute }} </div>-->
             <div class="pb-md-1">
               <div class="pt-8">
                 <div
@@ -129,6 +128,9 @@
               <ScoreBoard
                 class="mb-4 pr-lg-3"
                 :starPercent="toDistribute(starStatistic)"
+                :color="
+                  details.comment_num >= enoughDataThreshold ? null : '#B0B0B0'
+                "
               ></ScoreBoard>
             </div>
             <v-row no-gutters class="pt-md-6 pt-4">

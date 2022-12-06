@@ -4,7 +4,8 @@
       <ScoreLine
         :starNum="6 - index"
         :percentage="Math.round(starPercent[5 - index] * 100)"
-        :color="scoreInfo[6 - index].color"
+        :color="color ? color : scoreInfo[6 - index].color"
+        :star-color="color ? color : 'yellow darken-3'"
         style="max-height: 13px"
       ></ScoreLine>
     </div>
@@ -19,6 +20,10 @@ export default {
   components: { ScoreLine },
   props: {
     starPercent: Array,
+    color: {
+      type: String,
+      default: "",
+    },
   },
   setup() {
     return { scoreInfo };
