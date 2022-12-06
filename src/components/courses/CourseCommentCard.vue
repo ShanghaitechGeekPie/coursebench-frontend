@@ -6,10 +6,10 @@
           <div
               class="d-flex justify-space-between router-container"
               style="cursor: pointer"
-              @click="$router.push({ path: `/user/${comment.user.id}` })"
+              @click=" comment.user ? $router.push({ path: `/user/${comment.user.id}` }) : null"
           >
             <AvatarContainer
-                :name="avatar.localComment.user ? avatar.localComment.user.nickname : '' "
+                :name="avatar.localComment.user ? avatar.localComment.user.nickname : '?' "
                 :src="avatar.localComment.user ? avatar.localComment.user.avatar : '' "
                 small
                 tile
