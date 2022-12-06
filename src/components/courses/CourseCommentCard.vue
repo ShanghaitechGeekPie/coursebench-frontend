@@ -75,7 +75,7 @@
                 </div>
               </v-btn>
               <v-btn
-                class="like-button mr-3"
+                class="like-button mr-n1 mr-sm-3"
                 small
                 :color="formStatus.likeStatus === 2 ? 'primary' : 'primary'"
                 elevation="0"
@@ -90,7 +90,7 @@
                 </v-icon>
               </v-btn>
             </div>
-            <div class="mr-3">
+            <div class="mr-sm-3">
               <v-icon size="15" style="">
                 {{ footerNote.statics.icons.mdiClockOutline }}
               </v-icon>
