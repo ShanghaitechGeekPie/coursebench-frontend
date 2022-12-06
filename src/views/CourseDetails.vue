@@ -1,9 +1,9 @@
 <template>
-  <v-container class="d-flex justify-center mt-6" >
+  <v-container class="d-flex justify-center mt-6 mt-sm-13" >
     <v-row class="d-flex justify-center" style="max-width: 1300px" >
       <v-col sm="11" cols="12" class="pa-sm-3 pa-0" >
         <v-row class="d-flex justify-center">
-          <v-col cols="11" class="px-0 mb-sm-2">
+          <v-col cols="11" class="px-0 mb-3">
             <DetailCard
               class="pb-8 pt-2"
               :details="courseDetail"
@@ -12,12 +12,12 @@
           </v-col>
           <v-col cols="11">
             <v-row>
-              <v-col sm="3" cols="12" class="pt-0 pl-0 pr-sm-3 pr-0"  >
+              <v-col sm="3" cols="12" class="pt-0 pl-0 pr-sm-4 pr-0"  >
                 <TeacherSelect class="" :style="adoptiveCardPosition"/>
               </v-col>
               <v-col sm="9" cols="12" class="pl-sm-5">
                 <v-row>
-                  <v-col cols="12" class="px-0 pt-0 pb-1">
+                  <v-col cols="12" class="px-0 pt-0 pb-3">
                     <writing-box :disable-writing="disableWriting"></writing-box>
                   </v-col>
                   <v-col
@@ -120,6 +120,8 @@ export default {
   }
 };
 </script>
-
-<style scoped>
+<style>
+body {
+  overflow-y: hidden;
+}
 </style>
