@@ -4,7 +4,12 @@
       <v-col sm="11" cols="12" class="pa-sm-3 pa-0">
         <v-row class="d-flex justify-center">
           <v-col cols="11" class="px-0 mb-3">
-            <DetailCard :details="courseDetail" :comments="commentText" />
+            <DetailCard
+              :details="courseDetail"
+              :comments="commentText"
+              v-if="!status.commentLoading && !status.detailLoading"
+            />
+            <DetailCardLoader v-else />
           </v-col>
           <v-col cols="11">
             <v-row>
@@ -78,6 +83,7 @@ import WritingBox from "@/components/courses/WritingBox";
 import Nothing from "@/components/global/Nothing";
 import CommentLoader from "@/components/teachers/loader/CommentLoader";
 import FilterBoxLoader from "@/components/teachers/loader/FilterBoxLoader";
+import DetailCardLoader from "@/components/teachers/loader/DetailCardLoader";
 
 export default {
   components: {
@@ -88,6 +94,7 @@ export default {
     CourseCommentCard,
     CommentLoader,
     FilterBoxLoader,
+    DetailCardLoader,
   },
   setup() {
     const {
