@@ -30,6 +30,9 @@ export function sumOf(arr) {
  * @returns any - The average of the numbers in the array.
  */
 export function averageOf(arr) {
+  if (arr.length == 0) {
+    return 0;
+  }
   return sumOf(arr) / arr.length
 }
 

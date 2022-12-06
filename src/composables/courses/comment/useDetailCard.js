@@ -4,6 +4,7 @@ import { mdiStar, mdiStarOutline } from "@mdi/js";
 export default () => {
 
     const teachers = inject('teachers')
+    const selectedTeachers = inject('selectedTeachers')
     const statics = {
         icons: {
             mdiStarOutline,
@@ -11,5 +12,5 @@ export default () => {
         }
     }
 
-    return { teachers, statics }
+    return { teachers, statics, selectedTeachers }
 }

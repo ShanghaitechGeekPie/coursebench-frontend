@@ -92,7 +92,7 @@
           <div class="ml-md-6">
             <div class="subtitle-1 font-weight-bold">Ratings & Reviews</div>
             <div style="font-family: Arial, serif" class="pt-md-2">
-              <span v-if="details.comment_num >= enoughDataThreshold">
+              <span v-if="filteredCommentCount >= enoughDataThreshold">
                 <span
                   class="text-h3 font-weight-bold"
                   style="font-family: Arial, serif !important"
@@ -129,7 +129,7 @@
                 class="mb-4 pr-lg-3"
                 :starPercent="toDistribute(starStatistic)"
                 :color="
-                  details.comment_num >= enoughDataThreshold ? null : '#B0B0B0'
+                  filteredCommentCount >= enoughDataThreshold ? null : '#B0B0B0'
                 "
               ></ScoreBoard>
             </div>
@@ -194,7 +194,7 @@ export default {
     comments: Array,
   },
   setup() {
-    const { teachers, statics } = useDetailCard();
+    const { teachers, statics, selectedTeachers } = useDetailCard();
     return {
       teachers,
       statics,
@@ -202,10 +202,12 @@ export default {
       scoreInfo,
       toDistribute,
       enoughDataThreshold,
+      selectedTeachers,
     };
   },
   data() {
     return {
+      filteredCommentCount: 0,
       averageScore: 0,
       roundedScore: [0, 0, 0, 0],
       starStatistic: [0, 0, 0, 0, 0],
@@ -214,17 +216,34 @@ export default {
   computed: {},
   methods: {
     getStatistic() {
+      const groupList = this.details.groups.map((group) => group.id);
       this.roundedScore = [];
-      for (let score of this.details.score) {
-        let rounded = roundScore(score, this.details["comment_num"]);
+      const newAverageScore = [0, 0, 0, 0];
+      const filteredComments = this.comments.filter((comment) => {
+        return this.selectedTeachers.includes(
+          groupList.indexOf(comment.group.id)
+        );
+      });
+      this.filteredCommentCount = filteredComments.length;
+      for (let i of [0, 1, 2, 3]) {
+        newAverageScore[i] = averageOf(
+          filteredComments.map((comment) => comment.score[i])
+        );
+      }
+      for (let score of newAverageScore) {
+        let rounded = roundScore(score, this.filteredCommentCount);
         this.roundedScore.push(rounded);
       }
-      if (this.details.comment_num !== 0) {
-        this.averageScore = averageOf(this.details.score) * 20;
+      if (this.filteredCommentCount !== 0) {
+        this.averageScore = averageOf(newAverageScore) * 20;
 
         this.starStatistic = [0, 0, 0, 0, 0];
         for (let comment of this.comments) {
-          this.starStatistic[Math.round(averageOf(comment.score)) - 1] += 1;
+          if (
+            this.selectedTeachers.includes(groupList.indexOf(comment.group.id))
+          ) {
+            this.starStatistic[Math.round(averageOf(comment.score)) - 1] += 1;
+          }
         }
       }
     },
@@ -237,6 +256,12 @@ export default {
       immediate: true,
     },
     comments: {
+      handler() {
+        this.getStatistic();
+      },
+      immediate: true,
+    },
+    selectedTeachers: {
       handler() {
         this.getStatistic();
       },

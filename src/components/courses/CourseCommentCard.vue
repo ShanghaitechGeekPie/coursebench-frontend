@@ -13,7 +13,7 @@
             "
           >
             <AvatarContainer
-              :name="localComment.user ? localComment.user.nickname : '?'"
+              :name="localComment.user ? useUserName(localComment.user) : '?'"
               :src="localComment.user ? localComment.user.avatar : ''"
               small
               tile
