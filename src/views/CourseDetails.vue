@@ -121,7 +121,8 @@ export default {
 };
 </script>
 <style>
-body {
+body { 
+  /* // ! Temporary fix, leave for future. */
   overflow-y: hidden;
 }
 </style>
