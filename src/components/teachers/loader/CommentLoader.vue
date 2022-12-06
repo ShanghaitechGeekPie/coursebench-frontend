@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mb-3" flat max-width="800" outlined
+  <v-card class="mb-3" flat :max-width="maxWidth" outlined
     :style="{
       width: width, 
       height: height
@@ -71,6 +71,10 @@ export default {
     height: {
       type: String,
       default: '',
+    },
+    maxWidth: {
+      type: String,
+      default: '800',
     },
   }
 }

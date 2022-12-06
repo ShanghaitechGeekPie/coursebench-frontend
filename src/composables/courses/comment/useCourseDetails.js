@@ -24,7 +24,8 @@ export default () => {
 
     const status = reactive({
         ...defaultStatus,
-        loading: false,
+        detailLoading: false,
+        commentLoading: false,
         // currentCouseId: 0
     })
 
@@ -79,11 +80,13 @@ export default () => {
     // }))
 
     const getCourseComment = () => {
+        status.commentLoading = true
         const id = route.params.id
         const {status: fetchStatus, data, error} = useFetching(["course_comment", id], "/comment/course/" + id)
         useWatching(fetchStatus, () => {
             // console.log("Data Fetched!")
             if (fetchStatus.value === "success") {
+                status.commentLoading = false
             } else if (fetchStatus.value === "error") {
                 const response = error.value.response
                 showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
@@ -106,11 +109,13 @@ export default () => {
     provide("courseId", courseId)
 
     const getCourseDetail = () => {
+        status.detailLoading = true
         const id = route.params.id
         const {status: fetchStatus, data, error} = useFetching(["course_detail", id], "/course/" + id)
         useWatching(fetchStatus, () => {
             // console.log("Data Fetched!")
             if (fetchStatus.value === "success") {
+                status.detailLoading = false
             } else if (fetchStatus.value === "error") {
                 const response = error.value.response
                 showSnackbar("error", isNetworkError(response) ? "网络连接失败" : response.data.msg, 3000)
