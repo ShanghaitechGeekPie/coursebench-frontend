@@ -16,7 +16,7 @@
         readonly
         size="16"
         :value="starNum"
-        color="yellow darken-3"
+        :color="starColor"
         background-color="grey lighten-2"
       ></v-rating>
     </v-col>
@@ -40,7 +40,14 @@ export default {
   props: {
     starNum: Number,
     percentage: Number,
-    color: String,
+    color: {
+      type: String,
+      default: "grey",
+    },
+    starColor: {
+      type: String,
+      default: "yellow darken-3",
+    },
   },
   setup() {
     const { statics } = useScoreLine();
