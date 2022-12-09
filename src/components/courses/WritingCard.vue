@@ -41,7 +41,10 @@
             </v-btn>
           </div>
         </div>
-        <v-window v-model="windowStatus.windowStep" touchless>
+        <v-window
+          v-model="windowStatus.windowStep"
+          :touch="{ left: () => {}, right: () => {} }"
+        >
           <v-window-item :value="0">
             <v-card-title class="pt-1 px-6 px-sm-11">
               <div>

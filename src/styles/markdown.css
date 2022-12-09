@@ -29,6 +29,7 @@
     text-decoration: none;
     font-weight: 700;
     letter-spacing: .5px;
+    overflow-wrap: anywhere;
 }
 
 .markdown-body a :hover {
@@ -82,6 +83,8 @@
 .markdown-body table {
     border-collapse: collapse;
     border-style: hidden;
+    width: -webkit-max-content;
+    width: -moz-max-content;
     width: max-content;
     max-width: 100%;
     overflow: auto;
