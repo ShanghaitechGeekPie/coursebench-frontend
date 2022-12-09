@@ -8,12 +8,16 @@
     <v-toolbar-title
       class="px-sm-8"
       @click="isCurrentPath('^\/$') ? $router.push('/') : ''"
-      style="cursor: pointer"
+      :style="{
+        cursor: 'pointer',
+        width: $vuetify.breakpoint.xsOnly ? '250px' : 'auto',
+      }"
     >
-      <v-img
+      <img
         :src="$vuetify.theme.dark ? logoDark : logoLight"
         width="139.61px"
-      ></v-img>
+        alt=""
+      />
     </v-toolbar-title>
     <div
       class="d-flex"
@@ -75,7 +79,10 @@
       </v-text-field>
     </div>
     <v-spacer></v-spacer>
-    <MobileSearchBar v-model="status.searchString" v-if="$vuetify.breakpoint.xsOnly" />
+    <MobileSearchBar
+      v-model="status.searchString"
+      v-if="$vuetify.breakpoint.xsOnly"
+    />
     <v-btn
       color="primary"
       class="px-sm-8"
@@ -124,12 +131,7 @@
           </div>
           <div class="d-flex justify-center">
             <div
-              class="
-                text-body-2 text--darken-1
-                grey--text
-                overflow-ellipsis
-                py-1
-              "
+              class="text-body-2 text--darken-1 grey--text overflow-ellipsis py-1"
             >
               {{ global.userProfile.email }}
             </div>
@@ -213,19 +215,19 @@
 </template>
 
 <script>
-import { reactive, provide, inject, watch } from "vue";
-import Login from "@/components/users/forms/Login";
-import Register from "@/components/users/forms/Register";
-import useLogout from "@/composables/users/forms/useLogout";
-import useUserName from "@/composables/global/useUserName";
-import useRouteMatch from "@/composables/global/useRouteMatch";
-import useDebounce from "@/composables/global/useDebounce";
-import AvatarContainer from "@/components/users/profile/AvatarContainer";
-import SliderButton from "@/components/global/SliderButton";
-import MobileSearchBar from "@/components/global/MobileSearchBar";
-import useInsitePush from "@/composables/global/useInsitePush";
-import logoDark from "@/assets/logo-white.svg";
-import logoLight from "@/assets/logo.svg";
+import { reactive, provide, inject, watch } from 'vue';
+import Login from '@/components/users/forms/Login';
+import Register from '@/components/users/forms/Register';
+import useLogout from '@/composables/users/forms/useLogout';
+import useUserName from '@/composables/global/useUserName';
+import useRouteMatch from '@/composables/global/useRouteMatch';
+import useDebounce from '@/composables/global/useDebounce';
+import AvatarContainer from '@/components/users/profile/AvatarContainer';
+import SliderButton from '@/components/global/SliderButton';
+import MobileSearchBar from '@/components/global/MobileSearchBar';
+import useInsitePush from '@/composables/global/useInsitePush';
+import logoDark from '@/assets/logo-white.svg';
+import logoLight from '@/assets/logo.svg';
 
 import {
   mdiAccount,
@@ -235,7 +237,7 @@ import {
   mdiAccountOutline,
   mdiMessageAlertOutline,
   mdiMagnify,
-} from "@mdi/js";
+} from '@mdi/js';
 
 export default {
   components: {
@@ -254,32 +256,35 @@ export default {
       register: false,
     });
 
-    provide("closeDialog", (type) => (dialog[type] = false));
-    provide("openDialog", (type) => (dialog[type] = true));
+    provide('closeDialog', (type) => (dialog[type] = false));
+    provide('openDialog', (type) => (dialog[type] = true));
 
-    const global = inject("global"); // global status
-    const searchInput = inject("searchInput");
+    const global = inject('global'); // global status
+    const searchInput = inject('searchInput');
 
     const status = reactive({
-      searchString: "",
-    })
-
-    watch(() => status.searchString, () => {
-      useDebounce((searchString) => {
-        const searchRawString = (() => {
-          if (searchString.startsWith("regexp:")) {
-            searchInput.isRegexp = true;
-            return searchString.slice(7).trim();
-          } else {
-            searchInput.isRegexp = false;
-            return searchString.trim();
-          }
-        })();
-        searchInput.keys = searchRawString
-          .split(" ")
-          .filter((item) => item !== "");
-      })(status.searchString);
+      searchString: '',
     });
+
+    watch(
+      () => status.searchString,
+      () => {
+        useDebounce((searchString) => {
+          const searchRawString = (() => {
+            if (searchString.startsWith('regexp:')) {
+              searchInput.isRegexp = true;
+              return searchString.slice(7).trim();
+            } else {
+              searchInput.isRegexp = false;
+              return searchString.trim();
+            }
+          })();
+          searchInput.keys = searchRawString
+            .split(' ')
+            .filter((item) => item !== '');
+        })(status.searchString);
+      },
+    );
 
     return {
       global,
@@ -290,7 +295,7 @@ export default {
       useInsitePush,
       logoDark,
       logoLight,
-      status
+      status,
     };
   },
   data() {
@@ -311,12 +316,12 @@ export default {
 
     adoptiveSearchBarWidth() {
       if (this.$vuetify.breakpoint.width >= 1680) {
-        return "720px";
+        return '720px';
       } else if (this.$vuetify.breakpoint.mdAndUp) {
         return `calc(${
           Math.min(
             this.$vuetify.breakpoint.width - (this.global.isLogin ? 550 : 750),
-            720
+            720,
           ) + 35
         }px)`;
       } else {
@@ -330,11 +335,11 @@ export default {
 
     adoptiveSearchBarClass() {
       if (this.$vuetify.breakpoint.width >= 1680) {
-        return "search-bar-large";
+        return 'search-bar-large';
       } else if (this.$vuetify.breakpoint.mdAndUp) {
-        return "search-bar-medium pl-lg-1";
+        return 'search-bar-medium pl-lg-1';
       } else {
-        return "";
+        return '';
       }
     },
   },

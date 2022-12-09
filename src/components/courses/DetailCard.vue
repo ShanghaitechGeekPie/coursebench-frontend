@@ -8,8 +8,10 @@
             style="height: 100%"
           >
             <div>
-              <div class="text-h4 single-line-limit pr-3 font-weight-bold">
-                {{ details.name }}
+              <div class="text-h4 pr-3 font-weight-bold">
+                <div class="">
+                  {{ details.name }}
+                </div>
               </div>
               <div class="pt-2">
                 <span
