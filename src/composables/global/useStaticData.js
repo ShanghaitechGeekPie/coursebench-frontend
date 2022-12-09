@@ -51,6 +51,8 @@ const termItems = [{
     name: "暑学期"
 }]
 
+const gradingEmojis = ["😭", "☹️", "🙁", "🙂", "😊"]
+
 export {
     instituteInfo,
     scoreInfo,
@@ -60,5 +62,6 @@ export {
     visibleItems,
     yearItems,
     rawYearItems,
-    termItems
+    termItems, 
+    gradingEmojis
 }

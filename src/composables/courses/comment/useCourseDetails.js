@@ -107,6 +107,7 @@ export default () => {
 
     provide("courseCommentStatus", status)
     provide("courseId", courseId)
+    provide('courseCommentText', commentText)
 
     const getCourseDetail = () => {
         status.detailLoading = true

@@ -31,27 +31,31 @@
                       global.isLogin
                     "
                   >
-                    <writing-box
-                      :disable-writing="disableWriting"
-                    ></writing-box>
+                    <WritingCard />
                   </v-col>
                   <v-col
                     class="pr-0 pl-0 pr-0 py-0"
-                    v-if="!status.commentLoading && !status.detailLoading"
                     v-for="(comment, index) in selectedComment"
                     :key="comment.id"
                     cols="12"
                   >
-                    <CourseCommentCard :comment="comment"> </CourseCommentCard>
+                    <CourseCommentCard
+                      :comment="comment"
+                      v-if="!status.commentLoading && !status.detailLoading"
+                    >
+                    </CourseCommentCard>
                   </v-col>
                   <v-col
                     class="pr-0 pl-0 pr-0 py-0"
-                    v-if="status.commentLoading || status.detailLoading"
                     v-for="index in 2"
                     :key="index"
                     cols="12"
                   >
-                    <CommentLoader height="290px" :max-width="null" />
+                    <CommentLoader
+                      height="290px"
+                      :max-width="null"
+                      v-if="status.commentLoading || status.detailLoading"
+                    />
                   </v-col>
                   <v-col
                     v-if="
@@ -75,20 +79,20 @@
 </template>
 
 <script>
-import DetailCard from "@/components/courses/DetailCard";
-import useCourseDetails from "@/composables/courses/comment/useCourseDetails";
-import CourseCommentCard from "@/components/courses/CourseCommentCard";
-import FilterBox from "@/components/courses/FilterBox";
-import WritingBox from "@/components/courses/WritingBox";
-import Nothing from "@/components/global/Nothing";
-import CommentLoader from "@/components/teachers/loader/CommentLoader";
-import FilterBoxLoader from "@/components/teachers/loader/FilterBoxLoader";
-import DetailCardLoader from "@/components/teachers/loader/DetailCardLoader";
+import DetailCard from '@/components/courses/DetailCard';
+import useCourseDetails from '@/composables/courses/comment/useCourseDetails';
+import CourseCommentCard from '@/components/courses/CourseCommentCard';
+import FilterBox from '@/components/courses/FilterBox';
+import WritingCard from '@/components/courses/WritingCard';
+import Nothing from '@/components/global/Nothing';
+import CommentLoader from '@/components/teachers/loader/CommentLoader';
+import FilterBoxLoader from '@/components/teachers/loader/FilterBoxLoader';
+import DetailCardLoader from '@/components/teachers/loader/DetailCardLoader';
 
 export default {
   components: {
     Nothing,
-    WritingBox,
+    WritingCard,
     DetailCard,
     FilterBox,
     CourseCommentCard,
@@ -119,11 +123,10 @@ export default {
       currentTab: 0,
       scrollTop: document.documentElement.scrollTop,
       selectedComment: [],
-      disableWriting: false,
     };
   },
   mounted() {
-    document.addEventListener("scroll", () => {
+    document.addEventListener('scroll', () => {
       this.scrollTop = document.documentElement.scrollTop;
     });
   },
@@ -148,13 +151,6 @@ export default {
     commentText: {
       handler() {
         this.updateSelectedComment();
-        this.commentText.map((item) => {
-          if (item.user) {
-            if (item.user.id === this.global.userProfile.id) {
-              this.disableWriting = true;
-            }
-          }
-        });
       },
       immediate: true,
       deep: true,
@@ -166,20 +162,15 @@ export default {
         return {};
       } else if (this.scrollTop <= 323) {
         return {
-          transform: "translate(0, 0px)",
+          transform: 'translate(0, 0px)',
         };
       } else {
         return {
-          transform: "translate(0, " + (this.scrollTop - 323) + "px)",
+          transform: 'translate(0, ' + (this.scrollTop - 323) + 'px)',
         };
       }
     },
   },
 };
 </script>
-<style>
-body {
-  /* // ! Temporary fix, leave for future. */
-  overflow-y: hidden;
-}
-</style>
+<style></style>
