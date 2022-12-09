@@ -173,4 +173,8 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+body {
+  overflow-y: hidden;
+}
+</style>
