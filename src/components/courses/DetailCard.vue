@@ -8,10 +8,7 @@
             style="height: 100%"
           >
             <div>
-              <div
-                class="text-h4 single-line-limit pr-3"
-                style="font-weight: bold"
-              >
+              <div class="text-h4 single-line-limit pr-3 font-weight-bold">
                 {{ details.name }}
               </div>
               <div class="pt-2">
@@ -175,19 +172,19 @@
 </template>
 
 <script>
-import ScoreBoard from "@/components/courses/ScoreBoard";
-import DetailChips from "@/components/courses/DetailChips";
-import ReviewDetail from "@/components/courses/ReviewDetail";
-import useDetailCard from "@/composables/courses/comment/useDetailCard";
-import { judgeItems, scoreInfo } from "@/composables/global/useStaticData";
+import ScoreBoard from '@/components/courses/ScoreBoard';
+import DetailChips from '@/components/courses/DetailChips';
+import ReviewDetail from '@/components/courses/ReviewDetail';
+import useDetailCard from '@/composables/courses/comment/useDetailCard';
+import { judgeItems, scoreInfo } from '@/composables/global/useStaticData';
 import {
   roundScore,
   enoughDataThreshold,
-} from "@/composables/global/useParseScore";
-import { averageOf, toDistribute } from "@/composables/global/useArrayUtils";
+} from '@/composables/global/useParseScore';
+import { averageOf, toDistribute } from '@/composables/global/useArrayUtils';
 
 export default {
-  name: "DetailCard",
+  name: 'DetailCard',
   components: { ScoreBoard, DetailChips, ReviewDetail },
   props: {
     details: Object,
@@ -221,13 +218,13 @@ export default {
       const newAverageScore = [0, 0, 0, 0];
       const filteredComments = this.comments.filter((comment) => {
         return this.selectedTeachers.includes(
-          groupList.indexOf(comment.group.id)
+          groupList.indexOf(comment.group.id),
         );
       });
       this.filteredCommentCount = filteredComments.length;
       for (let i of [0, 1, 2, 3]) {
         newAverageScore[i] = averageOf(
-          filteredComments.map((comment) => comment.score[i])
+          filteredComments.map((comment) => comment.score[i]),
         );
       }
       for (let score of newAverageScore) {
