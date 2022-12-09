@@ -255,9 +255,13 @@ export default () => {
       if (commentText.value.length > 0) {
         courseName.value = commentText.value[0].course.name;
       }
-      userComments.value = commentText.value.filter((comment) => {
-        return comment.user && comment.user.id == global.userProfile.id;
-      });
+      userComments.value = commentText.value
+        .filter((comment) => {
+          return comment.user && comment.user.id == global.userProfile.id;
+        })
+        .map((comment) => {
+          return JSON.parse(JSON.stringify(comment));
+        });
       if (userComments.value.length > 0) {
         windowStatus.windowStep = 0;
       } else {
