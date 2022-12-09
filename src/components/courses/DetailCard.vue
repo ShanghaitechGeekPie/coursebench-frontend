@@ -105,7 +105,7 @@
                     display: inline-block;
                   "
                 >
-                  .{{ parseInt(averageScore / 2) % 10 }}
+                  .{{ Math.round(averageScore / 2) % 10 }}
                 </span>
               </span>
               <span v-else>
@@ -229,15 +229,17 @@ export default {
           filteredComments.map((comment) => comment.score[i]),
         );
       }
+      // console.log(newAverageScore);
       for (let score of newAverageScore) {
         let rounded = roundScore(score, this.filteredCommentCount);
         this.roundedScore.push(rounded);
       }
+      // console.log(this.roundedScore);
       if (this.filteredCommentCount !== 0) {
         this.averageScore = averageOf(newAverageScore) * 20;
 
         this.starStatistic = [0, 0, 0, 0, 0];
-        for (let comment of this.comments) {
+        for (let comment of filteredComments) {
           if (
             this.selectedTeachers.includes(groupList.indexOf(comment.group.id))
           ) {
