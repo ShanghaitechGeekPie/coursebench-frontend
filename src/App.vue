@@ -23,15 +23,15 @@
   </v-app>
 </template>
 <script>
-import Header from "@/components/global/Header";
-import InsiderBanner from "@/components/global/InsiderBanner";
-import useSnackbar from "@/composables/global/useSnackbar";
-import { getPreset } from "@/composables/global/useCookie";
-import { provide, reactive } from "vue";
-import { mdiClose } from "@mdi/js";
+import Header from '@/components/global/Header';
+import InsiderBanner from '@/components/global/InsiderBanner';
+import useSnackbar from '@/composables/global/useSnackbar';
+import { getPreset } from '@/composables/global/useCookie';
+import { provide, reactive } from 'vue';
+import { mdiClose } from '@mdi/js';
 
 export default {
-  name: "App",
+  name: 'App',
   components: { Header, InsiderBanner },
   setup() {
     const { snackbar } = useSnackbar();
@@ -39,28 +39,28 @@ export default {
       userProfile: getPreset(),
       isLogin:
         Object.getOwnPropertyNames(getPreset()).filter(
-          (key) => key !== "__ob__"
+          (key) => key !== '__ob__',
         ).length !== 0,
     });
     const searchInput = reactive({
-      isRegexp: false, 
-      keys: [""]
-    })
+      isRegexp: false,
+      keys: [''],
+    });
 
     const savedCourseAllStatus = reactive({
-      page: 1
-    })
+      page: 1,
+    });
 
     const savedCourseAllFilterStatus = reactive({
       selected: [],
-      sortKey: "综合评分",
-      order: "从高到低",      
-    })
+      sortKey: '综合评分',
+      order: '从高到低',
+    });
 
-    provide("global", global);
-    provide("searchInput", searchInput)
-    provide("savedCourseAllStatus", savedCourseAllStatus)
-    provide("savedCourseAllFilterStatus", savedCourseAllFilterStatus)
+    provide('global', global);
+    provide('searchInput', searchInput);
+    provide('savedCourseAllStatus', savedCourseAllStatus);
+    provide('savedCourseAllFilterStatus', savedCourseAllFilterStatus);
 
     return { snackbar };
   },
@@ -72,10 +72,19 @@ export default {
     };
   },
   created() {
+    console.log(`
+    _____                         ____                  _     
+  / ____|                        |  _ \\                | |    
+ | |     ___  _   _ _ __ ___  ___| |_) | ___ _ __   ___| |__  
+ | |    / _ \\| | | | '__/ __|/ _ \\  _ < / _ \\ '_ \\ / __| '_ \\ 
+ | |___| (_) | |_| | |  \\__ \\  __/ |_) |  __/ | | | (__| | | |
+  \\_____\\___/ \\__,_|_|  |___/\\___|____/ \\___|_| |_|\\___|_| |_|
+
+    `);
     try {
-      document.body.removeChild(document.getElementById("app-loader"));
+      document.body.removeChild(document.getElementById('app-loader'));
       this.$vuetify.theme.dark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
+        '(prefers-color-scheme: dark)',
       ).matches;
     } catch {}
   },
