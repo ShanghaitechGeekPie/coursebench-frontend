@@ -6,7 +6,7 @@
         style="max-width: 140px; min-width: 130px"
       >
         <v-select
-          hide-details          
+          hide-details
           v-model="status.sortKey"
           :items="statics.sortKeyItem"
           style="font-size: 13px"
@@ -18,7 +18,7 @@
         style="max-width: 140px; min-width: 130px"
       >
         <v-select
-          hide-details          
+          hide-details
           v-model="status.order"
           style="font-size: 13px"
           :items="statics.orderItem[status.sortKey]"
@@ -45,7 +45,16 @@
             class="lighten-1"
             filter
           >
-            {{ teacher.name }}
+            <div
+              class="overflow-ellipsis"
+              :style="{
+                'max-width': $vuetify.breakpoint.xsOnly
+                  ? 'calc(100vw - 64px)'
+                  : '',
+              }"
+            >
+              {{ teacher.name }}
+            </div>
           </v-chip>
         </v-chip-group>
       </div>
@@ -54,10 +63,10 @@
 </template>
 
 <script>
-import useSelectBar from "@/composables/courses/comment/useSelectBar";
+import useSelectBar from '@/composables/courses/comment/useSelectBar';
 
 export default {
-  name: "FilterBox",
+  name: 'FilterBox',
   data() {
     return {
       // selected: []
@@ -85,4 +94,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.overflow-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
