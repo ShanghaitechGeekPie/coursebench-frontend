@@ -66,30 +66,9 @@
 import useSelectBar from '@/composables/courses/comment/useSelectBar';
 
 export default {
-  name: 'FilterBox',
-  data() {
-    return {
-      // selected: []
-    };
-  },
   setup() {
     const { teachers, status, statics, selectedTeachers } = useSelectBar();
     return { teachers, status, statics, selectedTeachers };
-  },
-  // watch: {
-  //   selected: {
-  //     handler() {
-  //       console.log(this.selected)
-  //       this.selectedTeachers = this.selected
-  //     },
-  //     immediate: false,
-  //     deep: true
-  //   },
-  // },
-  mounted() {
-    // setInterval(()=>{
-    //   console.log(this.selectedTeachers)
-    // }, 1500)
   },
 };
 </script>
