@@ -32,9 +32,9 @@ export default () => {
   const courseTerm = ref('');
   const courseName = ref('');
   const userComments = ref([]);
-  const writingMode = computed(() =>
-    userComments.value.length > 0 ? 'edit' : 'create',
-  );
+  const writingMode = computed(() => {
+    return userComments.value.length > 0 ? 'edit' : 'create';
+  });
   const windowStatus = reactive({
     windowStep: 1,
     previewMarkdown: false,
@@ -65,12 +65,15 @@ export default () => {
     id: null,
     editLoading: false,
     deleteLoading: false,
+    hideLoading: false,
     isPostSuccess: false,
     isPostError: false,
     title: '',
     content: '',
     semester: computed(getSemesterCode),
     is_anonymous: false,
+    is_fold: false,
+    userProfile: {},
     slider: [5, 5, 5, 5],
     commentTarget: 0,
   });
@@ -92,10 +95,12 @@ export default () => {
     formStatus.title = comment.title;
     formStatus.content = comment.content;
     formStatus.is_anonymous = comment.is_anonymous;
+    formStatus.is_fold = comment.is_fold;
     formStatus.slider = comment.score;
     courseYear.value = parseInt(comment.semester / 100);
     courseTerm.value = comment.semester.toString().slice(4, 6);
     formStatus.commentTarget = comment.group.id;
+    formStatus.userProfile = comment.user;
   };
 
   const clearEditTarget = () => {
@@ -105,8 +110,10 @@ export default () => {
     courseTerm.value = '';
     courseYear.value = 0;
     formStatus.is_anonymous = false;
+    formStatus.is_fold = false;
     formStatus.slider = [5, 5, 5, 5];
     formStatus.commentTarget = 0;
+    formStatus.userProfile = {};
   };
 
   const createCommentMutation = useMutation('/comment/post', {
@@ -201,6 +208,41 @@ export default () => {
     },
   });
 
+  const hideCommentMutation = useMutation('/comment/fold', {
+    onMutate: () => {
+      formStatus.hideLoading = true;
+    },
+    onSuccess: () => {
+      formStatus.hideLoading = false;
+      formStatus.isPostSuccess = true;
+      if (!formStatus.is_fold) {
+        showSnackbar('success', '评论已隐藏');
+      } else {
+        showSnackbar('success', '评论已显示');
+      }
+      clearEditTarget();
+      windowStatus.windowStep = 0;
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    },
+    onError: (error) => {
+      formStatus.hideLoading = false;
+      formStatus.isPostError = true;
+      if (isNetworkError(error.response)) {
+        showSnackbar('error', '网络连接错误', 3000);
+      } else if (error.response.data.code === 'CommentNotExists') {
+        showSnackbar('error', error.response.data.msg, 3000);
+      } else if (error.response.data.code === 'PermissionDenied') {
+        showSnackbar('error', error.response.data.msg, 3000);
+      } else if (isValidErrorMessage(error.value.response.data.msg)) {
+        showSnackbar('error', error.value.response.data.msg, 3000);
+      } else {
+        showSnackbar('error', '服务器发生错误', 3000);
+      }
+    },
+  });
+
   const doSubmitComment = () => {
     clearErrorMsg();
     if (formStatus.semester === '' || isNaN(parseInt(formStatus.semester))) {
@@ -249,23 +291,37 @@ export default () => {
     });
   };
 
+  const doHideComment = () => {
+    hideCommentMutation.mutate({
+      id: formStatus.id,
+      status: !formStatus.is_fold,
+    });
+  };
+
   watch(
     commentText,
     () => {
       if (commentText.value.length > 0) {
         courseName.value = commentText.value[0].course.name;
       }
-      userComments.value = commentText.value
-        .filter((comment) => {
-          return comment.user && comment.user.id == global.userProfile.id;
-        })
-        .map((comment) => {
-          return JSON.parse(JSON.stringify(comment));
-        });
+      if (global.userProfile.is_admin) {
+        userComments.value = commentText.value.map((comment) =>
+          JSON.parse(JSON.stringify(comment)),
+        );
+      } else {
+        userComments.value = commentText.value
+          .filter((comment) => {
+            return comment.user && comment.user.id == global.userProfile.id;
+          })
+          .map((comment) => {
+            return JSON.parse(JSON.stringify(comment));
+          });
+      }
       if (userComments.value.length > 0) {
         windowStatus.windowStep = 0;
       } else {
         windowStatus.windowStep = 1;
+        formStatus.userProfile = global.userProfile;
       }
     },
     {
@@ -286,6 +342,7 @@ export default () => {
     courseName,
     doSubmitComment,
     doDeleteComment,
+    doHideComment,
     setEditTarget,
     clearEditTarget,
   };

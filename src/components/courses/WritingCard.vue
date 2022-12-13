@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!global.userProfile.is_admin || writingMode != 'create'">
     <v-dialog
       width="750"
       v-model="windowStatus.showDialog"
@@ -61,6 +61,48 @@
                       >
                         <v-divider></v-divider>
                         <div class="pt-4">
+                          <div
+                            v-if="global.userProfile.is_admin"
+                            class="d-flex"
+                          >
+                            <div
+                              style="transform: translate(0, -1px)"
+                              class="pr-1"
+                            >
+                              <AvatarContainer
+                                :name="
+                                  comment.user ? useUserName(comment.user) : '?'
+                                "
+                                :src="comment.user ? comment.user.avatar : ''"
+                                small
+                                slice
+                                size="15"
+                              />
+                            </div>
+                            <div class="pr-1">
+                              {{
+                                useUserName(comment.user) +
+                                (comment.user && comment.is_anonymous
+                                  ? '(匿名)'
+                                  : '')
+                              }}
+                            </div>
+                            <div
+                              v-if="comment.is_fold"
+                              style="transform: translate(0, -1px)"
+                            >
+                              <v-chip
+                                label
+                                x-small
+                                class="px-1"
+                                color="warning"
+                              >
+                                {{ '已隐藏' }}
+                              </v-chip>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
                           <v-icon
                             size="16"
                             style="transform: translate(0, -1px)"
@@ -111,12 +153,18 @@
               </div>
               <div
                 class="pt-8 d-flex justify-end"
-                v-if="teacherGroup.length != userComments.length"
+                v-if="
+                  teacherGroup.length != userComments.length &&
+                  !global.userProfile.is_admin
+                "
               >
                 <v-btn
                   color="primary"
                   depressed
-                  @click="windowStatus.windowStep = 1"
+                  @click="
+                    (windowStatus.windowStep = 1),
+                      (formStatus.userProfile = global.userProfile)
+                  "
                 >
                   {{ '写评论' }}
                 </v-btn>
@@ -143,10 +191,18 @@
               </div>
               <div style="width: 100%" class="pt-1">
                 <div class="d-inline-block pr-4 align-center">
-                  <avatar-container
-                    :name="global.userProfile.nickname"
+                  <AvatarContainer
+                    :name="
+                      formStatus.userProfile
+                        ? useUserName(formStatus.userProfile)
+                        : '?'
+                    "
+                    :src="
+                      formStatus.userProfile
+                        ? formStatus.userProfile.avatar
+                        : ''
+                    "
                     slice
-                    :src="global.userProfile.avatar"
                     :size="50"
                   />
                 </div>
@@ -161,12 +217,13 @@
                     :error-messages="
                       errorMsg.target === 'title' ? errorMsg.msg : ''
                     "
+                    :disabled="!allowEdit"
                   ></v-text-field>
                 </div>
               </div>
             </v-card-title>
             <v-card-text class="px-6 px-sm-11 pb-6 pb-sm-11">
-              <div v-show="!windowStatus.previewMarkdown">
+              <div v-show="allowEdit && !windowStatus.previewMarkdown">
                 <v-textarea
                   :label="commentPolicy"
                   auto-grow
@@ -180,7 +237,11 @@
                 >
                 </v-textarea>
               </div>
-              <div v-show="windowStatus.previewMarkdown">
+              <div
+                v-show="
+                  !allowEdit || (allowEdit && windowStatus.previewMarkdown)
+                "
+              >
                 <v-sheet
                   flat
                   outlined
@@ -191,6 +252,7 @@
                     :text="formStatus.content"
                     markdown
                     title="1321"
+                    no-expand
                   >
                   </TextContainer>
                 </v-sheet>
@@ -215,6 +277,7 @@
                     thumb-label
                     hide-details
                     :label="dim"
+                    :disabled="!allowEdit"
                   >
                     <template v-slot:append>
                       <v-chip
@@ -257,6 +320,7 @@
                       :items="yearItems"
                       label="修读时间"
                       :error="errorMsg.target === 'semester'"
+                      :disabled="!allowEdit"
                     ></v-select>
                   </div>
                   <div class="pr-sm-4 pr-0">
@@ -268,6 +332,7 @@
                       item-value="id"
                       label="修读学期"
                       :error="errorMsg.target === 'semester'"
+                      :disabled="!allowEdit"
                     ></v-select>
                   </div>
                   <div class="pr-sm-4 pr-0" v-if="formStatus.id == null">
@@ -302,9 +367,10 @@
                           label="匿名"
                           color="info"
                           hide-details
+                          :disabled="!allowEdit"
                         ></v-switch>
                       </div>
-                      <div class="align-center d-flex">
+                      <div class="align-center d-flex" v-if="allowEdit">
                         <v-checkbox
                           v-model="windowStatus.previewMarkdown"
                           class="mt-0"
@@ -339,8 +405,18 @@
                         depressed
                         @click="doSubmitComment"
                         :loading="formStatus.editLoading"
+                        v-if="allowEdit"
                       >
                         {{ formStatus.id != null ? '修改评论' : '发表评论' }}
+                      </v-btn>
+                      <v-btn
+                        :color="formStatus.is_fold ? 'success' : 'warning'"
+                        depressed
+                        @click="doHideComment"
+                        :loading="formStatus.hideLoading"
+                        v-else
+                      >
+                        {{ formStatus.is_fold ? '展示评论' : '隐藏评论' }}
                       </v-btn>
                     </div>
                   </div>
@@ -369,6 +445,7 @@ import { unixToReadable } from '@/composables/global/useTimeUtils';
 import logoDark from '@/assets/logo-white.svg';
 import logoLight from '@/assets/logo.svg';
 import { commentPolicy } from 'Policy';
+import useUserName from '@/composables/global/useUserName';
 
 export default {
   setup() {
@@ -384,6 +461,7 @@ export default {
       userComments,
       courseName,
       doSubmitComment,
+      doHideComment,
       doDeleteComment,
       setEditTarget,
       clearEditTarget,
@@ -392,6 +470,7 @@ export default {
     const global = inject('global');
 
     return {
+      useUserName,
       commentPolicy,
       logoDark,
       logoLight,
@@ -412,6 +491,7 @@ export default {
       userComments,
       courseName,
       doSubmitComment,
+      doHideComment,
       doDeleteComment,
       setEditTarget,
       clearEditTarget,
@@ -421,6 +501,24 @@ export default {
   components: {
     AvatarContainer,
     TextContainer,
+  },
+  computed: {
+    allowEdit() {
+      if (this.formStatus.id == null) {
+        return true;
+      } else if (this.global.userProfile.is_admin) {
+        if (
+          this.formStatus.userProfile &&
+          this.formStatus.userProfile.id == this.global.userProfile.id
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    },
   },
 };
 </script>
