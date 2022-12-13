@@ -1,21 +1,23 @@
 <template>
   <v-card tile elevation="0">
-    <v-card-title class="pa-sm-4 pa-2 pb-sm-0 py-sm-0">
-      <v-container>
-        <v-row>
-          <v-col cols="12" class="pa-0 d-flex">
-            <div class="pr-2" style="transform: translate(0, -1px)">
-              <v-icon size="24">
-                {{ statics.icons.mdiSubtitlesOutline }}
-              </v-icon>
-            </div>
-            <div class="justify-start text-h6 overflow">
-              {{ comment.title }}
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-card-title>
+    <slot name="title" :localComment="comment">
+      <v-card-title class="pa-sm-4 pa-2 pb-sm-0 py-sm-0">
+        <v-container>
+          <v-row>
+            <v-col cols="12" class="pa-0 d-flex">
+              <div class="pr-2" style="transform: translate(0, -1px)">
+                <v-icon size="24">
+                  {{ statics.icons.mdiSubtitlesOutline }}
+                </v-icon>
+              </div>
+              <div class="justify-start text-h6 overflow">
+                {{ comment.title }}
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card-title>
+    </slot>
     <v-card-text class="pa-0">
       <v-container>
         <v-row>
@@ -24,36 +26,40 @@
               <span class="font-weight-bold pr-2">课程绩点</span>
               <span class="text-caption">{{ comment.user_score_ranking.toFixed(1) }}</span>
             </div> -->
-            <TextContainer
-              :text="comment.content"
-              :title="comment.title"
-              markdown
-              dense
-              :dialog="$vuetify.breakpoint.name === 'xs'"
-              #default="{ overflow }"
-            >
-              <slot name="contentNote" :localComment="comment">
-                <v-row>
-                  <v-col
-                    class="pa-0 pl-3 pb-2 pt-sm-3 pt-2"
-                    :style="{ 'max-width': overflow ? '60vw' : '90%' }"
-                    cols="12"
-                  >
-                    <v-icon size="16">
-                      {{ statics.icons.mdiSchoolOutline }}
-                    </v-icon>
-                    <span
-                      v-for="(teacher, index) in comment.group.teachers"
-                      class="pl-1 router-container text-caption font-weight-bold"
-                      :key="index"
-                      @click="$router.push({ path: `/teacher/${teacher.id}` })"
+            <slot name="content" :localComment="comment">
+              <TextContainer
+                :text="comment.content"
+                :title="comment.title"
+                markdown
+                dense
+                :dialog="$vuetify.breakpoint.name === 'xs'"
+                #default="{ overflow }"
+              >
+                <slot name="contentNote" :localComment="comment">
+                  <v-row>
+                    <v-col
+                      class="pa-0 pl-3 pb-2 pt-sm-3 pt-2"
+                      :style="{ 'max-width': overflow ? '60vw' : '90%' }"
+                      cols="12"
                     >
-                      {{ teacher.name }}
-                    </span>
-                  </v-col>
-                </v-row>
-              </slot>
-            </TextContainer>
+                      <v-icon size="16">
+                        {{ statics.icons.mdiSchoolOutline }}
+                      </v-icon>
+                      <span
+                        v-for="(teacher, index) in comment.group.teachers"
+                        class="pl-1 router-container text-caption font-weight-bold"
+                        :key="index"
+                        @click="
+                          $router.push({ path: `/teacher/${teacher.id}` })
+                        "
+                      >
+                        {{ teacher.name }}
+                      </span>
+                    </v-col>
+                  </v-row>
+                </slot>
+              </TextContainer>
+            </slot>
           </v-col>
         </v-row>
         <v-row>
@@ -92,7 +98,9 @@
                           <v-chip
                             x-small
                             label
-                            :color="gradingInfo.color[comment.score[index - 1] - 1]"
+                            :color="
+                              gradingInfo.color[comment.score[index - 1] - 1]
+                            "
                             class="px-1"
                           >
                             <span class="text-caption white--text">{{
@@ -106,11 +114,13 @@
                     </v-row>
                   </v-container>
                 </v-col>
-                <v-col 
-                  class="pa-0 pr-sm-4 pr-3" 
-                  cols="4"
-                >                  
-                  <slot name="footerNote" :comment="comment" :statics="statics" :semester="semester">
+                <v-col class="pa-0 pr-sm-4 pr-3" cols="4">
+                  <slot
+                    name="footerNote"
+                    :comment="comment"
+                    :statics="statics"
+                    :semester="semester"
+                  >
                     <div class="d-flex justify-end" style="flex-wrap: wrap">
                       <div class="pr-sm-2">
                         <v-icon size="15" style="transform: translate(0, -1px)">
@@ -126,7 +136,7 @@
                         </v-icon>
                         <span class="text-caption">
                           {{ semester }}
-                        </span>                    
+                        </span>
                       </div>
                     </div>
                   </slot>
@@ -140,9 +150,13 @@
   </v-card>
 </template>
 <script>
-import useCommentCardContent from "@/composables/users/comment/useCommentCardContent";
-import TextContainer from "@/components/users/comment/TextContainer";
-import { judgeItems, gradingInfo, termItems } from "@/composables/global/useStaticData";
+import useCommentCardContent from '@/composables/users/comment/useCommentCardContent';
+import TextContainer from '@/components/users/comment/TextContainer';
+import {
+  judgeItems,
+  gradingInfo,
+  termItems,
+} from '@/composables/global/useStaticData';
 
 // TODO: Decide if the score by user is int or float
 
@@ -155,11 +169,11 @@ export default {
     return { statics, judgeItems, gradingInfo };
   },
   components: { TextContainer },
-  props: { 
+  props: {
     comment: {
       type: Object,
       required: true,
-    }
+    },
   },
   computed: {
     semester() {

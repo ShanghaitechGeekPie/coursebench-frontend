@@ -168,7 +168,7 @@
             <v-card-text class="px-6 px-sm-11 pb-6 pb-sm-11">
               <div v-show="!windowStatus.previewMarkdown">
                 <v-textarea
-                  label="发一条友善的评论"
+                  :label="commentPolicy"
                   auto-grow
                   outlined
                   rows="8"
@@ -368,6 +368,7 @@ import { gradingInfo } from '@/composables/global/useStaticData';
 import { unixToReadable } from '@/composables/global/useTimeUtils';
 import logoDark from '@/assets/logo-white.svg';
 import logoLight from '@/assets/logo.svg';
+import { commentPolicy } from 'Policy';
 
 export default {
   setup() {
@@ -391,6 +392,7 @@ export default {
     const global = inject('global');
 
     return {
+      commentPolicy,
       logoDark,
       logoLight,
       unixToReadable,

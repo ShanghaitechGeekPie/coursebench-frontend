@@ -25,15 +25,15 @@
                 {{
                   useUserName(localComment.user) +
                   (localComment.user && localComment.is_anonymous
-                    ? "(匿名)"
-                    : "")
+                    ? '(匿名)'
+                    : '')
                 }}
               </div>
               <div class="text-caption mt-n1 single-line-limit">
                 {{
                   localComment.user
                     ? gradeItems[localComment.user.grade]
-                    : "由匿名用户发送，请仔细分辨其真实性"
+                    : '由匿名用户发送，请仔细分辨其真实性'
                 }}
               </div>
             </div>
@@ -41,6 +41,29 @@
         </template>
       </CommentCardBar>
       <CommentCardContent :comment="comment">
+        <template #title v-if="comment.is_fold && foldComment">
+          <div></div>
+        </template>
+        <template #content v-if="comment.is_fold && foldComment">
+          <div class="px-sm-4 px-2 pb-2 pt-2">
+            <CommentFold @click="foldComment = false" />
+            <v-row>
+              <v-col class="pa-0 pl-3 pb-2 pt-sm-8 pt-2" cols="12">
+                <v-icon size="16">
+                  {{ statics.icons.mdiSchoolOutline }}
+                </v-icon>
+                <span
+                  v-for="(teacher, index) in comment.group.teachers"
+                  class="pl-1 router-container text-caption font-weight-bold"
+                  :key="index"
+                  @click="$router.push({ path: `/teacher/${teacher.id}` })"
+                >
+                  {{ teacher.name }}
+                </span>
+              </v-col>
+            </v-row>
+          </div>
+        </template>
         <template v-slot:footerNote="footerNote">
           <div class="d-flex justify-end" style="flex-wrap: wrap">
             <div class="d-flex">
@@ -103,13 +126,14 @@
   </v-lazy>
 </template>
 <script>
-import CommentCardContent from "@/components/users/comment/CommentCardContent";
-import CommentCardBar from "@/components/users/comment/CommentCardBar";
-import AvatarContainer from "@/components/users/profile/AvatarContainer";
-import useCourseCommentCard from "@/composables/courses/comment/useCourseCommentCard";
-import useUserName from "@/composables/global/useUserName";
-import { gradeItems } from "@/composables/global/useStaticData";
-import { inject } from "vue";
+import CommentCardContent from '@/components/users/comment/CommentCardContent';
+import CommentCardBar from '@/components/users/comment/CommentCardBar';
+import CommentFold from '@/components/users/comment/CommentFold';
+import AvatarContainer from '@/components/users/profile/AvatarContainer';
+import useCourseCommentCard from '@/composables/courses/comment/useCourseCommentCard';
+import useUserName from '@/composables/global/useUserName';
+import { gradeItems } from '@/composables/global/useStaticData';
+import { inject, ref } from 'vue';
 
 export default {
   props: {
@@ -119,11 +143,17 @@ export default {
     CommentCardContent,
     CommentCardBar,
     AvatarContainer,
+    CommentFold,
   },
   setup() {
-    const { doLike, doDislike, doUndo, formStatus } = useCourseCommentCard();
-    const global = inject("global");
+    const { doLike, doDislike, doUndo, formStatus, statics } =
+      useCourseCommentCard();
+    const global = inject('global');
+
+    const foldComment = ref(true);
+
     return {
+      foldComment,
       doLike,
       doDislike,
       doUndo,
@@ -131,6 +161,7 @@ export default {
       useUserName,
       gradeItems,
       global,
+      statics,
     };
   },
   mounted() {
