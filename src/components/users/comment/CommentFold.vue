@@ -1,13 +1,16 @@
 <template>
   <v-sheet
     outlined
-    class="px-4 py-4 d-flex justify-space-between"
-    color="#f5f5f5"
+    class="pa-sm-4 pa-2 mb-sm-0 mb-5 d-flex justify-space-between"
+    :color="$vuetify.theme.dark ? '#121212' : '#f5f5f5'"
     rounded="lg"
   >
-    <div class="text-body-1 d-flex align-center" style="height: 28px">
+    <div
+      class="text-sm-body-1 text-body-2 d-flex align-center"
+      style="height: 28px"
+    >
       <div>
-        以下评论可能包含敏感内容。
+        以下评论可能包含违规内容。
         <span
           class="inline-link"
           @click="$router.push('/about'), useInsitePush('#privacy_policy')"
@@ -15,9 +18,14 @@
         >
       </div>
     </div>
-    <div v-if="global.isLogin">
-      <v-btn elevation="0" small @click="$emit('click')">
-        <span class="font-weight-bold text-body-1">查看</span>
+    <div v-if="global.isLogin" class="d-sm-block d-flex align-center">
+      <v-btn
+        elevation="0"
+        :small="$vuetify.breakpoint.smAndUp"
+        :x-small="$vuetify.breakpoint.xsOnly"
+        @click="$emit('click')"
+      >
+        <span class="font-weight-bold text-sm-body-1 text-body-2">查看</span>
       </v-btn>
     </div>
   </v-sheet>
