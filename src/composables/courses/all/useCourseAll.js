@@ -28,8 +28,8 @@ export default () => {
 
 
     const courseRawText = ref([])
-    const courseText = computed(() => courseRawText.value.filter(course => 
-        matchSearchCourse(course) && matchFilterCourse(course)));
+    const courseText = computed(() => courseRawText.value.filter(course =>
+      matchSearchCourse(course) && matchFilterCourse(course) && filterInvalidCourse(course)));
     const courseStatistic = computed(() => {
         const courseSearchedText = courseRawText.value.filter(matchSearchCourse);
         if (courseSearchedText.length === 0) {
@@ -122,7 +122,16 @@ export default () => {
 
     const matchFilterCourse = (course) => courseFilterStatus.selected.some((item) => item === course.institute)
 
-
+    //Updated 23.3.1, this filter is used to remove courses with insufficient data in descending mode.
+    const filterInvalidCourse = (course) => {
+        if(courseFilterStatus.sortKey === sortStatics.sortKeyItem[0] ||
+          courseFilterStatus.sortKey === sortStatics.sortKeyItem[1]){
+            if(courseFilterStatus.order === sortStatics.orderItem[courseFilterStatus.sortKey][1]){
+                if(sortPolicy[courseFilterStatus.sortKey](course) === 0) return false
+            }
+        }
+        return true
+    }
 
     const sortStatics = {
         sortKeyItem: ['综合评分', '评价总数', "学分"],
@@ -134,15 +143,15 @@ export default () => {
     }
     const sortPolicy = {
         "综合评分": (x) => x.comment_num < enoughDataThreshold ? 0 : averageOf(x.score),
-        "评价总数": (x) => x.comment_num,
+        "评价总数": (x) => x.comment_num < enoughDataThreshold ? 0 : x.comment_num,
         "学分": (x) => x.credit
     }
     const sortFunc = (x, y) => {
         // by default, [0] is descending, [1] is ascending
         return (courseFilterStatus.order === sortStatics.orderItem[courseFilterStatus.sortKey][0] ? 1 : -1) *
-            sortCmp(
-                sortPolicy[courseFilterStatus.sortKey](x), sortPolicy[courseFilterStatus.sortKey](y)
-            )
+          sortCmp(
+            sortPolicy[courseFilterStatus.sortKey](x), sortPolicy[courseFilterStatus.sortKey](y)
+          )
     }
 
     // A notice for future developers: The if statement justifying if to and from are equal is not necessary
