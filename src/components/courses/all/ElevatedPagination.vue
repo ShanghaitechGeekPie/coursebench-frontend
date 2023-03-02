@@ -1,17 +1,17 @@
 <template>
-  <div class='pa-2 d-flex'>
+  <div class="pa-2 d-flex">
     <div>
       <div
         :class="[ page > 1 ? 'pagination-item' : '', 'pr-3' ]"
         @click="page > 1 ? $emit('change', page - 1) : ''">
         <v-card
-          width='34'
-          height='34'
-          :elevation='elevation'
-          :outlined='outlined'
-          class='d-flex justify-center flex-column'
+          width="34"
+          height="34"
+          :elevation="elevation"
+          :outlined="outlined"
+          class="d-flex justify-center flex-column"
         >
-          <div class='d-flex justify-center'>
+          <div class="d-flex justify-center">
             <div>
               <v-icon :color="page > 1 ? '' : 'grey'">
                 {{ icons.mdiChevronLeft }}
@@ -21,17 +21,17 @@
         </v-card>
       </div>
     </div>
-    <div v-for='(label) in paginationLabels' :key='label'>
-      <div class='pagination-item px-1' @click="$emit('change', label)">
+    <div v-for="(label) in paginationLabels" :key="label">
+      <div class="pagination-item px-1" @click="$emit('change', label)">
         <v-card
-          width='34'
-          height='34'
-          :elevation='elevation'
-          :outlined='outlined'
-          class='d-flex justify-center flex-column'
+          width="34"
+          height="34"
+          :elevation="elevation"
+          :outlined="outlined"
+          class="d-flex justify-center flex-column"
           :color="label === page ? 'primary' : ''"
         >
-          <div class='d-flex justify-center'>
+          <div class="d-flex justify-center">
             <div :class="[ label === page ? 'white--text' : '' ]">{{ label }}</div>
           </div>
         </v-card>
@@ -42,13 +42,13 @@
         :class="[ page < length ? 'pagination-item' : '', 'pl-3' ]"
         @click="page < length ? $emit('change', page + 1) : ''">
         <v-card
-          width='34'
-          height='34'
-          :elevation='elevation'
-          :outlined='outlined'
-          class='d-flex justify-center flex-column'
+          width="34"
+          height="34"
+          :elevation="elevation"
+          :outlined="outlined"
+          class="d-flex justify-center flex-column"
         >
-          <div class='d-flex justify-center'>
+          <div class="d-flex justify-center">
             <div>
               <v-icon
                 :color="page < length ? '' : 'grey'"
@@ -59,19 +59,19 @@
         </v-card>
       </div>
     </div>
-    <div class='pl-3 d-flex'>
+    <div class="pl-3 d-flex">
       <v-text-field solo dense
-                    v-model='pageModel' @change='onPageChange'
-                    style='width: 46px; height: 34px!important;margin-top: -2px;'
+                    v-model="pageModel" @change="onPageChange"
+                    style="width: 46px; height: 34px!important;margin-top: -2px;"
       />
       <v-card
-        width='50'
-        height='34'
-        :elevation='elevation'
-        :outlined='outlined'
-        class='d-flex justify-center flex-column'
+        width="50"
+        height="34"
+        :elevation="elevation"
+        :outlined="outlined"
+        class="d-flex justify-center flex-column"
       >
-        <div class='d-flex justify-center'>
+        <div class="d-flex justify-center">
           /{{ length }}
         </div>
       </v-card>
@@ -79,7 +79,7 @@
   </div>
 </template>
 <script>
-import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 
 export default {
   data() {
@@ -100,7 +100,7 @@ export default {
       type: Number,
       required: true,
     },
-    'total-visible': {
+    "total-visible": {
       type: Number,
       default: -1,
     },
@@ -114,8 +114,8 @@ export default {
     },
   },
   model: {
-    prop: 'page',
-    event: 'change',
+    prop: "page",
+    event: "change",
   },
   computed: {
     paginationLabels() {
@@ -133,10 +133,10 @@ export default {
   },
   methods: {
     onPageChange(page) {
-      page = Number(page);
+      page = Math.floor(Number(page));
       if (page > 0 && page < this.length) {
-        this.$emit('change', page);
-        console.log(this.page);
+        this.pageModel = page;
+        this.$emit("change", page);
       } else {
         this.pageModel = this.page;
       }
