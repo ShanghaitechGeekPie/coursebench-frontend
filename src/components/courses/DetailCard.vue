@@ -68,6 +68,7 @@
                   <span
                     v-for="(teacher, index) in teachers"
                     :key="index"
+                    v-if="teacher.name !== '其他'"
                     @click="$router.push({ path: `/teacher/${teacher.id}` })"
                     :class="
                       $vuetify.theme.isDark
