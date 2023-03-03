@@ -47,11 +47,9 @@
                       </v-icon>
                       <span
                         v-for="(teacher, index) in comment.group.teachers"
-                        class="pl-1 router-container text-caption font-weight-bold"
+                        :class="'pl-1 text-caption font-weight-bold'+teacher.name==='其他'?'': ' router-container'"
                         :key="index"
-                        @click="
-                          $router.push({ path: `/teacher/${teacher.id}` })
-                        "
+                        @click="teacher.name==='其他'?'':$router.push({ path: `/teacher/${teacher.id}` })"
                       >
                         {{ teacher.name }}
                       </span>
