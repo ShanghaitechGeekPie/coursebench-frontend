@@ -96,7 +96,7 @@
                   class="text-h3 font-weight-bold"
                   style="font-family: Arial, serif !important"
                 >
-                  {{ Math.floor(averageScore / 20) }}
+                  {{ Math.floor(Math.round(averageScore /2) / 10) }}
                 </span>
                 <span
                   class="font-weight-bold text-h5"
