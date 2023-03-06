@@ -124,10 +124,14 @@ export default () => {
 
     //Updated 23.3.1, this filter is used to remove courses with insufficient data in descending mode.
     const filterInvalidCourse = (course) => {
-        if(courseFilterStatus.sortKey === sortStatics.sortKeyItem[0] ||
-          courseFilterStatus.sortKey === sortStatics.sortKeyItem[1]){
+        if(courseFilterStatus.sortKey === sortStatics.sortKeyItem[0]){
             if(courseFilterStatus.order === sortStatics.orderItem[courseFilterStatus.sortKey][1]){
                 if(sortPolicy[courseFilterStatus.sortKey](course) === 0) return false
+            }
+        }
+        if(courseFilterStatus.sortKey === sortStatics.sortKeyItem[1]){
+            if(courseFilterStatus.order === sortStatics.orderItem[courseFilterStatus.sortKey][1]){
+                if(sortPolicy[courseFilterStatus.sortKey](course) < enoughDataThreshold) return false
             }
         }
         return true
@@ -143,7 +147,7 @@ export default () => {
     }
     const sortPolicy = {
         "综合评分": (x) => x.comment_num < enoughDataThreshold ? 0 : averageOf(x.score),
-        "评价总数": (x) => x.comment_num < enoughDataThreshold ? 0 : x.comment_num,
+        "评价总数": (x) => x.comment_num,
         "学分": (x) => x.credit
     }
     const sortFunc = (x, y) => {
