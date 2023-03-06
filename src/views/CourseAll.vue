@@ -17,7 +17,7 @@
           </div>
           <StatisticCard 
             :width="adoptiveCardContainerWidth + 'px'"
-            v-else="!status.loading"
+            v-else
           >
             <template #header>
               <div class="mb-3">
@@ -75,7 +75,7 @@
                   <div class="d-flex justify-center">
                     <div :style="{ width: adoptiveCardContainerWidth + 24 + 'px' }">
                       <div class="d-flex flex-wrap justify-start">                        
-                        <div v-for="(course, index) in items" :key="course.id" class="d-flex">
+                        <div v-for="(course) in items" :key="course.id" class="d-flex">
                           <v-fade-transition>
                             <CourseCard :course="course" :width="adoptiveCardWidth + 'px'" />
                           </v-fade-transition>
@@ -89,10 +89,10 @@
                     v-if="adoptiveCoursePage > 1"
                   >
                     <div class="mx-1">
-                      <ElevatedPagination 
+                      <ElevatedPagination
                         v-model="status.page"
                         :length="adoptiveCoursePage"
-                        :total-visible="$vuetify.breakpoint.xsOnly ? 5 : 7"
+                        :totalVisible="$vuetify.breakpoint.xsOnly ? 5 : 7"
                         elevation="0"
                         outlined
                       />
