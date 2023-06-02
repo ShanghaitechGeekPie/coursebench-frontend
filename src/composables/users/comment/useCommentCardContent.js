@@ -5,7 +5,8 @@ import {
   mdiSubtitlesOutline, 
   mdiTriangle,
   mdiTriangleSmallDown,
-  mdiTriangleSmallUp
+  mdiTriangleSmallUp,
+  mdiShare
 } from "@mdi/js";
 import { gradingInfo } from "@/composables/global/useStaticData";
 
@@ -19,7 +20,8 @@ export default () => {
       mdiSubtitlesOutline, 
       mdiTriangle,
       mdiTriangleSmallDown,
-      mdiTriangleSmallUp
+      mdiTriangleSmallUp,
+      mdiShare
     },
     grade: [
       gradingInfo.quality, 

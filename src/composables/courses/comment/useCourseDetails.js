@@ -163,5 +163,5 @@ export default () => {
     })
 
 
-    return {teachers, commentText, status, courseDetail, selectedTeachers, groups, global}
+    return {teachers, commentText, status, courseDetail, selectedTeachers, groups, global, route, router}
 }
