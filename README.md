@@ -2,13 +2,12 @@
 
 The frontend of the CourseBench.
 
-
 ### How to use
 
 Fetch the dependencies first by using the command below.
 
 ```
-yarn
+yarn --ignore-engines
 ```
 
 Run this command to build it.
