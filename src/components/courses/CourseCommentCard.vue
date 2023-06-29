@@ -289,7 +289,6 @@ export default {
       // vue3中获取到refs指向的element只能用.$el来获取, 直接用refs会导致出错(类型VueComponent不是Element)
       domToCanvas(this.$refs.commentCard.$el, {scale: 2})
         .then(async canvas => {
-          document.body.appendChild(canvas)
           // qrcode
           let sharePath = `https://coursebench.geekpie.club${this.$route.path}?answer=${this.comment.id}`;
           const QRCanvas = document.createElement("canvas");
