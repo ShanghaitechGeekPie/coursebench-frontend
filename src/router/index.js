@@ -27,20 +27,24 @@ export default new VueRouter({
       component: () => import('@/views/User.vue')
     },
     {
-      path: '/active', 
+      path: '/active',
       component: () => import('@/views/Active.vue')
-    }, 
+    },
     {
       path: '/reset_password_active',
       component: () => import('@/views/ResetPasswordActive.vue')
-    }, 
+    },
     {
-      path: '/about', 
+      path: '/about',
       component: () => import('@/views/About.vue')
-    }, 
+    },
     {
       path: '*',
       component: () => import('@/views/NotFound.vue')
+    },
+    {
+      path: '/recent',
+      component:() => import('@/views/Recent.vue')
     }
   ]
 })
