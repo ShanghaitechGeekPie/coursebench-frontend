@@ -59,6 +59,7 @@ export default {
   },
   setup() {
     const { commentText, status, global } = useCommentRecent();
+    // console.log(global)
     return { commentText, status, global ,backgroundDark, backgroundLight };
   },
   data() {
