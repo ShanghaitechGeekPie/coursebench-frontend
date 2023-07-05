@@ -26,6 +26,30 @@
             </v-row>
           </div>
         </template>
+        <template v-slot:footerNote v-if='$route.path === "/Recent" && global.userProfile.is_admin'>
+          <div class="d-flex justify-end" style="flex-wrap: wrap">
+            <div class="d-flex">
+              <v-btn
+                class="fold-button mr-1"
+                small
+                :color="commentFoldStatus.foldStatus ? 'primary' : 'primary'"
+                elevation="0"
+                :text="!commentFoldStatus.foldStatus"
+                :outlined="!commentFoldStatus.foldStatus"
+                @click="onClickFold"
+                :disabled="!global.isLogin"
+              >
+                <div class="px-0">
+                  <span
+                    class="text-caption"
+                  >
+                    折叠
+                  </span>
+                </div>
+              </v-btn>
+            </div>
+          </div>
+        </template>
       </CommentCardContent>
     </v-card>
   </v-lazy>
@@ -34,19 +58,22 @@
 import CommentCardContent from '@/components/users/comment/CommentCardContent';
 import CommentCardBar from '@/components/users/comment/CommentCardBar';
 import CommentFold from '@/components/users/comment/CommentFold';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { mdiSchoolOutline } from '@mdi/js';
+import useFoldComment from '@/composables/courses/comment/useFoldComment';
 
 export default {
   setup() {
+    const { doFold, doUnfold, commentFoldStatus } =
+      useFoldComment();
+    const global = inject("global")
     const foldComment = ref(true);
     const statics = {
       icons: {
         mdiSchoolOutline,
       },
     };
-
-    return { foldComment, statics };
+    return { foldComment, statics, global, doFold, doUnfold, commentFoldStatus };
   },
   props: {
     comment: Object,
@@ -56,5 +83,22 @@ export default {
     CommentCardBar,
     CommentFold,
   },
+  mounted() {
+    this.commentFoldStatus.foldStatus = this.comment.is_fold;
+  },
+  methods: {
+    onClickFold() {
+      if (this.commentFoldStatus.foldStatus === true) {
+        this.doUnfold(this.comment.id);
+      } else {
+        this.doFold(this.comment.id);
+      }
+    },
+  },
 };
 </script>
+<style>
+.fold-button {
+  padding: 0 !important;;
+}
+</style>
