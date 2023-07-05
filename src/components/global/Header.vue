@@ -48,6 +48,17 @@
         plain
         tile
         height="100%"
+        :hover-only="isCurrentPath('^\/recent$')"
+        to="/recent"
+        class="px-1"
+        v-if="$vuetify.breakpoint.lgAndUp"
+      >
+        最近评价
+      </SliderButton>
+      <SliderButton
+        plain
+        tile
+        height="100%"
         :hover-only="isCurrentPath('^\/about')"
         to="/about"
         class="px-1"
@@ -317,13 +328,18 @@ export default {
     adoptiveSearchBarWidth() {
       if (this.$vuetify.breakpoint.width >= 1680) {
         return '720px';
-      } else if (this.$vuetify.breakpoint.mdAndUp) {
+      } else if (this.$vuetify.breakpoint.mdOnly) {
         return `calc(${
           Math.min(
             this.$vuetify.breakpoint.width - (this.global.isLogin ? 550 : 750),
             720,
           ) + 35
         }px)`;
+      } else if (this.$vuetify.breakpoint.lgAndUp) {
+        return `calc(${Math.min(
+          this.$vuetify.breakpoint.width - (this.global.isLogin ? 450 : 650),
+          620,
+        )}px)`;
       } else {
         return `calc(${
           this.$vuetify.breakpoint.width -
