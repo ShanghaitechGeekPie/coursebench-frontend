@@ -6,7 +6,7 @@
     elevation="3"
   >
     <v-toolbar-title
-      class="px-sm-8"
+      class="px-md-8 px-sm-4"
       @click="isCurrentPath('^\/$') ? $router.push('/') : ''"
       :style="{
         cursor: 'pointer',
@@ -104,7 +104,7 @@
       登录
     </v-btn>
     <v-btn
-      class="px-sm-8 ml-4 mr-sm-8"
+      class="px-sm-8 ml-4 mr-md-8 mr-sm-3"
       @click="dialog.register = true"
       v-if="!global.isLogin"
       elevation="0"
@@ -333,18 +333,18 @@ export default {
           Math.min(
             this.$vuetify.breakpoint.width - (this.global.isLogin ? 550 : 750),
             720,
-          ) + 35
+          ) + 45
         }px)`;
       } else if (this.$vuetify.breakpoint.lgAndUp) {
         return `calc(${Math.min(
-          this.$vuetify.breakpoint.width - (this.global.isLogin ? 450 : 650),
-          620,
+          this.$vuetify.breakpoint.width - (this.global.isLogin ? 450 : 594),
+          564,
         )}px)`;
       } else {
         return `calc(${
           this.$vuetify.breakpoint.width -
           (this.global.isLogin ? 250 : 450) +
-          35
+          10
         }px)`;
       }
     },
