@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!(global.userProfile.is_admin || global.userProfile.is_community_admin) || writingMode != 'create'">
+  <div>
     <v-dialog
       width="750"
       v-model="windowStatus.showDialog"
@@ -12,18 +12,15 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn v-bind="attrs" v-on="on" block outlined text class="pa-0">
-          <div v-if="!(global.userProfile.is_admin || global.userProfile.is_community_admin)">
-            <v-icon size="18" style="transform: translate(0, -1px)" class="pr-1">
-              {{ statics.icons.mdiPencil }}
-            </v-icon>
-            <span v-if="writingMode == 'create'">{{ '写评论' }}</span>
-            <span v-else>{{ '我的评论' }}</span>
-          </div>
-          <div v-else>
-            <v-icon size="18" style="transform: translate(0, -1px)" class="pr-1">
+          <div>
+            <v-icon
+              size="18"
+              style="transform: translate(0, -1px)"
+              class="pr-1"
+            >
               {{ statics.icons.mdiFormatPaint }}
             </v-icon>
-            <span>管理评论</span>          
+            <span>管理评论</span>
           </div>
         </v-btn>
       </template>
@@ -51,9 +48,7 @@
           <v-window-item :value="0">
             <v-card-title class="pt-1 px-6 px-sm-11">
               <div>
-                <div class="font-weight-bold text-h5">
-                  {{ global.userProfile.is_admin || global.userProfile.is_community_admin ? '管理评论' : '我的评论' }}                  
-                </div>
+                <div class="font-weight-bold text-h5">管理评论</div>
               </div>
             </v-card-title>
             <v-card-text class="px-6 px-sm-11 pb-6 pb-sm-11">
@@ -70,7 +65,10 @@
                         <v-divider></v-divider>
                         <div class="pt-4">
                           <div
-                            v-if="global.userProfile.is_admin || global.userProfile.is_community_admin"
+                            v-if="
+                              global.userProfile.is_admin ||
+                              global.userProfile.is_community_admin
+                            "
                             class="d-flex"
                           >
                             <div
@@ -124,6 +122,7 @@
                           </div>
                         </div>
                         <div>
+                          <span class="pr-2">{{  comment.course.name  }}</span>
                           <v-icon
                             size="16"
                             style="transform: translate(0, -1px)"
@@ -172,32 +171,11 @@
                 </div>
                 <v-divider></v-divider>
               </div>
-              <div
-                class="pt-8 d-flex justify-end"
-                v-if="
-                  teacherGroup.length != userComments.length &&
-                  !(global.userProfile.is_admin || global.userProfile.is_community_admin)
-                "
-              >
-                <v-btn
-                  color="primary"
-                  depressed
-                  @click="
-                    (windowStatus.windowStep = 1),
-                      (formStatus.userProfile = global.userProfile)
-                  "
-                >
-                  {{ '写评论' }}
-                </v-btn>
-              </div>
             </v-card-text>
           </v-window-item>
           <v-window-item :value="1">
             <v-card-title class="pt-0 px-6 px-sm-11">
-              <div
-                class="text-body-2 pb-1 overflow-ellipsis"
-                v-if="writingMode == 'edit'"
-              >
+              <div class="text-body-2 pb-1 overflow-ellipsis">
                 <v-btn
                   icon
                   x-small
@@ -238,31 +216,13 @@
                     :error-messages="
                       errorMsg.target === 'title' ? errorMsg.msg : ''
                     "
-                    :disabled="!allowEdit"
+                    disabled
                   ></v-text-field>
                 </div>
               </div>
             </v-card-title>
             <v-card-text class="px-6 px-sm-11 pb-6 pb-sm-11">
-              <div v-show="allowEdit && !windowStatus.previewMarkdown">
-                <v-textarea
-                  :label="commentPolicy"
-                  auto-grow
-                  outlined
-                  rows="8"
-                  messages="支持markdown"
-                  v-model="formStatus.content"
-                  :error-messages="
-                    errorMsg.target === 'content' ? errorMsg.msg : ''
-                  "
-                >
-                </v-textarea>
-              </div>
-              <div
-                v-show="
-                  !allowEdit || (allowEdit && windowStatus.previewMarkdown)
-                "
-              >
+              <div>
                 <v-sheet
                   flat
                   outlined
@@ -298,7 +258,7 @@
                     thumb-label
                     hide-details
                     :label="dim"
-                    :disabled="!allowEdit"
+                    disabled
                   >
                     <template v-slot:append>
                       <v-chip
@@ -318,7 +278,9 @@
                   </v-slider>
                 </div>
               </div>
-              <div class="d-flex justify-end justify-sm-space-between flex-wrap">
+              <div
+                class="d-flex justify-end justify-sm-space-between flex-wrap"
+              >
                 <div
                   :class="[
                     'd-flex',
@@ -341,7 +303,7 @@
                       :items="yearItems"
                       label="修读时间"
                       :error="errorMsg.target === 'semester'"
-                      :disabled="!allowEdit"
+                      disabled
                     ></v-select>
                   </div>
                   <div class="pr-sm-4 pr-0">
@@ -353,20 +315,7 @@
                       item-value="id"
                       label="修读学期"
                       :error="errorMsg.target === 'semester'"
-                      :disabled="!allowEdit"
-                    ></v-select>
-                  </div>
-                  <div class="pr-sm-4 pr-0" v-if="formStatus.id == null">
-                    <v-select
-                      style="width: 100px"
-                      v-model="formStatus.commentTarget"
-                      :items="teacherGroup"
-                      item-text="name"
-                      item-value="id"
-                      label="评价对象"
-                      :error-messages="
-                        errorMsg.target === 'comentTarget' ? errorMsg.msg : ''
-                      "
+                      disabled
                     ></v-select>
                   </div>
                   <div
@@ -388,17 +337,8 @@
                           label="匿名"
                           color="info"
                           hide-details
-                          :disabled="!allowEdit"
+                          disabled
                         ></v-switch>
-                      </div>
-                      <div class="align-center d-flex" v-if="allowEdit">
-                        <v-checkbox
-                          v-model="windowStatus.previewMarkdown"
-                          class="mt-0"
-                          label="预览"
-                          color="info"
-                          hide-details
-                        ></v-checkbox>
                       </div>
                     </div>
                   </div>
@@ -416,21 +356,11 @@
                         depressed
                         @click="doDeleteComment"
                         :loading="formStatus.deleteLoading"
-                        v-if="formStatus.id != null"
                         class="mr-4"
                       >
                         {{ '删除评论' }}
                       </v-btn>
-                      <v-btn
-                        color="primary"
-                        depressed
-                        @click="doSubmitComment"
-                        :loading="formStatus.editLoading"
-                        v-if="allowEdit"
-                      >
-                        {{ formStatus.id != null ? '修改评论' : '发表评论' }}
-                      </v-btn>
-                      <span v-else>
+                      <span>
                         <v-btn
                           :color="formStatus.is_covered ? 'success' : 'warning'"
                           depressed
@@ -440,13 +370,13 @@
                           v-if="!formStatus.is_fold"
                         >
                           {{ formStatus.is_covered ? '取消遮盖' : '遮盖评论' }}
-                        </v-btn>                        
+                        </v-btn>
                         <v-btn
                           :color="formStatus.is_fold ? 'accent' : 'secondary'"
                           depressed
                           @click="doHideComment"
                           :loading="formStatus.hideLoading"
-                          v-if="!formStatus.is_covered"                          
+                          v-if="!formStatus.is_covered"
                         >
                           {{ formStatus.is_fold ? '取消隐藏' : '隐藏评论' }}
                         </v-btn>
@@ -455,7 +385,7 @@
                           depressed
                           @click="doRegenerateCover"
                           :loading="formStatus.regenerateLoading"
-                          v-if="formStatus.is_covered"                          
+                          v-if="formStatus.is_covered"
                         >
                           {{ '重新生成' }}
                         </v-btn>
@@ -478,7 +408,7 @@ import {
   termItems,
 } from '@/composables/global/useStaticData';
 import { inject } from 'vue';
-import useWritingCard from '@/composables/courses/comment/useWritingCard';
+import useManageCard from '@/composables/courses/comment/useManageCard';
 import { gradingEmojis } from '@/composables/global/useStaticData';
 import AvatarContainer from '@/components/users/profile/AvatarContainer';
 import TextContainer from '@/components/users/comment/TextContainer';
@@ -493,23 +423,20 @@ export default {
   setup() {
     const {
       statics,
-      teacherGroup,
       errorMsg,
       formStatus,
       windowStatus,
       courseYear,
       courseTerm,
-      writingMode,
       userComments,
       courseName,
-      doSubmitComment,
       doHideComment,
       doDeleteComment,
       doCoverComment,
       doRegenerateCover,
       setEditTarget,
       clearEditTarget,
-    } = useWritingCard();
+    } = useManageCard();
 
     const global = inject('global');
 
@@ -525,16 +452,13 @@ export default {
       gradingInfo,
       global,
       statics,
-      teacherGroup,
       errorMsg,
       formStatus,
       windowStatus,
       courseYear,
       courseTerm,
-      writingMode,
       userComments,
       courseName,
-      doSubmitComment,
       doHideComment,
       doDeleteComment,
       doCoverComment,
@@ -547,24 +471,6 @@ export default {
   components: {
     AvatarContainer,
     TextContainer,
-  },
-  computed: {
-    allowEdit() {
-      if (this.formStatus.id == null) {
-        return true;
-      } else if (this.global.userProfile.is_admin || this.global.userProfile.is_community_admin) {
-        if (
-          this.formStatus.userProfile &&
-          this.formStatus.userProfile.id == this.global.userProfile.id
-        ) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return true;
-      }
-    },
   },
 };
 </script>

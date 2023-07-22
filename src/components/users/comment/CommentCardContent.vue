@@ -11,11 +11,14 @@
                 </v-icon>
               </div>
               <div class="justify-start text-h6 overflow">
-                {{ comment.title }}
+                {{ comment.is_covered ? comment.cover_title : comment.title }}
               </div>
             </v-col>
           </v-row>
         </v-container>
+        <div v-if="comment.is_covered" class="pt-1" style="width: 100%;">
+          <CommentCover :reason="comment.cover_reason" />
+        </div>
       </v-card-title>
     </slot>
     <v-card-text class="pa-0">
@@ -28,8 +31,8 @@
             </div> -->
             <slot name="content" :localComment="comment">
               <TextContainer
-                :text="comment.content"
-                :title="comment.title"
+                :text="comment.is_covered ? comment.cover_content : comment.content"
+                :title="comment.is_covered ? comment.cover_title : comment.title"
                 markdown
                 dense
                 :dialog="$vuetify.breakpoint.name === 'xs'"
@@ -150,6 +153,7 @@
 <script>
 import useCommentCardContent from '@/composables/users/comment/useCommentCardContent';
 import TextContainer from '@/components/users/comment/TextContainer';
+import CommentCover from '@/components/users/comment/CommentCover';
 import {
   judgeItems,
   gradingInfo,
@@ -166,7 +170,7 @@ export default {
     const { statics } = useCommentCardContent();
     return { statics, judgeItems, gradingInfo };
   },
-  components: { TextContainer },
+  components: { TextContainer, CommentCover },
   props: {
     comment: {
       type: Object,

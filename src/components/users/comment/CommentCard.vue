@@ -26,7 +26,7 @@
             </v-row>
           </div>
         </template>
-        <template v-slot:footerNote v-if='$route.path === "/Recent" && global.userProfile.is_admin'>
+        <template v-slot:footerNote v-if='$route.path === "/Recent" && (global.userProfile.is_admin || global.userProfile.is_community_admin)'>
           <div class="d-flex justify-end" style="flex-wrap: wrap">
             <div class="d-flex">
               <v-btn

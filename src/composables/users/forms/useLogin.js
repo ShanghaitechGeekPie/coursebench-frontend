@@ -68,6 +68,7 @@ export default () => {
         grade: response.data.data.grade,
         realname: response.data.data.realname,
         is_admin: response.data.data.is_admin,
+        is_community_admin: response.data.data.is_community_admin,
       });
       global.isLogin = true;
       global.userProfile = getPreset();

@@ -14,6 +14,13 @@
             </v-col>
           </v-row>
           <v-row>
+            <v-col class="pl-sm-0 pr-lg-3 pr-0 pl-0 pr-0 py-0">
+              <div v-if="global.userProfile.is_admin || global.userProfile.is_community_admin">
+                <ManageCard />
+              </div>              
+            </v-col>
+          </v-row>
+          <v-row>
             <v-col class="pl-sm-0 pr-lg-3 pr-0 pl-0 pr-0 pt-sm-3 pt-0">
               <div v-if="status.commentLoading">
                 <div v-for="index in 2" :key="index">
@@ -43,10 +50,12 @@ import BackgroundImage from "@/components/teachers/detail/BackgroundImage";
 import CommentCard from "@/components/users/comment/CommentCard";
 import ImageLoader from "@/components/teachers/loader/ImageLoader";
 import CommentLoader from "@/components/teachers/loader/CommentLoader";
+import ManageCard from "@/components/courses/ManageCard";
 import Nothing from "@/components/global/Nothing"
 import backgroundDark from "@/assets/user-background-dark.svg";
 import backgroundLight from "@/assets/user-background-light.svg";
 import useCommentRecent from '@/composables/courses/comment/useCommentRecent';
+import { provide } from "vue";
 
 
 export default {
@@ -55,10 +64,12 @@ export default {
     CommentCard,
     ImageLoader,
     CommentLoader,
-    Nothing
+    Nothing,
+    ManageCard
   },
   setup() {
     const { commentText, status, global } = useCommentRecent();
+    provide("courseCommentText", commentText);
     // console.log(global)
     return { commentText, status, global ,backgroundDark, backgroundLight };
   },

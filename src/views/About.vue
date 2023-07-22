@@ -60,7 +60,7 @@
       </div>
       <div class="d-flex justify-center mt-10">
         <v-sheet width="318px" class="pa-6 d-flex justify-center" outlined>
-          <div>其他项目</div>
+          <div class="pr-4">其他项目</div>
           <div @click='openInplace("https://courseprettier.hcps.tech/")' class="coursePrettier">CoursePrettier</div>
         </v-sheet>
         <v-sheet width="318px" class="pa-6 d-flex justify-center" outlined>

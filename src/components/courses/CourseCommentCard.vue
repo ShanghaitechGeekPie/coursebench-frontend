@@ -75,6 +75,7 @@
                 :text="formStatus.likeStatus !== 1"
                 :outlined="formStatus.likeStatus !== 1"
                 @click="onClickLike"
+                :min-width="$vuetify.breakpoint.width < 400 ? 30 : undefined"
                 :disabled="!global.isLogin"
               >
                 <div class="px-0">
@@ -85,7 +86,7 @@
                     class="text-caption"
                     style="transform: translate(-7px, 0); display: inline-block"
                   >
-                    赞同
+                    {{ $vuetify.breakpoint.width < 400 ? "" : "赞同" }}                    
                     {{
                       footerNote.comment.like -
                       footerNote.comment.dislike +

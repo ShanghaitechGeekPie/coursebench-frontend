@@ -3,6 +3,7 @@ import {
   mdiSchoolOutline,
   mdiArrowLeft,
   mdiWindowClose,
+  mdiFormatPaint,
 } from '@mdi/js';
 import { gradingInfo } from '@/composables/global/useStaticData';
 import { computed, reactive, watch, ref, inject } from 'vue';
@@ -47,6 +48,7 @@ export default () => {
       mdiSchoolOutline,
       mdiArrowLeft,
       mdiWindowClose,
+      mdiFormatPaint
     },
     grade: [
       gradingInfo.quality,
@@ -66,6 +68,8 @@ export default () => {
     editLoading: false,
     deleteLoading: false,
     hideLoading: false,
+    coverLoading: false,
+    regenerateLoading: false,
     isPostSuccess: false,
     isPostError: false,
     title: '',
@@ -73,6 +77,7 @@ export default () => {
     semester: computed(getSemesterCode),
     is_anonymous: false,
     is_fold: false,
+    is_covered: false,
     userProfile: {},
     slider: [5, 5, 5, 5],
     commentTarget: 0,
@@ -96,6 +101,7 @@ export default () => {
     formStatus.content = comment.content;
     formStatus.is_anonymous = comment.is_anonymous;
     formStatus.is_fold = comment.is_fold;
+    formStatus.is_covered = comment.is_covered;
     formStatus.slider = comment.score;
     courseYear.value = parseInt(comment.semester / 100);
     courseTerm.value = comment.semester.toString().slice(4, 6);
@@ -111,6 +117,7 @@ export default () => {
     courseYear.value = 0;
     formStatus.is_anonymous = false;
     formStatus.is_fold = false;
+    formStatus.is_covered = false;
     formStatus.slider = [5, 5, 5, 5];
     formStatus.commentTarget = 0;
     formStatus.userProfile = {};
@@ -216,9 +223,9 @@ export default () => {
       formStatus.hideLoading = false;
       formStatus.isPostSuccess = true;
       if (!formStatus.is_fold) {
-        showSnackbar('success', '评论已隐藏');
+        showSnackbar('success', '隐藏评论成功');
       } else {
-        showSnackbar('success', '评论已显示');
+        showSnackbar('success', '取消隐藏成功');
       }
       clearEditTarget();
       windowStatus.windowStep = 0;
@@ -228,6 +235,43 @@ export default () => {
     },
     onError: (error) => {
       formStatus.hideLoading = false;
+      formStatus.isPostError = true;
+      if (isNetworkError(error.response)) {
+        showSnackbar('error', '网络连接错误', 3000);
+      } else if (error.response.data.code === 'CommentNotExists') {
+        showSnackbar('error', error.response.data.msg, 3000);
+      } else if (error.response.data.code === 'PermissionDenied') {
+        showSnackbar('error', error.response.data.msg, 3000);
+      } else if (isValidErrorMessage(error.value.response.data.msg)) {
+        showSnackbar('error', error.value.response.data.msg, 3000);
+      } else {
+        showSnackbar('error', '服务器发生错误', 3000);
+      }
+    },
+  });
+
+  const coverCommentMutation = useMutation('/comment/cover', {
+    onMutate: () => {
+      
+    },
+    onSuccess: () => {
+      formStatus.coverLoading = false;
+      formStatus.regenerateLoading = false;
+      formStatus.isPostSuccess = true;
+      if (!formStatus.is_covered) {
+        showSnackbar('success', '遮盖评论成功');
+      } else {
+        showSnackbar('success', '取消遮盖成功');
+      }
+      clearEditTarget();
+      windowStatus.windowStep = 0;
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    },
+    onError: (error) => {
+      formStatus.coverLoading = false;
+      formStatus.regenerateLoading = false;
       formStatus.isPostError = true;
       if (isNetworkError(error.response)) {
         showSnackbar('error', '网络连接错误', 3000);
@@ -298,13 +342,29 @@ export default () => {
     });
   };
 
+  const doCoverComment = () => {
+    formStatus.coverLoading = true;
+    coverCommentMutation.mutate({
+      id: formStatus.id,
+      status: !formStatus.is_covered,
+    });
+  };
+
+  const doRegenerateCover = () => {
+    formStatus.regenerateLoading = true;
+    coverCommentMutation.mutate({
+      id: formStatus.id,
+      status: formStatus.is_covered,
+    });
+  };  
+
   watch(
     commentText,
     () => {
       if (commentText.value.length > 0) {
         courseName.value = commentText.value[0].course.name;
       }
-      if (global.userProfile.is_admin) {
+      if (global.userProfile.is_admin || global.userProfile.is_community_admin) {
         userComments.value = commentText.value.map((comment) =>
           JSON.parse(JSON.stringify(comment)),
         );
@@ -343,6 +403,8 @@ export default () => {
     doSubmitComment,
     doDeleteComment,
     doHideComment,
+    doCoverComment,
+    doRegenerateCover,
     setEditTarget,
     clearEditTarget,
   };
