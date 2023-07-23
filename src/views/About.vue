@@ -249,8 +249,8 @@
             <div class="text-h5">支持我们</div>
             <div class="mt-4">
               如果您觉得我们的网站对您有帮助，您可以通过点击以下链接找到CourseBench的专属赞助方案并支持我们：
-              <a href="https://afdian.net/a/colldisSavior"
-              >爱发电（https://afdian.net/a/colldisSavior）</a
+              <a href="https://afdian.net/a/teafrogsf"
+              >爱发电（https://afdian.net/a/teafrogsf）</a
               >
             </div>
           </div>
