@@ -6,23 +6,21 @@
       rounded="lg"
     >
       <div
-        class="text-sm-body-1 text-body-2 d-flex align-center"
+        class="text-sm-body-1 text-body-2 d-flex align-center mb-1 mb-sm-0"
         style="height: 28px"
       >
         <div>
           以下评论已被 AI 生成内容遮盖。
-          <span
-            class="inline-link"
-            @click="$router.push('/about'), useInsitePush('#privacy_policy')"
-            >查看隐私政策</span
-          >
+          <a class="inline-link" href="https://clarivy.github.io/coursebench-ai/">
+            什么是 CourseBench AI?
+          </a>
         </div>
       </div>     
       <div
         class="text-sm-body-1 text-body-2 d-flex align-center"
       >
         <div class="text-caption">
-          遮盖原因：{{ reason }}
+          遮盖原因（由AI自动生成）: {{ reason }}
         </div>
       </div>          
     </v-sheet>
@@ -52,8 +50,10 @@
   .inline-link {
     color: #0067bf;
     cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
   }
-  
+
   .inline-link:hover {
     text-decoration: underline;
   }
