@@ -18,7 +18,7 @@ export default (userProfile) => {
     const { nickname, realname, email, is_anonymous, id } = userProfile
     if (nickname) { // if we have a nickname, then use it
         if (is_anonymous) { // if the user is anonymous, then use the nickname
-            return "昵称：" + nickname
+            return "匿名昵称：" + nickname
         }
         return nickname
     } else if (realname && !is_anonymous) { // if we have a realname and not anonymous, then use it
