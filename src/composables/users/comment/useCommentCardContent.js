@@ -6,12 +6,13 @@ import {
   mdiTriangle,
   mdiTriangleSmallDown,
   mdiTriangleSmallUp,
-  mdiShare
+  mdiShare,
+  mdiGold
 } from "@mdi/js";
 import { gradingInfo } from "@/composables/global/useStaticData";
-
+import { inject } from "vue";
 export default () => {
-
+  const global = inject("global")
   const statics = {
     icons: {
       mdiAccountOutline,
@@ -21,7 +22,8 @@ export default () => {
       mdiTriangle,
       mdiTriangleSmallDown,
       mdiTriangleSmallUp,
-      mdiShare
+      mdiShare,
+      mdiGold
     },
     grade: [
       gradingInfo.quality, 
@@ -31,5 +33,5 @@ export default () => {
     ], 
   }
 
-  return { statics }
+  return { statics, global }
 }

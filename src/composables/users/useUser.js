@@ -106,6 +106,7 @@ export default () => {
         userProfile.nickname = useUserName(userProfile)
         userProfile.grade = gradeItems[userProfile.grade]
         userProfile.year = userProfile.year === 0 ? "暂不透露" : userProfile.year
+
       }
     })
   }

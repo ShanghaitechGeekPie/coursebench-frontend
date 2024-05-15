@@ -33,6 +33,14 @@ export default () => {
     password: (value) => {
       const pattern = /^(?=.*[a-zA-Z])(?=.*\d)[^]{8,16}$/
       return pattern.test(value) || '密码必须包含字母及数字，长度为8-16位'
+    },
+    invitation_code: (value) => {
+      const pattern = /^[a-zA-Z0-9]{5}$/
+      return !value || value.length == 0 || pattern.test(value) || '邀请码为只含字母和数字的5位字符串'
+    },
+    reward: (value) => {
+      const pattern = /^([1-9]+[\d]*(.[0-9]{1,2})?)$/
+      return !value || value.length == 0 || pattern.test(value) || '赏金为两位小数'
     }
   }
   

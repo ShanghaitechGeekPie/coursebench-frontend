@@ -2,7 +2,15 @@
   <v-app>
     <Header :snackbar.sync="snackbar" />
     <v-main>
-      <InsiderBanner />
+      <div>
+        <InsiderBanner />
+      </div>
+      <div>
+        <ActivityBanner :Enable=true>
+          评论拿赏金功能上线啦！详情请看<a href="https://www.baidu.com/link?url=VZ8B58kyM3gTA1w7QLtmappBY36c06lFXGEjzaYUBNG&wd=&eqid=d5f4c163008c878200000005660fff04">这里</a>！
+        </ActivityBanner>
+      </div>
+      
       <router-view :key="$route.path" />
       <v-snackbar
         v-model="snackbar.show"
@@ -25,6 +33,7 @@
 <script>
 import Header from '@/components/global/Header';
 import InsiderBanner from '@/components/global/InsiderBanner';
+import ActivityBanner from '@/components/global/ActivityBanner';
 import useSnackbar from '@/composables/global/useSnackbar';
 import { getPreset } from '@/composables/global/useCookie';
 import { provide, reactive } from 'vue';
@@ -32,7 +41,7 @@ import { mdiClose } from '@mdi/js';
 
 export default {
   name: 'App',
-  components: { Header, InsiderBanner },
+  components: { Header, InsiderBanner, ActivityBanner },
   setup() {
     const { snackbar } = useSnackbar();
     const global = reactive({

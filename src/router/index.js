@@ -45,6 +45,10 @@ export default new VueRouter({
     {
       path: '/recent',
       component:() => import('@/views/Recent.vue')
+    },
+    {
+      path: '/ranking',
+      component: () => import('@/views/Ranking.vue')
     }
   ]
 })

@@ -1,7 +1,7 @@
 import { reactive, inject, onMounted } from "vue"
 import { isNetworkError, isValidErrorMessage } from "@/composables/global/useHttpError"
 import useCaptcha from "@/composables/global/useCaptcha"
-import { mdiArrowLeft, mdiEye, mdiEyeOff, mdiWindowClose, mdiEmailAlertOutline } from "@mdi/js"
+import { mdiArrowLeft, mdiEye, mdiEyeOff, mdiWindowClose, mdiEmailAlertOutline, mdiHelpCircleOutline } from "@mdi/js"
 import useMutation from "@/composables/global/useMutation"
 import { gradeItems } from "@/composables/global/useStaticData"
 import useDebounce from "@/composables/global/useDebounce"
@@ -17,7 +17,8 @@ export default () => {
       mdiEye,
       mdiEyeOff,
       mdiWindowClose,
-      mdiEmailAlertOutline
+      mdiEmailAlertOutline,
+      mdiHelpCircleOutline
     },
   }
 
@@ -25,6 +26,7 @@ export default () => {
     email: "",
     username: "",
     password: "",
+    invitation_code: "",
     year: undefined,
     grade: undefined,
   })
@@ -37,7 +39,7 @@ export default () => {
     loading: false,
     captchaLoading: false,
     captchaBase64: "",
-    windowStep: 0, 
+    windowStep: 0,
     agreeTerms: false,
   })
 
@@ -48,17 +50,22 @@ export default () => {
     onSuccess: (_) => {
       formStatus.loading = false
       formStatus.windowStep += 1
+      if (formStatus.invitation_code != "")
+        showSnackbar("success", "邀请码使用成功")
     },
     onError: (error) => {
       formStatus.loading = false
       if (isNetworkError(error.response)) {
         showSnackbar("error", "网络连接失败")
       } else if (isValidErrorMessage(error.response.data.msg)) {
-        showSnackbar("error", error.response.data.msg)        
+        showSnackbar("error", error.response.data.msg)
         userData.captcha = ""
         getCaptcha()
         if (error.response.data.code === "UserAlreadyExists" || error.response.data.code === "UserEmailDuplicated") {
           formStatus.windowStep = 0;
+        }
+        else if (true) {
+          formStatus.windowStep = 2;
         }
       } else {
         showSnackbar("error", "服务器发生错误")
@@ -88,7 +95,7 @@ export default () => {
   })
 
   const doRegister = useDebounce(() => {
-    if (formStatus.emailFormValid && formStatus.passwordFormValid && 
+    if (formStatus.emailFormValid && formStatus.passwordFormValid &&
       formStatus.usernameFormValid && userData.captcha !== "" && userData.year && userData.grade
     ) {
       console.log(userData)
@@ -96,6 +103,7 @@ export default () => {
         nickname: userData.username,
         email: userData.email,
         password: userData.password,
+        invitation_code: userData.invitation_code,
         year: userData.year === "暂不透露" ? 0 : userData.year,
         grade: gradeItems.indexOf(userData.grade),
         captcha: userData.captcha

@@ -59,6 +59,16 @@
         plain
         tile
         height="100%"
+        :hover-only="isCurrentPath('^\/ranking')"
+        to="/ranking"
+        class="px-1"
+      >
+        赏金排名
+      </SliderButton>
+      <SliderButton
+        plain
+        tile
+        height="100%"
         :hover-only="isCurrentPath('^\/about')"
         to="/about"
         class="px-1"
