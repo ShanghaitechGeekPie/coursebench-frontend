@@ -3,8 +3,8 @@ import useMutation from '@/composables/global/useMutation';
 import { inject, ref } from "vue";
 export default () => {
     const showSnackbar = inject("showSnackbar")
-    const onEnterUp = () => {console.log("SHIT");
-    console.log(formStatus.reward);}
+    // const onEnterUp = () => {console.log("SHIT");
+    // console.log(formStatus.reward);}
     const formStatus = ref({
         id: 0,
         reward: "1145.14",
@@ -31,5 +31,5 @@ export default () => {
     const doModifyReward = useDebounce((()=>{
         rewardMutation.mutate({"id": formStatus.value.id, "reward": Math.floor(parseFloat(formStatus.value.reward) * 100)});
     }))
-    return {doModifyReward, formStatus, onEnterUp};
+    return {doModifyReward, formStatus};
 }

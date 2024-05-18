@@ -65,7 +65,7 @@
                           {{ statics.icons.mdiGold }}
                         </v-icon>
                         <span class="text-caption">
-                          {{ comment.reward/100 }}元
+                          {{ comment.reward / 100 }}元
                         </span>
                       </span>
                       <div v-else class="d-flex align-center">
@@ -74,7 +74,7 @@
                         </v-icon>
                         <v-text-field
                           :class="'pl-1 text-caption'"
-                          v-model="localComment.reward"
+                          :value="localReward"
                           :rules=[formRules.reward]
                           suffix="元"
                           style="max-width: 80px"
@@ -204,16 +204,15 @@ export default {
     },
   },
   data(){
-    const localComment = this.comment;
-    localComment.reward = localComment.reward/100;
+    const localReward = this.comment.reward / 100;
     return {
-      localComment
+      localReward
     }
   },
   methods: {
     onEnterPressed() {
-      if (this.formRules.reward(this.localComment.reward) === true){
-        this.formStatus.reward = this.localComment.reward;
+      if (this.formRules.reward(localReward) === true){
+        this.formStatus.reward = localReward;
         this.formStatus.id = this.localComment.id;
         this.doModifyReward();
       }
