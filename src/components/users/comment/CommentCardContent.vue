@@ -74,7 +74,7 @@
                         </v-icon>
                         <v-text-field
                           :class="'pl-1 text-caption'"
-                          :value="localReward"
+                          v-model="localReward"
                           :rules=[formRules.reward]
                           suffix="元"
                           style="max-width: 80px"
@@ -168,7 +168,7 @@ import TextContainer from '@/components/users/comment/TextContainer';
 import CommentCover from '@/components/users/comment/CommentCover';
 import useForms from '@/composables/users/forms/useForms';
 import useModifyReward from '@/composables/reward/useModifyReward';
-import { inject } from "vue";
+import { inject, ref } from "vue";
 import {
   judgeItems,
   gradingInfo,
@@ -204,16 +204,16 @@ export default {
     },
   },
   data(){
-    const localReward = this.comment.reward / 100;
+    let localReward = this.comment.reward / 100;
     return {
       localReward
     }
   },
   methods: {
     onEnterPressed() {
-      if (this.formRules.reward(localReward) === true){
-        this.formStatus.reward = localReward;
-        this.formStatus.id = this.localComment.id;
+      if (this.formRules.reward(this.localReward) === true){
+        this.formStatus.reward = this.localReward;
+        this.formStatus.id = this.comment.id;
         this.doModifyReward();
       }
       else this.showSnackbar("error", "赏金格式错误");
