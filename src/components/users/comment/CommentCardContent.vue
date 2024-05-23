@@ -39,11 +39,9 @@
                 #default="{ overflow }"
               >
                 <slot name="contentNote" :localComment="comment">
-                  <v-row>
-                    <v-col
-                      class="pa-0 pl-3 pb-2 pt-sm-3 pt-2"
+                    <div
+                      class="pa-0 pb-2 pt-sm-3 pt-2 d-flex align-center"
                       :style="{ 'max-width': overflow ? '60vw' : '90%' }"
-                      cols="12"
                     >
                       <v-icon size="16">
                         {{ statics.icons.mdiSchoolOutline }}
@@ -56,8 +54,35 @@
                       >
                         {{ teacher.name }}
                       </span>
-                    </v-col>
-                  </v-row>
+                    <v-icon size="16">
+                        {{ statics.icons.mdiClockOutline }}
+                      </v-icon>
+                      <span class="text-caption">
+                        {{ semester }}
+                      </span>
+                      <span v-if="(comment.reward >= 0) && !(global.userProfile.is_admin || global.userProfile.is_community_admin)">
+                        <v-icon size="16">
+                          {{ statics.icons.mdiGold }}
+                        </v-icon>
+                        <span class="text-caption">
+                          {{ comment.reward / 100 }}元
+                        </span>
+                      </span>
+                      <div v-else class="d-flex align-center">
+                        <v-icon size="16">
+                            {{ statics.icons.mdiGold }}
+                        </v-icon>
+                        <v-text-field
+                          :class="'pl-1 text-caption'"
+                          v-model="localReward"
+                          :rules=[formRules.reward]
+                          suffix="元"
+                          style="max-width: 80px"
+                          @keyup.enter="onEnterPressed"
+                          >
+                          </v-text-field>
+                      </div>
+                    </div>
                 </slot>
               </TextContainer>
             </slot>
@@ -73,19 +98,14 @@
                   sm="8"
                 >
                   <v-container>
-                    <v-row>
+                    <v-row class="pl-3">
                       <v-col
                         v-for="index in judgeItems.length"
                         :key="index"
                         cols="6"
                         sm="3"
                         :class="[
-                          'py-0',
-                          !(index % 2)
-                            ? 'px-lg-3 px-md-0 px-sm-1 px-0'
-                            : 'pl-2 pr-lg-3 pr-md-0 pr-sm-1 pr-0',
-                          index === 1 ? 'pl-sm-3' : '',
-                          index === 3 ? 'pl-lg-3 pl-md-0 pl-sm-1' : '',
+                          'px-0','py-0'
                         ]"
                       >
                         <div>
@@ -131,14 +151,6 @@
                           赞同 {{ comment.like - comment.dislike }}
                         </span>
                       </div>
-                      <div>
-                        <v-icon size="16">
-                          {{ statics.icons.mdiClockOutline }}
-                        </v-icon>
-                        <span class="text-caption">
-                          {{ semester }}
-                        </span>
-                      </div>
                     </div>
                   </slot>
                 </v-col>
@@ -154,6 +166,9 @@
 import useCommentCardContent from '@/composables/users/comment/useCommentCardContent';
 import TextContainer from '@/components/users/comment/TextContainer';
 import CommentCover from '@/components/users/comment/CommentCover';
+import useForms from '@/composables/users/forms/useForms';
+import useModifyReward from '@/composables/reward/useModifyReward';
+import { inject, ref } from "vue";
 import {
   judgeItems,
   gradingInfo,
@@ -167,8 +182,11 @@ import {
 //  and use vanilla div, and rewrite the reactive paddings
 export default {
   setup() {
-    const { statics } = useCommentCardContent();
-    return { statics, judgeItems, gradingInfo };
+    const showSnackbar = inject("showSnackbar")
+    const { statics, global } = useCommentCardContent();
+    const { formRules } = useForms();
+    const { formStatus, doModifyReward, onEnterUp } = useModifyReward();
+    return { statics, judgeItems, gradingInfo, global, formRules, formStatus, onEnterUp, doModifyReward, showSnackbar };
   },
   components: { TextContainer, CommentCover },
   props: {
@@ -183,6 +201,22 @@ export default {
       let year = sem.substring(0, 4);
       let season = sem.substring(4);
       return `${year}年${termItems[new Number(season) - 1].name}`;
+    },
+  },
+  data(){
+    let localReward = this.comment.reward / 100;
+    return {
+      localReward
+    }
+  },
+  methods: {
+    onEnterPressed() {
+      if (this.formRules.reward(this.localReward) === true){
+        this.formStatus.reward = this.localReward;
+        this.formStatus.id = this.comment.id;
+        this.doModifyReward();
+      }
+      else this.showSnackbar("error", "赏金格式错误");
     },
   },
 };

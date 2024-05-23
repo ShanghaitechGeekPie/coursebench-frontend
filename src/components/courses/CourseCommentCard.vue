@@ -167,12 +167,6 @@
                 </v-list>
               </v-menu>
             </div>
-            <div class="mr-sm-1">
-              <v-icon size="15" style="">
-                {{ footerNote.statics.icons.mdiClockOutline }}
-              </v-icon>
-              <span class="text-caption"> {{ footerNote.semester }} </span>
-            </div>
           </div>
         </template>
       </CommentCardContent>

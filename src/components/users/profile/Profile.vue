@@ -2,7 +2,9 @@
   <div>
     <div
       class="d-flex justify-center"
-      :style="{ transform: $vuetify.breakpoint.mdAndDown ? 'translate(0, -76px)' : '' }"
+      :style="{
+        transform: $vuetify.breakpoint.mdAndDown ? 'translate(0, -76px)' : '',
+      }"
     >
       <div>
         <AvatarContainer
@@ -12,21 +14,21 @@
           :size="$vuetify.breakpoint.name === 'xs' ? 110 : 120"
           :outlined="$vuetify.breakpoint.mdAndDown"
         >
-        <v-overlay absolute v-if="isSelf">
-          <div>
-            <v-file-input
-              dense
-              :rules="statics.avatarRules"
-              accept="image/jpg, image/jpeg, image/png"
-              :prepend-icon="statics.icons.mdiCamera"
-              @change="doChangeAvatar"
-              hide-input
-              hide-details
-              style="transform: translate(7px, 0px) scale(1.5); opacity: 0.6;"
-            ></v-file-input>
-          </div>
-        </v-overlay>  
-        </AvatarContainer>      
+          <v-overlay absolute v-if="isSelf">
+            <div>
+              <v-file-input
+                dense
+                :rules="statics.avatarRules"
+                accept="image/jpg, image/jpeg, image/png"
+                :prepend-icon="statics.icons.mdiCamera"
+                @change="doChangeAvatar"
+                hide-input
+                hide-details
+                style="transform: translate(7px, 0px) scale(1.5); opacity: 0.6"
+              ></v-file-input>
+            </div>
+          </v-overlay>
+        </AvatarContainer>
       </div>
     </div>
     <div
@@ -42,27 +44,48 @@
       v-if="isSelf || !userProfile.is_anonymous"
     >
       <div class="grey--text text--darken-2">
-        <span v-if="userProfile.year && userProfile.year != '暂不透露'">{{ userProfile.year }}级</span>
-        <span v-if="userProfile.grade && userProfile.grade != '暂不透露'">{{ userProfile.grade }}</span>
+        <span v-if="userProfile.year && userProfile.year != '暂不透露'"
+          >{{ userProfile.year }}级</span
+        >
+        <span v-if="userProfile.grade && userProfile.grade != '暂不透露'">{{
+          userProfile.grade
+        }}</span>
         <span v-if="userProfile.realname">{{ userProfile.realname }}</span>
       </div>
     </div>
-    <div class="d-flex justify-center pt-3" v-if="isSelf || !userProfile.is_anonymous">
+    <div
+      class="d-flex justify-center pt-3"
+      v-if="isSelf || !userProfile.is_anonymous"
+    >
       <div class="grey--text text--darken-2 single-line-limit">
         <span>{{ userProfile.email }}</span>
       </div>
     </div>
-    <div class="d-flex justify-center pt-6"
-      v-if="isSelf"
+    <div
+      class="d-flex justify-center pt-3"
+      v-if="userProfile.invitation_code"
     >
+      <div class="grey--text text--darken-2 single-line-limit">
+        <span>邀请码：{{ userProfile.invitation_code }}</span>
+      </div>
+    </div>
+    <div
+      class="d-flex justify-center pt-3"
+      v-if="userProfile.reward>=0"
+    >
+      <div class="grey--text text--darken-2 single-line-limit">
+        <span>已获赏金：{{ userProfile.reward / 100 }}元</span>
+      </div>
+    </div>
+    <div class="d-flex justify-center pt-6" v-if="isSelf">
       <EditProfile />
     </div>
   </div>
 </template>
 <script>
-import useProfile from "@/composables/users/profile/useProfile";
-import EditProfile from "@/components/users/profile/EditProfile";
-import AvatarContainer from "@/components/users/profile/AvatarContainer";
+import useProfile from '@/composables/users/profile/useProfile';
+import EditProfile from '@/components/users/profile/EditProfile';
+import AvatarContainer from '@/components/users/profile/AvatarContainer';
 import { inject } from 'vue';
 
 export default {
@@ -71,7 +94,6 @@ export default {
     const { userProfile, statics, doChangeAvatar } = useProfile();
 
     const isSelf = inject('isSelf');
-
     return { userProfile, statics, doChangeAvatar, isSelf };
   },
 };
