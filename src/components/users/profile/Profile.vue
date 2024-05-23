@@ -74,7 +74,7 @@
       v-if="userProfile.reward>=0"
     >
       <div class="grey--text text--darken-2 single-line-limit">
-        <span>已获赏金：{{ userProfile.reward }}元</span>
+        <span>已获赏金：{{ userProfile.reward / 100 }}元</span>
       </div>
     </div>
     <div class="d-flex justify-center pt-6" v-if="isSelf">
