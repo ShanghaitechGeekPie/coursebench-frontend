@@ -55,6 +55,10 @@ module.exports = {
           path.join(__dirname, './src/assets/comment_policy.md'),
           'utf8',
         ),
+        benchReviewerPolicy: fs.readFileSync(
+          path.join(__dirname, './src/assets/bench_reviewer.md'),
+          'utf8',
+        ),
       }),
     },
     module: {

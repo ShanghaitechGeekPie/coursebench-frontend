@@ -39,6 +39,10 @@ export default new VueRouter({
       component: () => import('@/views/About.vue')
     },
     {
+      path: '/activities',
+      component: () => import('@/views/ActivityPoster.vue')
+    },
+    {
       path: '*',
       component: () => import('@/views/NotFound.vue')
     },

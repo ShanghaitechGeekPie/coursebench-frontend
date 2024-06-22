@@ -7,7 +7,7 @@
       </div>
       <div>
         <ActivityBanner :Enable=true>
-          评论拿赏金功能上线啦！详情请看<a href="https://www.baidu.com/link?url=VZ8B58kyM3gTA1w7QLtmappBY36c06lFXGEjzaYUBNG&wd=&eqid=d5f4c163008c878200000005660fff04">这里</a>！
+          评论拿赏金功能上线啦！详情请点击<a @click="$router.push('/activities')">这里</a>！
         </ActivityBanner>
       </div>
       
