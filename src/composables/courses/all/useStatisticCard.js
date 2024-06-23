@@ -1,4 +1,4 @@
-import { inject, onMounted, reactive, watch } from "vue"
+import { inject, onMounted, onUnmounted, reactive, watch } from "vue"
 import { mdiCity, mdiChevronUp, mdiChevronDown } from "@mdi/js";
 import useDebounce from "@/composables/global/useDebounce";
 
@@ -36,7 +36,13 @@ export default () => {
         }
     }))
 
+    watch(() => window.innerWidth, useDebounce((to, from) => {
+        updateShowAll();
+    }))
+
     onMounted(() => {
+        updateShowAll();
+        window.addEventListener('resize', updateShowAll, { passive: true })
         if (courseFilterStatus.selected.length === 0) {
             status.selectAll = false
             status.selectNotAll = true
@@ -46,6 +52,14 @@ export default () => {
             status.selectNotAll = false
         }
     })
+
+    onUnmounted(() => {
+        window.removeEventListener('resize', updateShowAll, { passive: true })
+    })
+
+    const updateShowAll = () => {
+        status.showAll = window.innerWidth >= 600;
+    }
 
     return { statics, courseStatistic, courseFilterStatus, status }
 
