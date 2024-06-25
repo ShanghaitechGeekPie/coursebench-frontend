@@ -36,6 +36,20 @@ export function averageOf(arr) {
   return sumOf(arr) / arr.length
 }
 
+/**
+ * Given an array, an prior average and prior count, return the bayesian average of those items.
+ * @param {Array<any>} arr
+ * @param {Array<any>} priorAverage
+ * @param {any} priorCount
+ * @returns any - The bayesian average of the numbers in the array.
+ */
+export function bayesianAverageOf(arr, priorAverage, priorCount) {
+  if (arr.length == 0) {
+    return 0;
+  }
+  return (priorCount * priorAverage + sumOf(arr)) / (priorCount + arr.length)
+}
+
 
 /**
  * It takes an array of numbers and returns an array of numbers that are the same proportions of the

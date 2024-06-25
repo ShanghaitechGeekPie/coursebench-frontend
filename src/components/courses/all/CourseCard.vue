@@ -153,6 +153,7 @@ import useCourseCard from "@/composables/courses/all/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import { judgeItems, instituteInfo, scoreInfo } from "@/composables/global/useStaticData";
 import { averageOf } from "@/composables/global/useArrayUtils";
+import { bayesianAverageOf } from "@/composables/global/useArrayUtils";
 import { roundScore, enoughDataThreshold } from "@/composables/global/useParseScore"
 
 export default {
@@ -184,7 +185,13 @@ export default {
       let rounded = roundScore(score, this.course["comment_num"]);
       this.roundedScore.push(rounded);
     }
-    this.averageScore = averageOf(this.course.score) * 20;
+    // Bayes statistics inference
+    // averageScore = (C * m + Σ(ratings)) / (C + N)
+    // As of 2024/06/25, 20:01:
+    // C: Prior Comments Count = 847
+    // m: Prior Mean Rating = 3.853896103896104
+    // N: Current Comments Count = this.course.score
+    this.averageScore = bayesianAverageOf(this.course.score, 3.853896103896104, 847) * 20;
   },
 };
 </script>
