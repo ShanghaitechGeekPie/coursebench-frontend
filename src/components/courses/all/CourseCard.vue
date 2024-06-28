@@ -153,6 +153,7 @@ import useCourseCard from "@/composables/courses/all/useCourseCard";
 import AvatarContainer from "@/components/users/profile/AvatarContainer";
 import { judgeItems, instituteInfo, scoreInfo } from "@/composables/global/useStaticData";
 import { averageOf } from "@/composables/global/useArrayUtils";
+import { bayesianAverageOf } from "@/composables/global/useArrayUtils";
 import { roundScore, enoughDataThreshold } from "@/composables/global/useParseScore"
 
 export default {
@@ -184,7 +185,14 @@ export default {
       let rounded = roundScore(score, this.course["comment_num"]);
       this.roundedScore.push(rounded);
     }
-    this.averageScore = averageOf(this.course.score) * 20;
+    // Bayes statistics inference
+    // averageScore = (C * m + Σ(ratings)) / (C + N)
+    // C: Prior Comments Count = 2
+    // m: Prior Mean Rating = 3.19
+    // N: Current Comments Count = this.course.score
+    // By the way, we set a bar that the course must have at least 8 comments
+    // and the raw average score at 5 to consider this course as a full score course. 
+    this.averageScore = bayesianAverageOf(this.course.score, 4.1, 1, 5) * 20;
   },
 };
 </script>

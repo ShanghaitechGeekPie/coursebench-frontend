@@ -36,6 +36,25 @@ export function averageOf(arr) {
   return sumOf(arr) / arr.length
 }
 
+/**
+ * Given an array, an prior average and prior count, return the bayesian average of those items.
+ * @param {Array<any>} arr
+ * @param {Array<any>} priorAverage
+ * @param {any} priorCount
+ * @param {any} fullScoreBar - The number of reviews required to consider the average as 5.
+ * @returns any - The bayesian average of the numbers in the array.
+ */
+export function bayesianAverageOf(arr, priorAverage, priorCount, fullScoreBar) {
+  if (arr.length == 0) {
+    return 0;
+  }
+  if(averageOf(arr) == 5 && arr.length >= fullScoreBar) {
+    return 5;
+  }
+
+  return (priorCount * priorAverage + sumOf(arr)) / (priorCount + arr.length)
+}
+
 
 /**
  * It takes an array of numbers and returns an array of numbers that are the same proportions of the
