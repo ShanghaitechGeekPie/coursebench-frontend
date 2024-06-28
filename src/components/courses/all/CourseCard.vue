@@ -192,7 +192,7 @@ export default {
     // N: Current Comments Count = this.course.score
     // By the way, we set a bar that the course must have at least 8 comments
     // and the raw average score at 5 to consider this course as a full score course. 
-    this.averageScore = bayesianAverageOf(this.course.score, 3.19, 2, 8) * 20;
+    this.averageScore = bayesianAverageOf(this.course.score, 4.1, 1, 5) * 20;
   },
 };
 </script>
