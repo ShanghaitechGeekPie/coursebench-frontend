@@ -6,7 +6,7 @@
     >
       <div
         class="mt-4"
-        v-html="useMarkdown(benchReviewerPolicy)"
+        v-html="useMarkdownWithHTML(benchReviewerPolicy)"
         style="white-space: pre-line"
       ></div>
     </div>
@@ -22,8 +22,8 @@ import {
   parseHomeLink,
 } from '@/composables/global/useSponsors';
 import { openInplace } from '@/composables/global/useExternalUrl';
-import useMarkdown from '@/composables/global/useMarkdown';
 import { benchReviewerPolicy } from 'Policy';
+import { useMarkdownWithHTML } from '../composables/global/useMarkdown';
 
 export default {
   setup() {
@@ -44,7 +44,7 @@ export default {
       parseAvatarLink,
       openInplace,
       benchReviewerPolicy,
-      useMarkdown,
+      useMarkdownWithHTML,
     };
   },
   components: {
