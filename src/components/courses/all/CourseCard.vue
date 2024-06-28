@@ -187,14 +187,12 @@ export default {
     }
     // Bayes statistics inference
     // averageScore = (C * m + Σ(ratings)) / (C + N)
-    // As of 2024/06/25, 20:01, Prior Comments Count = 847
-    // Since Prior Comments Count is too large, we just take Prior Comments Count as 2.
     // C: Prior Comments Count = 2
-    // m: Prior Mean Rating = 3.853896103896104
+    // m: Prior Mean Rating = 3.19
     // N: Current Comments Count = this.course.score
     // By the way, we set a bar that the course must have at least 8 comments
     // and the raw average score at 5 to consider this course as a full score course. 
-    this.averageScore = bayesianAverageOf(this.course.score, 3.853896103896104, 2, 8) * 20;
+    this.averageScore = bayesianAverageOf(this.course.score, 3.19, 2, 8) * 20;
   },
 };
 </script>
