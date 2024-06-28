@@ -187,11 +187,13 @@ export default {
     }
     // Bayes statistics inference
     // averageScore = (C * m + Σ(ratings)) / (C + N)
-    // As of 2024/06/25, 20:01:
-    // C: Prior Comments Count = 847
+    // As of 2024/06/25, 20:01, Prior Comments Count = 847
+    // Since Prior Comments Count is too large, we just take Prior Comments Count
+    // as the minimum number of comments required to give a course an average score.
+    // C: Prior Comments Count = enoughDataThreshold (3 at 2024/6/28)
     // m: Prior Mean Rating = 3.853896103896104
     // N: Current Comments Count = this.course.score
-    this.averageScore = bayesianAverageOf(this.course.score, 3.853896103896104, 847) * 20;
+    this.averageScore = bayesianAverageOf(this.course.score, 3.853896103896104, enoughDataThreshold) * 20;
   },
 };
 </script>
