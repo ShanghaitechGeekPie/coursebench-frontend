@@ -14,7 +14,7 @@
           <v-icon size="18" style="transform: translate(0, 1px)">
             {{ statics.icons.mdiPencil }}
           </v-icon>
-          {{ writingMode ? "修改评论" : "写评论" }}
+          {{ writingMode ? '修改评论' : '写评论' }}
         </v-btn>
         <v-btn
           v-else
@@ -181,7 +181,7 @@
                   @click="doSubmit"
                   :loading="formStatus.loading"
                 >
-                  {{ writingMode == "edit" ? "修改评论" : "发表评论" }}
+                  {{ writingMode == 'edit' ? '修改评论' : '发表评论' }}
                   <v-icon>
                     {{ statics.icons.mdiChevronRight }}
                   </v-icon>
@@ -196,12 +196,12 @@
 </template>
 
 <script>
-import useWritingBox from "@/composables/courses/comment/useWritingBox";
+import useWritingBox from '@/composables/courses/comment/useWritingBox';
 // import useProfile from "@/composables/users/profile/useProfile";
-import AvatarContainer from "@/components/users/profile/AvatarContainer";
-import TextContainer from "@/components/users/comment/TextContainer";
-import { inject } from "vue";
-import { gradingEmojis } from "@/composables/global/useStaticData";
+import AvatarContainer from '@/components/users/profile/AvatarContainer';
+import TextContainer from '@/components/users/comment/TextContainer';
+import { inject } from 'vue';
+import { gradingEmojis } from '@/composables/global/useStaticData';
 
 export default {
   components: {
@@ -220,7 +220,7 @@ export default {
       courseYear,
       courseTerm,
     } = useWritingBox();
-    const global = inject("global");
+    const global = inject('global');
 
     return {
       statics,
@@ -244,10 +244,10 @@ export default {
   methods: {
     getSemesterCode() {
       if (this.courseYear === 0) {
-        return "";
+        return '';
       }
-      if (this.courseTerm === "") {
-        return "";
+      if (this.courseTerm === '') {
+        return '';
       }
       return this.courseYear + this.courseTerm;
     },

@@ -30,10 +30,22 @@
           <div v-if="status.showAll">
             <div class="d-flex pt-1">
               <div>
-                <v-checkbox @change="handleSelectAll($event)" :value="status.selectAll" dense label="全选" hide-details></v-checkbox>
+                <v-checkbox
+                  @change="handleSelectAll($event)"
+                  :value="status.selectAll"
+                  dense
+                  label="全选"
+                  hide-details
+                ></v-checkbox>
               </div>
               <div class="pl-8">
-                <v-checkbox @change="handleSelectAll(!$event)" :value="status.selectNotAll" dense label="全不选" hide-details></v-checkbox>
+                <v-checkbox
+                  @change="handleSelectAll(!$event)"
+                  :value="status.selectNotAll"
+                  dense
+                  label="全不选"
+                  hide-details
+                ></v-checkbox>
               </div>
             </div>
             <div
@@ -42,9 +54,16 @@
               :class="index !== 0 ? 'mt-n4' : ''"
             >
               <div class="pt-2">
-                <v-checkbox dense v-model="courseFilterStatus.selected" :value="key">
+                <v-checkbox
+                  dense
+                  v-model="courseFilterStatus.selected"
+                  :value="key"
+                >
                   <template #label>
-                    <div class="d-flex justify-space-between" style="width: 100%">
+                    <div
+                      class="d-flex justify-space-between"
+                      style="width: 100%"
+                    >
                       <div>{{ key }}</div>
                       <div>{{ value }}节</div>
                     </div>
@@ -63,32 +82,35 @@
   </div>
 </template>
 <script>
-import useStatisticCard from "@/composables/courses/all/useStatisticCard";
+import useStatisticCard from '@/composables/courses/all/useStatisticCard';
 
 export default {
   setup() {
-    const { statics, courseStatistic, status, courseFilterStatus } = useStatisticCard();
+    const { statics, courseStatistic, status, courseFilterStatus } =
+      useStatisticCard();
     return {
       statics,
       courseStatistic,
-      courseFilterStatus, 
+      courseFilterStatus,
       status,
     };
   },
   props: {
     width: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   methods: {
     handleSelectAll(event) {
       if (event) {
-        this.courseFilterStatus.selected = Object.keys(this.courseStatistic.count).filter(key => key !== "__ob__");
+        this.courseFilterStatus.selected = Object.keys(
+          this.courseStatistic.count,
+        ).filter((key) => key !== '__ob__');
       } else {
         this.courseFilterStatus.selected = [];
       }
-    }, 
-  }
+    },
+  },
 };
 </script>

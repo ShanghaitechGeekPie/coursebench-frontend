@@ -1,13 +1,12 @@
-import { mdiStar, mdiStarOutline } from "@mdi/js";
+import { mdiStar, mdiStarOutline } from '@mdi/js';
 
 export default () => {
+  const statics = {
+    icons: {
+      mdiStarOutline,
+      mdiStar,
+    },
+  };
 
-    const statics = {
-        icons: {
-            mdiStarOutline,
-            mdiStar
-        }
-    }
-
-    return { statics }
-}
+  return { statics };
+};

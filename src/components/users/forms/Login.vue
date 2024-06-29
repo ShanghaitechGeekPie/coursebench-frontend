@@ -12,10 +12,10 @@
       class="pt-6 pt-sm-11 px-6 px-sm-11 pb-0 d-flex justify-space-between"
     >
       <div>
-        <img 
-          class='small-icon' 
-          :src="$vuetify.theme.dark ? logoDark : logoLight" 
-          alt=''
+        <img
+          class="small-icon"
+          :src="$vuetify.theme.dark ? logoDark : logoLight"
+          alt=""
         />
       </div>
       <div>
@@ -33,7 +33,7 @@
       <v-window-item :value="0" style="height: 100%">
         <v-card-text
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; min-height: 262px;"
+          style="height: 100%; min-height: 262px"
         >
           <div>
             <div class="font-weight-bold text-h5 pt-2">登录</div>
@@ -74,7 +74,7 @@
       <v-window-item :value="1" style="height: 100%">
         <v-card-text
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; min-height: 262px;"
+          style="height: 100%; min-height: 262px"
         >
           <div>
             <div class="text-body-2 py-2 overflow-ellipsis">
@@ -91,10 +91,7 @@
               @submit="$event.preventDefault(), clickNextStep()"
             >
               <v-card-text class="pa-0">
-                <v-text-field
-                  v-model="userData.email"
-                  class="fake-input"
-                >
+                <v-text-field v-model="userData.email" class="fake-input">
                 </v-text-field>
                 <v-text-field
                   v-model="userData.password"
@@ -139,7 +136,7 @@
       <v-window-item :value="2" style="height: 100%">
         <v-card-text
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; min-height: 262px;"
+          style="height: 100%; min-height: 262px"
         >
           <div>
             <div class="text-body-2 py-2 overflow-ellipsis">
@@ -157,7 +154,13 @@
               <v-radio-group v-model="userData.resetPasswordMethod">
                 <v-radio value="email" class="black--text">
                   <template v-slot:label>
-                    <div :class="[$vuetify.theme.dark ? 'white--text' : 'black--text']">通过电子邮件发送安全代码</div>
+                    <div
+                      :class="[
+                        $vuetify.theme.dark ? 'white--text' : 'black--text',
+                      ]"
+                    >
+                      通过电子邮件发送安全代码
+                    </div>
                   </template>
                 </v-radio>
               </v-radio-group>
@@ -186,7 +189,7 @@
       <v-window-item :value="3" style="height: 100%">
         <v-card-text
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; min-height: 262px;"
+          style="height: 100%; min-height: 262px"
         >
           <div>
             <div class="text-body-2 py-2 overflow-ellipsis">
@@ -239,16 +242,18 @@
               length="6"
               type="number"
               v-model="userData.captcha"
-              @finish="formStatus.isResetPassword ? doResetPassword() : doLogin()"
+              @finish="
+                formStatus.isResetPassword ? doResetPassword() : doLogin()
+              "
               ref="captchaOptInput"
             ></v-otp-input>
           </div>
         </v-card-text>
-      </v-window-item>      
+      </v-window-item>
       <v-window-item :value="4" style="height: 100%">
         <v-card-text
           class="px-6 px-sm-11 py-0 d-flex justify-sm-space-between flex-column"
-          style="height: 100%; min-height: 262px;"
+          style="height: 100%; min-height: 262px"
         >
           <div class="text-h5 py-2 overflow-ellipsis">还差最后一步</div>
           <div class="d-flex justify-center py-sm-0 py-4">
@@ -257,15 +262,7 @@
             </v-icon>
           </div>
           <div
-            class="
-              px-0
-              pt-0
-              pb-6 pb-sm-11
-              pt-4 pt-sm-0
-              d-flex
-              flex-column
-              justify-end
-            "
+            class="px-0 pt-0 pb-6 pb-sm-11 pt-4 pt-sm-0 d-flex flex-column justify-end"
           >
             <div class="text-body-1">
               重置密码的邮件已发送至您的邮箱，请点击其中的激活链接以重置您的密码
@@ -278,19 +275,26 @@
 </template>
 
 <script>
-import { inject } from "vue";
-import useLogin from "@/composables/users/forms/useLogin";
-import useForms from "@/composables/users/forms/useForms";
-import useAfterRender from "@/composables/global/useAfterRender";
-import logoDark from "@/assets/logo-white.svg";
-import logoLight from "@/assets/logo.svg";
+import { inject } from 'vue';
+import useLogin from '@/composables/users/forms/useLogin';
+import useForms from '@/composables/users/forms/useForms';
+import useAfterRender from '@/composables/global/useAfterRender';
+import logoDark from '@/assets/logo-white.svg';
+import logoLight from '@/assets/logo.svg';
 
 export default {
   setup() {
     const { formRules } = useForms();
-    const closeDialog = inject("closeDialog");
-    const openDialog = inject("openDialog");
-    const { statics, userData, formStatus, doLogin, getCaptcha, doResetPassword } = useLogin();
+    const closeDialog = inject('closeDialog');
+    const openDialog = inject('openDialog');
+    const {
+      statics,
+      userData,
+      formStatus,
+      doLogin,
+      getCaptcha,
+      doResetPassword,
+    } = useLogin();
     return {
       closeDialog,
       openDialog,
@@ -310,7 +314,10 @@ export default {
       if (this.formStatus.windowStep === 2) {
         this.formStatus.windowStep -= 1;
         this.formStatus.isResetPassword = false;
-      } else if (this.formStatus.windowStep === 3 && (!this.formStatus.isResetPassword)) {
+      } else if (
+        this.formStatus.windowStep === 3 &&
+        !this.formStatus.isResetPassword
+      ) {
         this.formStatus.windowStep = 1;
       } else if (this.formStatus.windowStep > 0) {
         this.formStatus.windowStep -= 1;
@@ -334,12 +341,15 @@ export default {
           retry: true,
           timeout: 300,
         });
-      } else if (this.formStatus.windowStep === 2 && this.userData.resetPasswordMethod !== "") {
-        this.formStatus.windowStep += 1; 
+      } else if (
+        this.formStatus.windowStep === 2 &&
+        this.userData.resetPasswordMethod !== ''
+      ) {
+        this.formStatus.windowStep += 1;
         useAfterRender(() => this.$refs.captchaOptInput.focus(), {
           retry: true,
           timeout: 300,
-        });        
+        });
       }
     },
   },

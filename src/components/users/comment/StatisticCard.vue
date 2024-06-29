@@ -1,6 +1,9 @@
 <template>
   <div :class="[$vuetify.breakpoint.mdOnly ? 'd-flex' : '', 'justify-center']">
-    <div class="pt-4" :style="{ width: $vuetify.breakpoint.mdOnly ? '812px' : '' }">
+    <div
+      class="pt-4"
+      :style="{ width: $vuetify.breakpoint.mdOnly ? '812px' : '' }"
+    >
       <div class="d-flex justify-space-between pt-2">
         <div>
           <div>
@@ -15,7 +18,9 @@
       <div class="d-flex justify-space-between pt-2">
         <div>
           <div>
-            <v-icon size="18">{{ statics.icons.mdiCommentCheckOutline }}</v-icon>
+            <v-icon size="18">{{
+              statics.icons.mdiCommentCheckOutline
+            }}</v-icon>
             <span class="text-sm-subtitle-1 pl-1">评价总数</span>
           </div>
         </div>
@@ -46,7 +51,12 @@
             :key="index"
           >
             <div v-if="value">
-              <v-checkbox dense v-model="status.selected" :value="key" hide-details>
+              <v-checkbox
+                dense
+                v-model="status.selected"
+                :value="key"
+                hide-details
+              >
                 <template #label>
                   <div class="d-flex justify-space-between" style="width: 100%">
                     <div>{{ key }}</div>
@@ -62,17 +72,17 @@
   </div>
 </template>
 <script>
-import useStatisticCard from "@/composables/users/comment/useStatisticCard"
+import useStatisticCard from '@/composables/users/comment/useStatisticCard';
 
 export default {
   setup() {
-    const { commentStatistic, statics, status } = useStatisticCard()
-    return { commentStatistic, statics, status }
-  }, 
+    const { commentStatistic, statics, status } = useStatisticCard();
+    return { commentStatistic, statics, status };
+  },
   created() {
     if (this.$vuetify.breakpoint.mdAndDown) {
-      this.status.showAll = false
+      this.status.showAll = false;
     }
-  }
-}
+  },
+};
 </script>

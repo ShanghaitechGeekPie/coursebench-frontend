@@ -1,5 +1,5 @@
-import { watch } from "vue"
+import { watch } from 'vue';
 
 export default (variable, callback) => {
-    watch(variable, callback, { deep: true, immediate: true })
-}
+  watch(variable, callback, { deep: true, immediate: true });
+};

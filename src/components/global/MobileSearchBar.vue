@@ -6,55 +6,56 @@
       </v-btn>
     </div>
     <div class="mobile-search-bar" v-if="status.showSearchBar">
-      <v-text-field 
-        hide-details 
+      <v-text-field
+        hide-details
         solo
-        :flat="!status.showSearchBar" 
+        :flat="!status.showSearchBar"
         :prepend-inner-icon="icons.mdiMagnify"
         autofocus
         @blur="status.showSearchBar = false"
-        @input="$emit('input', $event), isCurrentPath('^\/$') ? $router.push('/') : ''"
+        @input="
+          $emit('input', $event), isCurrentPath('^\/$') ? $router.push('/') : ''
+        "
         placeholder="以空格间隔关键字或以regexp:开头输入正则表达式"
         :value="value"
-      >  
+      >
       </v-text-field>
-    </div>    
+    </div>
   </div>
 </template>
 <script>
-import { mdiMagnify } from "@mdi/js";
+import { mdiMagnify } from '@mdi/js';
 import { reactive } from 'vue';
-import useRouteMatch from "@/composables/global/useRouteMatch"
+import useRouteMatch from '@/composables/global/useRouteMatch';
 
 export default {
   setup() {
     const status = reactive({
-      showSearchBar: false, 
-    })
+      showSearchBar: false,
+    });
 
-    const { isCurrentPath } = useRouteMatch()
+    const { isCurrentPath } = useRouteMatch();
 
-    return { status, isCurrentPath }
-  }, 
+    return { status, isCurrentPath };
+  },
   data() {
     return {
       icons: {
-        mdiMagnify
-      }
-    }
-  }, 
+        mdiMagnify,
+      },
+    };
+  },
   model: {
     prop: 'value',
-    event: 'input'
-  }, 
+    event: 'input',
+  },
   props: {
     value: {
       type: String,
-      default: ''
-    }
-  }
-}
-
+      default: '',
+    },
+  },
+};
 </script>
 <style scoped>
 .mobile-search-bar {

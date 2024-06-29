@@ -2,7 +2,9 @@
   <div>
     <div
       class="d-flex justify-center"
-      :style="{ transform: $vuetify.breakpoint.mdAndDown ? 'translate(0, -76px)' : '' }"
+      :style="{
+        transform: $vuetify.breakpoint.mdAndDown ? 'translate(0, -76px)' : '',
+      }"
     >
       <AvatarContainer
         :name="teacherDetail.name"
@@ -38,8 +40,8 @@
   </div>
 </template>
 <script>
-import useDetail from "@/composables/teachers/detail/useDetail";
-import AvatarContainer from "@/components/users/profile/AvatarContainer";
+import useDetail from '@/composables/teachers/detail/useDetail';
+import AvatarContainer from '@/components/users/profile/AvatarContainer';
 
 export default {
   components: { AvatarContainer },

@@ -61,18 +61,12 @@
         <span>{{ userProfile.email }}</span>
       </div>
     </div>
-    <div
-      class="d-flex justify-center pt-3"
-      v-if="userProfile.invitation_code"
-    >
+    <div class="d-flex justify-center pt-3" v-if="userProfile.invitation_code">
       <div class="grey--text text--darken-2 single-line-limit">
         <span>邀请码：{{ userProfile.invitation_code }}</span>
       </div>
     </div>
-    <div
-      class="d-flex justify-center pt-3"
-      v-if="userProfile.reward>=0"
-    >
+    <div class="d-flex justify-center pt-3" v-if="userProfile.reward >= 0">
       <div class="grey--text text--darken-2 single-line-limit">
         <span>已获赏金：{{ userProfile.reward / 100 }}元</span>
       </div>

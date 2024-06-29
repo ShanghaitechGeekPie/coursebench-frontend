@@ -2,19 +2,24 @@
   <div v-if="$vuetify.breakpoint.xsOnly">
     <div class="main-card" style="min-width: 300px">
       <div class="d-flex justify-center">
-        <div v-if="status.loading"
+        <div
+          v-if="status.loading"
           class="loading-container-mobile d-flex justify-center"
         >
           <div class="d-flex justify-center flex-column">
-            <v-progress-circular 
-              indeterminate 
+            <v-progress-circular
+              indeterminate
               size="128"
               width="8"
               color="primary"
             ></v-progress-circular>
-          </div> 
-        </div> 
-        <v-icon v-else-if="status.errorMessage == ''" size="160" color="success">
+          </div>
+        </div>
+        <v-icon
+          v-else-if="status.errorMessage == ''"
+          size="160"
+          color="success"
+        >
           {{ statics.icons.mdiCheckboxMarkedCircleOutline }}
         </v-icon>
         <v-icon v-else size="160" color="error">
@@ -54,11 +59,16 @@
     </div>
   </div>
   <div
-    :style="{ background: $vuetify.theme.isDark ? '' : '#f9f9f9', 'min-height': '100%' }"
+    :style="{
+      background: $vuetify.theme.isDark ? '' : '#f9f9f9',
+      'min-height': '100%',
+    }"
     v-else
   >
     <v-sheet
-      :color="$vuetify.theme.isDark ? statics.backgroundDark : statics.backgroundLight"
+      :color="
+        $vuetify.theme.isDark ? statics.backgroundDark : statics.backgroundLight
+      "
       :height="$vuetify.breakpoint.xsOnly ? 91 : '40vh'"
     ></v-sheet>
     <v-fade-transition>
@@ -71,18 +81,19 @@
         >
           <div class="px-16 pt-16 d-flex">
             <div style="height: 100%">
-              <div v-if="status.loading"
+              <div
+                v-if="status.loading"
                 class="loading-container d-flex justify-center"
               >
                 <div class="d-flex justify-center flex-column">
-                  <v-progress-circular 
-                    indeterminate 
+                  <v-progress-circular
+                    indeterminate
                     size="100"
                     width="8"
                     color="primary"
                   ></v-progress-circular>
-                </div> 
-              </div>              
+                </div>
+              </div>
               <v-icon
                 v-else-if="status.errorMessage == ''"
                 size="128"
@@ -100,10 +111,8 @@
             >
               <div v-if="status.loading">
                 <div class="text-h4 pt-6">正在加载中...</div>
-                <div class="pt-6 word-wrap">
-                  您的账号即将完成激活，请稍等。
-                </div>
-              </div>            
+                <div class="pt-6 word-wrap">您的账号即将完成激活，请稍等。</div>
+              </div>
               <div v-else-if="status.errorMessage == ''">
                 <div class="text-h4 pt-6">电子邮箱验证成功!</div>
                 <div class="pt-6 word-wrap">
@@ -137,7 +146,7 @@
 </template>
 
 <script>
-import useActive from "@/composables/users/useActive";
+import useActive from '@/composables/users/useActive';
 
 export default {
   setup() {

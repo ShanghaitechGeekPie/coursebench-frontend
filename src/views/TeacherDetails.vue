@@ -69,8 +69,8 @@
                       v-else-if="
                         courseText.filter((course) =>
                           courseFilterStatus.selected.some(
-                            (school) => school === course.institute
-                          )
+                            (school) => school === course.institute,
+                          ),
                         ).length === 0
                       "
                     >
@@ -88,7 +88,7 @@
                             :width="adoptiveCardWidth + 'px'"
                             v-if="
                               courseFilterStatus.selected.some(
-                                (school) => school === course.institute
+                                (school) => school === course.institute,
                               )
                             "
                           />
@@ -106,17 +106,17 @@
   </div>
 </template>
 <script>
-import Detail from "@/components/teachers/detail/Detail";
-import BackgroundImage from "@/components/teachers/detail/BackgroundImage";
-import CourseCard from "@/components/teachers/course/CourseCard";
-import StatisticCard from "@/components/teachers/course/StatisticCard";
-import useTeacherDetail from "@/composables/teachers/useTeacherDetail";
-import CourseLoader from "@/components/teachers/loader/CourseLoader";
-import DetailLoader from "@/components/teachers/loader/DetailLoader";
-import StatisticLoader from "@/components/teachers/loader/StatisticLoader";
-import ImageLoader from "@/components/teachers/loader/ImageLoader";
-import Nothing from "@/components/global/Nothing";
-import { instituteInfo } from "@/composables/global/useStaticData";
+import Detail from '@/components/teachers/detail/Detail';
+import BackgroundImage from '@/components/teachers/detail/BackgroundImage';
+import CourseCard from '@/components/teachers/course/CourseCard';
+import StatisticCard from '@/components/teachers/course/StatisticCard';
+import useTeacherDetail from '@/composables/teachers/useTeacherDetail';
+import CourseLoader from '@/components/teachers/loader/CourseLoader';
+import DetailLoader from '@/components/teachers/loader/DetailLoader';
+import StatisticLoader from '@/components/teachers/loader/StatisticLoader';
+import ImageLoader from '@/components/teachers/loader/ImageLoader';
+import Nothing from '@/components/global/Nothing';
+import { instituteInfo } from '@/composables/global/useStaticData';
 
 export default {
   components: {
@@ -132,8 +132,15 @@ export default {
     Nothing,
   },
   setup() {
-    const { courseText, status, courseFilterStatus, teacherDetail } = useTeacherDetail();
-    return { courseText, status, courseFilterStatus, instituteInfo, teacherDetail };
+    const { courseText, status, courseFilterStatus, teacherDetail } =
+      useTeacherDetail();
+    return {
+      courseText,
+      status,
+      courseFilterStatus,
+      instituteInfo,
+      teacherDetail,
+    };
   },
   data() {
     return {
@@ -146,12 +153,12 @@ export default {
         return {};
       } else if (this.scrollTop <= 40) {
         return {
-          transform: "translate(0, -160px)",
+          transform: 'translate(0, -160px)',
         };
       } else {
         return {
-          position: "fixed",
-          top: "90px",
+          position: 'fixed',
+          top: '90px',
         };
       }
     },
@@ -178,7 +185,7 @@ export default {
       } else {
         return Math.min(
           Math.floor((this.$vuetify.breakpoint.width - 428) / 428),
-          3
+          3,
         );
       }
     },
@@ -194,7 +201,7 @@ export default {
     },
   },
   mounted() {
-    document.addEventListener("scroll", () => {
+    document.addEventListener('scroll', () => {
       this.scrollTop = document.documentElement.scrollTop;
     });
   },

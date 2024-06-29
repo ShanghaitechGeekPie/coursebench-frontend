@@ -1,30 +1,29 @@
-import { inject, reactive, toRefs } from "vue"
-import { 
-  mdiCommentCheckOutline, 
-  mdiTriangle, 
-  mdiChevronDown, 
-  mdiChevronUp, 
-  mdiClipboardText, 
-} from "@mdi/js"
+import { inject, reactive, toRefs } from 'vue';
+import {
+  mdiCommentCheckOutline,
+  mdiTriangle,
+  mdiChevronDown,
+  mdiChevronUp,
+  mdiClipboardText,
+} from '@mdi/js';
 
 export default () => {
-
-  const commentStatistic = inject('commentStatistic')
+  const commentStatistic = inject('commentStatistic');
 
   const statics = {
     icons: {
       mdiCommentCheckOutline,
       mdiChevronDown,
       mdiChevronUp,
-      mdiTriangle, 
-      mdiClipboardText, 
+      mdiTriangle,
+      mdiClipboardText,
     },
-  }
+  };
 
   const status = reactive({
     showAll: true,
-    ...toRefs(inject("commentFilterStatus"))
-  })
+    ...toRefs(inject('commentFilterStatus')),
+  });
 
-  return { commentStatistic, statics, status }
-}
+  return { commentStatistic, statics, status };
+};
