@@ -12,9 +12,26 @@ const parser = new MarkdownIt({
   quotes: '“”‘’',
 });
 
-parser.use(prism).use(pangu);
+const parser_with_html = new MarkdownIt({
+  html: true,
+  xhtmlOut: true,
+  breaks: false,
+  langPrefix: 'language-',
+  linkify: true,
+  typographer: true,
+  quotes: '“”‘’',
+});
 
-export default (content) => {
+parser.use(prism).use(pangu);
+parser_with_html.use(prism).use(pangu);
+
+const useMarkdown = (content) => {
   // parser.use(prism).use(pangu)
   return parser.render(content);
 };
+
+const useMarkdownWithHTML = (content) => {
+  return parser_with_html.render(content);
+};
+
+export { useMarkdown, useMarkdownWithHTML };

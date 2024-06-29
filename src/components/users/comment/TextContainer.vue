@@ -147,7 +147,7 @@
 </template>
 <script>
 import useTextContainer from '@/composables/users/comment/useTextContainer';
-import useMarkdown from '@/composables/global/useMarkdown';
+import { useMarkdown } from '@/composables/global/useMarkdown';
 import useAfterRender from '@/composables/global/useAfterRender';
 
 export default {

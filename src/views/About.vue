@@ -275,7 +275,7 @@ import {
   parseHomeLink,
 } from '@/composables/global/useSponsors';
 import { openInplace } from '@/composables/global/useExternalUrl';
-import useMarkdown from '@/composables/global/useMarkdown';
+import { useMarkdown } from '@/composables/global/useMarkdown';
 import { termsOfService, privacyPolicy } from 'Policy';
 
 export default {
