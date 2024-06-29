@@ -3,30 +3,36 @@
     <div v-if="$vuetify.breakpoint.xsOnly">
       <div class="main-card" style="min-width: 300px">
         <div class="d-flex justify-center">
-          <div v-if="!status.inputFinished"
+          <div
+            v-if="!status.inputFinished"
             class="loading-container-mobile d-flex justify-center"
           >
             <div class="d-flex justify-center flex-column">
               <div class="d-flex justify-center flex-column">
                 <v-icon size="128">
                   {{ statics.icons.mdiKeyVariant }}
-                </v-icon>   
-              </div> 
-            </div> 
-          </div>           
-          <div v-else-if="status.loading"
+                </v-icon>
+              </div>
+            </div>
+          </div>
+          <div
+            v-else-if="status.loading"
             class="loading-container-mobile d-flex justify-center"
           >
             <div class="d-flex justify-center flex-column">
-              <v-progress-circular 
-                indeterminate 
+              <v-progress-circular
+                indeterminate
                 size="128"
                 width="8"
                 color="primary"
               ></v-progress-circular>
-            </div> 
-          </div> 
-          <v-icon v-else-if="status.errorMessage == ''" size="160" color="success">
+            </div>
+          </div>
+          <v-icon
+            v-else-if="status.errorMessage == ''"
+            size="160"
+            color="success"
+          >
             {{ statics.icons.mdiCheckboxMarkedCircleOutline }}
           </v-icon>
           <v-icon v-else size="160" color="error">
@@ -46,7 +52,10 @@
                 hide-details
               ></v-input>
             </div>             -->
-            <v-form v-model="status.passwordFormValid" @submit="$event.preventDefault(), doResetPasswordActive()">
+            <v-form
+              v-model="status.passwordFormValid"
+              @submit="$event.preventDefault(), doResetPasswordActive()"
+            >
               <v-text-field
                 v-model="userData.password"
                 :type="status.passwordVisible ? 'text' : 'password'"
@@ -57,12 +66,10 @@
                     ? statics.icons.mdiEyeOff
                     : statics.icons.mdiEye
                 "
-                @click:append="
-                  status.passwordVisible = !status.passwordVisible
-                "
+                @click:append="status.passwordVisible = !status.passwordVisible"
               ></v-text-field>
-            </v-form>                  
-          </div>          
+            </v-form>
+          </div>
           <div v-else-if="status.loading">
             <div class="text-h4 pt-6 text-center">正在加载中...</div>
             <div class="pt-6 word-wrap text-center">
@@ -90,7 +97,7 @@
               v-if="!status.inputFinished"
             >
               下一步
-            </v-btn>                
+            </v-btn>
             <v-btn
               width="90px"
               elevation="1"
@@ -105,11 +112,18 @@
       </div>
     </div>
     <div
-      :style="{ background: $vuetify.theme.isDark ? '' : '#f9f9f9', 'min-height': '100%' }"
+      :style="{
+        background: $vuetify.theme.isDark ? '' : '#f9f9f9',
+        'min-height': '100%',
+      }"
       v-else
     >
       <v-sheet
-        :color="$vuetify.theme.isDark ? statics.backgroundDark : statics.backgroundLight"
+        :color="
+          $vuetify.theme.isDark
+            ? statics.backgroundDark
+            : statics.backgroundLight
+        "
         :height="$vuetify.breakpoint.xsOnly ? 91 : '40vh'"
       ></v-sheet>
       <v-fade-transition>
@@ -122,27 +136,29 @@
           >
             <div class="px-16 pt-16 d-flex">
               <div style="height: 100%">
-                <div v-if="!status.inputFinished"
+                <div
+                  v-if="!status.inputFinished"
                   class="loading-container d-flex justify-center"
                 >
                   <div class="d-flex justify-center flex-column">
                     <v-icon size="100">
                       {{ statics.icons.mdiKeyVariant }}
-                    </v-icon>   
-                  </div> 
-                </div>                               
-                <div v-else-if="status.loading"
+                    </v-icon>
+                  </div>
+                </div>
+                <div
+                  v-else-if="status.loading"
                   class="loading-container d-flex justify-center"
                 >
                   <div class="d-flex justify-center flex-column">
-                    <v-progress-circular 
-                      indeterminate 
+                    <v-progress-circular
+                      indeterminate
                       size="100"
                       width="8"
                       color="primary"
                     ></v-progress-circular>
-                  </div> 
-                </div>              
+                  </div>
+                </div>
                 <v-icon
                   v-else-if="status.errorMessage == ''"
                   size="128"
@@ -160,7 +176,10 @@
               >
                 <div v-if="!status.inputFinished">
                   <div class="text-h5 pt-6">重置密码</div>
-                  <v-form v-model="status.passwordFormValid" @submit="$event.preventDefault(), doResetPasswordActive()">
+                  <v-form
+                    v-model="status.passwordFormValid"
+                    @submit="$event.preventDefault(), doResetPasswordActive()"
+                  >
                     <v-text-field
                       class="mr-4"
                       v-model="userData.password"
@@ -176,14 +195,14 @@
                         status.passwordVisible = !status.passwordVisible
                       "
                     ></v-text-field>
-                  </v-form>                  
+                  </v-form>
                 </div>
                 <div v-else-if="status.loading">
                   <div class="text-h4 pt-6">正在加载中...</div>
                   <div class="pt-6 word-wrap">
                     您的密码即将完成重置，请稍等。
                   </div>
-                </div>            
+                </div>
                 <div v-else-if="status.errorMessage == ''">
                   <div class="text-h4 pt-6">密码重置成功!</div>
                   <div class="pt-6 word-wrap">
@@ -208,7 +227,7 @@
                   v-if="!status.inputFinished"
                 >
                   下一步
-                </v-btn>                
+                </v-btn>
                 <v-btn
                   width="90px"
                   elevation="1"
@@ -228,14 +247,15 @@
 </template>
 
 <script>
-import useResetPasswordActive from "@/composables/users/useResetPasswordActive";
-import useForms from "@/composables/users/forms/useForms";
-import useAfterRender from "@/composables/global/useAfterRender";
+import useResetPasswordActive from '@/composables/users/useResetPasswordActive';
+import useForms from '@/composables/users/forms/useForms';
+import useAfterRender from '@/composables/global/useAfterRender';
 
 export default {
   setup() {
     const { formRules } = useForms();
-    const { statics, status, userData, doResetPasswordActive } = useResetPasswordActive();
+    const { statics, status, userData, doResetPasswordActive } =
+      useResetPasswordActive();
 
     return { statics, status, userData, doResetPasswordActive, formRules };
   },
@@ -243,7 +263,7 @@ export default {
     useAfterRender(() => {
       this.$refs.passwordTextField.focus();
     });
-  }
+  },
 };
 </script>
 

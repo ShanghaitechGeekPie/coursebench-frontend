@@ -21,7 +21,7 @@ export function sortCmp(lhs, rhs) {
  * @returns any - The sum of the array.
  */
 export function sumOf(arr) {
-  return arr.reduce((a, b) => a + b, 0)
+  return arr.reduce((a, b) => a + b, 0);
 }
 
 /**
@@ -33,9 +33,8 @@ export function averageOf(arr) {
   if (arr.length == 0) {
     return 0;
   }
-  return sumOf(arr) / arr.length
+  return sumOf(arr) / arr.length;
 }
-
 
 /**
  * It takes an array of numbers and returns an array of numbers that are the same proportions of the
@@ -44,12 +43,12 @@ export function averageOf(arr) {
  * @returns Array<number> - An array of the same length as the input array, with each element divided by the sum of the
  * input array.
  */
- export function toDistribute(arr) {
-  let sum = sumOf(arr)
-  if (sum === 0) return arr
-  return arr.map((x) =>{
-    return x / sum
-  })
+export function toDistribute(arr) {
+  let sum = sumOf(arr);
+  if (sum === 0) return arr;
+  return arr.map((x) => {
+    return x / sum;
+  });
 }
 
 /**
@@ -61,13 +60,14 @@ export function averageOf(arr) {
  */
 export function equal(a, b) {
   if (a.length !== b.length) {
-    return false
+    return false;
   }
-  return !a.map((value, index, array) => {
-    return value === b[index]
-  }).some(x => x === false)
+  return !a
+    .map((value, index, array) => {
+      return value === b[index];
+    })
+    .some((x) => x === false);
 }
-
 
 /**
  * If the two values are not equal, return true, otherwise return false.
@@ -76,5 +76,5 @@ export function equal(a, b) {
  * @returns The function notEqual is being returned.
  */
 export function notEqual(a, b) {
-  return !equal(a, b)
+  return !equal(a, b);
 }

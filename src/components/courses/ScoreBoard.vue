@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import ScoreLine from "@/components/courses/ScoreLine";
-import { scoreInfo } from "@/composables/global/useStaticData";
+import ScoreLine from '@/components/courses/ScoreLine';
+import { scoreInfo } from '@/composables/global/useStaticData';
 
 export default {
   components: { ScoreLine },
@@ -22,7 +22,7 @@ export default {
     starPercent: Array,
     color: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   setup() {
@@ -31,5 +31,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

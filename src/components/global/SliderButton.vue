@@ -39,12 +39,12 @@
         :width="width"
         :x-large="xLarge"
         :x-small="xSmall"
-        :class="[ fontSize ]"
+        :class="[fontSize]"
       >
         <slot></slot>
       </v-btn>
       <div class="d-flex justify-center">
-        <div :style="{ 'height': '2px', 'width': sliderWidth }">
+        <div :style="{ height: '2px', width: sliderWidth }">
           <v-fade-transition>
             <div class="button-slider" v-if="hoverOnly ? hover : true"></div>
           </v-fade-transition>
@@ -54,181 +54,179 @@
   </v-hover>
 </template>
 <script>
-
 export default {
-  name: "SliderButton",
+  name: 'SliderButton',
   props: {
     absolute: {
       type: Boolean,
-      default: false
+      default: false,
     },
     append: {
       type: Boolean,
-      default: false
+      default: false,
     },
     block: {
       type: Boolean,
-      default: false
+      default: false,
     },
     bottom: {
       type: Boolean,
-      default: false
+      default: false,
     },
     color: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     dark: {
       type: Boolean,
-      default: false
+      default: false,
     },
     depressed: {
       type: Boolean,
-      default: false
+      default: false,
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     elevation: {
       type: [Number, String],
-      default: undefined
+      default: undefined,
     },
     fab: {
       type: Boolean,
-      default: false
+      default: false,
     },
     fixed: {
       type: Boolean,
-      default: false
+      default: false,
     },
     height: {
       type: [Number, String],
-      default: undefined
-    }, 
+      default: undefined,
+    },
     href: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     large: {
       type: Boolean,
-      default: false
+      default: false,
     },
     left: {
       type: Boolean,
-      default: false
+      default: false,
     },
     light: {
       type: Boolean,
-      default: false
+      default: false,
     },
     link: {
       type: Boolean,
-      default: false
+      default: false,
     },
     loading: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    "max-height": {
+    'max-height': {
       type: [Number, String],
-      default: undefined
+      default: undefined,
     },
-    "max-width": {
+    'max-width': {
       type: [Number, String],
-      default: undefined
+      default: undefined,
     },
-    "min-height": {
+    'min-height': {
       type: [Number, String],
-      default: undefined
+      default: undefined,
     },
-    "min-width": {
+    'min-width': {
       type: [Number, String],
-      default: undefined
+      default: undefined,
     },
     outlined: {
       type: Boolean,
-      default: false
+      default: false,
     },
     plain: {
       type: Boolean,
-      default: false
+      default: false,
     },
     replace: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    "retain-focus-on-click": {
+    'retain-focus-on-click': {
       type: Boolean,
-      default: false
+      default: false,
     },
     right: {
       type: Boolean,
-      default: false
+      default: false,
     },
     rounded: {
       type: Boolean,
-      default: false
+      default: false,
     },
     shaped: {
       type: Boolean,
-      default: false
+      default: false,
     },
     small: {
       type: Boolean,
-      default: false
+      default: false,
     },
     tag: {
       type: String,
-      default: "button"
+      default: 'button',
     },
     text: {
       type: Boolean,
-      default: false
+      default: false,
     },
     tile: {
       type: Boolean,
-      default: false
+      default: false,
     },
     to: {
       type: [String, Object],
-      default: undefined
+      default: undefined,
     },
     top: {
       type: Boolean,
-      default: false
+      default: false,
     },
     width: {
       type: [Number, String],
-      default: undefined
+      default: undefined,
     },
-    "x-large": {
+    'x-large': {
       type: Boolean,
-      default: false
+      default: false,
     },
-    "x-small": {
+    'x-small': {
       type: Boolean,
-      default: false
+      default: false,
     },
-    "hover-only": {
+    'hover-only': {
       type: Boolean,
-      default: false
+      default: false,
     },
-    "slider-width": {
+    'slider-width': {
       type: [Number, String],
-      default: "100%"
-    }, 
-    "font-size": {
+      default: '100%',
+    },
+    'font-size': {
       type: String,
-      default: ""
-    }
-  }
-}
-
+      default: '',
+    },
+  },
+};
 </script>
 <style scoped>
 .button-slider {
-  background-color: #1976D2;
+  background-color: #1976d2;
   height: 100%;
   width: 100%;
 }

@@ -26,7 +26,14 @@
             </v-row>
           </div>
         </template>
-        <template v-slot:footerNote v-if='$route.path === "/Recent" && (global.userProfile.is_admin || global.userProfile.is_community_admin)'>
+        <template
+          v-slot:footerNote
+          v-if="
+            $route.path === '/Recent' &&
+            (global.userProfile.is_admin ||
+              global.userProfile.is_community_admin)
+          "
+        >
           <div class="d-flex justify-end" style="flex-wrap: wrap">
             <div class="d-flex">
               <v-btn
@@ -40,11 +47,7 @@
                 :disabled="!global.isLogin"
               >
                 <div class="px-0">
-                  <span
-                    class="text-caption"
-                  >
-                    折叠
-                  </span>
+                  <span class="text-caption"> 折叠 </span>
                 </div>
               </v-btn>
             </div>
@@ -64,16 +67,22 @@ import useFoldComment from '@/composables/courses/comment/useFoldComment';
 
 export default {
   setup() {
-    const { doFold, doUnfold, commentFoldStatus } =
-      useFoldComment();
-    const global = inject("global")
+    const { doFold, doUnfold, commentFoldStatus } = useFoldComment();
+    const global = inject('global');
     const foldComment = ref(true);
     const statics = {
       icons: {
         mdiSchoolOutline,
       },
     };
-    return { foldComment, statics, global, doFold, doUnfold, commentFoldStatus };
+    return {
+      foldComment,
+      statics,
+      global,
+      doFold,
+      doUnfold,
+      commentFoldStatus,
+    };
   },
   props: {
     comment: Object,
@@ -99,6 +108,6 @@ export default {
 </script>
 <style>
 .fold-button {
-  padding: 0 !important;;
+  padding: 0 !important;
 }
 </style>

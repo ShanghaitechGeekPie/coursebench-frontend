@@ -38,7 +38,7 @@
         >
         </v-sheet>
         <div
-          :class="['d-flex', 'justify-space-between', 'mt-n8']"
+          :class="['d-flex', 'justify-space-between', 'mt-n8', 'align-center']"
           v-if="!status.showAll && !noExpand"
         >
           <slot :overflow="status.isOverflow">
@@ -63,7 +63,12 @@
           </v-chip>
         </div>
         <div
-          :class="['d-flex', 'justify-space-between', dense ? 'pr-sm-1' : '']"
+          :class="[
+            'd-flex',
+            'justify-space-between',
+            dense ? 'pr-sm-1' : '',
+            'align-center',
+          ]"
           v-if="status.showAll && !noExpand"
         >
           <slot :overflow="status.isOverflow">
@@ -142,7 +147,7 @@
 </template>
 <script>
 import useTextContainer from '@/composables/users/comment/useTextContainer';
-import useMarkdown from '@/composables/global/useMarkdown';
+import { useMarkdown } from '@/composables/global/useMarkdown';
 import useAfterRender from '@/composables/global/useAfterRender';
 
 export default {

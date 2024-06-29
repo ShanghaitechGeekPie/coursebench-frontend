@@ -48,7 +48,7 @@ export default () => {
       mdiSchoolOutline,
       mdiArrowLeft,
       mdiWindowClose,
-      mdiFormatPaint
+      mdiFormatPaint,
     },
     grade: [
       gradingInfo.quality,
@@ -251,9 +251,7 @@ export default () => {
   });
 
   const coverCommentMutation = useMutation('/comment/cover', {
-    onMutate: () => {
-      
-    },
+    onMutate: () => {},
     onSuccess: () => {
       formStatus.coverLoading = false;
       formStatus.regenerateLoading = false;
@@ -356,7 +354,7 @@ export default () => {
       id: formStatus.id,
       status: formStatus.is_covered,
     });
-  };  
+  };
 
   watch(
     commentText,
@@ -364,7 +362,10 @@ export default () => {
       if (commentText.value.length > 0) {
         courseName.value = commentText.value[0].course.name;
       }
-      if (global.userProfile.is_admin || global.userProfile.is_community_admin) {
+      if (
+        global.userProfile.is_admin ||
+        global.userProfile.is_community_admin
+      ) {
         userComments.value = commentText.value.map((comment) =>
           JSON.parse(JSON.stringify(comment)),
         );

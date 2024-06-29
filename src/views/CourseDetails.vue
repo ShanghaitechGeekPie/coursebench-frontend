@@ -81,15 +81,15 @@
 </template>
 
 <script>
-import DetailCard from "@/components/courses/DetailCard";
-import useCourseDetails from "@/composables/courses/comment/useCourseDetails";
-import CourseCommentCard from "@/components/courses/CourseCommentCard";
-import FilterBox from "@/components/courses/FilterBox";
-import WritingCard from "@/components/courses/WritingCard";
-import Nothing from "@/components/global/Nothing";
-import CommentLoader from "@/components/teachers/loader/CommentLoader";
-import FilterBoxLoader from "@/components/teachers/loader/FilterBoxLoader";
-import DetailCardLoader from "@/components/teachers/loader/DetailCardLoader";
+import DetailCard from '@/components/courses/DetailCard';
+import useCourseDetails from '@/composables/courses/comment/useCourseDetails';
+import CourseCommentCard from '@/components/courses/CourseCommentCard';
+import FilterBox from '@/components/courses/FilterBox';
+import WritingCard from '@/components/courses/WritingCard';
+import Nothing from '@/components/global/Nothing';
+import CommentLoader from '@/components/teachers/loader/CommentLoader';
+import FilterBoxLoader from '@/components/teachers/loader/FilterBoxLoader';
+import DetailCardLoader from '@/components/teachers/loader/DetailCardLoader';
 
 export default {
   components: {
@@ -133,7 +133,7 @@ export default {
     };
   },
   mounted() {
-    document.addEventListener("scroll", () => {
+    document.addEventListener('scroll', () => {
       this.scrollTop = document.documentElement.scrollTop;
     });
   },
@@ -146,7 +146,9 @@ export default {
         return mappedGroup.includes(item.group.id);
       });
       if (this.shareAnswer === -1) return;
-      let itemIndex = this.selectedComment.findIndex((item) => item.id === this.shareAnswer);
+      let itemIndex = this.selectedComment.findIndex(
+        (item) => item.id === this.shareAnswer,
+      );
       if (itemIndex === -1) return;
       let shareComment = this.selectedComment[itemIndex];
       this.selectedComment.splice(itemIndex, 1);
@@ -175,11 +177,11 @@ export default {
         return {};
       } else if (this.scrollTop <= 323) {
         return {
-          transform: "translate(0, 0px)",
+          transform: 'translate(0, 0px)',
         };
       } else {
         return {
-          transform: "translate(0, " + (this.scrollTop - 323) + "px)",
+          transform: 'translate(0, ' + (this.scrollTop - 323) + 'px)',
         };
       }
     },

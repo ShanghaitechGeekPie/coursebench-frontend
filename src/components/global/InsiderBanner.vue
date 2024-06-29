@@ -14,15 +14,13 @@
   </div>
 </template>
 <script>
-import Config from "Config"
+import Config from 'Config';
 
 export default {
   setup() {
-    
-    return { Config }
+    return { Config };
   },
-}
-
+};
 </script>
 <style scoped>
 .insider-banner {

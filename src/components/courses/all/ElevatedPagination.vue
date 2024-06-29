@@ -1,5 +1,10 @@
 <template>
-  <v-pagination :length="length" :total-visible="totalVisible" v-model="pageModel" @input="$emit('change',pageModel)" />
+  <v-pagination
+    :length="length"
+    :total-visible="totalVisible"
+    v-model="pageModel"
+    @input="$emit('change', pageModel)"
+  />
 </template>
 <script>
 export default {
@@ -31,23 +36,26 @@ export default {
     },
   },
   model: {
-    prop: "page",
-    event: "change",
+    prop: 'page',
+    event: 'change',
   },
 };
 </script>
 <style scoped lang="scss">
-::v-deep .v-pagination__item, ::v-deep .v-pagination__navigation{
+::v-deep .v-pagination__item,
+::v-deep .v-pagination__navigation {
   box-shadow: none;
 }
 
 ::v-deep .theme--light {
-  .v-pagination__item, .v-pagination__navigation{
+  .v-pagination__item,
+  .v-pagination__navigation {
     border: 1px solid #e6e6e6;
   }
 }
-::v-deep .theme--dark{
-  .v-pagination__item, .v-pagination__navigation{
+::v-deep .theme--dark {
+  .v-pagination__item,
+  .v-pagination__navigation {
     border: 1px solid #393939;
   }
 }

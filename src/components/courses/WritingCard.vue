@@ -1,5 +1,10 @@
 <template>
-  <div v-if="!(global.userProfile.is_admin || global.userProfile.is_community_admin) || writingMode != 'create'">
+  <div
+    v-if="
+      !(global.userProfile.is_admin || global.userProfile.is_community_admin) ||
+      writingMode != 'create'
+    "
+  >
     <v-dialog
       width="750"
       v-model="windowStatus.showDialog"
@@ -12,18 +17,33 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn v-bind="attrs" v-on="on" block outlined text class="pa-0">
-          <div v-if="!(global.userProfile.is_admin || global.userProfile.is_community_admin)">
-            <v-icon size="18" style="transform: translate(0, -1px)" class="pr-1">
+          <div
+            v-if="
+              !(
+                global.userProfile.is_admin ||
+                global.userProfile.is_community_admin
+              )
+            "
+          >
+            <v-icon
+              size="18"
+              style="transform: translate(0, -1px)"
+              class="pr-1"
+            >
               {{ statics.icons.mdiPencil }}
             </v-icon>
             <span v-if="writingMode == 'create'">{{ '写评论' }}</span>
             <span v-else>{{ '我的评论' }}</span>
           </div>
           <div v-else>
-            <v-icon size="18" style="transform: translate(0, -1px)" class="pr-1">
+            <v-icon
+              size="18"
+              style="transform: translate(0, -1px)"
+              class="pr-1"
+            >
               {{ statics.icons.mdiFormatPaint }}
             </v-icon>
-            <span>管理评论</span>          
+            <span>管理评论</span>
           </div>
         </v-btn>
       </template>
@@ -52,7 +72,12 @@
             <v-card-title class="pt-1 px-6 px-sm-11">
               <div>
                 <div class="font-weight-bold text-h5">
-                  {{ global.userProfile.is_admin || global.userProfile.is_community_admin ? '管理评论' : '我的评论' }}                  
+                  {{
+                    global.userProfile.is_admin ||
+                    global.userProfile.is_community_admin
+                      ? '管理评论'
+                      : '我的评论'
+                  }}
                 </div>
               </div>
             </v-card-title>
@@ -70,7 +95,10 @@
                         <v-divider></v-divider>
                         <div class="pt-4">
                           <div
-                            v-if="global.userProfile.is_admin || global.userProfile.is_community_admin"
+                            v-if="
+                              global.userProfile.is_admin ||
+                              global.userProfile.is_community_admin
+                            "
                             class="d-flex"
                           >
                             <div
@@ -176,7 +204,10 @@
                 class="pt-8 d-flex justify-end"
                 v-if="
                   teacherGroup.length != userComments.length &&
-                  !(global.userProfile.is_admin || global.userProfile.is_community_admin)
+                  !(
+                    global.userProfile.is_admin ||
+                    global.userProfile.is_community_admin
+                  )
                 "
               >
                 <v-btn
@@ -318,7 +349,9 @@
                   </v-slider>
                 </div>
               </div>
-              <div class="d-flex justify-end justify-sm-space-between flex-wrap">
+              <div
+                class="d-flex justify-end justify-sm-space-between flex-wrap"
+              >
                 <div
                   :class="[
                     'd-flex',
@@ -440,13 +473,13 @@
                           v-if="!formStatus.is_fold"
                         >
                           {{ formStatus.is_covered ? '取消遮盖' : '遮盖评论' }}
-                        </v-btn>                        
+                        </v-btn>
                         <v-btn
                           :color="formStatus.is_fold ? 'accent' : 'secondary'"
                           depressed
                           @click="doHideComment"
                           :loading="formStatus.hideLoading"
-                          v-if="!formStatus.is_covered"                          
+                          v-if="!formStatus.is_covered"
                         >
                           {{ formStatus.is_fold ? '取消隐藏' : '隐藏评论' }}
                         </v-btn>
@@ -455,7 +488,7 @@
                           depressed
                           @click="doRegenerateCover"
                           :loading="formStatus.regenerateLoading"
-                          v-if="formStatus.is_covered"                          
+                          v-if="formStatus.is_covered"
                         >
                           {{ '重新生成' }}
                         </v-btn>
@@ -552,7 +585,10 @@ export default {
     allowEdit() {
       if (this.formStatus.id == null) {
         return true;
-      } else if (this.global.userProfile.is_admin || this.global.userProfile.is_community_admin) {
+      } else if (
+        this.global.userProfile.is_admin ||
+        this.global.userProfile.is_community_admin
+      ) {
         if (
           this.formStatus.userProfile &&
           this.formStatus.userProfile.id == this.global.userProfile.id

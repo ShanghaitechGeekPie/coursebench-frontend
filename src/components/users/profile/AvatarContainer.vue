@@ -1,5 +1,8 @@
 <template>
-  <v-card flat :outlined="outlined" :class="[tile ? '' : 'rounded-circle']"
+  <v-card
+    flat
+    :outlined="outlined"
+    :class="[tile ? '' : 'rounded-circle']"
     :width="size"
     :height="size"
   >
@@ -10,14 +13,11 @@
       :class="[tile ? 'rounded' : '']"
     >
       <span
-        :class="[
-          adoptiveFont(slice ? slicedName : name),
-          fontColor,
-        ]"
+        :class="[adoptiveFont(slice ? slicedName : name), fontColor]"
         v-if="src === ''"
         >{{ slice ? slicedName : name }}</span
       >
-      <v-img :src="src" alt="Avatar" :aspect-ratio="aspectRatio" v-else></v-img>      
+      <v-img :src="src" alt="Avatar" :aspect-ratio="aspectRatio" v-else></v-img>
     </v-avatar>
     <slot></slot>
   </v-card>
@@ -27,11 +27,11 @@ export default {
   props: {
     name: {
       type: String,
-      default: "",
+      default: '',
     },
     src: {
       type: String,
-      default: "",
+      default: '',
     },
     aspectRatio: {
       type: Number,
@@ -47,16 +47,16 @@ export default {
     },
     color: {
       type: String,
-      default: "blue",
+      default: 'blue',
     },
     fontColor: {
       type: String,
-      default: "white--text",
+      default: 'white--text',
     },
     'font-size': {
       type: String,
       default: undefined,
-    },    
+    },
     small: {
       type: Boolean,
       default: false,
@@ -66,9 +66,9 @@ export default {
       default: false,
     },
     slice: {
-      type: Boolean, 
-      default: false
-    }
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     slicedName() {
@@ -78,27 +78,27 @@ export default {
       //   ? this.name.slice(0, 1)
       //   : this.name.slice(0, 2);
     },
-  }, 
+  },
   methods: {
     adoptiveFont() {
       if (!this.fontSize) {
         if (!this.small) {
           if (this.size > 50) {
-            return "text-h3";
+            return 'text-h3';
           } else {
-            return "text-h6";
+            return 'text-h6';
           }
         } else {
           if (this.name.length >= 3) {
-            return "text-body-2";
+            return 'text-body-2';
           } else {
-            return "text-body-1";
+            return 'text-body-1';
           }
         }
       } else {
-        return this.fontSize
+        return this.fontSize;
       }
-    }
-  }
+    },
+  },
 };
 </script>

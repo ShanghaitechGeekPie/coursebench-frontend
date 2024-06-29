@@ -1,24 +1,23 @@
-import { clearPreset } from "@/composables/global/useCookie"
-import { inject } from "vue"
-import useMutation from "@/composables/global/useMutation"
+import { clearPreset } from '@/composables/global/useCookie';
+import { inject } from 'vue';
+import useMutation from '@/composables/global/useMutation';
 
 export default () => {
+  const showSnackbar = inject('showSnackbar');
+  const global = inject('global');
 
-  const showSnackbar = inject("showSnackbar")
-  const global = inject("global")
-
-  const logoutMutation = useMutation("/user/logout", {
+  const logoutMutation = useMutation('/user/logout', {
     onMutate: () => {
-      clearPreset()
-      global.isLogin = false
-      global.userProfile = {}
-      showSnackbar("success", "登出成功")
-    }
-  })
+      clearPreset();
+      global.isLogin = false;
+      global.userProfile = {};
+      showSnackbar('success', '登出成功');
+    },
+  });
 
   const doLogout = () => {
-    logoutMutation.mutate({})
-  }
+    logoutMutation.mutate({});
+  };
 
-  return { doLogout }
-}
+  return { doLogout };
+};

@@ -6,12 +6,12 @@ import { isNetworkError } from '@/composables/global/useHttpError';
 export default () => {
   const showSnackbar = inject('showSnackbar');
 
-  const global = inject("global");
+  const global = inject('global');
 
   const commentFoldStatus = reactive({
     foldStatus: false,
-    operationStatus: -1
-  })
+    operationStatus: -1,
+  });
 
   let errorMethod = (error) => {
     if (isNetworkError(error.response)) {
@@ -21,12 +21,12 @@ export default () => {
     } else if (!global.userProfile.is_admin) {
       showSnackbar('error', '您没有权限执行此操作');
     }
-    commentFoldStatus.operationStatus = -1
+    commentFoldStatus.operationStatus = -1;
   };
 
   let successMethod = (response) => {
-    commentFoldStatus.foldStatus = (commentFoldStatus.operationStatus === 1);
-    showSnackbar("success", "折叠成功")
+    commentFoldStatus.foldStatus = commentFoldStatus.operationStatus === 1;
+    showSnackbar('success', '折叠成功');
   };
 
   const commentMutation = useMutation('/comment/fold', {
@@ -52,4 +52,4 @@ export default () => {
   });
 
   return { doFold, doUnfold, commentFoldStatus };
-}
+};

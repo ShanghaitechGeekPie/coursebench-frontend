@@ -5,6 +5,11 @@
     elevate-on-scroll
     elevation="3"
   >
+    <v-app-bar-nav-icon
+      @click="menuBarStatus.drawer = true"
+      v-if="$vuetify.breakpoint.xsOnly"
+    />
+
     <v-toolbar-title
       class="px-md-8 px-sm-4"
       @click="isCurrentPath('^\/$') ? $router.push('/') : ''"
@@ -12,17 +17,19 @@
         cursor: 'pointer',
         width: $vuetify.breakpoint.xsOnly ? '250px' : 'auto',
       }"
+      v-if="$vuetify.breakpoint.xsOnly || $vuetify.breakpoint.mdAndUp"
     >
       <img
         :src="$vuetify.theme.dark ? logoDark : logoLight"
-        width="139.61px"
+        :width="$vuetify.breakpoint.xsOnly ? 'auto' : 139.61"
+        style="max-width: 139.61px"
         alt=""
       />
     </v-toolbar-title>
     <div
       class="d-flex"
       style="height: calc(100% + 8px)"
-      v-if="$vuetify.breakpoint.mdAndUp"
+      v-if="!$vuetify.breakpoint.xsOnly"
     >
       <SliderButton
         tile
@@ -51,9 +58,18 @@
         :hover-only="isCurrentPath('^\/recent$')"
         to="/recent"
         class="px-1"
-        v-if="$vuetify.breakpoint.lgAndUp"
       >
         最近评价
+      </SliderButton>
+      <SliderButton
+        plain
+        tile
+        height="100%"
+        :hover-only="isCurrentPath('^\/ranking')"
+        to="/ranking"
+        class="px-1"
+      >
+        赏金排名
       </SliderButton>
       <SliderButton
         plain
@@ -270,6 +286,7 @@ export default {
     provide('closeDialog', (type) => (dialog[type] = false));
     provide('openDialog', (type) => (dialog[type] = true));
 
+    const menuBarStatus = inject('menu');
     const global = inject('global'); // global status
     const searchInput = inject('searchInput');
 
@@ -307,6 +324,7 @@ export default {
       logoDark,
       logoLight,
       status,
+      menuBarStatus,
     };
   },
   data() {
@@ -331,13 +349,13 @@ export default {
       } else if (this.$vuetify.breakpoint.mdOnly) {
         return `calc(${
           Math.min(
-            this.$vuetify.breakpoint.width - (this.global.isLogin ? 550 : 750),
+            this.$vuetify.breakpoint.width - (this.global.isLogin ? 700 : 955),
             720,
           ) + 45
         }px)`;
       } else if (this.$vuetify.breakpoint.lgAndUp) {
         return `calc(${Math.min(
-          this.$vuetify.breakpoint.width - (this.global.isLogin ? 450 : 594),
+          this.$vuetify.breakpoint.width - (this.global.isLogin ? 450 : 894),
           564,
         )}px)`;
       } else {

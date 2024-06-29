@@ -1,8 +1,7 @@
-import { inject } from "vue"
+import { inject } from 'vue';
 
 export default () => {
+  const teacherDetail = inject('teacherDetail');
 
-  const teacherDetail = inject("teacherDetail")
-
-  return { teacherDetail }
-}
+  return { teacherDetail };
+};
