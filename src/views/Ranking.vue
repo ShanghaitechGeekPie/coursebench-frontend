@@ -9,7 +9,7 @@
         :headers="headers"
         :items="rankList"
         :items-per-page="adoptiveItemCount"
-        item-key="nick_name"
+        item-key="index"
         :loading="status.loading"
       ></v-data-table>
     </v-card>
@@ -22,7 +22,6 @@ export default {
   setup() {
     const { status, rankList, headers } = useRewardRank();
     rankList.value.sort();
-    console.log(rankList.value);
     return { status, rankList, headers };
   },
   computed: {
