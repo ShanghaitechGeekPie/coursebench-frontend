@@ -14,7 +14,7 @@ export default () => {
 
   const updateMenuStatus = () => {
     menuBarStatus.drawer =
-      window.innerWidth >= 960 ? false : menuBarStatus.drawer;
+      window.innerWidth >= 600 ? false : menuBarStatus.drawer;
   };
 
   return { menuBarStatus };
