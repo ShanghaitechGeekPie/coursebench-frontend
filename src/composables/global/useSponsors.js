@@ -37,6 +37,8 @@ const homeRegistry = {
     desktop: (id) => `tencent://message/?uin=${id}&Site=qq&Menu=yes`,
   },
   github: (id) => `https://github.com/${id}`,
+  email: (id) => `mailto:${id}`,
+  homepage: (id) => id,
 };
 
 /**
