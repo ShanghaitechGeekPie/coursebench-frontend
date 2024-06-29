@@ -137,23 +137,27 @@
               <div
                 v-for="(contributor, index) in contributors"
                 :key="index"
-                class="pr-4 pb-sm-4 pb-4 d-flex"
+                class="ma-1 pr-4 pb-sm-4 pb-4 d-flex align-center"
               >
                 <AvatarContainer
                   :src="parseAvatarLink(contributor.avatar)"
                   :name="contributor.name"
+                  :title="contributor.role"
                   size="32"
                 />
-                <a
-                  :href="parseHomeLink(contributor.home)"
-                  :class="[
-                    $vuetify.theme.dark
-                      ? 'inline-text-white'
-                      : 'inline-text-black',
-                    'inline-link-hover ml-2 mt-1',
-                  ]"
-                  >{{ contributor.name }}</a
-                >
+                <div class="ml-2 mt-1">
+                    <div class="font-weight-black">{{ contributor.role }}</div>
+                  <a
+                    :href="parseHomeLink(contributor.home)"
+                    :class="[
+                      $vuetify.theme.dark
+                        ? 'inline-text-white'
+                        : 'inline-text-black',
+                      'inline-link-hover',
+                    ]"
+                    >{{ contributor.name }}</a
+                  >
+                </div>
               </div>
             </div>
           </div>
