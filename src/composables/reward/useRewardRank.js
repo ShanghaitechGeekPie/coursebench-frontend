@@ -46,11 +46,20 @@ export default () => {
     });
     useWatching(data, () => {
       if (data.value) {
-        rankList.value = data.value.data.map((item) => {
+        rankList.value = data.value.data.map((item, index) => {
           if (!item.is_anonymous) {
-            return item;
+            return {
+              ...item,
+              reward: item.reward / 100,
+              index: index,
+            };
           } else {
-            return { ...item, nick_name: '匿名用户' };
+            return {
+              ...item,
+              reward: item.reward / 100,
+              nick_name: '匿名用户',
+              index: index,
+            };
           }
         });
         rankList.value.sort(sortFunc);
