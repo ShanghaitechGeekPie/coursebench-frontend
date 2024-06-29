@@ -3,8 +3,8 @@
     <v-card-text class="px-sm-4 px-2 pt-sm-4 pt-3 pb-sm-3 pb-0">
       <div class="d-flex justify-space-between">
         <slot name="headerAvatar" :localComment="comment">
-          <div 
-            class="d-flex justify-space-between router-container" 
+          <div
+            class="d-flex justify-space-between router-container"
             @click="$router.push({ path: `/course/${comment.course.id}` })"
           >
             <AvatarContainer
@@ -20,12 +20,15 @@
             />
             <div class="pl-2">
               <div class="text-caption mt-n1">{{ comment.course.code }}</div>
-              <div class="text-body-1 font-weight-bold overflow-ellipsis"
-                :style="{ 'max-width': $vuetify.breakpoint.xsOnly ? '180px' : '' }"
+              <div
+                class="text-body-1 font-weight-bold overflow-ellipsis"
+                :style="{
+                  'max-width': $vuetify.breakpoint.xsOnly ? '180px' : '',
+                }"
               >
                 {{ comment.course.name }}
               </div>
-            </div>          
+            </div>
           </div>
         </slot>
         <slot name="headerNote" :localComment="comment">
@@ -55,10 +58,10 @@
   </v-card>
 </template>
 <script>
-import useCommentCardBar from "@/composables/users/comment/useCommentCardBar";
-import AvatarContainer from "@/components/users/profile/AvatarContainer";
-import { instituteInfo, gradeItems } from "@/composables/global/useStaticData"
-import { unixToReadable } from "@/composables/global/useTimeUtils";
+import useCommentCardBar from '@/composables/users/comment/useCommentCardBar';
+import AvatarContainer from '@/components/users/profile/AvatarContainer';
+import { instituteInfo, gradeItems } from '@/composables/global/useStaticData';
+import { unixToReadable } from '@/composables/global/useTimeUtils';
 
 export default {
   components: { AvatarContainer },
@@ -70,7 +73,7 @@ export default {
     comment: {
       type: Object,
       required: true,
-    }
+    },
   },
 };
 </script>

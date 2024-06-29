@@ -63,7 +63,12 @@
           </v-chip>
         </div>
         <div
-          :class="['d-flex', 'justify-space-between', dense ? 'pr-sm-1' : '', 'align-center']"
+          :class="[
+            'd-flex',
+            'justify-space-between',
+            dense ? 'pr-sm-1' : '',
+            'align-center',
+          ]"
           v-if="status.showAll && !noExpand"
         >
           <slot :overflow="status.isOverflow">

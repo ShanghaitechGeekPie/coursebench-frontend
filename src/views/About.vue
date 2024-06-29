@@ -13,10 +13,7 @@
         <div class="text-h4">一个真实可靠、不断完善的多维课程评价信息库</div>
       </div>
       <div class="d-flex justify-center" style="flex-wrap: wrap">
-        <div
-          class="mx-sm-6"
-          style="width: 168px"
-        >
+        <div class="mx-sm-6" style="width: 168px">
           <div class="text-h6 d-flex justify-center">
             <div>真实评价</div>
           </div>
@@ -24,10 +21,7 @@
             <div>Real Comments</div>
           </div>
         </div>
-        <div
-          class="mx-sm-6"
-          style="width: 168px"
-        >
+        <div class="mx-sm-6" style="width: 168px">
           <div class="text-h6 d-flex justify-center">
             <div>畅所欲言</div>
           </div>
@@ -35,10 +29,7 @@
             <div>Free Discussion</div>
           </div>
         </div>
-        <div
-          class="mx-sm-6"
-          style="width: 168px"
-        >
+        <div class="mx-sm-6" style="width: 168px">
           <div class="text-h6 d-flex justify-center">
             <div>多维评分</div>
           </div>
@@ -46,10 +37,7 @@
             <div>Comprehensive Grading</div>
           </div>
         </div>
-        <div
-          class="mx-sm-6"
-          style="width: 168px"
-        >
+        <div class="mx-sm-6" style="width: 168px">
           <div class="text-h6 d-flex justify-center">
             <div>简明易用</div>
           </div>
@@ -61,7 +49,12 @@
       <div class="d-flex justify-center mt-10">
         <v-sheet width="318px" class="pa-6 d-flex justify-center" outlined>
           <div class="pr-4">其他项目</div>
-          <div @click='openInplace("https://courseprettier.hcps.tech/")' class="coursePrettier">CoursePrettier</div>
+          <div
+            @click="openInplace('https://courseprettier.hcps.tech/')"
+            class="coursePrettier"
+          >
+            CoursePrettier
+          </div>
         </v-sheet>
         <v-sheet width="318px" class="pa-6 d-flex justify-center" outlined>
           <div>联系我们？</div>
@@ -69,46 +62,39 @@
             <v-icon
               class="ml-3"
               @click="openInplace('https://jq.qq.com/?_wv=1027&k=nJPBtvhe')"
-            >{{ statics.icons.mdiQqchat }}
-            </v-icon
-            >
+              >{{ statics.icons.mdiQqchat }}
+            </v-icon>
             <v-icon
               class="ml-3"
               @click="openInplace('mailto:geekpie@geekpie.club')"
-            >{{ statics.icons.mdiEmail }}
-            </v-icon
-            >
+              >{{ statics.icons.mdiEmail }}
+            </v-icon>
             <v-icon
               class="ml-3"
               @click="
                 openInplace(
-                  'https://github.com/ShanghaitechGeekPie/coursebench_official'
+                  'https://github.com/ShanghaitechGeekPie/coursebench_official',
                 )
               "
-            >{{ statics.icons.mdiGithub }}
-            </v-icon
-            >
-            <v-icon
-              class="ml-3"
-              @click="openInplace('https://geekpie.club')"
-            >{{ statics.icons.mdiWeb }}
-            </v-icon
-            >
+              >{{ statics.icons.mdiGithub }}
+            </v-icon>
+            <v-icon class="ml-3" @click="openInplace('https://geekpie.club')"
+              >{{ statics.icons.mdiWeb }}
+            </v-icon>
           </div>
         </v-sheet>
       </div>
       <div class="mt-16">
-        <v-sheet
-          width="100%"
-          height="200px"
-          class="d-flex justify-center"
-        >
+        <v-sheet width="100%" height="200px" class="d-flex justify-center">
           <div class="d-flex justify-center flex-column">
             <div class="d-flex mx-2">
               <div class="d-flex justify-center flex-column">
                 <div class="text-sm-h3 text-h4">Powered by</div>
               </div>
-              <v-img src="@/assets/geekpie.svg" :width="$vuetify.breakpoint.xsOnly ? '160px' : ''"></v-img>
+              <v-img
+                src="@/assets/geekpie.svg"
+                :width="$vuetify.breakpoint.xsOnly ? '160px' : ''"
+              ></v-img>
             </div>
           </div>
         </v-sheet>
@@ -130,7 +116,7 @@
                   <AvatarContainer
                     :src="
                       parseAvatarLink(
-                        'https://avatars.githubusercontent.com/u/52339623?s=64&v=4'
+                        'https://avatars.githubusercontent.com/u/52339623?s=64&v=4',
                       )
                     "
                     :name="'spedoske'"
@@ -144,7 +130,7 @@
                         : 'inline-text-black',
                       'inline-link-hover ml-2 mt-1',
                     ]"
-                  >{{ "Spedoske" }}</a
+                    >{{ 'Spedoske' }}</a
                   >
                 </div>
               </div>
@@ -166,7 +152,7 @@
                       : 'inline-text-black',
                     'inline-link-hover ml-2 mt-1',
                   ]"
-                >{{ contributor.name }}</a
+                  >{{ contributor.name }}</a
                 >
               </div>
             </div>
@@ -175,14 +161,16 @@
           <div class="py-8" id="bug_report">
             <div class="text-h5">错误反馈</div>
             <div class="mt-4">
-              如果您在使用中遇到了问题，欢迎联系 <a
-              href="mailto:zhaoqch1@shanghaitech.edu.cn"
-            >zhaoqch1@shanghaitech.edu.cn</a
-            >
-              或在 <a
-              href="https://github.com/ShanghaitechGeekPie/coursebench_official"
-            >GitHub Official Repository</a
-            > 中提出Issue。
+              如果您在使用中遇到了问题，欢迎联系
+              <a href="mailto:zhaoqch1@shanghaitech.edu.cn"
+                >zhaoqch1@shanghaitech.edu.cn</a
+              >
+              或在
+              <a
+                href="https://github.com/ShanghaitechGeekPie/coursebench_official"
+                >GitHub Official Repository</a
+              >
+              中提出Issue。
             </div>
           </div>
           <v-divider></v-divider>
@@ -209,7 +197,7 @@
                           : 'inline-text-black',
                         'inline-link-hover',
                       ]"
-                    >{{ sponsor.name }}</a
+                      >{{ sponsor.name }}</a
                     >
                   </div>
                 </div>
@@ -237,7 +225,7 @@
                           : 'inline-text-black',
                         'inline-link-hover ml-2 mt-1',
                       ]"
-                    >{{ sponsor.name }}</a
+                      >{{ sponsor.name }}</a
                     >
                   </div>
                 </div>
@@ -250,7 +238,7 @@
             <div class="mt-4">
               如果您觉得我们的网站对您有帮助，您可以通过点击以下链接找到CourseBench的专属赞助方案并支持我们：
               <a href="https://afdian.net/a/teafrogsf"
-              >爱发电（https://afdian.net/a/teafrogsf）</a
+                >爱发电（https://afdian.net/a/teafrogsf）</a
               >
             </div>
           </div>
@@ -278,17 +266,17 @@
   </div>
 </template>
 <script>
-import AvatarContainer from "@/components/users/profile/AvatarContainer";
-import contributors from "@/assets/contributors.json";
-import sponsors from "@/assets/sponsors.json";
-import { mdiQqchat, mdiEmail, mdiGithub, mdiWeb } from "@mdi/js";
+import AvatarContainer from '@/components/users/profile/AvatarContainer';
+import contributors from '@/assets/contributors.json';
+import sponsors from '@/assets/sponsors.json';
+import { mdiQqchat, mdiEmail, mdiGithub, mdiWeb } from '@mdi/js';
 import {
   parseAvatarLink,
   parseHomeLink,
-} from "@/composables/global/useSponsors";
-import { openInplace } from "@/composables/global/useExternalUrl";
-import useMarkdown from "@/composables/global/useMarkdown";
-import { termsOfService, privacyPolicy } from "Policy";
+} from '@/composables/global/useSponsors';
+import { openInplace } from '@/composables/global/useExternalUrl';
+import useMarkdown from '@/composables/global/useMarkdown';
+import { termsOfService, privacyPolicy } from 'Policy';
 
 export default {
   setup() {

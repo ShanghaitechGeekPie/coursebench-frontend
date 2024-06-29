@@ -2,15 +2,19 @@
   <v-app>
     <Header :snackbar.sync="snackbar" />
     <v-main>
+      <MenuSideBar />
       <div>
         <InsiderBanner />
       </div>
       <div>
-        <ActivityBanner :Enable=true>
-          评论拿赏金功能上线啦！详情请点击<a @click="$router.push('/activities')">这里</a>！
+        <ActivityBanner :Enable="true">
+          评论拿赏金功能上线啦！详情请点击<a
+            @click="$router.push('/activities')"
+            >这里</a
+          >！
         </ActivityBanner>
       </div>
-      
+
       <router-view :key="$route.path" />
       <v-snackbar
         v-model="snackbar.show"
@@ -38,10 +42,11 @@ import useSnackbar from '@/composables/global/useSnackbar';
 import { getPreset } from '@/composables/global/useCookie';
 import { provide, reactive } from 'vue';
 import { mdiClose } from '@mdi/js';
+import MenuSideBar from '@/components/global/MenuSideBar.vue';
 
 export default {
   name: 'App',
-  components: { Header, InsiderBanner, ActivityBanner },
+  components: { Header, InsiderBanner, ActivityBanner, MenuSideBar },
   setup() {
     const { snackbar } = useSnackbar();
     const global = reactive({
@@ -66,7 +71,12 @@ export default {
       order: '从高到低',
     });
 
+    const menuBarStatus = reactive({
+      drawer: false,
+    });
+
     provide('global', global);
+    provide('menu', menuBarStatus);
     provide('searchInput', searchInput);
     provide('savedCourseAllStatus', savedCourseAllStatus);
     provide('savedCourseAllFilterStatus', savedCourseAllFilterStatus);

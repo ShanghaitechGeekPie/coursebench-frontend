@@ -16,7 +16,7 @@
             </v-col>
           </v-row>
         </v-container>
-        <div v-if="comment.is_covered" class="pt-1" style="width: 100%;">
+        <div v-if="comment.is_covered" class="pt-1" style="width: 100%">
           <CommentCover :reason="comment.cover_reason" />
         </div>
       </v-card-title>
@@ -31,58 +31,79 @@
             </div> -->
             <slot name="content" :localComment="comment">
               <TextContainer
-                :text="comment.is_covered ? comment.cover_content : comment.content"
-                :title="comment.is_covered ? comment.cover_title : comment.title"
+                :text="
+                  comment.is_covered ? comment.cover_content : comment.content
+                "
+                :title="
+                  comment.is_covered ? comment.cover_title : comment.title
+                "
                 markdown
                 dense
                 :dialog="$vuetify.breakpoint.name === 'xs'"
                 #default="{ overflow }"
               >
                 <slot name="contentNote" :localComment="comment">
-                    <div
-                      class="pa-0 pb-2 pt-sm-3 pt-2 d-flex align-center"
-                      :style="{ 'max-width': overflow ? '60vw' : '90%' }"
+                  <div
+                    class="pa-0 pb-2 pt-sm-3 pt-2 d-flex align-center"
+                    :style="{ 'max-width': overflow ? '60vw' : '90%' }"
+                  >
+                    <v-icon size="16">
+                      {{ statics.icons.mdiSchoolOutline }}
+                    </v-icon>
+                    <span
+                      v-for="(teacher, index) in comment.group.teachers"
+                      :class="
+                        'pl-1 text-caption font-weight-bold' + teacher.name ===
+                        '其他'
+                          ? ''
+                          : ' router-container'
+                      "
+                      :key="index"
+                      @click="
+                        teacher.name === '其他'
+                          ? ''
+                          : $router.push({ path: `/teacher/${teacher.id}` })
+                      "
+                    >
+                      {{ teacher.name }}
+                    </span>
+                    <v-icon size="16">
+                      {{ statics.icons.mdiClockOutline }}
+                    </v-icon>
+                    <span class="text-caption">
+                      {{ semester }}
+                    </span>
+                    <span
+                      v-if="
+                        comment.reward >= 0 &&
+                        !(
+                          global.userProfile.is_admin ||
+                          global.userProfile.is_community_admin
+                        )
+                      "
                     >
                       <v-icon size="16">
-                        {{ statics.icons.mdiSchoolOutline }}
-                      </v-icon>
-                      <span
-                        v-for="(teacher, index) in comment.group.teachers"
-                        :class="'pl-1 text-caption font-weight-bold'+teacher.name==='其他'?'': ' router-container'"
-                        :key="index"
-                        @click="teacher.name==='其他'?'':$router.push({ path: `/teacher/${teacher.id}` })"
-                      >
-                        {{ teacher.name }}
-                      </span>
-                    <v-icon size="16">
-                        {{ statics.icons.mdiClockOutline }}
+                        {{ statics.icons.mdiGold }}
                       </v-icon>
                       <span class="text-caption">
-                        {{ semester }}
+                        {{ comment.reward / 100 }}元
                       </span>
-                      <span v-if="(comment.reward >= 0) && !(global.userProfile.is_admin || global.userProfile.is_community_admin)">
-                        <v-icon size="16">
-                          {{ statics.icons.mdiGold }}
-                        </v-icon>
-                        <span class="text-caption">
-                          {{ comment.reward / 100 }}元
-                        </span>
-                      </span>
-                      <div v-else class="d-flex align-center">
-                        <v-icon size="16">
-                            {{ statics.icons.mdiGold }}
-                        </v-icon>
-                        <v-text-field
-                          :class="'pl-1 text-caption'"
-                          v-model="localReward"
-                          :rules=[formRules.reward]
-                          suffix="元"
-                          style="max-width: 80px"
-                          @keyup.enter="onEnterPressed"
-                          >
-                          </v-text-field>
-                      </div>
+                    </span>
+                    <div v-else class="d-flex align-center">
+                      <v-icon size="16">
+                        {{ statics.icons.mdiGold }}
+                      </v-icon>
+                      <v-text-field
+                        :class="'pl-1 text-caption'"
+                        v-model="localReward"
+                        :rules="[formRules.reward]"
+                        suffix="元"
+                        style="max-width: 80px"
+                        @keyup.enter="onEnterPressed"
+                      >
+                      </v-text-field>
                     </div>
+                  </div>
                 </slot>
               </TextContainer>
             </slot>
@@ -104,9 +125,7 @@
                         :key="index"
                         cols="6"
                         sm="3"
-                        :class="[
-                          'px-0','py-0'
-                        ]"
+                        :class="['px-0', 'py-0']"
                       >
                         <div>
                           <span
@@ -168,7 +187,7 @@ import TextContainer from '@/components/users/comment/TextContainer';
 import CommentCover from '@/components/users/comment/CommentCover';
 import useForms from '@/composables/users/forms/useForms';
 import useModifyReward from '@/composables/reward/useModifyReward';
-import { inject, ref } from "vue";
+import { inject, ref } from 'vue';
 import {
   judgeItems,
   gradingInfo,
@@ -182,11 +201,21 @@ import {
 //  and use vanilla div, and rewrite the reactive paddings
 export default {
   setup() {
-    const showSnackbar = inject("showSnackbar")
+    const showSnackbar = inject('showSnackbar');
     const { statics, global } = useCommentCardContent();
     const { formRules } = useForms();
     const { formStatus, doModifyReward, onEnterUp } = useModifyReward();
-    return { statics, judgeItems, gradingInfo, global, formRules, formStatus, onEnterUp, doModifyReward, showSnackbar };
+    return {
+      statics,
+      judgeItems,
+      gradingInfo,
+      global,
+      formRules,
+      formStatus,
+      onEnterUp,
+      doModifyReward,
+      showSnackbar,
+    };
   },
   components: { TextContainer, CommentCover },
   props: {
@@ -203,20 +232,19 @@ export default {
       return `${year}年${termItems[new Number(season) - 1].name}`;
     },
   },
-  data(){
+  data() {
     let localReward = this.comment.reward / 100;
     return {
-      localReward
-    }
+      localReward,
+    };
   },
   methods: {
     onEnterPressed() {
-      if (this.formRules.reward(this.localReward) === true){
+      if (this.formRules.reward(this.localReward) === true) {
         this.formStatus.reward = this.localReward;
         this.formStatus.id = this.comment.id;
         this.doModifyReward();
-      }
-      else this.showSnackbar("error", "赏金格式错误");
+      } else this.showSnackbar('error', '赏金格式错误');
     },
   },
 };

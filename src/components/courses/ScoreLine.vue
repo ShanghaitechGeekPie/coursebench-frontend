@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import useScoreLine from "@/composables/courses/comment/useScoreLine";
+import useScoreLine from '@/composables/courses/comment/useScoreLine';
 
 export default {
   props: {
@@ -42,11 +42,11 @@ export default {
     percentage: Number,
     color: {
       type: String,
-      default: "grey",
+      default: 'grey',
     },
     starColor: {
       type: String,
-      default: "yellow darken-3",
+      default: 'yellow darken-3',
     },
   },
   setup() {
@@ -56,5 +56,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

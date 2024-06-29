@@ -1,23 +1,35 @@
 <template>
   <div style="min-height: 100%">
     <ImageLoader v-if="status.commentLoading" />
-    <BackgroundImage :src="$vuetify.theme.dark ? backgroundDark : backgroundLight" v-else />
+    <BackgroundImage
+      :src="$vuetify.theme.dark ? backgroundDark : backgroundLight"
+      v-else
+    />
     <div style="flex-wrap: wrap" class="d-flex justify-center">
       <div class="pa-3">
         <v-container class="py-sm-3 py-0">
           <v-row>
             <v-col class="pl-sm-0 pr-lg-3 pr-0 pl-0 pr-0 pt-0 pb-3">
               <v-card
-                :width="$vuetify.breakpoint.width - 24 > 800 ? '800px' : $vuetify.breakpoint.width - 24 + 'px'"
+                :width="
+                  $vuetify.breakpoint.width - 24 > 800
+                    ? '800px'
+                    : $vuetify.breakpoint.width - 24 + 'px'
+                "
               >
               </v-card>
             </v-col>
           </v-row>
           <v-row>
             <v-col class="pl-sm-0 pr-lg-3 pr-0 pl-0 pr-0 py-0">
-              <div v-if="global.userProfile.is_admin || global.userProfile.is_community_admin">
+              <div
+                v-if="
+                  global.userProfile.is_admin ||
+                  global.userProfile.is_community_admin
+                "
+              >
                 <ManageCard />
-              </div>              
+              </div>
             </v-col>
           </v-row>
           <v-row>
@@ -46,17 +58,16 @@
 </template>
 
 <script>
-import BackgroundImage from "@/components/teachers/detail/BackgroundImage";
-import CommentCard from "@/components/users/comment/CommentCard";
-import ImageLoader from "@/components/teachers/loader/ImageLoader";
-import CommentLoader from "@/components/teachers/loader/CommentLoader";
-import ManageCard from "@/components/courses/ManageCard";
-import Nothing from "@/components/global/Nothing"
-import backgroundDark from "@/assets/user-background-dark.svg";
-import backgroundLight from "@/assets/user-background-light.svg";
+import BackgroundImage from '@/components/teachers/detail/BackgroundImage';
+import CommentCard from '@/components/users/comment/CommentCard';
+import ImageLoader from '@/components/teachers/loader/ImageLoader';
+import CommentLoader from '@/components/teachers/loader/CommentLoader';
+import ManageCard from '@/components/courses/ManageCard';
+import Nothing from '@/components/global/Nothing';
+import backgroundDark from '@/assets/user-background-dark.svg';
+import backgroundLight from '@/assets/user-background-light.svg';
 import useCommentRecent from '@/composables/courses/comment/useCommentRecent';
-import { provide } from "vue";
-
+import { provide } from 'vue';
 
 export default {
   components: {
@@ -65,13 +76,13 @@ export default {
     ImageLoader,
     CommentLoader,
     Nothing,
-    ManageCard
+    ManageCard,
   },
   setup() {
     const { commentText, status, global } = useCommentRecent();
-    provide("courseCommentText", commentText);
+    provide('courseCommentText', commentText);
     // console.log(global)
-    return { commentText, status, global ,backgroundDark, backgroundLight };
+    return { commentText, status, global, backgroundDark, backgroundLight };
   },
   data() {
     return {
@@ -79,7 +90,7 @@ export default {
     };
   },
   mounted() {
-    document.addEventListener("scroll", () => {
+    document.addEventListener('scroll', () => {
       this.scrollTop = document.documentElement.scrollTop;
     });
   },
@@ -89,15 +100,15 @@ export default {
         return {};
       } else if (this.scrollTop <= 40) {
         return {
-          transform: "translate(0, -160px)",
+          transform: 'translate(0, -160px)',
         };
       } else {
         return {
-          position: "fixed",
-          top: "90px",
+          position: 'fixed',
+          top: '90px',
         };
       }
-    }
-  }
+    },
+  },
 };
 </script>

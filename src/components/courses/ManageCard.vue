@@ -122,7 +122,7 @@
                           </div>
                         </div>
                         <div>
-                          <span class="pr-2">{{  comment.course.name  }}</span>
+                          <span class="pr-2">{{ comment.course.name }}</span>
                           <v-icon
                             size="16"
                             style="transform: translate(0, -1px)"

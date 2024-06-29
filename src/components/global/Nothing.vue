@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import { mdiAlertDecagram } from "@mdi/js";
+import { mdiAlertDecagram } from '@mdi/js';
 
 export default {
   setup() {
@@ -21,13 +21,13 @@ export default {
       },
     };
 
-    return { statics }
+    return { statics };
   },
   props: {
     text: {
       type: String,
-      default: "这里什么都没有...",
+      default: '这里什么都没有...',
     },
-  }
+  },
 };
 </script>

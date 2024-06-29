@@ -66,7 +66,11 @@
                   </div>
                   <div style="width: 64%" class="px-0 px-sm-1 px-md-0">
                     <v-progress-linear
-                      v-model="course.comment_num < enoughDataThreshold ? 0 : course.score[index - 1] * 20"
+                      v-model="
+                        course.comment_num < enoughDataThreshold
+                          ? 0
+                          : course.score[index - 1] * 20
+                      "
                       :color="scoreInfo[roundedScore[index - 1]].color"
                       class="mt-2"
                       style="pointer-events: none"
@@ -95,19 +99,29 @@
   </v-lazy>
 </template>
 <script>
-import useCourseCard from "@/composables/teachers/course/useCourseCard";
-import AvatarContainer from "@/components/users/profile/AvatarContainer";
+import useCourseCard from '@/composables/teachers/course/useCourseCard';
+import AvatarContainer from '@/components/users/profile/AvatarContainer';
 import {
   judgeItems,
   instituteInfo,
   scoreInfo,
-} from "@/composables/global/useStaticData";
-import { roundScore, enoughDataThreshold } from "@/composables/global/useParseScore";
+} from '@/composables/global/useStaticData';
+import {
+  roundScore,
+  enoughDataThreshold,
+} from '@/composables/global/useParseScore';
 
 export default {
   setup() {
     const { statics } = useCourseCard();
-    return { statics, judgeItems, roundScore, instituteInfo, scoreInfo, enoughDataThreshold };
+    return {
+      statics,
+      judgeItems,
+      roundScore,
+      instituteInfo,
+      scoreInfo,
+      enoughDataThreshold,
+    };
   },
   data() {
     return {
@@ -121,7 +135,7 @@ export default {
     },
     width: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   components: {
@@ -129,7 +143,7 @@ export default {
   },
   created() {
     for (let score of this.course.score) {
-      let rounded = this.roundScore(score, this.course["comment_num"]);
+      let rounded = this.roundScore(score, this.course['comment_num']);
       this.roundedScore.push(rounded);
     }
   },

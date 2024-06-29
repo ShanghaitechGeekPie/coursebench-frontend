@@ -3,11 +3,11 @@
     <div :style="{ width: width }">
       <v-hover>
         <template #default="{ hover }">
-          <v-card 
-            class="mb-3" 
-            flat 
-            height="303" 
-            outlined 
+          <v-card
+            class="mb-3"
+            flat
+            height="303"
+            outlined
             :style="hover ? { cursor: 'pointer' } : {}"
             @click="$router.push('/course/' + course.id)"
           >
@@ -31,12 +31,7 @@
                       </div>
                       <div>
                         <div
-                          class="
-                            justify-start
-                            text-body-1
-                            font-weight-bold
-                            overflow
-                          "
+                          class="justify-start text-body-1 font-weight-bold overflow"
                         >
                           {{ course.name }}
                         </div>
@@ -111,23 +106,26 @@
             <div class="pt-3">
               <div>
                 <div class="px-5 text-caption">
-                  
                   <div v-if="course.comment_num >= enoughDataThreshold">
-                    共获评价{{course.comment_num}}条，综合评分：{{(averageScore / 20).toFixed(1)}}/5.0
+                    共获评价{{ course.comment_num }}条，综合评分：{{
+                      (averageScore / 20).toFixed(1)
+                    }}/5.0
                   </div>
                   <div v-else-if="course.comment_num > 0">
-                    共获评价{{course.comment_num}}条，不足以给出综合评分
+                    共获评价{{ course.comment_num }}条，不足以给出综合评分
                   </div>
-                  <div v-else>
-                    数据不足
-                  </div>
-                </div>            
+                  <div v-else>数据不足</div>
+                </div>
               </div>
               <div>
                 <div style="width: 100%" class="px-5">
                   <v-progress-linear
                     v-model="course.comment_num < enoughDataThreshold ? 0 : averageScore"
-                    :color="scoreInfo[roundScore(averageScore / 20, course['comment_num'])].color"
+                    :color="
+                      scoreInfo[
+                        roundScore(averageScore / 20, course['comment_num'])
+                      ].color
+                    "
                     class="mt-2"
                     style="pointer-events: none"
                   >
@@ -136,11 +134,7 @@
               </div>
             </div>
             <v-fade-transition>
-              <v-overlay
-                v-if="hover"
-                absolute
-                opacity="0.1"
-              ></v-overlay>
+              <v-overlay v-if="hover" absolute opacity="0.1"></v-overlay>
             </v-fade-transition>
           </v-card>
         </template>
@@ -149,39 +143,53 @@
   </v-lazy>
 </template>
 <script>
-import useCourseCard from "@/composables/courses/all/useCourseCard";
-import AvatarContainer from "@/components/users/profile/AvatarContainer";
-import { judgeItems, instituteInfo, scoreInfo } from "@/composables/global/useStaticData";
-import { averageOf } from "@/composables/global/useArrayUtils";
-import { roundScore, enoughDataThreshold } from "@/composables/global/useParseScore"
+import useCourseCard from '@/composables/courses/all/useCourseCard';
+import AvatarContainer from '@/components/users/profile/AvatarContainer';
+import {
+  judgeItems,
+  instituteInfo,
+  scoreInfo,
+} from '@/composables/global/useStaticData';
+import { averageOf } from '@/composables/global/useArrayUtils';
+import {
+  roundScore,
+  enoughDataThreshold,
+} from '@/composables/global/useParseScore';
 
 export default {
   setup() {
     const { statics } = useCourseCard();
-    return { statics, judgeItems, roundScore, enoughDataThreshold, instituteInfo, scoreInfo };
+    return {
+      statics,
+      judgeItems,
+      roundScore,
+      enoughDataThreshold,
+      instituteInfo,
+      scoreInfo,
+    };
   },
   data() {
     return {
       roundedScore: new Array(),
-      averageScore: 0
+      averageScore: 0,
     };
   },
   props: {
     course: {
-      type: Object, 
-      required: true
+      type: Object,
+      required: true,
     },
     width: {
-      type: String, 
-      default: ""
-    }
+      type: String,
+      default: '',
+    },
   },
   components: {
     AvatarContainer,
   },
   created() {
     for (let score of this.course.score) {
-      let rounded = roundScore(score, this.course["comment_num"]);
+      let rounded = roundScore(score, this.course['comment_num']);
       this.roundedScore.push(rounded);
     }
     this.averageScore = averageOf(this.course.score) * 20;

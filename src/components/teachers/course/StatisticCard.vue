@@ -68,7 +68,7 @@
   </div>
 </template>
 <script>
-import useStatisticCard from "@/composables/teachers/course/useStatisticCard";
+import useStatisticCard from '@/composables/teachers/course/useStatisticCard';
 
 export default {
   setup() {

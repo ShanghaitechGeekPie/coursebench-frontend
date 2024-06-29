@@ -1,16 +1,12 @@
-import {
-  mdiSchool,  
-  mdiDotsHorizontal, 
-} from "@mdi/js";
+import { mdiSchool, mdiDotsHorizontal } from '@mdi/js';
 
 export default () => {
-
   const statics = {
     icons: {
-      mdiSchool,  
-      mdiDotsHorizontal, 
-    }, 
-  }
+      mdiSchool,
+      mdiDotsHorizontal,
+    },
+  };
 
-  return { statics }
-}
+  return { statics };
+};

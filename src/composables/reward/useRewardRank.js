@@ -18,8 +18,7 @@ const headers = [
 export default () => {
   const showSnackbar = inject('showSnackbar');
 
-  const rankList = ref([
-  ]);
+  const rankList = ref([]);
 
   const status = reactive({
     loading: true,

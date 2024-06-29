@@ -3,7 +3,7 @@
     style="width: 100%"
     class="d-flex justify-center flex-row-reverse pt-sm-13 pt-6"
   >
-    <v-card max-width="800" class="pa-lg-3 pb-3" :width="adoptiveListWidth" >
+    <v-card max-width="800" class="pa-lg-3 pb-3" :width="adoptiveListWidth">
       <v-card-title>Ranking List</v-card-title>
       <v-data-table
         :headers="headers"
@@ -26,7 +26,6 @@ export default {
     return { status, rankList, headers };
   },
   computed: {
-
     adoptiveListWidth() {
       if (this.$vuetify.breakpoint.mdAndDown) {
         if (this.$vuetify.breakpoint.xsOnly) {
