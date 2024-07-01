@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="menuBarStatus.drawer" absolute>
+  <v-navigation-drawer v-model="menuBarStatus.drawer" fixed>
     <v-list nav dense>
       <v-list-item-group
         v-model="model"
@@ -26,7 +26,7 @@
             最近评价
           </v-list-item-title>
         </v-list-item>
-        <v-list-item to="/ranking" v-if="$vuetify.breakpoint.smAndDown">
+        <v-list-item to="/ranking" v-if="$vuetify.breakpoint.lgAndDown">
           <v-list-item-title
             plain
             tile
