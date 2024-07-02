@@ -5,6 +5,7 @@
       'background-color': $vuetify.theme.dark ? '#2a4165' : '#e8f0fe',
     }"
     v-if="Enable"
+    style="z-index: 2;"
   >
     <div class="d-flex justify-center flex-column">
       <div class="text-body-1 primary--text">

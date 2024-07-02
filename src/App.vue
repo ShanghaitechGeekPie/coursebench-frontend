@@ -10,6 +10,7 @@
         <ActivityBanner :Enable="true">
           评论拿赏金功能上线啦！详情请点击<a
             @click="$router.push('/activities')"
+            class="inline-link"
             >这里</a
           >！
         </ActivityBanner>
@@ -112,5 +113,12 @@ export default {
 <style>
 body {
   overflow-x: hidden;
+}
+.inline-link {
+  color: #0067bf;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  text-decoration: underline;
 }
 </style>
