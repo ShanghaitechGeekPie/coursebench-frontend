@@ -85,21 +85,6 @@
         </v-sheet>
       </div>
       <div class="mt-16">
-        <v-sheet width="100%" height="200px" class="d-flex justify-center">
-          <div class="d-flex justify-center flex-column">
-            <div class="d-flex mx-2">
-              <div class="d-flex justify-center flex-column">
-                <div class="text-sm-h3 text-h4">Powered by</div>
-              </div>
-              <v-img
-                src="@/assets/geekpie.svg"
-                :width="$vuetify.breakpoint.xsOnly ? '160px' : ''"
-              ></v-img>
-            </div>
-          </div>
-        </v-sheet>
-      </div>
-      <div class="mt-16">
         <div
           :class="[
             $vuetify.breakpoint.xsOnly
