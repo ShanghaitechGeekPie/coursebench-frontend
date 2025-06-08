@@ -1,17 +1,6 @@
 {
-  "cooperations": [
-    {
-      "name": "上海科技大学ACM社",
-      "home": "https://acm.shanghaitech.edu.cn/",
-      "logo": "https://s2.loli.net/2022/09/30/O3vP8m5t1qV6D4n.png"
-    }
-  ],
+  "cooperations": [],
   "individuals": [
-    {
-      "name": "Winlere",
-      "home": "https://cnblogs.com/winlere",
-      "avatar": "https://avatars.githubusercontent.com/u/48151038?s=64&v=4"
-    },
     {
       "name": "logan",
       "home": "github:LoganJoe",
