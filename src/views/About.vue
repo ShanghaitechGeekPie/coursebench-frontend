@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-center mt-10">
+      <!-- <div class="d-flex justify-center mt-10">
         <v-sheet width="318px" class="pa-6 d-flex justify-center" outlined>
           <div class="pr-4">其他项目</div>
           <div
@@ -98,7 +98,7 @@
             </div>
           </div>
         </v-sheet>
-      </div>
+      </div> -->
       <div class="mt-16">
         <div
           :class="[
@@ -241,9 +241,9 @@
             <div class="text-h5">支持我们</div>
             <div class="mt-4">
               如果您觉得我们的网站对您有帮助，您可以通过点击以下链接找到CourseBench的专属赞助方案并支持我们：
-              <a href="https://afdian.net/a/teafrogsf"
+              <!-- <a href="https://afdian.net/a/teafrogsf"
                 >爱发电（https://afdian.net/a/teafrogsf）</a
-              >
+              > -->
             </div>
           </div>
           <v-divider></v-divider>
