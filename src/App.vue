@@ -7,7 +7,7 @@
         <InsiderBanner />
       </div>
       <div>
-        <ActivityBanner :Enable="true">
+        <ActivityBanner :Enable="false">
           评论拿赏金功能上线啦！详情请点击<a
             @click="$router.push('/activities')"
             class="inline-link"
