@@ -162,7 +162,7 @@
             </div>
           </div>
           <v-divider></v-divider>
-          <div class="py-8" id="bug_report">
+          <!-- <div class="py-8" id="bug_report">
             <div class="text-h5">错误反馈</div>
             <div class="mt-4">
               如果您在使用中遇到了问题，欢迎联系
@@ -177,7 +177,7 @@
               中提出Issue。
             </div>
           </div>
-          <v-divider></v-divider>
+          <v-divider></v-divider> -->
           <div class="py-8">
             <div class="text-h5">友情赞助</div>
             <div class="mt-4">
