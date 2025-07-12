@@ -1,7 +1,7 @@
 // In memorize of some great piece of work used as phantom data
 
-// Mock 数据开关 - 设置为 true 启用假数据模式
-export const USE_MOCK_DATA = true;
+// Mock 数据开关 - 设置为 true 启用mock数据模式
+export const USE_MOCK_DATA = false;
 
 export const testUserProfile = {
   email: 'aReallyReallyReallyLongName@shanghaitech.edu.cn',

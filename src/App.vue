@@ -52,7 +52,11 @@ export default {
     const { snackbar, showSnackbar } = useSnackbar();
     const global = reactive({
       userProfile: getPreset(),
-      isLogin: true, // 强制设置为true方便调试
+      isLogin:
+        Object.getOwnPropertyNames(getPreset()).filter(
+          (key) => key !== '__ob__',
+        ).length !== 0,
+      // isLogin: true, //强制设置为true方便调试
     });
     const searchInput = reactive({
       isRegexp: false,

@@ -186,6 +186,7 @@
         :replies="comment.replies || []"
         :comment-id="comment.id"
         :show-reply-input="showReplyInput"
+        :reply-loading="replyStatus.loading"
         @submit-reply="handleSubmitReply"
         @like-reply="handleLikeReply"
         @cancel-reply="showReplyInput = false"
@@ -200,9 +201,10 @@ import CommentFold from '@/components/users/comment/CommentFold';
 import CommentReplyList from '@/components/courses/CommentReplyList';
 import AvatarContainer from '@/components/users/profile/AvatarContainer';
 import useCourseCommentCard from '@/composables/courses/comment/useCourseCommentCard';
+import useCommentReply from '@/composables/courses/comment/useCommentReply';
 import useUserName from '@/composables/global/useUserName';
 import { gradeItems } from '@/composables/global/useStaticData';
-import { inject, ref } from 'vue';
+import { inject, ref, watch } from 'vue';
 import QRCode from 'qrcode';
 import { domToCanvas } from 'modern-screenshot';
 import {
@@ -225,12 +227,25 @@ export default {
   setup() {
     const { doLike, doDislike, doUndo, formStatus, statics } =
       useCourseCommentCard();
+    const { doSubmitReply, doLikeReply, doUndoReply, replyStatus } = 
+      useCommentReply();
     const global = inject('global');
 
     const showSnackbar = inject('showSnackbar');
 
     const foldComment = ref(true);
     const showReplyInput = ref(false);
+
+    // Watch for successful reply submission to refresh data
+    watch(() => replyStatus.isSuccess, (newVal) => {
+      if (newVal) {
+        // Reload the page or refresh comment data after successful reply
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      }
+    });
+
     return {
       foldComment,
       showReplyInput,
@@ -243,6 +258,10 @@ export default {
       global,
       statics,
       showSnackbar,
+      doSubmitReply,
+      doLikeReply,
+      doUndoReply,
+      replyStatus,
     };
   },
   mounted() {
@@ -387,37 +406,16 @@ export default {
       console.log('Reply to comment:', this.comment.id);
     },
     handleSubmitReply(replyData) {
-      // 处理回复提交
-      console.log('Submit reply:', replyData);
-      this.showSnackbar('success', '回复发表成功');
-
-      // 在实际应用中，这里应该调用API提交回复
-      // 现在只是模拟添加到本地数据
-      if (!this.comment.replies) {
-        this.comment.replies = [];
-      }
-
-      const newReply = {
-        id: Date.now(),
-        content: replyData.content,
-        user: replyData.user,
-        created_at: new Date().toISOString(),
-        like: 0,
-        dislike: 0,
-        parent_reply_id: replyData.parent_reply_id,
-        parent_user: replyData.parent_user,
-      };
-
-      this.comment.replies.push(newReply);
-      this.comment.reply_count = (this.comment.reply_count || 0) + 1;
-      this.showReplyInput = false;
+      this.doSubmitReply({
+        ...replyData,
+        comment_id: this.comment.id,
+      });
     },
     handleLikeReply(replyId, isLiked) {
-      // 处理回复点赞
-
-      const reply = this.comment.replies?.find((r) => r.id === replyId);
-      if (reply) {
-        reply.like += isLiked ? 1 : -1;
+      if (isLiked) {
+        this.doLikeReply(replyId);
+      } else {
+        this.doUndoReply(replyId);
       }
     },
   },

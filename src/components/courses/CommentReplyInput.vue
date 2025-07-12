@@ -19,6 +19,7 @@
         hide-details="auto"
         :rules="[rules.required, rules.maxLength]"
         counter="500"
+        :disabled="submitting"
       />
       
       <div class="d-flex justify-end mt-3">
@@ -27,6 +28,7 @@
           small
           class="mr-2"
           @click="$emit('cancel')"
+          :disabled="submitting"
         >
           取消
         </v-btn>
@@ -53,42 +55,38 @@ export default {
     parentReply: {
       type: Object,
       default: null
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['submit', 'cancel'],
   setup(props, { emit }) {
     const global = inject('global');
-    // const showSnackbar = inject('showSnackbar');
     const replyContent = ref('');
-    const submitting = ref(false);
+    const submitting = computed(() => props.loading);
 
     const rules = {
       required: value => !!value || '回复内容不能为空',
-      maxLength: value => (value && value.length <= 500) || '回复内容不能超过500字'
     };
 
     const canSubmit = computed(() => {
       return replyContent.value.trim().length > 0 && 
-             replyContent.value.length <= 500 &&
-             global.isLogin;
+             global.isLogin &&
+             !submitting.value;
     });
 
     const handleSubmit = async () => {
       if (!canSubmit.value) return;
       
-      submitting.value = true;
+      const replyData = {
+        content: replyContent.value.trim(),
+        user: global.userProfile
+      };
       
-      try {
-        const replyData = {
-          content: replyContent.value.trim(),
-          user: global.userProfile
-        };
-        
-        emit('submit', replyData);
-        replyContent.value = '';
-      } finally {
-        submitting.value = false;
-      }
+      emit('submit', replyData);
+      replyContent.value = '';
     };
 
     return {

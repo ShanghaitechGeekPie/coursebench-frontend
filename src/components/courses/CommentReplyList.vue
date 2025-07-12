@@ -39,6 +39,7 @@
     <div v-if="showReplyInput || showReplyToReply" class="mt-3">
       <CommentReplyInput
         :parent-reply="replyTarget"
+        :loading="replyLoading"
         @submit="handleSubmitReply"
         @cancel="handleCancelReply"
       />
@@ -68,6 +69,10 @@ export default {
       required: true
     },
     showReplyInput: {
+      type: Boolean,
+      default: false
+    },
+    replyLoading: {
       type: Boolean,
       default: false
     }
