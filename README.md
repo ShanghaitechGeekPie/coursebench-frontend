@@ -23,3 +23,5 @@ Run this command if you feel like debuging it.
 ```
 yarn run serve
 ```
+
+Modify `export const USE_MOCK_DATA = false;` to `true` in the file `/src/composables/global/usePhantomData.js` to use mock data.
