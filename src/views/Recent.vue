@@ -68,6 +68,7 @@ import backgroundDark from '@/assets/user-background-dark.svg';
 import backgroundLight from '@/assets/user-background-light.svg';
 import useCommentRecent from '@/composables/courses/comment/useCommentRecent';
 import { provide } from 'vue';
+import { mockDataManager } from '@/composables/global/usePhantomData';
 
 export default {
   components: {
@@ -80,8 +81,14 @@ export default {
   },
   setup() {
     const { commentText, status, global } = useCommentRecent();
+    
+    // 使用mock数据
+    if (mockDataManager.isEnabled()) {
+      commentText.value = mockDataManager.getData('comments');
+      status.commentLoading = false;
+    }
+    
     provide('courseCommentText', commentText);
-    // console.log(global)
     return { commentText, status, global, backgroundDark, backgroundLight };
   },
   data() {

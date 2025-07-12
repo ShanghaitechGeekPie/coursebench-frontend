@@ -175,11 +175,19 @@ import SelectLoader from '@/components/teachers/loader/SelectLoader';
 import StatisticLoader from '@/components/teachers/loader/StatisticLoader';
 import Nothing from '@/components/global/Nothing.vue';
 
+import { mockDataManager } from '@/composables/global/usePhantomData';
+
 export default {
   setup() {
     const { courseText, status, courseFilterStatus, sortStatics } =
       useCourseAll();
 
+    // 使用 mock 数据
+    if (mockDataManager.isEnabled()) {
+      courseText.value = mockDataManager.getData('courses');
+      status.loading = false;
+    }
+    
     return {
       instituteInfo,
       courseText,

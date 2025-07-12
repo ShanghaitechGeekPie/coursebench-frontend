@@ -5,6 +5,7 @@ import useWatching from '@/composables/global/useWatching';
 import { useRouter } from '@/router/migrateRouter';
 import { isNetworkError } from '@/composables/global/useHttpError';
 import { instituteInfo } from '@/composables/global/useStaticData';
+import { mockDataManager } from '@/composables/global/usePhantomData';
 
 export default () => {
   const router = useRouter();
@@ -33,6 +34,27 @@ export default () => {
   };
 
   const getCommentRecent = () => {
+    // mock数据
+    if (mockDataManager.isEnabled()) {
+      const schools = Object.keys(baseStatistic.count).filter(
+        (key) => key !== '__ob__',
+      );
+
+      commentText.value = mockDataManager.getData('comments').map((comment) => {
+        if (schools.indexOf(comment.course.institute) >= 0) {
+          return comment;
+        } else {
+          return {
+            ...comment,
+            course: { ...comment.course, institute: '其他学院' },
+          };
+        }
+      });
+      status.commentLoading = false;
+      return;
+    }
+
+
     status.commentLoading = true;
     const {
       status: fetchStatus,

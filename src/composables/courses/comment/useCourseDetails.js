@@ -11,6 +11,7 @@ import useRefCopy from '@/composables/global/useRefCopy';
 import { sortCmp } from '@/composables/global/useArrayUtils';
 import { useRoute, useRouter } from '@/router/migrateRouter';
 import { isNetworkError } from '@/composables/global/useHttpError';
+import { mockDataManager } from '@/composables/global/usePhantomData';
 
 export default () => {
   const teachers = ref([]);
@@ -92,6 +93,21 @@ export default () => {
   const getCourseComment = () => {
     status.commentLoading = true;
     const id = route.params.id;
+
+    // mock数据
+    if (mockDataManager.isEnabled()) {
+      const mockCourseDetail = mockDataManager.getData('courseDetail', parseInt(id));
+      if (mockCourseDetail && mockCourseDetail.comments) {
+        commentText.value = mockCourseDetail.comments;
+        commentText.value.sort(commentSortFunc);
+      } else {
+        commentText.value = [];
+      }
+      status.commentLoading = false;
+      return;
+    }
+
+
     const {
       status: fetchStatus,
       data,
@@ -130,6 +146,42 @@ export default () => {
   const getCourseDetail = () => {
     status.detailLoading = true;
     const id = route.params.id;
+
+    // mock数据
+    if (mockDataManager.isEnabled()) {
+      const mockCourseDetail = mockDataManager.getData('courseDetail', parseInt(id));
+      if (mockCourseDetail) {
+        useRefCopy(mockCourseDetail.course, courseDetail);
+        courseId.value = { id: id };
+
+        if (mockCourseDetail.groups) {
+          let teacherContainer = [];
+          mockCourseDetail.groups.forEach((value, index, array) => {
+            let names = '';
+            value.teachers.forEach((teacher, teacherIndex, teacherArray) => {
+              names += teacher.name;
+              if (teacherIndex !== teacherArray.length - 1) {
+                names += ', ';
+              }
+              teacherContainer.push(teacher);
+            });
+            groups.value.push({
+              id: value.id,
+              name: names,
+            });
+            selectedTeachers.value.push(index);
+          });
+          teachers.value = teacherContainer.filter(arrayUnique);
+        }
+        status.detailLoading = false;
+      } else {
+        showSnackbar('error', '课程不存在', 3000);
+        setTimeout(() => router.push('/'), 3000);
+      }
+      return;
+    }
+
+
     const {
       status: fetchStatus,
       data,

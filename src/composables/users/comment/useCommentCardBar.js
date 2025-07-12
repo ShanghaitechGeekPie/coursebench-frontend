@@ -1,10 +1,12 @@
-import { mdiUpdate, mdiCommentEditOutline } from '@mdi/js';
+import { mdiUpdate, mdiCommentEditOutline, mdiTriangleSmallUp, mdiTriangleSmallDown } from '@mdi/js';
 
 export default () => {
   const statics = {
     icons: {
       mdiUpdate,
       mdiCommentEditOutline,
+      mdiTriangleSmallUp,
+      mdiTriangleSmallDown,
     },
   };
 

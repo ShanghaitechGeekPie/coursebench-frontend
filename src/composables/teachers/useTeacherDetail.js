@@ -8,6 +8,7 @@ import {
   isValidErrorMessage,
 } from '@/composables/global/useHttpError';
 import { instituteInfo } from '@/composables/global/useStaticData';
+import { mockDataManager } from '@/composables/global/usePhantomData';
 
 export default () => {
   const router = useRouter();
@@ -67,6 +68,33 @@ export default () => {
 
   const getTeacherDetail = () => {
     const id = route.params.id;
+
+    // mock数据
+    if (mockDataManager.isEnabled()) {
+      const mockTeacherDetail = mockDataManager.getData('teacherDetail', parseInt(id));
+      if (mockTeacherDetail) {
+        useRefCopy(mockTeacherDetail.teacher, teacherDetail);
+        teacherDetail.courses = mockTeacherDetail.courses;
+        getCourseStatistic();
+        courseText.value = teacherDetail.courses;
+        courseFilterStatus.selected = (() => {
+          let ret = new Array();
+          for (let key in courseStatistic.count) {
+            if (courseStatistic.count[key]) {
+              ret.push(key);
+            }
+          }
+          return ret;
+        })();
+        status.loading = false;
+      } else {
+        showSnackbar('error', '教师不存在', 3000);
+        setTimeout(() => router.push('/'), 3000);
+      }
+      return;
+    }
+
+
     const {
       status: fetchStatus,
       data,

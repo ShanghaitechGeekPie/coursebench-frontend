@@ -97,6 +97,7 @@ import CommentLoader from '@/components/teachers/loader/CommentLoader';
 import Nothing from '@/components/global/Nothing';
 import backgroundDark from '@/assets/user-background-dark.svg';
 import backgroundLight from '@/assets/user-background-light.svg';
+import { mockDataManager } from '@/composables/global/usePhantomData';
 
 export default {
   components: {
@@ -115,6 +116,13 @@ export default {
   },
   setup() {
     const { commentText, commentFilterStatus, status } = useUser();
+
+    // 使用 mock 数据
+    if (mockDataManager.isEnabled()) {
+      status.profileLoading = false;
+      status.commentLoading = false;
+    }
+    
     return {
       commentText,
       commentFilterStatus,

@@ -22,6 +22,7 @@ import {
   isValidErrorMessage,
 } from '@/composables/global/useHttpError';
 import { enoughDataThreshold } from '@/composables/global/useParseScore';
+import { mockDataManager } from '@/composables/global/usePhantomData';
 
 const baseStatistic = {
   total: 0,
@@ -82,6 +83,25 @@ export default () => {
   });
 
   const getCourseAll = () => {
+    // mock数据
+    if (mockDataManager.isEnabled()) {
+      const schools = Object.keys(baseStatistic.count).filter(
+        (key) => key != '__ob__',
+      );
+      courseFilterStatus.selected = schools;
+      courseRawText.value = mockDataManager.getData('courses').map((course) => {
+        if (schools.indexOf(course.institute) >= 0) {
+          return course;
+        } else {
+          return { ...course, institute: '其他学院' };
+        }
+      });
+      courseRawText.value.sort(sortFunc);
+      status.loading = false;
+      return;
+    }
+
+
     const {
       status: fetchStatus,
       data,

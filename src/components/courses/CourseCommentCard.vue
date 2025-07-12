@@ -40,7 +40,7 @@
           </div>
         </template>
       </CommentCardBar>
-      <CommentCardContent :comment="comment">
+      <CommentCardContent :comment="comment" @reply="handleReply">
         <template #title v-if="comment.is_fold && foldComment">
           <div></div>
         </template>
@@ -113,6 +113,30 @@
                   {{ footerNote.statics.icons.mdiTriangleSmallDown }}
                 </v-icon>
               </v-btn>
+              <v-btn
+                class="like-button mr-1"
+                small
+                color="primary"
+                elevation="0"
+                outlined
+                @click="handleReply"
+                :min-width="$vuetify.breakpoint.width < 400 ? 30 : undefined"
+                :disabled="!global.isLogin"
+              >
+                <div class="px-1">
+                  <v-icon size="20" style="">
+                    {{ footerNote.statics.icons.mdiCommentEditOutline }}
+                  </v-icon>
+                  <span
+                    class="text-caption"
+                    style="transform: translate(0px, 0); display: inline-block"
+                    v-if="$vuetify.breakpoint.width >= 400"
+                  >
+                    回复
+                    <span v-if="comment.reply_count > 0">{{ comment.reply_count }}</span>
+                  </span>
+                </div>
+              </v-btn>
               <v-menu
                 bottom
                 offset-y
@@ -157,6 +181,15 @@
           </div>
         </template>
       </CommentCardContent>
+      <CommentReplyList
+        v-if="(!comment.is_fold || !foldComment) && (comment.replies && comment.replies.length > 0 || showReplyInput)"
+        :replies="comment.replies || []"
+        :comment-id="comment.id"
+        :show-reply-input="showReplyInput"
+        @submit-reply="handleSubmitReply"
+        @like-reply="handleLikeReply"
+        @cancel-reply="showReplyInput = false"
+      />
     </v-card>
   </v-lazy>
 </template>
@@ -164,6 +197,7 @@
 import CommentCardContent from '@/components/users/comment/CommentCardContent';
 import CommentCardBar from '@/components/users/comment/CommentCardBar';
 import CommentFold from '@/components/users/comment/CommentFold';
+import CommentReplyList from '@/components/courses/CommentReplyList';
 import AvatarContainer from '@/components/users/profile/AvatarContainer';
 import useCourseCommentCard from '@/composables/courses/comment/useCourseCommentCard';
 import useUserName from '@/composables/global/useUserName';
@@ -186,6 +220,7 @@ export default {
     CommentCardBar,
     AvatarContainer,
     CommentFold,
+    CommentReplyList,
   },
   setup() {
     const { doLike, doDislike, doUndo, formStatus, statics } =
@@ -195,8 +230,10 @@ export default {
     const showSnackbar = inject('showSnackbar');
 
     const foldComment = ref(true);
+    const showReplyInput = ref(false);
     return {
       foldComment,
+      showReplyInput,
       doLike,
       doDislike,
       doUndo,
@@ -344,6 +381,44 @@ export default {
         .then(() => {
           this.$refs.shareButton.$el.style.display = 'flex';
         });
+    },
+    handleReply() {
+      this.showReplyInput = true;
+      console.log('Reply to comment:', this.comment.id);
+    },
+    handleSubmitReply(replyData) {
+      // 处理回复提交
+      console.log('Submit reply:', replyData);
+      this.showSnackbar('success', '回复发表成功');
+
+      // 在实际应用中，这里应该调用API提交回复
+      // 现在只是模拟添加到本地数据
+      if (!this.comment.replies) {
+        this.comment.replies = [];
+      }
+
+      const newReply = {
+        id: Date.now(),
+        content: replyData.content,
+        user: replyData.user,
+        created_at: new Date().toISOString(),
+        like: 0,
+        dislike: 0,
+        parent_reply_id: replyData.parent_reply_id,
+        parent_user: replyData.parent_user,
+      };
+
+      this.comment.replies.push(newReply);
+      this.comment.reply_count = (this.comment.reply_count || 0) + 1;
+      this.showReplyInput = false;
+    },
+    handleLikeReply(replyId, isLiked) {
+      // 处理回复点赞
+
+      const reply = this.comment.replies?.find((r) => r.id === replyId);
+      if (reply) {
+        reply.like += isLiked ? 1 : -1;
+      }
     },
   },
 };
