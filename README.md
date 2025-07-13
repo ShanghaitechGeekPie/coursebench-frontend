@@ -23,5 +23,3 @@ Run this command if you feel like debuging it.
 ```
 yarn run serve
 ```
-
-

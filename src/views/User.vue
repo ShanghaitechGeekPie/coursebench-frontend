@@ -101,6 +101,7 @@ import backgroundLight from '@/assets/user-background-light.svg';
 export default {
   components: {
     Profile,
+    Comment,
     BackgroundImage,
     StatisticCard,
     CommentCard,
@@ -114,7 +115,6 @@ export default {
   },
   setup() {
     const { commentText, commentFilterStatus, status } = useUser();
-
     return {
       commentText,
       commentFilterStatus,

@@ -151,7 +151,6 @@ import useActive from '@/composables/users/useActive';
 export default {
   setup() {
     const { statics, status } = useActive();
-    
     return { statics, status };
   },
 };

@@ -626,7 +626,14 @@ export const testTeacherDetailData = {
         institute: '数学科学研究所',
         semester: 202102,
         score: [4.5, 4.2, 4.3, 4.1],
-        comment_num: 15
+        comment_num: 15,
+        groups: [
+          {
+            id: 1,
+            code: 'GEMA1009.01',
+            teachers: [{ id: 1, name: '陈克应' }]
+          }
+        ]
       },
       {
         id: 13,
@@ -635,7 +642,14 @@ export const testTeacherDetailData = {
         institute: '数学科学研究所',
         semester: 202201,
         score: [4.3, 4.1, 4.2, 4.0],
-        comment_num: 12
+        comment_num: 12,
+        groups: [
+          {
+            id: 15,
+            code: 'GEMA1010.01',
+            teachers: [{ id: 1, name: '陈克应' }]
+          }
+        ]
       }
     ],
     comments: [
@@ -692,7 +706,14 @@ export const testTeacherDetailData = {
         institute: '数学科学研究所',
         semester: 202102,
         score: [3.8, 3.5, 3.9, 3.7],
-        comment_num: 18
+        comment_num: 18,
+        groups: [
+          {
+            id: 2,
+            code: 'GEMA1009.02',
+            teachers: [{ id: 2, name: '孙伟' }]
+          }
+        ]
       }
     ],
     comments: [
@@ -851,8 +872,57 @@ export const testCourseDetailData = {
           avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
           grade: 1
         },
-        replies: [],
-        reply_count: 0
+        replies: [
+          {
+            id: 101,
+            content: '同意！我也觉得这门课很棒，特别是老师的讲解方式很生动。',
+            user: {
+              id: 2,
+              nickname: '学习达人',
+              avatar: '',
+              is_anonymous: false
+            },
+            created_at: '2024-01-15T10:30:00Z',
+            like: 5,
+            dislike: 0,
+            parent_reply_id: null, // 直接回复评论
+            parent_user: null
+          },
+          {
+            id: 102,
+            content: '请问作业难度怎么样？我比较担心跟不上进度。',
+            user: {
+              id: 3,
+              nickname: '新手小白',
+              avatar: '',
+              is_anonymous: false
+            },
+            created_at: '2024-01-15T11:15:00Z',
+            like: 2,
+            dislike: 0,
+            parent_reply_id: null,
+            parent_user: null
+          },
+          {
+            id: 103,
+            content: '作业难度还好，主要是理解概念，多练习就行。',
+            user: {
+              id: 1,
+              nickname: '课程体验者',
+              avatar: '',
+              is_anonymous: false
+            },
+            created_at: '2024-01-15T12:00:00Z',
+            like: 3,
+            dislike: 0,
+            parent_reply_id: 102, // 回复特定用户
+            parent_user: {
+              id: 3,
+              nickname: '新手小白'
+            }
+          }
+        ],
+        reply_count: 3
       },
       {
         id: 5,
@@ -889,48 +959,7 @@ export const testCourseDetailData = {
           nickname: '小白',
           avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
           grade: 1
-        },
-        replies: [],
-        reply_count: 0
-      },
-      {
-        id: 21,
-        title: '陈教授的课程很棒',
-        content: `陈教授讲课清晰，逻辑性强，非常推荐！虽然作业量比较大，但是能学到很多东西。`,
-        course: {
-          name: '数学分析I',
-          code: 'GEMA1009',
-          id: 1,
-          institute: '数学科学研究所',
-        },
-        group: {
-          id: 1,
-          code: 'GEMA1009.01',
-          teachers: [{ name: '陈克应', id: 1 }],
-        },
-        post_time: '20211120',
-        update_time: '20211120',
-        semester: 202102,
-        is_anonymous: false,
-        user_nickname: '数学爱好者',
-        user_id: 125,
-        avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
-        grade: 2,
-        score: [5, 4, 4, 5],
-        user_score_ranking: 1,
-        like: 25,
-        dislike: 0,
-        like_status: 0,
-        is_fold: false,
-        is_covered: false,
-        user: {
-          id: 125,
-          nickname: '数学爱好者',
-          avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
-          grade: 2
-        },
-        replies: [],
-        reply_count: 0
+        }
       }
     ]
   },
@@ -961,7 +990,7 @@ export const testCourseDetailData = {
         title: '信息技术入门很好的课程',
         content: `这门课程对于初学者来说非常友好，老师讲解清晰，内容丰富。推荐给所有对信息技术感兴趣的同学。`,
         course: {
-          name: '信息科学与技术导论',
+          name: '信息科学技术导论',
           code: 'SI100B',
           id: 2,
           institute: '信息科学与技术学院',

@@ -134,7 +134,6 @@ export default {
   setup() {
     const { courseText, status, courseFilterStatus, teacherDetail } =
       useTeacherDetail();
-      
     return {
       courseText,
       status,

@@ -22,7 +22,6 @@ import {
 } from '@/composables/global/useHttpError';
 import { setPreset, getPreset } from '@/composables/global/useCookie';
 
-
 const baseStatistic = {
   total: 0,
   score: 0,
@@ -129,7 +128,6 @@ export default () => {
 
   const getCommentText = () => {
     const id = route.params.id;
-
     const {
       status: fetchStatus,
       data,

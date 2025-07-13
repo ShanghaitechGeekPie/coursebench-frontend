@@ -178,8 +178,7 @@ import Nothing from '@/components/global/Nothing.vue';
 export default {
   setup() {
     const { courseText, status, courseFilterStatus, sortStatics } =
-      useCourseAll();
-    
+      useCourseAll();    
     return {
       instituteInfo,
       courseText,

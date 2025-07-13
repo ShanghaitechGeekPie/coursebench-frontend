@@ -67,7 +67,6 @@ export default () => {
 
   const getTeacherDetail = () => {
     const id = route.params.id;
-
     const {
       status: fetchStatus,
       data,

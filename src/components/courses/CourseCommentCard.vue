@@ -204,7 +204,7 @@ import useCourseCommentCard from '@/composables/courses/comment/useCourseComment
 import useCommentReply from '@/composables/courses/comment/useCommentReply';
 import useUserName from '@/composables/global/useUserName';
 import { gradeItems } from '@/composables/global/useStaticData';
-import { inject, ref, watch } from 'vue';
+import { inject, ref } from 'vue';
 import QRCode from 'qrcode';
 import { domToCanvas } from 'modern-screenshot';
 import {

@@ -40,6 +40,7 @@ export default () => {
       error,
     } = useFetching(['comment_recent'], '/comment/recent');
     useWatching(fetchStatus, () => {
+      // console.log("Data Fetched!")
       if (fetchStatus.value === 'success') {
         status.commentLoading = false;
       } else if (fetchStatus.value === 'error') {
@@ -53,6 +54,7 @@ export default () => {
       }
     });
     useWatching(data, () => {
+      // console.log("Data Assigned!")
       if (data.value) {
         const schools = Object.keys(baseStatistic.count).filter(
           (key) => key !== '__ob__',

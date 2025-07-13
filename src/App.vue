@@ -49,7 +49,7 @@ export default {
   name: 'App',
   components: { Header, InsiderBanner, ActivityBanner, MenuSideBar },
   setup() {
-    const { snackbar, showSnackbar } = useSnackbar();
+    const { snackbar } = useSnackbar();
     const global = reactive({
       userProfile: getPreset(),
       isLogin:
