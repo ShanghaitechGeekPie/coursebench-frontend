@@ -10,20 +10,15 @@ export const mockManager = {
   // 检查是否使用mock数据
   shouldUseMock: () => USE_MOCK_DATA,
   
-  // 模拟API延迟
-  mockDelay: (ms = 500) => new Promise(resolve => setTimeout(resolve, ms)),
-  
-  // 模拟成功响应
-  mockSuccess: async (data, delay = 500) => {
+ 
+  mockSuccess: async (data) => {
     if (!USE_MOCK_DATA) return null;
-    await mockManager.mockDelay(delay);
     return { data: { data } };
   },
   
   // 模拟错误响应
-  mockError: async (message = '模拟错误', delay = 500) => {
+  mockError: async (message = '模拟错误') => {
     if (!USE_MOCK_DATA) return null;
-    await mockManager.mockDelay(delay);
     throw new Error(message);
   },
   

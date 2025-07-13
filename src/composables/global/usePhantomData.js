@@ -1240,16 +1240,6 @@ export const mockDataManager = {
     return dataMap[type] || [];
   },
   
-  // 模拟 API 延迟
-  delay: (ms = 500) => new Promise(resolve => setTimeout(resolve, ms)),
-  
-  // 模拟成功响应
-  mockSuccess: async (data, delay = 500) => {
-    if (!USE_MOCK_DATA) return null;
-    await mockDataManager.delay(delay);
-    return { data: { data } };
-  },
-  
   // 模拟错误响应
   mockError: async (message = '模拟网络错误', delay = 500) => {
     if (!USE_MOCK_DATA) return null;
