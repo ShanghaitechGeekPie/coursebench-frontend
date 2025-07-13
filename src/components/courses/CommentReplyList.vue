@@ -1,37 +1,47 @@
 <template>
   <div class="comment-reply-list">
     <div v-if="replies.length > 0" class="mt-3">
-      <div v-if="!showAll && replies.length > displayLimit" class="mb-2">
-        <v-btn
-          text
-          small
-          color="primary"
-          @click="showAll = true"
-        >
-          查看全部 {{ replies.length }} 条回复
-          <v-icon small class="ml-1">{{ mdiChevronDown }}</v-icon>
-        </v-btn>
-      </div>
-      
-      <div class="replies-container">
-        <CommentReply
-          v-for="reply in displayedReplies"
-          :key="reply.id"
-          :reply="reply"
-          @reply="handleReply"
-          @like="handleLike"
-        />
-      </div>
-      
-      <div v-if="showAll && replies.length > displayLimit" class="mt-2">
-        <v-btn
-          text
-          small
-          @click="showAll = false"
-        >
-          收起回复
-          <v-icon small class="ml-1">{{ mdiChevronUp }}</v-icon>
-        </v-btn>
+      <div class="replies-container-wrapper" :class="{ 'has-gradient': !showAll && replies.length > displayLimit }">
+        <div class="replies-container">
+          <CommentReply
+            v-for="reply in displayedReplies"
+            :key="reply.id"
+            :reply="reply"
+            @reply="handleReply"
+            @like="handleLike"
+          />
+        </div>
+        
+        <!-- 渐变遮罩层 -->
+        <div v-if="!showAll && replies.length > displayLimit" class="gradient-overlay"></div>
+        
+        <!-- 查看全部按钮 - 移到底部 -->
+        <div v-if="!showAll && replies.length > displayLimit" class="show-all-button">
+          <v-btn
+            small
+            color="primary"
+            elevation="0"
+            outlined
+            @click="showAll = true"
+          >
+            查看全部 {{ replies.length }} 条回复
+            <v-icon small class="ml-1">{{ mdiChevronDown }}</v-icon>
+          </v-btn>
+        </div>
+        
+        <!-- 收起回复按钮 - 与查看全部按钮位置一致 -->
+        <div v-if="showAll && replies.length > displayLimit" class="show-all-button">
+          <v-btn
+            small
+            color="primary"
+            elevation="0"
+            outlined
+            @click="showAll = false"
+          >
+            收起回复
+            <v-icon small class="ml-1">{{ mdiChevronUp }}</v-icon>
+          </v-btn>
+        </div>
       </div>
     </div>
     
@@ -141,5 +151,41 @@ export default {
 
 .theme--dark .replies-container {
   border-left-color: #424242;
+}
+
+.replies-container-wrapper {
+  position: relative;
+}
+
+.has-gradient .replies-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.9) 70%, rgba(255, 255, 255, 1) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.theme--dark .gradient-overlay {
+  background: linear-gradient(to bottom, transparent 0%, rgba(33, 33, 33, 0.9) 70%, rgba(33, 33, 33, 1) 100%);
+}
+
+.show-all-button {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding-top: 8px;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.theme--dark .show-all-button {
+  background-color: rgba(33, 33, 33, 1);
 }
 </style>

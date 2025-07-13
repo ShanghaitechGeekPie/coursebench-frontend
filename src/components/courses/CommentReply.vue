@@ -24,22 +24,26 @@
         </div>
         <div class="d-flex align-center">
           <v-btn
-            text
-            x-small
-            class="text-caption mr-2"
+            small
+            :color="isLiked ? 'primary' : 'primary'"
+            elevation="0"
+            :text="!isLiked"
+            :outlined="!isLiked"
+            class="like-button mr-2"
             @click="toggleLike"
-            :color="isLiked ? 'primary' : ''"
           >
             <v-icon size="14" class="mr-1">{{ mdiThumbUp }}</v-icon>
-            {{ reply.like }}
+            <span class="text-caption">{{ reply.like }}</span>
           </v-btn>
           <v-btn
-            text
-            x-small
-            class="text-caption mr-2"
+            small
+            color="primary"
+            elevation="0"
+            outlined
+            class="mr-2"
             @click="$emit('reply', reply)"
           >
-            回复
+            <span class="text-caption">回复</span>
           </v-btn>
         </div>
       </div>
@@ -101,5 +105,9 @@ export default {
 
 .theme--dark .comment-reply {
   background-color: rgba(255, 255, 255, 0.05);
+}
+
+.like-button {
+  padding: 0 !important;
 }
 </style>

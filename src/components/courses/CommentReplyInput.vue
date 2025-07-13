@@ -24,8 +24,10 @@
       
       <div class="d-flex justify-end mt-3">
         <v-btn
-          text
           small
+          color="primary"
+          elevation="0"
+          outlined
           class="mr-2"
           @click="$emit('cancel')"
           :disabled="submitting"
@@ -33,8 +35,9 @@
           取消
         </v-btn>
         <v-btn
-          color="primary"
           small
+          color="primary"
+          elevation="0"
           :disabled="!canSubmit"
           :loading="submitting"
           @click="handleSubmit"

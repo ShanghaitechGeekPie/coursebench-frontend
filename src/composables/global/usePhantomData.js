@@ -889,6 +889,21 @@ export const testCourseDetailData = {
             parent_user: null
           },
           {
+            id: 101,
+            content: '同意！我也觉得这门课很棒，特别是老师的讲解方式很生动。',
+            user: {
+              id: 2,
+              nickname: '学习达人',
+              avatar: '',
+              is_anonymous: false
+            },
+            created_at: '2024-01-15T10:30:00Z',
+            like: 5,
+            dislike: 0,
+            parent_reply_id: null, // 直接回复评论
+            parent_user: null
+          },
+          {
             id: 102,
             content: '请问作业难度怎么样？我比较担心跟不上进度。',
             user: {
