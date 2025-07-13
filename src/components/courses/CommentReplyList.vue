@@ -12,10 +12,7 @@
           />
         </div>
         
-        <!-- 渐变遮罩层 -->
         <div v-if="!showAll && replies.length > displayLimit" class="gradient-overlay"></div>
-        
-        <!-- 查看全部按钮 - 移到底部 -->
         <div v-if="!showAll && replies.length > displayLimit" class="show-all-button">
           <v-btn
             small
@@ -174,7 +171,7 @@ export default {
 }
 
 .theme--dark .gradient-overlay {
-  background: linear-gradient(to bottom, transparent 0%, rgba(33, 33, 33, 0.9) 70%, rgba(33, 33, 33, 1) 100%);
+  background: linear-gradient(to bottom, transparent 0%, rgba(66, 66, 66, 0.9) 70%, rgba(66, 66, 66, 1) 100%);
 }
 
 .show-all-button {
@@ -186,6 +183,6 @@ export default {
 }
 
 .theme--dark .show-all-button {
-  background-color: rgba(33, 33, 33, 1);
+  background-color: rgba(66, 66, 66, 1);
 }
 </style>

@@ -99,15 +99,12 @@ export default {
 
 <style scoped>
 .comment-reply {
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: transparent;
   border-radius: 8px;
-}
-
-.theme--dark .comment-reply {
-  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .like-button {
   padding: 0 !important;
 }
 </style>
+
