@@ -24,4 +24,15 @@ Run this command if you feel like debuging it.
 yarn run serve
 ```
 
-Modify `export const USE_MOCK_DATA = false;` to `true` in the file `/src/composables/global/usePhantomData.js` to use mock data.
+### Mock Data Configuration
+
+To enable mock data during development, modify the `USE_MOCK` setting in `/src/config/environment.js`:
+
+```javascript
+development: {
+  USE_MOCK: true,  // Set to false to use real API
+  API_BASE_URL: 'http://localhost:3000',
+}
+```
+
+Mock data is automatically disabled in production builds.

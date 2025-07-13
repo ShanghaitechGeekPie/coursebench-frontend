@@ -7,7 +7,6 @@ import {
   isNetworkError,
   isValidErrorMessage,
 } from '@/composables/global/useHttpError';
-import { mockDataManager } from '@/composables/global/usePhantomData';
 
 export default () => {
   const router = useRouter();
@@ -35,23 +34,6 @@ export default () => {
   const getCourseDetail = () => {
     const id = route.params.id;
     
-    // mock数据
-    if (mockDataManager.isEnabled()) {
-      const mockCourseDetail = mockDataManager.getData('courseDetail', parseInt(id));
-      if (mockCourseDetail) {
-        useRefCopy(mockCourseDetail.course, courseDetail);
-        courseDetail.groups = mockCourseDetail.groups;
-        commentText.value = mockCourseDetail.comments;
-        status.loading = false;
-        status.commentLoading = false;
-      } else {
-        showSnackbar('error', '课程不存在', 3000);
-        setTimeout(() => router.push('/'), 3000);
-      }
-      return;
-    }
-
-    // 原有的 API 请求逻辑
     const {
       status: fetchStatus,
       data,
@@ -83,12 +65,6 @@ export default () => {
   const getCourseComments = () => {
     const id = route.params.id;
     
-    // 如果启用了 mock 数据，评论已经在 getCourseDetail 中加载了
-    if (mockDataManager.isEnabled()) {
-      return;
-    }
-
-    // 原有的评论 API 请求逻辑
     const {
       status: fetchStatus,
       data,

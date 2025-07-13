@@ -117,7 +117,6 @@ import StatisticLoader from '@/components/teachers/loader/StatisticLoader';
 import ImageLoader from '@/components/teachers/loader/ImageLoader';
 import Nothing from '@/components/global/Nothing';
 import { instituteInfo } from '@/composables/global/useStaticData';
-import { mockDataManager } from '@/composables/global/usePhantomData';
 
 export default {
   components: {
@@ -135,11 +134,6 @@ export default {
   setup() {
     const { courseText, status, courseFilterStatus, teacherDetail } =
       useTeacherDetail();
-      
-    // 使用 mock 数据
-    if (mockDataManager.isEnabled()) {
-      status.loading = false;
-    }
       
     return {
       courseText,

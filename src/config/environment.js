@@ -1,13 +1,10 @@
-// 环境配置
 export const ENVIRONMENT = {
-  // 开发环境配置
   development: {
     USE_MOCK: true,
     API_BASE_URL: 'http://localhost:3000',
-    MOCK_DELAY: 500
+    MOCK_DELAY: 0
   },
-  
-  // 生产环境配置
+
   production: {
     USE_MOCK: false,
     API_BASE_URL: 'https://api.coursebench.com',
@@ -15,12 +12,14 @@ export const ENVIRONMENT = {
   }
 };
 
-// 获取当前环境
 export const getCurrentEnv = () => {
-  return import.meta.env.MODE === 'production' ? 'production' : 'development';
+  console.log('Current environment:', process.env.NODE_ENV);
+  return process.env.NODE_ENV === 'production' ? 'production' : 'development';
 };
 
-// 获取当前环境配置
 export const getEnvConfig = () => {
   return ENVIRONMENT[getCurrentEnv()];
 };
+
+export const USE_MOCK_DATA = getEnvConfig().USE_MOCK;
+

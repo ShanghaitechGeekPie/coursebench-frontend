@@ -88,8 +88,9 @@
 
 <script>
 import Nothing from '@/components/global/Nothing';
-import { mockDataManager } from '@/composables/global/usePhantomData';
 import { ref, reactive, onMounted } from 'vue';
+import useFetching from '@/composables/global/useFetching';
+import useWatching from '@/composables/global/useWatching';
 
 export default {
   components: {
@@ -102,10 +103,21 @@ export default {
     });
 
     onMounted(() => {
-      if (mockDataManager.isEnabled()) {
-        teacherText.value = mockDataManager.getData('teachers');
-        status.loading = false;
-      }
+      const { status: fetchStatus, data } = useFetching(['teachers'], '/teacher/all');
+      
+      useWatching(fetchStatus, () => {
+        if (fetchStatus.value === 'success') {
+          status.loading = false;
+        } else if (fetchStatus.value === 'error') {
+          status.loading = false;
+        }
+      });
+      
+      useWatching(data, () => {
+        if (data.value && data.value.data) {
+          teacherText.value = data.value.data;
+        }
+      });
     });
 
     return {

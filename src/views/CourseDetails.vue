@@ -139,12 +139,25 @@ export default {
   },
   methods: {
     updateSelectedComment() {
-      let mappedGroup = this.selectedTeachers.map((item) => {
-        return this.groups[item].id;
-      });
+      // 确保有评论数据和教师组数据
+      if (!this.commentText || !this.groups || this.groups.length === 0) {
+        this.selectedComment = [];
+        return;
+      }
+
+      // 获取选中教师对应的组ID
+      let mappedGroup = this.selectedTeachers
+        .map((item) => {
+          return this.groups[item] ? this.groups[item].id : null;
+        })
+        .filter((id) => id !== null);
+
+      // 过滤评论
       this.selectedComment = this.commentText.filter((item) => {
-        return mappedGroup.includes(item.group.id);
+        return item.group && mappedGroup.includes(item.group.id);
       });
+
+      // 处理分享的评论
       if (this.shareAnswer === -1) return;
       let itemIndex = this.selectedComment.findIndex(
         (item) => item.id === this.shareAnswer,
@@ -164,6 +177,13 @@ export default {
       deep: true,
     },
     commentText: {
+      handler() {
+        this.updateSelectedComment();
+      },
+      immediate: true,
+      deep: true,
+    },
+    groups: {
       handler() {
         this.updateSelectedComment();
       },

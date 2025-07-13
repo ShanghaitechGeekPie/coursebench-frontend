@@ -21,7 +21,7 @@ import {
   isValidErrorMessage,
 } from '@/composables/global/useHttpError';
 import { setPreset, getPreset } from '@/composables/global/useCookie';
-import { mockDataManager } from '@/composables/global/usePhantomData';
+
 
 const baseStatistic = {
   total: 0,
@@ -91,19 +91,6 @@ export default () => {
   });
 
   const getUserProfile = () => {
-    // mock数据
-    if (mockDataManager.isEnabled()) {
-      const id = parseInt(route.params.id);
-      const mockUser = mockDataManager.getData('users').find(user => user.id === id) || mockDataManager.getData('userProfile');
-      useRefCopy(mockUser, userProfile);
-      userProfile.nickname = useUserName(userProfile);
-      userProfile.grade = gradeItems[userProfile.grade];
-      userProfile.year = userProfile.year === 0 ? '暂不透露' : userProfile.year;
-      status.profileLoading = false;
-      return;
-    }
-
-
     const id = route.params.id;
     const {
       status: fetchStatus,
@@ -141,45 +128,8 @@ export default () => {
   };
 
   const getCommentText = () => {
-    // mock数据
-    if (mockDataManager.isEnabled()) {
-      const id = parseInt(route.params.id);
-      const userComments = mockDataManager.getData('comments').filter(comment => 
-        comment.user_id === id || comment.user?.id === id
-      );
-      
-      const schools = Object.keys(baseStatistic.count).filter(
-        (key) => key !== '__ob__',
-      );
-      commentFilterStatus.selected = schools;
-      
-
-      commentRawText.value = userComments.map((comment) => {
-        const processedComment = {
-          ...comment,
-          replies: comment.replies || [],
-          reply_count: comment.reply_count || 0,
-          user: comment.user || mockDataManager.getData('userProfile'),
-          like: comment.like || 0,
-          dislike: comment.dislike || 0
-        };
-        
-        if (schools.indexOf(processedComment.course.institute) >= 0) {
-          return processedComment;
-        } else {
-          return {
-            ...processedComment,
-            course: { ...processedComment.course, institute: '其他学院' },
-          };
-        }
-      });
-      commentRawText.value.sort(commentSortFunc);
-      status.commentLoading = false;
-      return;
-    }
-
-
     const id = route.params.id;
+
     const {
       status: fetchStatus,
       data,

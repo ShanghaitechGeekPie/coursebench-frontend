@@ -147,19 +147,10 @@
 
 <script>
 import useActive from '@/composables/users/useActive';
-import { mockDataManager } from '@/composables/global/usePhantomData';
 
 export default {
   setup() {
     const { statics, status } = useActive();
-    
-    // 使用 mock 数据
-    if (mockDataManager.isEnabled()) {
-      const mockActiveData = mockDataManager.getData('activeData');
-      status.loading = mockActiveData.loading;
-      status.errorMessage = mockActiveData.errorMessage;
-      status.success = mockActiveData.success;
-    }
     
     return { statics, status };
   },
