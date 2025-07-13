@@ -90,6 +90,7 @@ export default () => {
   // }))
 
   const getCourseComment = () => {
+    status.commentLoading = true;
     const id = route.params.id;
     const {
       status: fetchStatus,
