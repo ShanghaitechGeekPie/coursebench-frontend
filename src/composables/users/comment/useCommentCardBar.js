@@ -5,8 +5,6 @@ export default () => {
     icons: {
       mdiUpdate,
       mdiCommentEditOutline,
-      mdiTriangleSmallUp,
-      mdiTriangleSmallDown,
     },
   };
 

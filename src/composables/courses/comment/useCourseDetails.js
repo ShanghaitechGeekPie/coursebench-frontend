@@ -92,7 +92,6 @@ export default () => {
   const getCourseComment = () => {
     status.commentLoading = true;
     const id = route.params.id;
-
     const {
       status: fetchStatus,
       data,
@@ -131,7 +130,6 @@ export default () => {
   const getCourseDetail = () => {
     status.detailLoading = true;
     const id = route.params.id;
-
     const {
       status: fetchStatus,
       data,
