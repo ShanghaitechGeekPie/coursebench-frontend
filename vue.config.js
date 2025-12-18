@@ -25,6 +25,16 @@ module.exports = {
     hot: true,
     port: 8000,
     compress: true,
+    proxy: {
+      '/v1': {
+        target: 'http://coursebench.org',
+        changeOrigin: true,
+        secure: false,
+        pathRewrite: {
+          // '^/v1': ''  // 如果后端不需要/v1前缀，可以移除它
+        }
+      }
+    }
   },
   transpileDependencies: ['vuetify'],
   configureWebpack: {

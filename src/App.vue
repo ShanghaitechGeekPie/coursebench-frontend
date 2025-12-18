@@ -8,16 +8,16 @@
       </div>
       <div>
         <ActivityBanner :Enable="true">
-          OhMyGPA 论坛正在试运营！ 访问 <a
+          OhMyGPA 论坛试运营！ 访问 <a
             href="https://ohmygpa.icu/"
             target="_blank"
             class="inline-link"
-            >https://ohmygpa.icu/</a
+            >ohmygpa.icu</a
           > 查看详情！
         </ActivityBanner>
       </div>
 
-      <router-view :key="$route.path" />
+      <router-view :key="$route.path" class="mt-15 sm:mt-0" />
       <v-snackbar
         v-model="snackbar.show"
         :color="snackbar.color"
