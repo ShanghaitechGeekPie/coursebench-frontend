@@ -179,7 +179,7 @@ export default {
   setup() {
     const { courseText, status, courseFilterStatus, sortStatics } =
       useCourseAll();
-
+        
     return {
       instituteInfo,
       courseText,

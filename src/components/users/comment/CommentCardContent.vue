@@ -73,35 +73,7 @@
                     <span class="text-caption">
                       {{ semester }}
                     </span>
-                    <span
-                      v-if="
-                        comment.reward >= 0 &&
-                        !(
-                          global.userProfile.is_admin ||
-                          global.userProfile.is_community_admin
-                        )
-                      "
-                    >
-                      <v-icon size="16">
-                        {{ statics.icons.mdiGold }}
-                      </v-icon>
-                      <span class="text-caption">
-                        {{ comment.reward / 100 }}元
-                      </span>
-                    </span>
-                    <div v-else class="d-flex align-center">
-                      <v-icon size="16">
-                        {{ statics.icons.mdiGold }}
-                      </v-icon>
-                      <v-text-field
-                        :class="'pl-1 text-caption'"
-                        v-model="localReward"
-                        :rules="[formRules.reward]"
-                        suffix="元"
-                        style="max-width: 80px"
-                        @keyup.enter="onEnterPressed"
-                      >
-                      </v-text-field>
+                    
                     </div>
                   </div>
                 </slot>
