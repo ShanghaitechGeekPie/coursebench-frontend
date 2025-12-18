@@ -7,12 +7,13 @@
         <InsiderBanner />
       </div>
       <div>
-        <ActivityBanner :Enable="false">
-          评论拿赏金功能上线啦！详情请点击<a
-            @click="$router.push('/activities')"
+        <ActivityBanner :Enable="true">
+          OhMyGPA 论坛正在试运营！ 访问 <a
+            href="https://ohmygpa.icu/"
+            target="_blank"
             class="inline-link"
-            >这里</a
-          >！
+            >https://ohmygpa.icu/</a
+          > 查看详情！
         </ActivityBanner>
       </div>
 
