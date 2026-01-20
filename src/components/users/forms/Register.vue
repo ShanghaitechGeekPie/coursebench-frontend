@@ -48,6 +48,8 @@
                   :rules="[formRules.required, formRules.email]"
                   placeholder="请输入上科大邮箱"
                   ref="emailTextField"
+                  name="username"
+                  autocomplete="username"
                 ></v-text-field>
               </v-card-text>
             </v-form>
@@ -100,6 +102,8 @@
                   :rules="[formRules.required, formRules.password]"
                   ref="passwordTextField"
                   placeholder="请输入密码"
+                  name="password"
+                  autocomplete="new-password"
                   :append-icon="
                     formStatus.passwordVisible
                       ? statics.icons.mdiEyeOff
@@ -184,6 +188,8 @@
                     :rules="[formRules.required, formRules.nickname]"
                     placeholder="用户名"
                     ref="usernameTextField"
+                    name="nickname"
+                    autocomplete="nickname"
                   ></v-text-field>
                 </div>
                 <div>
