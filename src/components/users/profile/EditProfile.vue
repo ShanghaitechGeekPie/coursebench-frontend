@@ -183,6 +183,8 @@
                           : statics.icons.mdiEye
                       "
                       ref="oldPasswordTextField"
+                      name="current-password"
+                      autocomplete="current-password"
                       @click:append="
                         formStatus.oldPasswordVisible =
                           !formStatus.oldPasswordVisible
@@ -235,6 +237,8 @@
                           : statics.icons.mdiEye
                       "
                       ref="newPasswordTextField"
+                      name="new-password"
+                      autocomplete="new-password"
                       @click:append="
                         formStatus.newPasswordVisible =
                           !formStatus.newPasswordVisible
