@@ -7,7 +7,7 @@
         <InsiderBanner />
       </div>
       <div>
-        <ActivityBanner :Enable="true">
+        <ActivityBanner :Enable="false">
           OhMyGPA 论坛试运营！ 访问 <a
             href="https://ohmygpa.icu/"
             target="_blank"
@@ -18,6 +18,7 @@
       </div>
 
       <router-view :key="$route.path" class="mt-15 sm:mt-0" />
+      <Footer />
       <v-snackbar
         v-model="snackbar.show"
         :color="snackbar.color"
@@ -40,6 +41,7 @@
 import Header from '@/components/global/Header';
 import InsiderBanner from '@/components/global/InsiderBanner';
 import ActivityBanner from '@/components/global/ActivityBanner';
+import Footer from '@/components/global/Footer';
 import useSnackbar from '@/composables/global/useSnackbar';
 import { getPreset } from '@/composables/global/useCookie';
 import { provide, reactive } from 'vue';
@@ -48,7 +50,7 @@ import MenuSideBar from '@/components/global/MenuSideBar.vue';
 
 export default {
   name: 'App',
-  components: { Header, InsiderBanner, ActivityBanner, MenuSideBar },
+  components: { Header, InsiderBanner, ActivityBanner, MenuSideBar, Footer },
   setup() {
     const { snackbar } = useSnackbar();
     const global = reactive({
