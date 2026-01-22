@@ -1,0 +1,95 @@
+name: Release on Package Update
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - release
+    paths:
+      - 'package.json'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract version from package.json
+        id: version
+        run: |
+          VERSION=$(jq -r '.version' package.json)
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
+
+      - name: Generate release tag and metadata
+        id: release_info
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          BRANCH=${{ github.ref_name }}
+          BUILD_DATE=$(date +'%Y%m%d')
+          
+          if [[ "$BRANCH" == "release" ]]; then
+            TAG="v$VERSION"
+            TITLE="v$VERSION"
+            NOTES="Release v$VERSION"
+            IS_PRERELEASE="false"
+            IS_LATEST="true"
+          else
+            TAG="v$VERSION-pre.$BUILD_DATE.$COMMIT_HASH"
+            TITLE="v$VERSION-pre ($COMMIT_HASH)"
+            NOTES="Pre-release v$VERSION from branch: $BRANCH"$'\n'"Commit: $COMMIT_HASH"$'\n'"Build Date: $BUILD_DATE"
+            IS_PRERELEASE="true"
+            IS_LATEST="false"
+          fi
+          
+          echo "TAG=$TAG" >> $GITHUB_OUTPUT
+          echo "TITLE=$TITLE" >> $GITHUB_OUTPUT
+          echo "NOTES<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "IS_PRERELEASE=$IS_PRERELEASE" >> $GITHUB_OUTPUT
+          echo "IS_LATEST=$IS_LATEST" >> $GITHUB_OUTPUT
+          echo "Generated tag: $TAG"
+
+      - name: Check if release already exists
+        id: check_release
+        run: |
+          TAG=${{ steps.release_info.outputs.TAG }}
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            echo "EXISTS=true" >> $GITHUB_OUTPUT
+          else
+            echo "EXISTS=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release
+        if: steps.check_release.outputs.EXISTS == 'false'
+        run: |
+          TAG="${{ steps.release_info.outputs.TAG }}"
+          TITLE="${{ steps.release_info.outputs.TITLE }}"
+          IS_PRERELEASE="${{ steps.release_info.outputs.IS_PRERELEASE }}"
+          IS_LATEST="${{ steps.release_info.outputs.IS_LATEST }}"
+          NOTES="${{ steps.release_info.outputs.NOTES }}"
+          
+          # Build the gh release create command
+          GH_CMD="gh release create '$TAG' --title '$TITLE'"
+          
+          if [[ "$IS_PRERELEASE" == "true" ]]; then
+            GH_CMD="$GH_CMD --prerelease"
+          fi
+          
+          if [[ "$IS_LATEST" == "true" ]]; then
+            GH_CMD="$GH_CMD --latest"
+          fi
+          
+          GH_CMD="$GH_CMD --notes '$NOTES'"
+          
+          eval "$GH_CMD"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
