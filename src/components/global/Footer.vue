@@ -1,7 +1,6 @@
 <template>
   <footer class="footer-container">
-    <v-divider></v-divider>
-    <div class="footer-content pt-5">
+    <div class="footer-content">
       <div class="footer-text">
         <span class="copyright">
           &copy; {{ currentYear }} CourseBench. All rights reserved.
@@ -11,8 +10,14 @@
           <span v-if="buildHash" class="build-hash">
             (Build: {{ buildHash }})
           </span>
+          <a
+            href="https://github.com/ShanghaitechGeekPie/coursebench-frontend/releases/latest"
+            target="_blank"
+            rel="noopener noreferrer"
+            classname="inline-link"
+          >更新日志</a>
           <span v-if="buildDate" class="build-date">
-            Last build at: {{ buildDate }}
+            构建日期: {{ buildDate }}
           </span>
         </span>
       </div>
@@ -66,6 +71,9 @@ export default {
 .version-info {
   font-size: 0.8125rem;
   color: rgba(0, 0, 0, 0.5);
+  a {
+    color: inherit;
+  }
 }
 
 .build-hash {
