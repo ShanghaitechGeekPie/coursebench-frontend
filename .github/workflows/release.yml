@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - main
+      - release
     paths:
       - 'package.json'
 
@@ -24,11 +25,42 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "Extracted version: $VERSION"
 
+      - name: Generate release tag and metadata
+        id: release_info
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          BRANCH=${{ github.ref_name }}
+          BUILD_DATE=$(date +'%Y%m%d')
+          
+          if [[ "$BRANCH" == "release" ]]; then
+            TAG="v$VERSION"
+            TITLE="v$VERSION"
+            NOTES="Release v$VERSION"
+            IS_PRERELEASE="false"
+            IS_LATEST="true"
+          else
+            TAG="v$VERSION-pre.$BUILD_DATE.$COMMIT_HASH"
+            TITLE="v$VERSION-pre ($COMMIT_HASH)"
+            NOTES="Pre-release v$VERSION from branch: $BRANCH"$'\n'"Commit: $COMMIT_HASH"$'\n'"Build Date: $BUILD_DATE"
+            IS_PRERELEASE="true"
+            IS_LATEST="false"
+          fi
+          
+          echo "TAG=$TAG" >> $GITHUB_OUTPUT
+          echo "TITLE=$TITLE" >> $GITHUB_OUTPUT
+          echo "NOTES<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "IS_PRERELEASE=$IS_PRERELEASE" >> $GITHUB_OUTPUT
+          echo "IS_LATEST=$IS_LATEST" >> $GITHUB_OUTPUT
+          echo "Generated tag: $TAG"
+
       - name: Check if release already exists
         id: check_release
         run: |
-          VERSION=${{ steps.version.outputs.VERSION }}
-          if gh release view "v$VERSION" > /dev/null 2>&1; then
+          TAG=${{ steps.release_info.outputs.TAG }}
+          if gh release view "$TAG" > /dev/null 2>&1; then
             echo "EXISTS=true" >> $GITHUB_OUTPUT
           else
             echo "EXISTS=false" >> $GITHUB_OUTPUT
@@ -39,10 +71,23 @@ jobs:
       - name: Create Release
         if: steps.check_release.outputs.EXISTS == 'false'
         run: |
-          VERSION=${{ steps.version.outputs.VERSION }}
-          gh release create "v$VERSION" \
-            --title "v$VERSION" \
-            --notes "Release v$VERSION" \
-            --latest
+          TAG=${{ steps.release_info.outputs.TAG }}
+          TITLE=${{ steps.release_info.outputs.TITLE }}
+          IS_PRERELEASE=${{ steps.release_info.outputs.IS_PRERELEASE }}
+          IS_LATEST=${{ steps.release_info.outputs.IS_LATEST }}
+          
+          CREATE_ARGS="--title '$TITLE'"
+          
+          if [[ "$IS_PRERELEASE" == "true" ]]; then
+            CREATE_ARGS="$CREATE_ARGS --prerelease"
+          fi
+          
+          if [[ "$IS_LATEST" == "true" ]]; then
+            CREATE_ARGS="$CREATE_ARGS --latest"
+          fi
+          
+          gh release create "$TAG" \
+            $CREATE_ARGS \
+            --notes "${{ steps.release_info.outputs.NOTES }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
