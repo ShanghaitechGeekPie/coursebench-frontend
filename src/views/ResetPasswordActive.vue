@@ -61,6 +61,8 @@
                 :type="status.passwordVisible ? 'text' : 'password'"
                 :rules="[formRules.required, formRules.password]"
                 ref="passwordTextField"
+                name="password"
+                autocomplete="new-password"
                 :append-icon="
                   status.passwordVisible
                     ? statics.icons.mdiEyeOff

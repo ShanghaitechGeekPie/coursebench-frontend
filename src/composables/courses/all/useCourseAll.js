@@ -140,7 +140,8 @@ export default () => {
     } else {
       return matchSearchKeys((key) => {
         return (
-          course.name.includes(key) || new String(course.code).includes(key)
+          course.name.toLowerCase().includes(key.toLowerCase()) ||
+            new String(course.code).toLowerCase().includes(key.toLowerCase())
         );
       });
     }
