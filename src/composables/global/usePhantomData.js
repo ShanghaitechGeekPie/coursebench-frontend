@@ -12,6 +12,8 @@ export const testUserProfile = {
   show_year: true,
   show_grade: true,
   show_realname: true,
+  is_admin: true,
+  is_community_admin: true,
 }; // Just for test
 
 export const testCommentText = [
@@ -246,6 +248,1018 @@ export const testCommentText = [
   },
 ]; // Just for test
 
+
+export const testCourseData = [
+  {
+    id: 1,
+    name: '数学分析I',
+    code: 'GEMA1009',
+    credit: 4,
+    institute: '数学科学研究所',
+    comment_num: 25,
+    score: [4.2, 3.8, 4.0, 4.1],
+    teachers: [
+      { id: 1, name: '陈克应' },
+      { id: 2, name: '孙伟' }
+    ]
+  },
+  {
+    id: 2,
+    name: '信息科学技术导论',
+    code: 'SI100B',
+    credit: 3,
+    institute: '信息科学与技术学院',
+    comment_num: 18,
+    score: [4.5, 4.2, 4.3, 4.0],
+    teachers: [
+      { id: 3, name: '张三' }
+    ]
+  },
+  {
+    id: 3,
+    name: '线性代数',
+    code: 'GEMA1011',
+    credit: 4,
+    institute: '数学科学研究所',
+    comment_num: 32,
+    score: [4.0, 3.9, 4.1, 3.8],
+    teachers: [
+      { id: 4, name: '李四' }
+    ]
+  },
+  {
+    id: 4,
+    name: '普通物理学I',
+    code: 'PHYS1001',
+    credit: 4,
+    institute: '物质科学与技术学院',
+    comment_num: 15,
+    score: [3.8, 4.0, 3.9, 4.2],
+    teachers: [
+      { id: 5, name: '王五' }
+    ]
+  },
+  {
+    id: 5,
+    name: '程序设计思维与实践',
+    code: 'CS100',
+    credit: 3,
+    institute: '信息科学与技术学院',
+    comment_num: 42,
+    score: [4.6, 3.5, 4.2, 4.3],
+    teachers: [
+      { id: 6, name: '刘教授' }
+    ]
+  },
+  {
+    id: 6,
+    name: '有机化学',
+    code: 'CHEM1002',
+    credit: 4,
+    institute: '物质科学与技术学院',
+    comment_num: 28,
+    score: [3.9, 4.1, 3.8, 3.7],
+    teachers: [
+      { id: 7, name: '化学老师' }
+    ]
+  },
+  {
+    id: 7,
+    name: '分子生物学',
+    code: 'BIOL2001',
+    credit: 3,
+    institute: '生命科学与技术学院',
+    comment_num: 21,
+    score: [4.3, 3.9, 4.0, 4.1],
+    teachers: [
+      { id: 8, name: '生物老师' }
+    ]
+  },
+  {
+    id: 8,
+    name: '创业基础',
+    code: 'ENTR1001',
+    credit: 2,
+    institute: '创业与管理学院',
+    comment_num: 16,
+    score: [4.1, 4.4, 3.6, 4.2],
+    teachers: [
+      { id: 9, name: '创业导师' }
+    ]
+  },
+  {
+    id: 9,
+    name: '设计思维',
+    code: 'ART1001',
+    credit: 3,
+    institute: '创意与艺术学院',
+    comment_num: 19,
+    score: [4.4, 3.8, 4.1, 4.0],
+    teachers: [
+      { id: 10, name: '艺术老师' }
+    ]
+  },
+  {
+    id: 10,
+    name: '中国文化概论',
+    code: 'GE1001',
+    credit: 2,
+    institute: '人文科学研究院',
+    comment_num: 33,
+    score: [4.2, 4.0, 3.9, 4.1],
+    teachers: [
+      { id: 11, name: '人文老师' }
+    ]
+  },
+  {
+    id: 11,
+    name: '生物医学工程导论',
+    code: 'BME1001',
+    credit: 3,
+    institute: '生物医学工程学院',
+    comment_num: 14,
+    score: [4.0, 3.7, 4.2, 3.9],
+    teachers: [
+      { id: 12, name: 'BME老师' }
+    ]
+  },
+  {
+    id: 12,
+    name: '概率论与数理统计',
+    code: 'GEMA2005',
+    credit: 4,
+    institute: '数学科学研究所',
+    comment_num: 29,
+    score: [3.7, 3.9, 4.0, 3.8],
+    teachers: [
+      { id: 13, name: '概率老师' }
+    ]
+  }
+];
+
+export const testTeacherData = [
+  {
+    id: 1,
+    name: '陈克应',
+    avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+    institute: '数学科学研究所',
+    job: '教授',
+    introduction: '数学分析专家，专注于实分析和复分析研究。在数学分析领域有着深厚的造诣，发表过多篇高质量论文。教学风格严谨，深受学生喜爱。',
+    courses: [
+      {
+        id: 1,
+        name: '数学分析I',
+        code: 'GEMA1009',
+        institute: '数学科学研究所',
+        semester: 202102,
+        score: [4.5, 4.2, 4.3, 4.1],
+        comment_num: 15
+      },
+      {
+        id: 13,
+        name: '数学分析II',
+        code: 'GEMA1010',
+        institute: '数学科学研究所',
+        semester: 202201,
+        score: [4.3, 4.1, 4.2, 4.0],
+        comment_num: 12
+      }
+    ],
+    total_courses: 2,
+    total_comments: 27,
+    avg_score: [4.4, 4.15, 4.25, 4.05]
+  },
+  {
+    id: 2,
+    name: '孙伟',
+    avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+    institute: '数学科学研究所',
+    job: '助理教授',
+    introduction: '年轻有为的数学教授，主要研究方向为数学分析和微分方程。课堂教学充满激情，善于用生动的例子解释抽象的数学概念。',
+    courses: [
+      {
+        id: 1,
+        name: '数学分析I',
+        code: 'GEMA1009',
+        institute: '数学科学研究所',
+        semester: 202102,
+        score: [3.8, 3.5, 3.9, 3.7],
+        comment_num: 18
+      }
+    ],
+    total_courses: 1,
+    total_comments: 18,
+    avg_score: [3.8, 3.5, 3.9, 3.7]
+  },
+  {
+    id: 3,
+    name: '张三',
+    avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+    institute: '信息科学与技术学院',
+    job: '副教授',
+    introduction: '计算机科学博士，专注于人工智能和机器学习研究。有丰富的工业界经验，善于将理论与实践相结合。',
+    courses: [
+      {
+        id: 2,
+        name: '信息科学技术导论',
+        code: 'SI100B',
+        institute: '信息科学与技术学院',
+        semester: 202102,
+        score: [4.5, 4.2, 4.3, 4.0],
+        comment_num: 25
+      },
+      {
+        id: 14,
+        name: '人工智能导论',
+        code: 'CS201',
+        institute: '信息科学与技术学院',
+        semester: 202201,
+        score: [4.2, 3.9, 4.1, 4.3],
+        comment_num: 20
+      }
+    ],
+    total_courses: 2,
+    total_comments: 45,
+    avg_score: [4.35, 4.05, 4.2, 4.15]
+  },
+  {
+    id: 4,
+    name: '李四',
+    avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+    institute: '数学科学研究所',
+    job: '教授',
+    introduction: '线性代数和抽象代数专家，教学经验丰富。善于化繁为简，帮助学生理解抽象的数学概念。',
+    courses: [
+      {
+        id: 3,
+        name: '线性代数',
+        code: 'GEMA1011',
+        institute: '数学科学研究所',
+        semester: 202102,
+        score: [4.0, 3.9, 4.1, 3.8],
+        comment_num: 22
+      }
+    ],
+    total_courses: 1,
+    total_comments: 22,
+    avg_score: [4.0, 3.9, 4.1, 3.8]
+  },
+  {
+    id: 5,
+    name: '王五',
+    avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+    institute: '物质科学与技术学院',
+    job: '教授',
+    introduction: '物理学教授，专注于理论物理和量子力学研究。课堂生动有趣，能够将复杂的物理概念用简单的语言解释清楚。',
+    courses: [
+      {
+        id: 4,
+        name: '普通物理学I',
+        code: 'PHYS1001',
+        institute: '物质科学与技术学院',
+        semester: 202102,
+        score: [3.8, 4.0, 3.9, 4.2],
+        comment_num: 15
+      }
+    ],
+    total_courses: 1,
+    total_comments: 15,
+    avg_score: [3.8, 4.0, 3.9, 4.2]
+  }
+];
+
+
+export const testUserData = [
+  {
+    id: 123,
+    nickname: '小明',
+    realname: '张小明',
+    email: 'xiaoming@shanghaitech.edu.cn',
+    avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+    grade: 1,
+    year: 2022,
+    show_email: true,
+    show_year: true,
+    show_grade: true,
+    show_realname: true,
+    is_admin: false,
+    is_community_admin: false,
+    comment_count: 5,
+    like_count: 25,
+    reward_total: 50.5
+  },
+  {
+    id: 124,
+    nickname: '小白',
+    realname: '李小白',
+    email: 'xiaobai@shanghaitech.edu.cn',
+    avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+    grade: 2,
+    year: 2021,
+    show_email: false,
+    show_year: true,
+    show_grade: true,
+    show_realname: false,
+    is_admin: false,
+    is_community_admin: false,
+    comment_count: 3,
+    like_count: 15,
+    reward_total: 25.0
+  },
+  {
+    id: 125,
+    nickname: '科技爱好者',
+    realname: '王科技',
+    email: 'tech@shanghaitech.edu.cn',
+    avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+    grade: 3,
+    year: 2020,
+    show_email: true,
+    show_year: true,
+    show_grade: true,
+    show_realname: true,
+    is_admin: false,
+    is_community_admin: true,
+    comment_count: 8,
+    like_count: 45,
+    reward_total: 100.0
+  },
+  {
+    id: 126,
+    nickname: '数学达人',
+    realname: '赵数学',
+    email: 'math@shanghaitech.edu.cn',
+    avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+    grade: 4,
+    year: 2019,
+    show_email: false,
+    show_year: true,
+    show_grade: true,
+    show_realname: true,
+    is_admin: true,
+    is_community_admin: true,
+    comment_count: 12,
+    like_count: 80,
+    reward_total: 200.0
+  }
+];
+
+// 添加教师详情数据
+export const testTeacherDetailData = {
+  1: {
+    teacher: {
+      id: 1,
+      name: '陈克应',
+      avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+      institute: '数学科学研究所',
+      job: '教授',
+      introduction: '数学分析专家，专注于实分析和复分析研究。在数学分析领域有着深厚的造诣，发表过多篇高质量论文。教学风格严谨，深受学生喜爱。',
+      total_courses: 2,
+      total_comments: 27,
+      avg_score: [4.4, 4.15, 4.25, 4.05]
+    },
+    courses: [
+      {
+        id: 1,
+        name: '数学分析I',
+        code: 'GEMA1009',
+        institute: '数学科学研究所',
+        semester: 202102,
+        score: [4.5, 4.2, 4.3, 4.1],
+        comment_num: 15,
+        groups: [
+          {
+            id: 1,
+            code: 'GEMA1009.01',
+            teachers: [{ id: 1, name: '陈克应' }]
+          }
+        ]
+      },
+      {
+        id: 13,
+        name: '数学分析II',
+        code: 'GEMA1010',
+        institute: '数学科学研究所',
+        semester: 202201,
+        score: [4.3, 4.1, 4.2, 4.0],
+        comment_num: 12,
+        groups: [
+          {
+            id: 15,
+            code: 'GEMA1010.01',
+            teachers: [{ id: 1, name: '陈克应' }]
+          }
+        ]
+      }
+    ],
+    comments: [
+      {
+        id: 101,
+        title: '陈教授的数分课真的很棒',
+        content: '陈教授讲课非常清晰，逻辑性强，能够帮助我们理解复杂的数学概念。',
+        course: {
+          name: '数学分析I',
+          code: 'GEMA1009',
+          id: 1
+        },
+        group: {
+          id: 1,
+          code: 'GEMA1009.01',
+          teachers: [{ name: '陈克应', id: 1 }]
+        },
+        user: {
+          id: 123,
+          nickname: '小明',
+          avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+          grade: 1
+        },
+        post_time: '20211015',
+        update_time: '20211015',
+        semester: 202102,
+        is_anonymous: false,
+        score: [5, 4, 4, 4],
+        like: 20,
+        dislike: 1,
+        like_status: 0,
+        is_fold: false,
+        is_covered: false
+      }
+    ]
+  },
+  2: {
+    teacher: {
+      id: 2,
+      name: '孙伟',
+      avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+      institute: '数学科学研究所',
+      job: '助理教授',
+      introduction: '年轻有为的数学教授，主要研究方向为数学分析和微分方程。课堂教学充满激情，善于用生动的例子解释抽象的数学概念。',
+      total_courses: 1,
+      total_comments: 18,
+      avg_score: [3.8, 3.5, 3.9, 3.7]
+    },
+    courses: [
+      {
+        id: 1,
+        name: '数学分析I',
+        code: 'GEMA1009',
+        institute: '数学科学研究所',
+        semester: 202102,
+        score: [3.8, 3.5, 3.9, 3.7],
+        comment_num: 18,
+        groups: [
+          {
+            id: 2,
+            code: 'GEMA1009.02',
+            teachers: [{ id: 2, name: '孙伟' }]
+          }
+        ]
+      }
+    ],
+    comments: [
+      {
+        id: 102,
+        title: '孙老师的课程有挑战性',
+        content: '孙老师的课程内容很有深度，虽然有些难度，但收获很大。',
+        course: {
+          name: '数学分析I',
+          code: 'GEMA1009',
+          id: 1
+        },
+        group: {
+          id: 2,
+          code: 'GEMA1009.02',
+          teachers: [{ name: '孙伟', id: 2 }]
+        },
+        user: {
+          id: 124,
+          nickname: '小白',
+          avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+          grade: 2
+        },
+        post_time: '20211020',
+        update_time: '20211020',
+        semester: 202102,
+        is_anonymous: false,
+        score: [4, 3, 4, 4],
+        like: 12,
+        dislike: 3,
+        like_status: 0,
+        is_fold: false,
+        is_covered: false
+      }
+    ]
+  }
+};
+
+// 添加用户统计数据
+export const testUserStatistic = {
+  total: 15,
+  score: 1250,
+  count: {
+    信息科学与技术学院: 3,
+    物质科学与技术学院: 2,
+    生命科学与技术学院: 1,
+    创意与艺术学院: 0,
+    创业与管理学院: 1,
+    人文科学研究院: 2,
+    生物医学工程学院: 1,
+    数学科学研究所: 4,
+    其他学院: 1,
+  },
+};
+
+// 添加活跃用户数据
+export const testActiveData = {
+  loading: false,
+  errorMessage: '',
+  success: true,
+  message: '账号激活成功！欢迎使用本系统。'
+};
+
+// 添加奖励排行榜数据
+export const testRewardRankData = [
+  {
+    id: 1,
+    nick_name: '小明',
+    reward: 15.50,
+    is_anonymous: false,
+    index: 0
+  },
+  {
+    id: 2,
+    nick_name: '小红',
+    reward: 12.30,
+    is_anonymous: false,
+    index: 1
+  },
+  {
+    id: 3,
+    nick_name: '匿名用户',
+    reward: 10.80,
+    is_anonymous: true,
+    index: 2
+  }
+];
+
+// 添加课程详情数据（包含课程信息和对应的评论）
+export const testCourseDetailData = {
+  1: { // 数学分析I
+    course: {
+      id: 1,
+      name: '数学分析I',
+      code: 'GEMA1009',
+      credit: 4,
+      institute: '数学科学研究所',
+      comment_num: 25,
+      score: [4.2, 3.8, 4.0, 4.1],
+      description: '数学分析是数学专业的核心基础课程，主要讲授极限、导数、积分等基本概念。'
+    },
+    groups: [
+      {
+        id: 1,
+        code: 'GEMA1009.01',
+        semester: 202102,
+        teachers: [
+          { id: 1, name: '陈克应' }
+        ]
+      },
+      {
+        id: 2,
+        code: 'GEMA1009.02',
+        semester: 202102,
+        teachers: [
+          { id: 2, name: '孙伟' }
+        ]
+      }
+    ],
+    comments: [
+      {
+        id: 1,
+        title: '锐评孙伟',
+        content: `### 我是陈克应\n\`\`\`js\nvar foo = function (bar) {
+          return bar++;
+        };\n\`\`\`\n这门课程非常有挑战性，需要大量的练习。`,
+        course: {
+          name: '数学分析I',
+          code: 'GEMA1009',
+          id: 1,
+          institute: '数学科学研究所',
+        },
+        group: {
+          id: 2,
+          code: 'GEMA1009.02',
+          teachers: [{ name: '孙伟', id: 2 }],
+        },
+        post_time: '20211012',
+        update_time: '20211023',
+        semester: 202102,
+        is_anonymous: false,
+        user_nickname: '小明',
+        user_id: 123,
+        avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+        grade: 1,
+        score: [5, 4, 3, 2],
+        user_score_ranking: 2,
+        like: 15,
+        dislike: 2,
+        like_status: 0,
+        is_fold: false,
+        is_covered: false,
+        user: {
+          id: 123,
+          nickname: '小明',
+          avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+          grade: 1
+        },
+        replies: [
+          {
+            id: 101,
+            content: '同意！我也觉得这门课很棒，特别是老师的讲解方式很生动。',
+            user: {
+              id: 2,
+              nickname: '学习达人',
+              avatar: '',
+              is_anonymous: false
+            },
+            created_at: '2024-01-15T10:30:00Z',
+            like: 5,
+            dislike: 0,
+            parent_reply_id: null, // 直接回复评论
+            parent_user: null
+          },
+          {
+            id: 101,
+            content: '同意！我也觉得这门课很棒，特别是老师的讲解方式很生动。',
+            user: {
+              id: 2,
+              nickname: '学习达人',
+              avatar: '',
+              is_anonymous: false
+            },
+            created_at: '2024-01-15T10:30:00Z',
+            like: 5,
+            dislike: 0,
+            parent_reply_id: null, // 直接回复评论
+            parent_user: null
+          },
+          {
+            id: 102,
+            content: '请问作业难度怎么样？我比较担心跟不上进度。',
+            user: {
+              id: 3,
+              nickname: '新手小白',
+              avatar: '',
+              is_anonymous: false
+            },
+            created_at: '2024-01-15T11:15:00Z',
+            like: 2,
+            dislike: 0,
+            parent_reply_id: null,
+            parent_user: null
+          },
+          {
+            id: 103,
+            content: '作业难度还好，主要是理解概念，多练习就行。',
+            user: {
+              id: 1,
+              nickname: '课程体验者',
+              avatar: '',
+              is_anonymous: false
+            },
+            created_at: '2024-01-15T12:00:00Z',
+            like: 3,
+            dislike: 0,
+            parent_reply_id: 102, // 回复特定用户
+            parent_user: {
+              id: 3,
+              nickname: '新手小白'
+            }
+          }
+        ],
+        reply_count: 3
+      },
+      {
+        id: 5,
+        title: '免费的薯条',
+        content: `**以下内容纯属虚构**\n\n孙伟老师的课程确实很有挑战性，但是通过努力还是能够掌握的。建议大家多做练习题。`,
+        course: {
+          name: '数学分析I',
+          code: 'GEMA1009',
+          id: 1,
+          institute: '数学科学研究所',
+        },
+        group: {
+          id: 2,
+          code: 'GEMA1009.02',
+          teachers: [{ name: '孙伟', id: 2 }],
+        },
+        post_time: '20210907',
+        update_time: '20211023',
+        semester: 202102,
+        is_anonymous: false,
+        user_nickname: '小白',
+        user_id: 124,
+        avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+        grade: 1,
+        score: [1, 3, 2, 4],
+        user_score_ranking: 0,
+        like: 8,
+        dislike: 1,
+        like_status: 0,
+        is_fold: false,
+        is_covered: false,
+        user: {
+          id: 124,
+          nickname: '小白',
+          avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+          grade: 1
+        }
+      }
+    ]
+  },
+  2: { // 信息科学技术导论
+    course: {
+      id: 2,
+      name: '信息科学技术导论',
+      code: 'SI100B',
+      credit: 3,
+      institute: '信息科学与技术学院',
+      comment_num: 18,
+      score: [4.5, 4.2, 4.3, 4.0],
+      description: '介绍信息科学与技术的基本概念和发展历程。'
+    },
+    groups: [
+      {
+        id: 3,
+        code: 'SI100B.01',
+        semester: 202102,
+        teachers: [
+          { id: 3, name: '梁俊瑞' }
+        ]
+      }
+    ],
+    comments: [
+      {
+        id: 6,
+        title: '信息技术入门很好的课程',
+        content: `这门课程对于初学者来说非常友好，老师讲解清晰，内容丰富。推荐给所有对信息技术感兴趣的同学。`,
+        course: {
+          name: '信息科学技术导论',
+          code: 'SI100B',
+          id: 2,
+          institute: '信息科学与技术学院',
+        },
+        group: {
+          id: 3,
+          code: 'SI100B.01',
+          teachers: [{ name: '张三', id: 3 }],
+        },
+        post_time: '20200107',
+        update_time: '20211223',
+        semester: 202102,
+        is_anonymous: false,
+        user_nickname: '科技爱好者',
+        user_id: 125,
+        avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+        grade: 1,
+        score: [5, 4, 3, 2],
+        user_score_ranking: 2,
+        like: 12,
+        dislike: 0,
+        like_status: 0,
+        is_fold: false,
+        is_covered: false,
+        user: {
+          id: 125,
+          nickname: '123123',
+          avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+          grade: 1
+        },
+        replies: [
+          {
+            id: 201,
+            content: '非常同意！张老师的课程确实很棒，作为计算机小白，我在这门课上学到了很多基础知识。',
+            user: {
+              id: 127,
+              nickname: '编程新手',
+              avatar: '',
+              is_anonymous: false
+            },
+            created_at: '2024-01-16T14:20:00Z',
+            like: 8,
+            dislike: 0,
+            parent_reply_id: null,
+            parent_user: null
+          },
+          {
+            id: 202,
+            content: '请问这门课的作业量大吗？我担心跟不上进度。',
+            user: {
+              id: 128,
+              nickname: '新生小白',
+              avatar: '',
+              is_anonymous: false
+            },
+            created_at: '2024-01-16T15:30:00Z',
+            like: 3,
+            dislike: 0,
+            parent_reply_id: null,
+            parent_user: null
+          },
+          {
+            id: 203,
+            content: '作业量还好，主要是理论作业和小练习，跟着老师的节奏走就没问题的！',
+            user: {
+              id: 125,
+              nickname: '科技爱好者',
+              avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+              is_anonymous: false
+            },
+            created_at: '2024-01-16T16:00:00Z',
+            like: 5,
+            dislike: 0,
+            parent_reply_id: 202,
+            parent_user: {
+              id: 128,
+              nickname: '新生小白'
+            }
+          },
+          {
+            id: 204,
+            content: '张老师上课会结合很多实际案例，特别有意思！',
+            user: {
+              id: 129,
+              nickname: 'IT达人',
+              avatar: '',
+              is_anonymous: false
+            },
+            created_at: '2024-01-16T17:45:00Z',
+            like: 6,
+            dislike: 0,
+            parent_reply_id: null,
+            parent_user: null
+          },
+          {
+            id: 205,
+            content: '确实！特别是讲到人工智能那部分，老师举的例子都很生动易懂。',
+            user: {
+              id: 130,
+              nickname: 'AI学习者',
+              avatar: '',
+              is_anonymous: false
+            },
+            created_at: '2024-01-16T18:20:00Z',
+            like: 4,
+            dislike: 0,
+            parent_reply_id: 204,
+            parent_user: {
+              id: 129,
+              nickname: 'IT达人'
+            }
+          }
+        ],
+        reply_count: 5
+      }
+    ]
+  },
+  3: { // 线性代数
+    course: {
+      id: 3,
+      name: '线性代数',
+      code: 'GEMA1011',
+      credit: 4,
+      institute: '数学科学研究所',
+      comment_num: 32,
+      score: [4.0, 3.9, 4.1, 3.8],
+      description: '线性代数是数学的一个重要分支，研究向量、向量空间、线性映射等。'
+    },
+    groups: [
+      {
+        id: 4,
+        code: 'GEMA1011.01',
+        semester: 202102,
+        teachers: [
+          { id: 4, name: '李四' }
+        ]
+      }
+    ],
+    comments: [
+      {
+        id: 7,
+        title: '线代学习心得',
+        content: `线性代数虽然抽象，但是应用很广泛。建议结合几何直观来理解概念，多做计算练习。`,
+        course: {
+          name: '线性代数',
+          code: 'GEMA1011',
+          id: 3,
+          institute: '数学科学研究所',
+        },
+        group: {
+          id: 4,
+          code: 'GEMA1011.01',
+          teachers: [{ name: '李四', id: 4 }],
+        },
+        post_time: '20210505',
+        update_time: '20210505',
+        semester: 202102,
+        is_anonymous: false,
+        user_nickname: '数学达人',
+        user_id: 126,
+        avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+        grade: 1,
+        score: [4, 3, 4, 4],
+        user_score_ranking: 1,
+        like: 20,
+        dislike: 3,
+        like_status: 0,
+        is_fold: false,
+        is_covered: false,
+        user: {
+          id: 126,
+          nickname: '数学达人',
+          avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.JdnTbs1HeiRA1zP2s7hxcgAAAA?pid=ImgDet&rs=1',
+          grade: 1
+        }
+      }
+    ]
+  },
+  4: {
+    course: {
+      id: 4,
+      name: '普通物理学I',
+      code: 'PHYS1001',
+      credit: 4,
+      institute: '物质科学与技术学院',
+      comment_num: 15,
+      score: [3.8, 4.0, 3.9, 4.2]
+    },
+    groups: [
+      {
+        id: 5,
+        code: 'PHYS1001.01',
+        semester: 202102,
+        teachers: [{ id: 5, name: '王五' }]
+      }
+    ],
+    comments: []
+  },
+  5: {
+    course: {
+      id: 5,
+      name: '程序设计思维与实践',
+      code: 'CS100',
+      credit: 3,
+      institute: '信息科学与技术学院',
+      comment_num: 42,
+      score: [4.6, 3.5, 4.2, 4.3]
+    },
+    groups: [
+      {
+        id: 6,
+        code: 'CS100.01',
+        semester: 202102,
+        teachers: [{ id: 6, name: '刘教授' }]
+      }
+    ],
+    comments: []
+  }
+};
+
+// Mock 数据管理器
+export const mockDataManager = {
+  // 检查是否启用 mock
+  isEnabled: () => USE_MOCK_DATA,
+  
+  // 获取指定类型的 mock 数据
+  getData: (type, id) => {
+    const dataMap = {
+      'comments': testCommentText,
+      'courses': testCourseData,
+      'teachers': testTeacherData,
+      'teacherDetail': testTeacherDetailData[id] || null,
+      'teacherComments': testTeacherDetailData[id]?.comments || [],
+      'teacherCourses': testTeacherDetailData[id]?.courses || [],
+      'users': testUserData,
+      'userProfile': testUserProfile,
+      'userStatistic': testUserStatistic,
+      'commentStatistic': testCommmentStatistic,
+      'activeData': testActiveData,
+      'rewardRank': testRewardRankData,
+      'courseDetail': testCourseDetailData[id] || null,
+      'courseComments': testCourseDetailData[id]?.comments || []
+    };
+    return dataMap[type] || [];
+  },
+  
+  // 模拟错误响应
+  mockError: async (message = '模拟网络错误', delay = 500) => {
+    if (!USE_MOCK_DATA) return null;
+    await mockDataManager.delay(delay);
+    throw new Error(message);
+  }
+};
+
 export const testCommmentStatistic = {
   total: 6,
   score: 2956,
@@ -260,4 +1274,4 @@ export const testCommmentStatistic = {
     数学科学研究所: 3,
     其他学院: 1,
   },
-}; // Just for test
+};

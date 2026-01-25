@@ -40,7 +40,7 @@
           </div>
         </template>
       </CommentCardBar>
-      <CommentCardContent :comment="comment">
+      <CommentCardContent :comment="comment" @reply="handleReply">
         <template #title v-if="comment.is_fold && foldComment">
           <div></div>
         </template>
@@ -113,6 +113,30 @@
                   {{ footerNote.statics.icons.mdiTriangleSmallDown }}
                 </v-icon>
               </v-btn>
+              <v-btn
+                class="like-button mr-1"
+                small
+                color="primary"
+                elevation="0"
+                outlined
+                @click="handleReply"
+                :min-width="$vuetify.breakpoint.width < 400 ? 30 : undefined"
+                :disabled="!global.isLogin"
+              >
+                <div class="px-1">
+                  <v-icon size="20" style="">
+                    {{ footerNote.statics.icons.mdiCommentEditOutline }}
+                  </v-icon>
+                  <span
+                    class="text-caption"
+                    style="transform: translate(0px, 0); display: inline-block"
+                    v-if="$vuetify.breakpoint.width >= 400"
+                  >
+                    回复
+                    <span v-if="comment.reply_count > 0">{{ comment.reply_count }}</span>
+                  </span>
+                </div>
+              </v-btn>
               <v-menu
                 bottom
                 offset-y
@@ -157,6 +181,16 @@
           </div>
         </template>
       </CommentCardContent>
+      <CommentReplyList
+        v-if="(!comment.is_fold || !foldComment) && (comment.replies && comment.replies.length > 0 || showReplyInput)"
+        :replies="comment.replies || []"
+        :comment-id="comment.id"
+        :show-reply-input="showReplyInput"
+        :reply-loading="replyStatus.loading"
+        @submit-reply="handleSubmitReply"
+        @like-reply="handleLikeReply"
+        @cancel-reply="showReplyInput = false"
+      />
     </v-card>
   </v-lazy>
 </template>
@@ -164,11 +198,13 @@
 import CommentCardContent from '@/components/users/comment/CommentCardContent';
 import CommentCardBar from '@/components/users/comment/CommentCardBar';
 import CommentFold from '@/components/users/comment/CommentFold';
+import CommentReplyList from '@/components/courses/CommentReplyList';
 import AvatarContainer from '@/components/users/profile/AvatarContainer';
 import useCourseCommentCard from '@/composables/courses/comment/useCourseCommentCard';
+import useCommentReply from '@/composables/courses/comment/useCommentReply';
 import useUserName from '@/composables/global/useUserName';
 import { gradeItems } from '@/composables/global/useStaticData';
-import { inject, ref } from 'vue';
+import { inject, ref, watch } from 'vue';
 import QRCode from 'qrcode';
 import { domToCanvas } from 'modern-screenshot';
 import {
@@ -186,17 +222,33 @@ export default {
     CommentCardBar,
     AvatarContainer,
     CommentFold,
+    CommentReplyList,
   },
   setup() {
     const { doLike, doDislike, doUndo, formStatus, statics } =
       useCourseCommentCard();
+    const { doSubmitReply, doLikeReply, doUndoReply, replyStatus } = 
+      useCommentReply();
     const global = inject('global');
 
     const showSnackbar = inject('showSnackbar');
 
     const foldComment = ref(true);
+    const showReplyInput = ref(false);
+
+    // Watch for successful reply submission to refresh data
+    watch(() => replyStatus.isSuccess, (newVal) => {
+      if (newVal) {
+        // Reload the page or refresh comment data after successful reply
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      }
+    });
+
     return {
       foldComment,
+      showReplyInput,
       doLike,
       doDislike,
       doUndo,
@@ -206,6 +258,10 @@ export default {
       global,
       statics,
       showSnackbar,
+      doSubmitReply,
+      doLikeReply,
+      doUndoReply,
+      replyStatus,
     };
   },
   mounted() {
@@ -344,6 +400,23 @@ export default {
         .then(() => {
           this.$refs.shareButton.$el.style.display = 'flex';
         });
+    },
+    handleReply() {
+      this.showReplyInput = true;
+      console.log('Reply to comment:', this.comment.id);
+    },
+    handleSubmitReply(replyData) {
+      this.doSubmitReply({
+        ...replyData,
+        comment_id: this.comment.id,
+      });
+    },
+    handleLikeReply(replyId, isLiked) {
+      if (isLiked) {
+        this.doLikeReply(replyId);
+      } else {
+        this.doUndoReply(replyId);
+      }
     },
   },
 };
