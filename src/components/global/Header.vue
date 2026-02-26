@@ -184,6 +184,12 @@
             >反馈</v-list-item-title
           >
         </v-list-item>
+        <v-list-item link @click="startCasdoorBind()" class="px-8">
+          <v-list-item-icon>
+            <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title class="text-body-1">绑定 Casdoor</v-list-item-title>
+        </v-list-item>
         <v-list-item link @click="doLogout()" class="px-8">
           <v-list-item-icon>
             <v-icon>{{ icons.mdiLogoutVariant }}</v-icon>
@@ -255,6 +261,7 @@ import MobileSearchBar from '@/components/global/MobileSearchBar';
 import useInsitePush from '@/composables/global/useInsitePush';
 import logoDark from '@/assets/logo-white.svg';
 import logoLight from '@/assets/logo.svg';
+import Config from 'Config';
 
 import {
   mdiAccount,
@@ -339,6 +346,12 @@ export default {
         mdiMagnify,
       },
     };
+  },
+  methods: {
+    startCasdoorBind() {
+      const returnUrl = encodeURIComponent(window.location.href);
+      window.location.href = `${Config.serverUrl}/user/casdoor/bind?return_url=${returnUrl}`;
+    },
   },
   computed: {
     // Some customized fix, only for search bar so no need to abstract
