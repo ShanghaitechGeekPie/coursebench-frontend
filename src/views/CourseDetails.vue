@@ -39,9 +39,12 @@
                       v-for="(comment, index) in selectedComment"
                       :key="comment.id"
                       cols="12"
+                      :data-comment-id="comment.id"
+                      :ref="`comment-${comment.id}`"
                     >
                       <CourseCommentCard
                         :comment="comment"
+                        :disableLazy="comment.id === shareAnswer"
                         v-if="!status.commentLoading && !status.detailLoading"
                       >
                       </CourseCommentCard>
@@ -154,6 +157,25 @@ export default {
       this.selectedComment.splice(itemIndex, 1);
       this.selectedComment.unshift(shareComment);
     },
+    scrollToAnswer() {
+      if (this.shareAnswer === -1 || this.status.commentLoading) return;
+      
+      this.$nextTick(() => {
+        // 多次尝试滚动，以处理v-lazy的懒加载延迟
+        const scrollAttempts = () => {
+          const element = document.querySelector(
+            `[data-comment-id="${this.shareAnswer}"]`
+          );
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            // 如果元素不存在，可能还在等待v-lazy渲染，再试一次
+            setTimeout(scrollAttempts, 300);
+          }
+        };
+        scrollAttempts();
+      });
+    },
   },
   watch: {
     selectedTeachers: {
@@ -166,6 +188,7 @@ export default {
     commentText: {
       handler() {
         this.updateSelectedComment();
+        this.scrollToAnswer();
       },
       immediate: true,
       deep: true,

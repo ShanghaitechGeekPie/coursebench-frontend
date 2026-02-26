@@ -1,5 +1,5 @@
 <template>
-  <v-lazy>
+  <v-lazy v-model="isActive">
     <v-card class="mb-3" flat outlined ref="commentCard">
       <CommentCardBar :comment="comment">
         <template v-slot:headerAvatar="{ localComment }">
@@ -182,6 +182,10 @@ import ReplySection from '@/components/courses/ReplySection';
 export default {
   props: {
     comment: Object,
+    disableLazy: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     CommentCardContent,
@@ -210,6 +214,21 @@ export default {
       statics,
       showSnackbar,
     };
+  },
+  data() {
+    return {
+      localIsActive: false,
+    };
+  },
+  computed: {
+    isActive: {
+      get() {
+        return this.disableLazy || this.localIsActive;
+      },
+      set(val) {
+        this.localIsActive = val;
+      },
+    },
   },
   mounted() {
     this.formStatus.likeStatus = this.comment.like_status;
