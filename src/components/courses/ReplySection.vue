@@ -86,10 +86,10 @@
                 <v-icon left x-small>{{ reply.like_status === 2 ? icons.mdiThumbDown : icons.mdiThumbDownOutline }}</v-icon>
                 {{ reply.dislike }}
               </v-btn>
-              <v-btn x-small text color="primary" @click="onShare(reply)">
+              <!-- <v-btn x-small text color="primary" @click="onShare(reply)">
                 <v-icon left x-small>{{ icons.mdiShareVariantOutline }}</v-icon>
                 分享
-              </v-btn>
+              </v-btn> -->
               <v-btn x-small text color="primary" @click="setReplyTarget(reply)">
                 <v-icon left x-small>{{ icons.mdiReplyOutline }}</v-icon>
                 回复
