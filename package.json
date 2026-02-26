@@ -1,6 +1,6 @@
 {
   "name": "coursebench-frontend",
-  "version": "1.5.1",
+  "version": "1.6.0-beta",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
