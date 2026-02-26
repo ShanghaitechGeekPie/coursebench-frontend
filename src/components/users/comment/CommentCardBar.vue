@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-text class="px-sm-4 px-2 pt-sm-4 pt-3 pb-sm-3 pb-0">
-      <div class="d-flex justify-space-between">
+      <div class="d-flex justify-space-between flex-wrap" style="gap: 1rem">
         <slot name="headerAvatar" :localComment="comment">
           <div
             class="d-flex justify-space-between router-container"
@@ -32,21 +32,21 @@
           </div>
         </slot>
         <slot name="headerNote" :localComment="comment">
-          <div class="d-flex justify-end">
+          <div class="d-flex justify-end flex-grow-1">
             <div class="d-flex flex-column">
-              <div class="mt-n1">
+              <div class="mt-n1 d-flex align-center" style="gap: 0.3rem">
                 <v-icon size="16">
                   {{ statics.icons.mdiUpdate }}
                 </v-icon>
-                <span class="text-caption">
+                <span class="text-caption" style="min-width: fit-content; display: inline-block">
                   {{ unixToReadable(comment.update_time) }}
                 </span>
               </div>
-              <div>
+              <div class="d-flex align-center" style="gap: 0.3rem">
                 <v-icon size="16">
                   {{ statics.icons.mdiCommentEditOutline }}
                 </v-icon>
-                <span class="text-caption">
+                <span class="text-caption" style="min-width: fit-content; display: inline-block">
                   {{ unixToReadable(comment.post_time) }}
                 </span>
               </div>

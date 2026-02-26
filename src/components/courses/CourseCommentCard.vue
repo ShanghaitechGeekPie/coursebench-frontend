@@ -1,5 +1,5 @@
 <template>
-  <v-lazy>
+  <v-lazy v-model="isActive">
     <v-card class="mb-3" flat outlined ref="commentCard">
       <CommentCardBar :comment="comment">
         <template v-slot:headerAvatar="{ localComment }">
@@ -33,7 +33,7 @@
                 {{
                   localComment.user
                     ? gradeItems[localComment.user.grade]
-                    : '由匿名用户发送，请仔细分辨其真实性'
+                    : '匿名发送，请仔细分辨其真实性'
                 }}
               </div>
             </div>
@@ -157,6 +157,7 @@
           </div>
         </template>
       </CommentCardContent>
+      <ReplySection :comment-id="comment.id" class="px-2 px-sm-4 pb-3" />
     </v-card>
   </v-lazy>
 </template>
@@ -176,16 +177,22 @@ import {
   shareLogoLight,
   shareLogoTitle,
 } from '@/composables/global/useShare';
+import ReplySection from '@/components/courses/ReplySection';
 
 export default {
   props: {
     comment: Object,
+    disableLazy: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     CommentCardContent,
     CommentCardBar,
     AvatarContainer,
     CommentFold,
+    ReplySection,
   },
   setup() {
     const { doLike, doDislike, doUndo, formStatus, statics } =
@@ -207,6 +214,21 @@ export default {
       statics,
       showSnackbar,
     };
+  },
+  data() {
+    return {
+      localIsActive: false,
+    };
+  },
+  computed: {
+    isActive: {
+      get() {
+        return this.disableLazy || this.localIsActive;
+      },
+      set(val) {
+        this.localIsActive = val;
+      },
+    },
   },
   mounted() {
     this.formStatus.likeStatus = this.comment.like_status;
