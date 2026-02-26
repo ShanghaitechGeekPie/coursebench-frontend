@@ -3,25 +3,6 @@
     <v-divider class="mb-2" />
     <div class="d-flex justify-space-between align-center mb-2">
       <div class="text-subtitle-2">{{ totalCount }} 条回复</div>
-      <div class="d-flex" v-if="showAll">
-        <v-btn
-          x-small
-          outlined
-          class="mr-1"
-          :color="sortBy === 'latest' ? 'primary' : ''"
-          @click="changeSort('latest')"
-        >
-          最新
-        </v-btn>
-        <v-btn
-          x-small
-          outlined
-          :color="sortBy === 'hottest' ? 'primary' : ''"
-          @click="changeSort('hottest')"
-        >
-          最热
-        </v-btn>
-      </div>
     </div>
 
     <div v-if="loading" class="py-2 d-flex justify-center">
@@ -29,8 +10,45 @@
     </div>
 
     <div v-else>
+      <!-- 排序和折叠控件 (仅在showAll时显示) -->
+      <div v-if="showAll" class="d-flex justify-space-between align-center mb-2">
+        <div class="d-flex gap">
+          <v-btn
+            x-small
+            outlined
+            class="mr-1"
+            :color="sortBy === 'latest' ? 'primary' : ''"
+            @click="changeSortType('latest')"
+          >
+            最新
+            <v-icon right x-small v-show="sortBy === 'latest'">{{ sortDirection === 'desc' ? icons.mdiChevronDown : icons.mdiChevronUp }}</v-icon>
+          </v-btn>
+          <v-btn
+            x-small
+            outlined
+            :color="sortBy === 'hottest' ? 'primary' : ''"
+            @click="changeSortType('hottest')"
+          >
+            最热
+            <v-icon right x-small v-show="sortBy === 'hottest'">{{ sortDirection === 'desc' ? icons.mdiChevronDown : icons.mdiChevronUp }}</v-icon>
+          </v-btn>
+        </div>
+        <v-btn
+          x-small
+          text
+          color="primary"
+          @click="collapseReplies"
+        >
+          折叠
+        </v-btn>
+      </div>
+
+      <!-- 分页信息 (仅在showAll时显示) -->
+      <div v-if="showAll" class="text-caption grey--text mb-2">
+        第 {{ currentPage }} 页，共 {{ totalPages }} 页
+      </div>
       <v-card
-        v-for="reply in replies"
+        v-for="reply in paginatedReplies"
         :key="reply.id"
         outlined
         class="mb-2 pa-2 reply-card"
@@ -89,6 +107,27 @@
           </div>
         </div>
       </v-card>
+
+      <!-- 分页导航 (仅在showAll时显示) -->
+      <div v-if="showAll" class="d-flex justify-center align-center mt-4 gap-2">
+        <v-btn
+          x-small
+          outlined
+          :disabled="currentPage === 1"
+          @click="currentPage--"
+        >
+          上一页
+        </v-btn>
+        <span class="text-caption mx-2">{{ currentPage }} / {{ totalPages }}</span>
+        <v-btn
+          x-small
+          outlined
+          :disabled="currentPage === totalPages"
+          @click="currentPage++"
+        >
+          下一页
+        </v-btn>
+      </div>
 
       <v-btn
         v-if="!showAll && totalCount > filteredCount"
@@ -157,6 +196,8 @@ import {
   mdiThumbDown,
   mdiShareVariantOutline,
   mdiReplyOutline,
+  mdiChevronUp,
+  mdiChevronDown,
 } from '@mdi/js';
 import AvatarContainer from '@/components/users/profile/AvatarContainer';
 import ReplyChainDialog from '@/components/courses/ReplyChainDialog';
@@ -193,7 +234,10 @@ export default {
       totalCount: 0,
       filteredCount: 0,
       sortBy: 'latest',
+      sortDirection: 'desc',
       showAll: false,
+      currentPage: 1,
+      pageSize: 10,
       replyContent: '',
       replyTarget: null,
       isAnonymous: false,
@@ -204,14 +248,40 @@ export default {
         mdiThumbDown,
         mdiShareVariantOutline,
         mdiReplyOutline,
+        mdiChevronUp,
+        mdiChevronDown,
       },
     };
+  },
+  computed: {
+    totalPages() {
+      return Math.ceil(this.replies.length / this.pageSize);
+    },
+    paginatedReplies() {
+      if (!this.showAll) {
+        return this.replies.slice(0, this.filteredCount);
+      }
+      const start = (this.currentPage - 1) * this.pageSize;
+      const end = start + this.pageSize;
+      return this.replies.slice(start, end);
+    },
   },
   watch: {
     commentId: {
       immediate: true,
       handler() {
         this.fetchReplies();
+      },
+    },
+    sortDirection() {
+      if (this.showAll) {
+        this.currentPage = 1;
+        this.replies.reverse();
+      }
+    },
+    showAll: {
+      handler() {
+        this.currentPage = 1;
       },
     },
   },
@@ -279,11 +349,29 @@ export default {
       this.sortBy = sortBy;
       this.fetchReplies();
     },
+    changeSortType(sortBy) {
+      if (this.sortBy === sortBy) {
+        this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
+        return;
+      }
+      this.sortBy = sortBy;
+      this.sortDirection = 'desc';
+      this.currentPage = 1;
+      this.fetchReplies();
+    },
+    collapseReplies() {
+      this.showAll = false;
+      this.totalCount = this.replies.length;
+      this.replies = this.replies.filter(reply => reply.like >= 5);
+      this.filteredCount = this.replies.length;
+      this.currentPage = 1;
+    },
     showAllReplies() {
       if (this.showAll) {
         return;
       }
       this.showAll = true;
+      this.currentPage = 1;
       this.fetchReplies();
     },
     setReplyTarget(reply) {
@@ -391,5 +479,8 @@ export default {
     background-color: rgba(0, 0, 0, 0.05);
     border-left: 3px solid rgba(0, 0, 0, 0.1);
   }
+}
+.gap {
+  gap: 8px;
 }
 </style>
