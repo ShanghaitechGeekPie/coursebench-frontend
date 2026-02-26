@@ -7,9 +7,9 @@
         </span>
         <span class="version-info">
           v{{ version }}
-          <span v-if="buildHash" class="build-hash">
+          <!-- <span v-if="buildHash" class="build-hash">
             (Build: {{ buildHash }})
-          </span>
+          </span> -->
           <a
             href="https://github.com/ShanghaitechGeekPie/coursebench-frontend/releases/latest"
             target="_blank"
