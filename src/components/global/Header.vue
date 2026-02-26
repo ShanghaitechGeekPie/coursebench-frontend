@@ -255,10 +255,8 @@ import MobileSearchBar from '@/components/global/MobileSearchBar';
 import useInsitePush from '@/composables/global/useInsitePush';
 import logoDark from '@/assets/logo-white.svg';
 import logoLight from '@/assets/logo.svg';
-
 import {
   mdiAccount,
-  mdiLoginVariant,
   mdiLogoutVariant,
   mdiAccountPlusOutline,
   mdiAccountOutline,
@@ -331,7 +329,6 @@ export default {
     return {
       icons: {
         mdiAccount,
-        mdiLoginVariant,
         mdiLogoutVariant,
         mdiAccountPlusOutline,
         mdiAccountOutline,

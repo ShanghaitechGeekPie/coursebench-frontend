@@ -1,5 +1,5 @@
 import { inject } from 'vue';
-import { mdiCamera } from '@mdi/js';
+import { mdiCamera, mdiCheckCircle, mdiCloseCircle } from '@mdi/js';
 import useDebounce from '@/composables/global/useDebounce';
 import useMutation from '@/composables/global/useMutation';
 import {
@@ -19,6 +19,8 @@ export default () => {
   const statics = {
     icons: {
       mdiCamera,
+      mdiCheckCircle,
+      mdiCloseCircle,
     },
     avatarRules: [
       (file) => {

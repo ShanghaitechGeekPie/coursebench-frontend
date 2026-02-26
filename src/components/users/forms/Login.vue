@@ -60,6 +60,9 @@
                 >创建一个</span
               >
             </div>
+            <div class="py-4">
+              <v-btn block outlined @click="startCasdoorLogin()">使用 GeekPie 账户登录</v-btn>
+            </div>
           </div>
           <div class="px-0 pt-0 pb-6 pb-sm-11 pt-8 pt-sm-0 d-flex justify-end">
             <v-btn
@@ -285,6 +288,7 @@ import useForms from '@/composables/users/forms/useForms';
 import useAfterRender from '@/composables/global/useAfterRender';
 import logoDark from '@/assets/logo-white.svg';
 import logoLight from '@/assets/logo.svg';
+import Config from 'Config';
 
 export default {
   setup() {
@@ -355,6 +359,11 @@ export default {
           timeout: 300,
         });
       }
+    },
+
+    startCasdoorLogin() {
+      const returnUrl = encodeURIComponent(window.location.href);
+      window.location.href = `${Config.serverUrl}/user/casdoor/login?return_url=${returnUrl}`;
     },
   },
   mounted() {

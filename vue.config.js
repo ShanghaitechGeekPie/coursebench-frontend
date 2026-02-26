@@ -40,12 +40,14 @@ module.exports = {
     }
   },
   devServer: {
+    host: 'localhost',
     hot: true,
     port: 8000,
     compress: true,
     proxy: {
       '/v1': {
-        target: 'http://coursebench.org',
+        // target: 'http://coursebench.org',
+        target: 'http://localhost:5000',
         changeOrigin: true,
         secure: false,
         pathRewrite: {
