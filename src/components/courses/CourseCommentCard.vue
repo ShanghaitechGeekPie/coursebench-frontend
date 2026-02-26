@@ -33,7 +33,7 @@
                 {{
                   localComment.user
                     ? gradeItems[localComment.user.grade]
-                    : '由匿名用户发送，请仔细分辨其真实性'
+                    : '匿名发送，请仔细分辨其真实性'
                 }}
               </div>
             </div>
