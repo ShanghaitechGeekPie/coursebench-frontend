@@ -188,7 +188,7 @@
           <v-list-item-icon>
             <v-icon>{{ icons.mdiLoginVariant }}</v-icon>
           </v-list-item-icon>
-          <v-list-item-title class="text-body-1">绑定 Casdoor</v-list-item-title>
+          <v-list-item-title class="text-body-1">绑定 GeekPie 账户</v-list-item-title>
         </v-list-item>
         <v-list-item link @click="doLogout()" class="px-8">
           <v-list-item-icon>

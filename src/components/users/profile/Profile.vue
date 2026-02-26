@@ -71,6 +71,16 @@
         <span>已获赏金：{{ userProfile.reward / 100 }}元</span>
       </div>
     </div>
+    <div class="d-flex justify-center pt-3" v-if="isSelf">
+      <div class="grey--text text--darken-2 single-line-limit">
+        <v-icon small :color="userProfile.has_casdoor_bound ? 'success' : 'grey'">
+          {{ userProfile.has_casdoor_bound ? statics.icons.mdiCheckCircle : statics.icons.mdiCloseCircle }}
+        </v-icon>
+        <span class="ml-1">
+          GeekPie 账户：{{ userProfile.has_casdoor_bound ? '已关联' : '未关联' }}
+        </span>
+      </div>
+    </div>
     <div class="d-flex justify-center pt-6" v-if="isSelf">
       <EditProfile />
     </div>

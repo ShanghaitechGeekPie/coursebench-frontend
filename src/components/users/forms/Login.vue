@@ -60,8 +60,8 @@
                 >创建一个</span
               >
             </div>
-            <div class="pt-4">
-              <v-btn block outlined @click="startCasdoorLogin()">使用 Casdoor 登录</v-btn>
+            <div class="py-4">
+              <v-btn block outlined @click="startCasdoorLogin()">使用 GeekPie 账户登录</v-btn>
             </div>
           </div>
           <div class="px-0 pt-0 pb-6 pb-sm-11 pt-8 pt-sm-0 d-flex justify-end">
