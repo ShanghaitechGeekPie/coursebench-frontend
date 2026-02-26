@@ -9,7 +9,7 @@
         <div class="d-flex align-start">
           <AvatarContainer
             :name="displayName(node.reply.user)"
-            :src="node.reply.user.avatar"
+            :src="node.reply.user ? node.reply.user.avatar : ''"
             size="28"
             small
             tile
@@ -18,8 +18,11 @@
           <div class="pl-2 flex-grow-1">
             <div class="text-caption font-weight-bold">
               {{ displayName(node.reply.user) }}
-              <span v-if="node.reply.reply_to" class="grey--text text--darken-1">
+              <span v-if="node.reply.reply_to && node.reply.reply_to.user" class="grey--text text--darken-1">
                 回复 {{ displayName(node.reply.reply_to.user) }}
+              </span>
+              <span v-else-if="node.reply.reply_to" class="grey--text text--darken-1">
+                回复 匿名用户
               </span>
             </div>
             <div class="text-body-2 break-word">{{ node.reply.content }}</div>
@@ -61,7 +64,7 @@ export default {
   methods: {
     unixToReadable,
     displayName(user) {
-      return useUserName(user);
+      return user ? useUserName(user) : '匿名用户';
     },
   },
 };

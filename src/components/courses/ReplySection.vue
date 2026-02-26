@@ -38,7 +38,7 @@
         <div class="d-flex align-start">
           <AvatarContainer
             :name="displayName(reply.user)"
-            :src="reply.user.avatar"
+            :src="reply.user ? reply.user.avatar : ''"
             size="30"
             small
             tile
@@ -47,8 +47,11 @@
           <div class="pl-2 flex-grow-1">
             <div class="text-caption font-weight-bold">
               {{ displayName(reply.user) }}
-              <span v-if="reply.reply_to" class="grey--text text--darken-1">
+              <span v-if="reply.reply_to && reply.reply_to.user" class="grey--text text--darken-1">
                 回复 {{ displayName(reply.reply_to.user) }}
+              </span>
+              <span v-else-if="reply.reply_to" class="grey--text text--darken-1">
+                回复 匿名用户
               </span>
             </div>
             <div class="text-body-2 break-word">{{ reply.content }}</div>
@@ -215,7 +218,7 @@ export default {
   methods: {
     unixToReadable,
     displayName(user) {
-      return useUserName(user);
+      return user ? useUserName(user) : '匿名用户';
     },
     async fetchReplies() {
       this.loading = true;

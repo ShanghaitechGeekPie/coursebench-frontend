@@ -26,7 +26,7 @@
             <div class="d-flex align-start">
               <AvatarContainer
                 :name="displayName(ancestor.user)"
-                :src="ancestor.user.avatar"
+                :src="ancestor.user ? ancestor.user.avatar : ''"
                 size="28"
                 small
                 tile
@@ -36,10 +36,16 @@
                 <div class="text-caption font-weight-bold">
                   {{ displayName(ancestor.user) }}
                   <span
-                    v-if="ancestor.reply_to"
+                    v-if="ancestor.reply_to && ancestor.reply_to.user"
                     class="grey--text text--darken-1"
                   >
                     回复 {{ displayName(ancestor.reply_to.user) }}
+                  </span>
+                  <span
+                    v-else-if="ancestor.reply_to"
+                    class="grey--text text--darken-1"
+                  >
+                    回复 匿名用户
                   </span>
                 </div>
                 <div class="text-body-2 break-word">{{ ancestor.content }}</div>
@@ -55,7 +61,7 @@
             <div class="d-flex align-start">
               <AvatarContainer
                 :name="displayName(chain.current.user)"
-                :src="chain.current.user.avatar"
+                :src="chain.current.user ? chain.current.user.avatar : ''"
                 size="28"
                 small
                 tile
@@ -65,10 +71,16 @@
                 <div class="text-caption font-weight-bold">
                   {{ displayName(chain.current.user) }}
                   <span
-                    v-if="chain.current.reply_to"
+                    v-if="chain.current.reply_to && chain.current.reply_to.user"
                     class="grey--text text--darken-1"
                   >
                     回复 {{ displayName(chain.current.reply_to.user) }}
+                  </span>
+                  <span
+                    v-else-if="chain.current.reply_to"
+                    class="grey--text text--darken-1"
+                  >
+                    回复 匿名用户
                   </span>
                 </div>
                 <div class="text-body-2 break-word">{{ chain.current.content }}</div>
@@ -123,7 +135,7 @@ export default {
   methods: {
     unixToReadable,
     displayName(user) {
-      return useUserName(user);
+      return user ? useUserName(user) : '匿名用户';
     },
   },
 };

@@ -20,7 +20,7 @@ export default (userProfile) => {
     // if we have a nickname, then use it
     if (is_anonymous) {
       // if the user is anonymous, then use the nickname
-      return '匿名昵称：' + nickname;
+      return '匿名用户（' + nickname + '）';
     }
     return nickname;
   } else if (realname && !is_anonymous) {
