@@ -258,6 +258,10 @@ export default {
   overflow: hidden;
 }
 
+.router-container {
+  margin: 0px 0.1rem;
+}
+
 .router-container:hover {
   cursor: pointer;
 }
