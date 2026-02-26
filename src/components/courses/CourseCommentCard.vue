@@ -157,6 +157,7 @@
           </div>
         </template>
       </CommentCardContent>
+      <ReplySection :comment-id="comment.id" class="px-2 px-sm-4 pb-3" />
     </v-card>
   </v-lazy>
 </template>
@@ -176,6 +177,7 @@ import {
   shareLogoLight,
   shareLogoTitle,
 } from '@/composables/global/useShare';
+import ReplySection from '@/components/courses/ReplySection';
 
 export default {
   props: {
@@ -186,6 +188,7 @@ export default {
     CommentCardBar,
     AvatarContainer,
     CommentFold,
+    ReplySection,
   },
   setup() {
     const { doLike, doDislike, doUndo, formStatus, statics } =
