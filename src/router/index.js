@@ -43,6 +43,10 @@ export default new VueRouter({
       component: () => import('@/views/ActivityPoster.vue'),
     },
     {
+      path: '/oauth/casdoor',
+      component: () => import('@/views/CasdoorCallback.vue'),
+    },
+    {
       path: '*',
       component: () => import('@/views/NotFound.vue'),
     },

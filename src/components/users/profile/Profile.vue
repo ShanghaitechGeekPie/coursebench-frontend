@@ -71,6 +71,27 @@
         <span>已获赏金：{{ userProfile.reward / 100 }}元</span>
       </div>
     </div>
+    <div class="d-flex justify-center pt-3" v-if="isSelf">
+      <div class="grey--text text--darken-2 single-line-limit">
+        <v-icon small :color="userProfile.has_casdoor_bound ? 'success' : 'grey'">
+          {{ userProfile.has_casdoor_bound ? statics.icons.mdiCheckCircle : statics.icons.mdiCloseCircle }}
+        </v-icon>
+        <span class="ml-1">
+          GeekPie 账户：{{ userProfile.has_casdoor_bound ? '已关联' : '未关联' }}
+        </span>
+      </div>
+    </div>
+    <div class="d-flex justify-center pt-3" v-if="isSelf">
+      <v-btn
+        small
+        outlined
+        :disabled="userProfile.has_casdoor_bound"
+        :color="userProfile.has_casdoor_bound ? 'grey' : 'primary'"
+        @click="startCasdoorBind"
+      >
+        绑定 GeekPie 账户
+      </v-btn>
+    </div>
     <div class="d-flex justify-center pt-6" v-if="isSelf">
       <EditProfile />
     </div>
@@ -81,9 +102,19 @@ import useProfile from '@/composables/users/profile/useProfile';
 import EditProfile from '@/components/users/profile/EditProfile';
 import AvatarContainer from '@/components/users/profile/AvatarContainer';
 import { inject } from 'vue';
+import Config from 'Config';
 
 export default {
   components: { EditProfile, AvatarContainer },
+  methods: {
+    startCasdoorBind() {
+      if (this.userProfile.has_casdoor_bound) {
+        return;
+      }
+      const returnUrl = encodeURIComponent(window.location.href);
+      window.location.href = `${Config.serverUrl}/user/casdoor/bind?return_url=${returnUrl}`;
+    },
+  },
   setup() {
     const { userProfile, statics, doChangeAvatar } = useProfile();
 
