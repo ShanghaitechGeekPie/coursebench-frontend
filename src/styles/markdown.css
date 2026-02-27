@@ -1,3 +1,7 @@
+.markdown-body {
+  word-break: break-word;
+}
+
 .markdown-body h1,
 h2,
 h3,
