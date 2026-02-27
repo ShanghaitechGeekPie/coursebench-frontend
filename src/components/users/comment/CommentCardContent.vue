@@ -1,7 +1,7 @@
 <template>
   <v-card tile elevation="0">
     <slot name="title" :localComment="comment">
-      <v-card-title class="pa-sm-4 pa-2 pb-sm-0 py-sm-0">
+      <v-card-title class="pa-sm-4 pa-2 pb-sm-0 py-sm-0 hoverlink" @click="$router.push({ path: `/course/${comment.course.id}`, query: { answer: comment.id } })">
         <v-container>
           <v-row>
             <v-col cols="12" class="pa-0 d-flex">
@@ -12,6 +12,11 @@
               </div>
               <div class="justify-start text-h6 overflow">
                 {{ comment.is_covered ? comment.cover_title : comment.title }}
+              </div>
+              <div style="transform: translate(0, -1px)">
+                <v-icon size="24">
+                  {{ statics.icons.mdiChevronRight }}
+                </v-icon>
               </div>
             </v-col>
           </v-row>
@@ -162,6 +167,14 @@
                     :semester="semester"
                   >
                     <div class="d-flex justify-end" style="flex-wrap: wrap">
+                      <div class="pr-sm-2 router-container" @click="$router.push({ path: `/course/${comment.course.id}`, query: { answer: comment.id } })">
+                        <v-icon size="15" style="transform: translate(0, -1px)">
+                          {{ statics.icons.mdiCommentOutline }}
+                        </v-icon>
+                        <span class="text-caption">
+                          评论
+                        </span>
+                      </div>
                       <div class="pr-sm-2">
                         <v-icon size="15" style="transform: translate(0, -1px)">
                           {{ statics.icons.mdiTriangle }}
@@ -264,5 +277,10 @@ export default {
 
 .router-container:hover {
   cursor: pointer;
+}
+
+.hoverlink:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 </style>

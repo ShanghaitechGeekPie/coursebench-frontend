@@ -8,6 +8,8 @@ import {
   mdiTriangleSmallUp,
   mdiShare,
   mdiGold,
+  mdiCommentOutline,
+  mdiChevronRight,
 } from '@mdi/js';
 import { gradingInfo } from '@/composables/global/useStaticData';
 import { inject } from 'vue';
@@ -24,6 +26,8 @@ export default () => {
       mdiTriangleSmallUp,
       mdiShare,
       mdiGold,
+      mdiCommentOutline,
+      mdiChevronRight,
     },
     grade: [
       gradingInfo.quality,
